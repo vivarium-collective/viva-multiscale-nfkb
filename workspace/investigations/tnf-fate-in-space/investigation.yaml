@@ -1,0 +1,25 @@
+schema_version: 2
+name: tnf-fate-in-space
+title: TNF fate in space
+created: '2026-11-04'
+status: planning
+runtime:
+  default_emitter: sqlite
+description: 'What decides whether a cell survives or dies when TNF reaches it by diffusion, and does
+  space act only through the dose that arrives, or also through when it arrives?
+
+  '
+studies: []
+expert_docs: []
+acceptance_criteria: []
+question: 'What decides whether a cell survives or dies when TNF reaches it by diffusion, and does space
+  act only through the dose that arrives, or also through when it arrives?
+
+  '
+hypothesis: 'Map each run with a diffusing TNF bolus onto the uniform-dose curve by the TNF dose that
+  reached the cell (peak and time-integrated). If fate collapses onto that curve, space acts only through
+  dose; if it does not, arrival timing matters. NF-kB''s nuclear wave timing under the moving front is
+  the mechanism either way. Every coupling is first calibrated (Study 0) on parts verified by the workspace''s
+  compose-api checks.
+
+  '
