@@ -43,8 +43,26 @@ node RIP1 {
   rate_down = $k_time * (($Low_RIP1 ? 1e+100 : (@logic ? 0 : 1)));
 }
 
+node cIAP {
+  logic = (mcIAP AND (NOT SMAC));
+  rate_up = $k_time * (($Low_cIAP ? 0 : (@logic ? ($r_tx / $k_time) : 0)));
+  rate_down = $k_time * (($Low_cIAP ? 1e+100 : ((SMAC) ? 1 : 0)));
+}
+
+node RIP1ub {
+  logic = cIAP AND RIP1;
+  rate_up = $k_time * (@logic ? 1 : 0);
+  rate_down = $k_time * (@logic ? 0 : 1);
+}
+
 node RIP1K {
   logic = RIP1;
+  rate_up = $k_time * (@logic ? 1 : 0);
+  rate_down = $k_time * (@logic ? 0 : 1);
+}
+
+node IKK {
+  logic = RIP1ub;
   rate_up = $k_time * (@logic ? 1 : 0);
   rate_down = $k_time * (@logic ? 0 : 1);
 }
@@ -56,7 +74,7 @@ node CASP3 {
 }
 
 node NFkB {
-  logic = NOT CASP3;
+  logic = IKK AND (NOT CASP3);
   rate_up = $k_time * (($High_NFkB ? 1e+100 : (@logic ? $u_NFkB : 0)));
   rate_down = $k_time * (($High_NFkB ? 0 : (@logic ? $d_NFkB : 1)));
 }
@@ -112,6 +130,12 @@ node MOMP {
 node SMAC {
   logic = MOMP;
   rate_up = $k_time * (@logic ? 1 : 0);
+  rate_down = $k_time * (@logic ? 0 : 1);
+}
+
+node mcIAP {
+  logic = (NFkB);
+  rate_up = $k_time * (@logic ? ($r_tx / $k_time) : 0);
   rate_down = $k_time * (@logic ? 0 : 1);
 }
 

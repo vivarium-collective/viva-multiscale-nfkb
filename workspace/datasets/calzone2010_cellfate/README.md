@@ -16,39 +16,65 @@ cell-fate decision in response to death receptor engagement", PLoS Comput Biol 6
 
 ## The composite's Boolean layer: `prep.py` → `processed/`
 
-`prep.py` writes `processed/cellfate_reduced.bnd` (27 nodes, sha256 `a6b32632ecfad48522db1d564985d67a5c61cc8231bd16bccc3afee895550745`,
-deterministic) and `processed/reduction.json` (every removed or rewritten node and why).
+`prep.py` writes `processed/cellfate_coupled.bnd` (all 31 nodes, sha256 `036fc9d18a83aa96d6fe95fb88306cc5493b3e83df4238579e8361fc2f9fe65a`, deterministic) and
+`processed/coupling.json` (every rewrite and why).
 
-Ownership, from Alex's ruling (2026-11-04: "the most biologically accurate and overall model-native option"):
-- **Lipniacki 2004 owns NF-kB activation.** Its lumped TNF → IKK step stands in for Calzone's RIP1 → RIP1ub → IKK → NFkB.
-  The reduction removes the nodes whose only role is that arm: RIP1ub and IKK, plus cIAP and mcIAP, which only fed
-  RIP1ub. `$Low_cIAP` goes with them.
-- **Calzone owns the death arms** and how NF-kB's targets hold them back:
-  - DISC_TNF → CASP8 → BAX → MOMP → … → CASP3 → Apoptosis;
-  - RIP1 → RIP1K → ROS → MPT → NonACD;
-  - cFLIP, BCL2, XIAP.
+### Ownership: remove nothing, Calzone gates
 
-  TNF, TNFR and RIP1 are kept for these arms. Removing them, as first planned, makes death unreachable (see
-  `checks/boolean/reduction-nfkb-knockout`).
-- **NFkB** becomes `logic = NOT CASP3` with rates `$u_NFkB` / `$d_NFkB` in place of IKK's 1 and 0, and `$High_NFkB` is
-  kept. The composite sets `u = f`, `d = 1 − f`, where `f` is Lipniacki's free nuclear NF-kB as a fraction of all NF-kB,
-  `(NFKB_nuc / Kv) / NFKB_total`, from its own `NFKB_total` rule (Kv = 5; NFKB_total = 0.06, conserved). It is
-  dimensionless, with no fitted constant: about 0.0077 at the unstimulated steady state.
+Alex's ruling (2026-11-04) was "Remove nothing; Calzone gates". It supersedes a first version that cut RIP1ub, IKK, cIAP
+and mcIAP. An adversarial review found that those nodes also carry Calzone's death → NF-kB feedbacks:
+- caspase-8 cleaves RIP1 (CASP8 ⊣ RIP1 → RIP1ub → IKK → NFkB);
+- SMAC sequesters cIAP (SMAC ⊣ cIAP → RIP1ub);
+- the pro-survival NFkB → mcIAP → cIAP loop.
+
+Cutting only those loops changes the full network under TNF, at t = 40:
+
+| Network | Survival | NonACD |
+|---|---|---|
+| Full | 0.0136 | 0.0291 |
+| Loops cut | 0.1281 | 0.0001 |
+
+The models now divide the work as follows:
+- **Lipniacki owns how much.** The nuclear fraction `f = (NFKB_nuc / Kv) / NFKB_total`, from its own `NFKB_total`
+  rule (Kv = 5; NFKB_total = 0.06, conserved), is supplied as `$u_NFkB = f`, `$d_NFkB = 1 − f`. It is dimensionless,
+  with no fitted constant: about 0.0077 at the unstimulated steady state.
+- **Calzone owns whether the route is open.** NFkB keeps its own logic, `IKK AND (NOT CASP3)`. While that holds, the
+  node switches on at `$u_NFkB` and off at `$d_NFkB`; when the route closes, it switches off at rate 1, as in Calzone.
+  At u = 1, d = 0 it is Calzone's node exactly. `$High_NFkB` is kept.
 - **TNF** becomes an input with rates `$u_TNF` / `$d_TNF`, driven by the same receptor-occupancy signal as Lipniacki's
   TNF_R.
 
-The cut is checked as exact against the full network under Calzone's NF-kB mutants
-(`checks/boolean/reduction-high-nfkb`, `reduction-nfkb-knockout`): all 27 kept nodes agree.
-- **Time.** Every rate is multiplied by `$k_time` (Calzone time units per composite second), so Calzone's internal
-  rate ratios are untouched. Alex chose (2026-11-04) to **sweep `k_time` as a study axis** rather than fix one value.
-  The anchors to compare against, measured: Lipniacki's NF-kB → target protein (A20) delay is about 35 min. Calzone's
-  NF-kB target induction half-time is 16.6 units, and its apoptosis half-time after TNF is 8.5 units. One factor
-  cannot match both; see docs/design/plan-section-b.md. Checked by `checks/boolean/pair-nfkb-seconds`.
-- **Gene expression keeps Lipniacki's clock** (Alex, 2026-11-04: "anchor to Lipniacki, sweep death"). Fate is a race
-  between the death arms and NF-kB's protective genes. Under TNF the full network's split depends on `$TransRate`:
-  Survival 0.02 at 1/24 (MaBoSS's example), 0.20 at 1; Calzone 2010 reports about 0.30 / 0.60 / 0.10 from
-  rate-free asynchronous reachability. So `$TransRate` becomes `$r_tx / $k_time`, and target genes switch on at
-  `r_tx` per second whatever `k_time` is. `anchor_transcription.py` measures `r_tx` from Lipniacki itself:
-  NFKB_nuc half-rise to A20 half-rise is 2107 s (35.1 min), so r_tx = ln 2 / 2107 s = 3.29e-4/s, written to
-  `processed/transcription_anchor.json`. `k_time` then sweeps only the death machinery's clock. Checked by
-  `checks/boolean/transcription-anchor-{fast,slow}`.
+### Time
+
+- **Every rate is multiplied by `$k_time`** (Calzone time units per composite second). Alex chose (2026-11-04) to
+  **sweep `k_time` as a study axis** for the death machinery's clock. With r_tx = k_time / 24, every rate scales
+  together and k_time is a pure change of clock (`coupled-equals-full-seconds`).
+- **Target-gene induction keeps Lipniacki's clock** (Alex: "anchor to Lipniacki, sweep death"). `$TransRate` (7 nodes:
+  cIAP, cFLIP, BCL2, mROS, mcIAP, mXIAP, Survival) becomes `$r_tx / $k_time`, so these genes switch ON at `r_tx` per
+  second whatever `k_time` is.
+- **How `r_tx` is measured.** `anchor_transcription.py` takes it from Lipniacki itself: NFKB_nuc half-rise to A20
+  half-rise is 2107 s (35.1 min), so r_tx = ln 2 / 2107 s = 3.29e-4/s, written to `processed/transcription_anchor.json`.
+- **Why the anchor matters.** Fate is a race between the death arms and NF-kB's protective genes, and TransRate decides
+  it. Under TNF the full network's Survival is 0.02 at MaBoSS's example 1/24 and 0.20 at 1. Calzone 2010 reports about
+  0.30 / 0.60 / 0.10 from rate-free asynchronous reachability.
+- **Not yet anchored:**
+  - the genes' switch-OFF rates when NF-kB is off stay on the `k_time` clock;
+  - the NF-kB node's own switching speed (u + d = 1, in Calzone units) flickers too fast for the genes to accumulate.
+
+  The calibration study (Study 0) decides both.
+- **The measured anchors.** Lipniacki's NF-kB → A20 delay is about 35 min. Calzone's target-induction half-time is 16.6
+  units and its apoptosis half-time after TNF 8.5 units, so one conversion factor cannot match both.
+
+### Checks (`checks/boolean/`)
+
+Each check has an independent oracle and a negative that has been run and failed.
+
+| Check | Oracle | What it guards |
+|---|---|---|
+| `calzone-reference` | MaBoSS's own reference run | `MaBoSSProcess` on the full network |
+| `coupled-equals-full` | the full network on the engine | with u = 1, d = 0 and TNF on, the coupled network equals the full one on all 31 nodes, at t = 40 |
+| `coupled-equals-full-early` | the full network on the engine | the same over [7, 8], where the gate's NOT CASP3 term is visible |
+| `coupled-equals-full-seconds` | the full network on the engine | every rate, death arms included, is on the k_time clock |
+| `coupled-nfkb-knockout` | the full network with NF-kB loss of function | the death arms intact without NF-kB |
+| `pair-nfkb-analytic`, `pair-nfkb-seconds` | closed form | the coupling, with the NF-kB rule read from the SBML; the node taken verbatim with its gate held open |
+| `transcription-anchor-fast`, `-slow` | closed form | target genes on Lipniacki's clock |

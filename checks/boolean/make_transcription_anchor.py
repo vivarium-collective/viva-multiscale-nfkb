@@ -1,6 +1,6 @@
 """Write checks/boolean/transcription-anchor-{fast,slow}/: NF-kB's target genes keep Lipniacki's clock whatever k_time is.
 
-The reduced network writes Calzone's $TransRate as $r_tx / $k_time inside rates that are all multiplied by $k_time, so
+The coupled network writes Calzone's $TransRate as $r_tx / $k_time inside rates that are all multiplied by $k_time, so
 a target gene switches on at r_tx per second, the rate measured from Lipniacki 2004's own NF-kB -> A20 delay
 (workspace/datasets/calzone2010_cellfate/processed/transcription_anchor.json, written by anchor_transcription.py).
 
@@ -32,7 +32,7 @@ WINDOWS, SAMPLES, ABS_TOL = 20, 50_000, 0.01
 
 def write(name: str, k_time: float, network: str, r_tx: float, interval: float) -> None:
     nodes = sorted(re.findall(r"^node\s+(\w+)", network, re.MULTILINE))
-    on = {"FADD", "ATP"}
+    on = {"FADD", "ATP", "cIAP"}  # cellfate.cfg's istates; TNF off
     a, b = interval * (WINDOWS - 1) / WINDOWS, interval
     expected = 1.0 - (math.exp(-r_tx * a) - math.exp(-r_tx * b)) / (r_tx * (b - a))
     initial = {n: float(n in on) for n in nodes}
@@ -48,7 +48,7 @@ def write(name: str, k_time: float, network: str, r_tx: float, interval: float) 
                 "address": "local:viva_maboss.processes.MaBoSSProcess",
                 "config": {
                     "network": network,
-                    "parameters": {"High_NFkB": 1.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "u_NFkB": 0.0,
+                    "parameters": {"High_NFkB": 1.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0, "u_NFkB": 0.0,
                                    "d_NFkB": 0.0, "u_TNF": 0.0, "d_TNF": 0.0, "k_time": k_time, "r_tx": r_tx},
                     "initial_state": {n: 1.0 for n in on},
                     "sample_count": SAMPLES,
@@ -96,7 +96,7 @@ def write(name: str, k_time: float, network: str, r_tx: float, interval: float) 
 
 
 def main() -> None:
-    network = (DATA / "cellfate_reduced.bnd").read_text()
+    network = (DATA / "cellfate_coupled.bnd").read_text()
     anchor = json.loads((DATA / "transcription_anchor.json").read_text())
     r_tx, delay = anchor["r_tx_per_s"], anchor["target_delay_s"]
     write("transcription-anchor-fast", 1.0 / 60.0, network, r_tx, delay)

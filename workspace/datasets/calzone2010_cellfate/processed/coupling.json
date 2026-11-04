@@ -1,0 +1,34 @@
+{
+  "source": "raw/cellfate.bnd (sysbio-curie/MaBoSS@375ffad engine/tests/maboss/cellfate/cellfate.bnd)",
+  "source_sha256": "cfef1e7054d77f4736d8e36e712946ad1043c2f967913e400ec449b56a3d26dc",
+  "output_sha256": "036fc9d18a83aa96d6fe95fb88306cc5493b3e83df4238579e8361fc2f9fe65a",
+  "nodes": 31,
+  "removed": {},
+  "ownership": "Lipniacki owns how much NF-kB (f); Calzone owns whether the activation route is open (logic kept)",
+  "rewritten": {
+    "NFkB": "logic kept (Calzone gates: the activation route is open and caspase-3 is off); while it holds, NF-kB follows Lipniacki's nuclear fraction f through $u_NFkB = f and $d_NFkB = 1 - f",
+    "TNF": "an input: the receptor-occupancy signal that drives Lipniacki's TNF_R drives $u_TNF/$d_TNF"
+  },
+  "transrate_nodes": [
+    "cIAP",
+    "cFLIP",
+    "BCL2",
+    "mROS",
+    "mcIAP",
+    "mXIAP",
+    "Survival"
+  ],
+  "transrate_uses_replaced": 7,
+  "rates_scaled_by_k_time": 62,
+  "parameters_removed": {
+    "TransRate": "replaced by $r_tx / $k_time: target-gene induction on Lipniacki's clock (anchor_transcription.py)"
+  },
+  "parameters_added": [
+    "u_NFkB",
+    "d_NFkB",
+    "u_TNF",
+    "d_TNF",
+    "k_time",
+    "r_tx"
+  ]
+}
