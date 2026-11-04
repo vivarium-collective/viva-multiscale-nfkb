@@ -18,9 +18,16 @@ This workspace exists in large part because of a specific step in
 [compose-api](https://github.com/biosimulations/compose-api), the BioSimulations service that runs process-bigraph
 documents on HPC: the onboarding of the **multi-framework viva workspace simulator packages**.
 
-- **The onboarding.** On 2026-11-04 compose-api added seven viva simulator packages to its registry at level
-  `tested` ([compose-api#499](https://github.com/biosimulations/compose-api/pull/499)). They span five modelling
-  frameworks:
+- **The agenda.** Alex Patrie set it on 2026-11-03 as three gated parts:
+  - **A:** onboard the viva simulator workspaces into compose-api, grouped by modelling framework.
+  - **B:** design one multiscale composite from what A onboarded. That is this workspace.
+  - **C:** classify every compliance case by biological scale.
+
+  A's groups are the five modelling paradigms the viva ecosystem had wrappers for, so that B could compose across
+  them.
+- **The onboarding.** compose-api added seven viva simulator packages to its registry at level `tested`
+  ([compose-api#499](https://github.com/biosimulations/compose-api/pull/499), opened 2026-11-03, merged 2026-11-04).
+  They span five modelling frameworks:
 
   | Framework | Package |
   |---|---|
@@ -30,12 +37,25 @@ documents on HPC: the onboarding of the **multi-framework viva workspace simulat
   | rule-based | viva-nfsim |
   | spatial | viva-smoldyn, viva-fenics |
 
-  Each one passed its compliance case in a real composed environment.
-- **Combining frameworks in one run.** compose-api already infers a combined environment, a "mash-up", from a
-  document's process addresses (its environment-composition plan, D7). Since
-  [compose-api#501](https://github.com/biosimulations/compose-api/pull/501) (release 0.7.78), that works for these
-  packages too, so a single document can mix frameworks and run as one job. The same day, all seven compliance cases
-  passed on production (compose.cam.uchc.edu, 0.7.78), each in its own inferred mash-up.
+  - **Each package passed its compliance case in a real composed environment.** Before the merge, all seven also
+    passed together in one 491-package environment, locked through compose-api's own pixi path. That combined pass
+    is the multi-framework evidence this workspace builds on.
+  - **Boolean:** no wrapper existed. BoolNet, the library first suggested, is R-only, so
+    [viva-maboss](https://github.com/vivarium-collective/viva-maboss) was built for this, on 2026-11-03.
+  - **viva-biomodels** is held at `listed`, for the reasons in #499.
+  - **Seven other workspaces** first carried on #499's branch (viva-mcom, viva-bbe-systems, viva-comets, viva-medyan,
+    viva-yalla, viva-simbio and viva-bioreactordesign) were parked on `registry/onboard-verified-workspaces-batch1`
+    when the PR was refocused on the five frameworks. They are not onboarded.
+- **Combining frameworks in one run.** compose-api infers a combined environment, a "mash-up", from a document's
+  process addresses (its environment-composition plan, D7).
+  - **The bug.** The first live run (copasi.omex) found that a signed-in run of these packages that used the core
+    emitter `local:RAMEmitter` was refused with a 400. Inference treated the short name as unregistered and fell back
+    to `registry_env`.
+  - **The fix.** [compose-api#501](https://github.com/biosimulations/compose-api/pull/501) (release 0.7.78,
+    2026-11-04) qualifies short names as validation does, so a single document can mix these frameworks and run as one
+    job.
+  - **Proven live.** The same day, all seven compliance cases passed on production (compose.cam.uchc.edu, 0.7.78),
+    each in its own inferred mash-up.
 - **What this workspace adds.** Onboarding proved each framework on its own. This workspace builds one model that
   spans scales from several of the newly onboarded frameworks: Boolean, ODE, and the spatial PDE layer. It needs no
   new registry entry, because it runs in a mash-up of viva-maboss, viva-tellurium, viva-pde-particle and

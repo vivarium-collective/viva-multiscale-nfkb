@@ -145,6 +145,18 @@ linking here.
 
 ### Coupling graph (→ is data flow; each store has one writer)
 
+**Wiring rules found by running composites (2026-11-04), each with a check that fails when the rule is broken:**
+- **Seed every map key that a step writes into.** In process-bigraph 1.9.1, a step's write to a `map[float]` key the
+  store doesn't hold yet is silently dropped. An overwrite to `["parameters","u"]` on an empty map leaves it empty;
+  the same write lands once the key is in the document. So the document seeds every such key: MaBoSS's `parameters`
+  (`u_NFkB`, `d_NFkB`, `u_TNF`, `d_TNF`) and Tellurium's `parameters_in` (`TNF_R`, …). The negative check is
+  `checks/boolean/pair-nfkb-analytic` with the store left unseeded.
+- **A writer to `parameters_in` must declare `overwrite[...]`.** A plain `map[float]` output adds to the store on
+  every update (viva-tellurium 0.2.3 README and test).
+- **Set `"global_time_precision": 6` at the document's top level.** Without it, floating-point drift skips the last
+  tick (`checks/kinetic/sim1-original`).
+- **Row 0 of an emitter is t = 0, before any process has written,** so no expectation is placed on it.
+
 | From | Port | Adapter | To | Port |
 |---|---|---|---|---|
 | PDE `FVReactionDiffusion` | `fields.TNF` | **`RegionMean`** (new, U2: masked mean over the cell-surface voxels) | store `tnf_at_cell` | |
