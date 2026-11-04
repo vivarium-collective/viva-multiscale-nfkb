@@ -114,25 +114,45 @@ linking here.
   left P(Apoptosis) = P(NonACD) = 0 whatever NF-κB does. Probe through `MaBoSSProcess` at t = 40, full network with
   TNF on: Survival 0.015, Apoptosis 0.949, NonACD 0.032.
 
-  The committed, scripted `.bnd` transform therefore makes these changes:
-  - **Removed (the duplicated arm only):** Lipniacki's lumped TNF→IKK activation stands in for Calzone's
-    RIP1→RIP1ub→IKK→NFkB, so RIP1ub and IKK are removed. cIAP and mcIAP fed only RIP1ub, so they are removed too.
-    Every removed node is logged with its reason.
-  - **Kept:** TNF, TNFR, RIP1, RIP1K, DISC_TNF, and both death arms.
-  - **NFkB:** rate-driven, and CASP3 still blocks it:
-    - `rate_up = CASP3 ? 0 : $u_NFkB`
-    - `rate_down = CASP3 ? 1 : $d_NFkB`
-    - with u = f and d = 1 − f, so with CASP3 off the stationary P(on) = f.
+  **"Remove nothing; Calzone gates" (Alex, 2026-11-04).** This supersedes an earlier cut of RIP1ub, IKK, cIAP and
+  mcIAP. That cut was exact only with NF-κB clamped, which the composite never does, because those nodes carry
+  Calzone's death → NF-κB feedbacks, which Lipniacki lacks:
+  - CASP8 ⊣ RIP1 → RIP1ub → IKK → NFkB (caspase-8 cleaves RIP1);
+  - SMAC ⊣ cIAP → RIP1ub;
+  - the pro-survival loop NFkB → mcIAP → cIAP.
+
+  Cutting only those loops changes fate. On cmaboss, TNF on, t = 40, 50k samples:
+
+  | Network | Survival | Apoptosis | NonACD |
+  |---|---|---|---|
+  | Full | 0.0136 | 0.9534 | 0.0291 |
+  | Loops cut | 0.1281 | 0.8312 | 0.0001 |
+
+  So the committed, scripted `.bnd` transform keeps all 31 nodes, and **Lipniacki owns how much NF-κB, while Calzone
+  owns whether the activation route is still open**: the receptor complex is formed, RIP1 is not cleaved, and cIAP
+  is not sequestered.
+  - **NFkB** keeps its own logic, `IKK AND NOT CASP3`, as the gate on its rates:
+    - `rate_up = @logic ? $u_NFkB : 0`
+    - `rate_down = @logic ? $d_NFkB : 1`
+    - with u = f and d = 1 − f, from Lipniacki. Study 0 calibrates the switching speed: u + d = κ on Lipniacki's
+      clock, because at u + d = 1 the node flickers too fast for survival genes to hold.
+  - **Every rate is multiplied by `$k_time`,** and `$TransRate` → `$r_tx/$k_time` in all 7 nodes that use it, cIAP and
+    mcIAP included.
+  - **Key check:** at u = 1, d = 0 (k_time = 1, r_tx = 1/24), the coupled network equals Calzone's original exactly,
+    on all 31 nodes, with TNF on.
+  - **Negatives, for coverage gaps the review found:**
+    - a mutant where CASP3 doesn't force NFkB off must fail;
+    - stripping `$k_time` from a death-arm node must fail.
+
+    The NF-κB rule is read from the SBML, not hand-typed.
   - **f is Lipniacki's own nuclear fraction of NF-κB,** `(NFKB_nuc/Kv) / NFKB_total`, from its `NFKB_total` rule. It is
     dimensionless and has no fitted constant. `NFKB_total` is a rule variable, not a floating species, so the adapter
     computes it from the floating species in that rule: `IKKactive_IkB_NFKB + NFKB + IkB_NFKB + (NFKB_nuc + IkB_NFKB_nuc)/Kv`.
   - **TNF node:** driven by `$u_TNF`/`$d_TNF` from the same receptor-occupancy value that drives Lipniacki's
     `TNF_R` (d1). That value has one writer and two readers.
-- **Checks that the cut is exact:**
-  - With NF-κB clamped on, the reduced network matches the full one with `$High_NFkB = 1`.
-  - With NF-κB clamped off, it matches the full network with NFkB knocked out.
-  - Fate probabilities must agree within sampling error.
-  - Then the kinetic → Boolean pair: TNF off and f held fixed, so P(NFkB on) matches its analytic window average.
+- **Superseded:** the mutant-equivalence checks of the 4-node cut, kept in git history. They were exact only with
+  NF-κB clamped. The kinetic → Boolean pair check stays, re-derived for u + d = κ: TNF off and f held fixed, P(NFkB on)
+  matches its analytic window average.
 - **Baseline already passing** (worktree `feat/boolean-layer`): `MaBoSSProcess` on the full 31-node network matches
   MaBoSS's own reference output (`refer/res_probtraj.csv`, sysbio-curie/MaBoSS@375ffad) within 0.008 on every node.
 - **Config keys,** verified at viva-maboss@3fdccd7: `network`, `parameters`, `initial_state` (0 or 1 per node),
