@@ -1,0 +1,41 @@
+{
+  "state": {
+    "kinetic": {
+      "_type": "process",
+      "address": "local:viva_tellurium.processes.TelluriumProcess",
+      "config": {
+        "model_file": "Lipniacki2004.xml",
+        "bulk_species": false
+      },
+      "interval": 385.2,
+      "inputs": {},
+      "outputs": {
+        "species": [
+          "species"
+        ],
+        "time": [
+          "kinetic_time"
+        ]
+      }
+    },
+    "emitter": {
+      "_type": "step",
+      "address": "local:RAMEmitter",
+      "config": {
+        "emit": {
+          "species": "map[float]",
+          "global_time": "float"
+        }
+      },
+      "inputs": {
+        "species": [
+          "species"
+        ],
+        "global_time": [
+          "global_time"
+        ]
+      }
+    }
+  },
+  "global_time_precision": 6
+}
