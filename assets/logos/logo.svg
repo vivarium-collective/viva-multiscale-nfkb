@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" stroke-linejoin="round" stroke-linecap="round">
+  <!-- Green backdrop (the logo's green), no horizon lines, no sun -->
+  <rect x="20" y="20" width="472" height="472" rx="60" fill="#7ccf8e"/>
+  <rect x="20" y="20" width="472" height="472" rx="60" fill="none" stroke="#1d1d1d" stroke-width="14"/>
+
+  <!-- Eye and its time-scale rings, scaled to fit the frame -->
+  <g transform="translate(256 256) scale(0.8) translate(-256 -256)">
+
+    <!-- Time-scale rings around the eyelid, slowest outermost.
+         Bands are evenly spaced: each tick layer is 7 units from the next.
+         Fast (innermost, 8 units long, every 15 degrees): yellow, radii 6 to 14.
+         Medium (14 units long, every 30 degrees): orange, radii 21 to 35.
+         Slow (outermost, 20 units long, every 60 degrees): purple, radii 42 to 62.
+         The three scales are pairwise coupled, so their interaction graph is K3 and needs three colours. -->
+    <path fill="none" stroke="#ffd23f" stroke-width="5" d="
+      M458 256L466 256 M450.9 291.4L458.3 294.4 M430.2 324L436.2 329.3 M397.9 351.5L402.3 358.2
+      M356.1 372.5L358.9 380 M307.7 385.6L309.1 393.5 M256 390L256 398 M204.3 385.6L202.9 393.5
+      M155.9 372.5L153.1 380 M114.1 351.5L109.7 358.2 M82.2 324L75.2 329.3 M61.2 291.4L53.8 294.4
+      M54 256L46 256 M61.2 220.6L53.8 217.6 M81.8 188L75.8 182.7 M114.1 160.5L109.7 153.8
+      M156 139.5L153.1 132 M204.3 126.4L202.9 118.5 M256 122L256 114 M307.7 126.4L309.1 118.5
+      M356.1 139.5L358.9 132 M397.9 160.5L402.3 153.8 M430.2 188L436.2 182.7 M450.9 220.6L458.3 217.6"/>
+
+    <path fill="none" stroke="#ff8c42" stroke-width="7" d="
+      M473 256L487 256 M441.5 333.9L452 343.2 M361.5 386.5L366.4 399.6 M256 405L256 419
+      M150.5 386.5L145.6 399.6 M70.6 333.9L60.1 343.2 M39 256L25 256 M70.6 178.1L60.1 168.8
+      M150.5 125.5L145.6 112.4 M256 107L256 93 M361.5 125.5L366.4 112.4 M441.5 178.1L452 168.8"/>
+
+    <path fill="none" stroke="#9b5de5" stroke-width="9" d="
+      M494 256L514 256 M368.8 406.2L375.9 424.9 M139.2 406.2L132.1 424.9 M18 256L-2 256
+      M143.2 105.8L136.1 87.1 M368.8 105.8L375.9 87.1"/>
+
+    <!-- Sclera: the region between the eyelid cycle and the iris rim (face colour A = purple) -->
+    <polygon fill="#9b5de5" points="60,256 110,200 180,150 256,128 332,150 402,200 452,256 402,312 332,362 256,384 180,362 110,312"/>
+
+    <!-- Iris: 8 sectors between spokes, alternating colours B (orange) and C (yellow) -->
+    <g stroke="none">
+      <polygon fill="#ff8c42" points="256,256 351,256 323,323"/>
+      <polygon fill="#ffd23f" points="256,256 323,323 256,351"/>
+      <polygon fill="#ff8c42" points="256,256 256,351 189,323"/>
+      <polygon fill="#ffd23f" points="256,256 189,323 161,256"/>
+      <polygon fill="#ff8c42" points="256,256 161,256 189,189"/>
+      <polygon fill="#ffd23f" points="256,256 189,189 256,161"/>
+      <polygon fill="#ff8c42" points="256,256 256,161 323,189"/>
+      <polygon fill="#ffd23f" points="256,256 323,189 351,256"/>
+    </g>
+
+    <!-- Eyelid edges (the C12 cycle) -->
+    <polygon fill="none" stroke="#1d1d1d" stroke-width="11" points="60,256 110,200 180,150 256,128 332,150 402,200 452,256 402,312 332,362 256,384 180,362 110,312"/>
+
+    <!-- Rim cycle and spokes of the iris wheel -->
+    <polygon fill="none" stroke="#1d1d1d" stroke-width="6" points="351,256 323,323 256,351 189,323 161,256 189,189 256,161 323,189"/>
+    <g stroke="#1d1d1d" stroke-width="6">
+      <line x1="256" y1="256" x2="351" y2="256"/>
+      <line x1="256" y1="256" x2="323" y2="323"/>
+      <line x1="256" y1="256" x2="256" y2="351"/>
+      <line x1="256" y1="256" x2="189" y2="323"/>
+      <line x1="256" y1="256" x2="161" y2="256"/>
+      <line x1="256" y1="256" x2="189" y2="189"/>
+      <line x1="256" y1="256" x2="256" y2="161"/>
+      <line x1="256" y1="256" x2="323" y2="189"/>
+    </g>
+
+    <!-- Eyelid nodes: even cycle, alternating orange and yellow -->
+    <g stroke="#1d1d1d" stroke-width="6">
+      <circle cx="110" cy="200" r="11" fill="#ffd23f"/>
+      <circle cx="180" cy="150" r="11" fill="#ff8c42"/>
+      <circle cx="256" cy="128" r="11" fill="#ffd23f"/>
+      <circle cx="332" cy="150" r="11" fill="#ff8c42"/>
+      <circle cx="402" cy="200" r="11" fill="#ffd23f"/>
+      <circle cx="402" cy="312" r="11" fill="#ffd23f"/>
+      <circle cx="332" cy="362" r="11" fill="#ff8c42"/>
+      <circle cx="256" cy="384" r="11" fill="#ffd23f"/>
+      <circle cx="180" cy="362" r="11" fill="#ff8c42"/>
+      <circle cx="110" cy="312" r="11" fill="#ffd23f"/>
+    </g>
+    <circle cx="60" cy="256" r="14" fill="#ff8c42" stroke="#1d1d1d" stroke-width="6"/>
+    <circle cx="452" cy="256" r="14" fill="#ff8c42" stroke="#1d1d1d" stroke-width="6"/>
+
+    <!-- Iris rim nodes: C8 cycle, alternating orange and yellow -->
+    <g stroke="#1d1d1d" stroke-width="6">
+      <circle cx="351" cy="256" r="13" fill="#ff8c42"/>
+      <circle cx="323" cy="323" r="13" fill="#ffd23f"/>
+      <circle cx="256" cy="351" r="13" fill="#ff8c42"/>
+      <circle cx="189" cy="323" r="13" fill="#ffd23f"/>
+      <circle cx="161" cy="256" r="13" fill="#ff8c42"/>
+      <circle cx="189" cy="189" r="13" fill="#ffd23f"/>
+      <circle cx="256" cy="161" r="13" fill="#ff8c42"/>
+      <circle cx="323" cy="189" r="13" fill="#ffd23f"/>
+    </g>
+
+    <!-- Pupil hub: adjacent to every rim node, so it takes the third colour (purple) -->
+    <circle cx="256" cy="256" r="24" fill="#9b5de5" stroke="#1d1d1d" stroke-width="6"/>
+    <ellipse cx="248" cy="246" rx="7" ry="5" fill="#fff6dc" transform="rotate(-20 248 246)"/>
+  </g>
+</svg>

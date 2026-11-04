@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="2.4" fill="#1b1f4b"/>
+    </pattern>
+    <pattern id="bgdots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="5" cy="5" r="2.5" fill="#ff3ea5" opacity="0.35"/>
+    </pattern>
+    <path id="membrane" d="M256 66 C380 60 452 150 448 262 C444 380 360 448 252 446 C140 444 62 370 66 252 C70 138 150 70 256 66 Z"/>
+    <path id="spark" d="M0 -22 L5 -5 L22 0 L5 5 L0 22 L-5 5 L-22 0 L-5 -5 Z"/>
+  </defs>
+
+  <!-- Poster frame -->
+  <rect x="18" y="18" width="476" height="476" rx="56" fill="#fff1c9"/>
+  <rect x="18" y="18" width="476" height="476" rx="56" fill="url(#bgdots)"/>
+  <rect x="18" y="18" width="476" height="476" rx="56" fill="none" stroke="#1b1f4b" stroke-width="12"/>
+
+  <!-- Outer cell membrane: hard drop shadow, body, halftone shading -->
+  <use href="#membrane" transform="translate(14 14)" fill="#ff3ea5"/>
+  <use href="#membrane" fill="#5ee6c8" stroke="#1b1f4b" stroke-width="12" stroke-linejoin="round"/>
+  <use href="#membrane" fill="url(#dots)" opacity="0.3"/>
+
+  <!-- Mid-scale compartment: shadow, body -->
+  <circle cx="270" cy="276" r="118" fill="#1b1f4b"/>
+  <circle cx="256" cy="262" r="118" fill="#ffd23f" stroke="#1b1f4b" stroke-width="10"/>
+
+  <!-- Scale-coupling orbit -->
+  <ellipse cx="256" cy="262" rx="152" ry="58" transform="rotate(-25 256 262)" fill="none" stroke="#1b1f4b" stroke-width="5" stroke-dasharray="14 10"/>
+
+  <!-- Micro-scale network (bigraph-style nodes and edges) -->
+  <g stroke="#1b1f4b" stroke-width="8" stroke-linecap="round">
+    <line x1="196" y1="222" x2="300" y2="206"/>
+    <line x1="196" y1="222" x2="246" y2="300"/>
+    <line x1="300" y1="206" x2="322" y2="296"/>
+    <line x1="246" y1="300" x2="322" y2="296"/>
+    <line x1="246" y1="300" x2="186" y2="326"/>
+  </g>
+
+  <circle cx="196" cy="222" r="18" fill="#ff3ea5" stroke="#1b1f4b" stroke-width="7"/>
+  <circle cx="300" cy="206" r="14" fill="#3a86ff" stroke="#1b1f4b" stroke-width="7"/>
+  <circle cx="322" cy="296" r="18" fill="#ff7a2f" stroke="#1b1f4b" stroke-width="7"/>
+  <circle cx="186" cy="326" r="12" fill="#ffffff" stroke="#1b1f4b" stroke-width="7"/>
+
+  <!-- Coarse-grained complex: nested node -->
+  <circle cx="246" cy="300" r="30" fill="#5ee6c8" stroke="#1b1f4b" stroke-width="7"/>
+  <circle cx="246" cy="300" r="11" fill="#1b1f4b"/>
+
+  <!-- Sparkles -->
+  <use href="#spark" transform="translate(110 118)" fill="#ff3ea5" stroke="#1b1f4b" stroke-width="4"/>
+  <use href="#spark" transform="translate(420 92)" fill="#3a86ff" stroke="#1b1f4b" stroke-width="4"/>
+  <use href="#spark" transform="translate(432 420)" fill="#ff7a2f" stroke="#1b1f4b" stroke-width="4"/>
+</svg>
