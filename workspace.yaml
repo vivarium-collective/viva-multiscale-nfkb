@@ -17,6 +17,9 @@ datasets:
 - name: lipniacki2004
   claims: []
   path: workspace/datasets/lipniacki2004/
+- name: calzone2010_cellfate
+  claims: []
+  path: workspace/datasets/calzone2010_cellfate/
 references_bib: workspace/references/papers.bib
 server:
   enabled: false
