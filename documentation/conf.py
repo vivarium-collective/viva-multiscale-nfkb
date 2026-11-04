@@ -24,6 +24,9 @@ exclude_patterns = ["_build"]
 html_theme = "pydata_sphinx_theme"
 html_title = "viva-multiscale-nfkb"
 html_static_path = ["_static"]
+# The workspace logo (assets/logos/logo.svg) is the header on every page and the favicon.
+html_logo = "../assets/logos/logo.svg"
+html_favicon = "../assets/logos/logo.svg"
 html_css_files = ["colors.css"]
 html_context = {"default_mode": "dark"}
 html_theme_options = {
@@ -31,6 +34,7 @@ html_theme_options = {
     "navigation_with_keys": False,
     "show_toc_level": 2,
     "navbar_align": "left",
+    "logo": {"text": "viva-multiscale-nfkb", "alt_text": "viva-multiscale-nfkb"},
 }
 
 # Source links in the pages point at the repository on GitHub.

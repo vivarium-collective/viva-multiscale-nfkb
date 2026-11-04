@@ -40,3 +40,6 @@ html[data-theme="dark"] .admonition.warning { border-left-color: #ffa94f; }
 html[data-theme="dark"] table.table thead th { color: #ffd84f; border-bottom-color: #ff4fd8; }
 html[data-theme="dark"] .sd-card { border-color: #2c3155; }
 html[data-theme="dark"] .sd-card:hover { border-color: #ff4fd8; }
+
+/* The workspace logo in the header: a square mark, sized to the navbar. */
+.navbar-brand img.logo__image { height: 2.4rem; width: auto; border-radius: 0.35rem; }
