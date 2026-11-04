@@ -33,3 +33,7 @@ workspace/reports/assets/*
 .superpowers/brainstorm/
 # Scratch TODO list agents keep per-workspace; not tracked content.
 todo.md
+
+# compose/check.sh outputs
+.checks-out/
+compose/.venv/

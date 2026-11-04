@@ -1,0 +1,22 @@
+# The environment the composite is verified in: the same core and the same pinned
+# entries as the compose-api mash-up that will run it in production
+# (compose-api compose_api/registry/environments.yaml `composition`, and
+# manifest.yaml pins). Kept apart from the workspace's dashboard env, whose
+# process-bigraph floats with vivarium-workbench. Bump a pin here only when
+# compose-api's manifest moves it.
+[project]
+name = "multiscale-nfkb-compose"
+version = "0.0.0"
+requires-python = "==3.12.*"
+dependencies = [
+    "process-bigraph==1.9.1",
+    "bigraph-schema==1.8.1",
+    "tellurium==2.2.13.1",
+    "viva-tellurium @ git+https://github.com/vivarium-collective/viva-tellurium@967d5dd721627561bff3472b662b97dffa212a7f",
+    "viva-maboss @ git+https://github.com/vivarium-collective/viva-maboss@3fdccd7bb605109f3284e6ff9be2616b50b19ca7",
+    "viva-basic-processes @ git+https://github.com/vivarium-collective/viva-basic-processes@9a1a624dc925cf700c3f89a8cc008a8fa4b4e5d4",
+    "viva-pde-particle @ git+https://github.com/vivarium-collective/viva-pde-particle@70438826a348cfb3feddbc928e2c9038129ff69e",
+]
+
+[tool.uv]
+package = false

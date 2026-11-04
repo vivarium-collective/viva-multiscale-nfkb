@@ -1,0 +1,5 @@
+runner.py is compose-api's composed-image entry point, copied byte for byte (never edited):
+  source: https://github.com/biosimulations/compose-api/blob/0.7.78/compose_api/environments/runner.py
+  tag:    0.7.78 (tag object 1331fbd9c6071875d6d9138403f1f858cc2fa069), the version live on compose.cam.uchc.edu
+  sha256: 246f90f288c2412319b606014b8e39cfadb4ee28551702acfe1d0f779fc20abc
+Refresh it from a newer tag only when production moves to that tag, and update this file with it.
