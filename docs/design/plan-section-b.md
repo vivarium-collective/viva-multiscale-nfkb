@@ -233,6 +233,11 @@ linking here.
 ### Headline studies (Alex, 2026-11-04: all three)
 One composite and one parameter sweep give all three. Each is a workspace study (`/viva-study`).
 
+- **Where they live:** investigation `tnf-fate-in-space` (workspace/investigations/tnf-fate-in-space; Alex: the rest of B
+  runs as an investigation, and the checks stay its verified foundation).
+- **Study 0, `s0-coupling-calibration`, is running.** κ, the Boolean NF-κB node's switching speed, and the k_time death
+  clock are decided in its decide phase, not here.
+
 | # | Study | Spatial setup | Swept | Readouts |
 |---|---|---|---|---|
 | 2 | **Fate vs uniform TNF dose.** The control: kinetic + Boolean with a spatially flat input | Uniform bath: the TNF field starts uniform at dose D, with no gradient and optional linear decay | D | MaBoSS Survival/Apoptosis/NonACD probabilities; NF-κB first nuclear peak (height, time) and oscillation period |
