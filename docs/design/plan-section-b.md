@@ -140,8 +140,24 @@ linking here.
 - **Porting the `.cfg`:** its `$` defaults (`High_NFkB`, `Low_CASP8`, `Low_RIP1` and `Low_cIAP` = 0; `TransRate` =
   0.041666…, as a number) and its istates go into `config.parameters` and `config.initial_state`, because
   `MaBoSSProcess` writes its own `.cfg`.
-- **Clock:** Calzone's rates are in abstract (roughly hourly) time, and the composite runs in Lipniacki's seconds. One
-  documented time-scale factor multiplies every Boolean rate, with a citation for its value (`/viva-cite-bands`).
+- **Clock (Alex, 2026-11-04): swept, not fixed.** Calzone's rates are in abstract units, and the composite runs in
+  Lipniacki's seconds.
+  - **No single factor fits.** Measured anchors:
+    - Lipniacki: NF-κB half-rise ≈ 6 min; A20 protein half-rise 41 min.
+    - Calzone: target-gene induction half-time 16.6 units; apoptosis half-time after TNF 8.5 units.
+  - **The `.bnd` transform multiplies every rate by `$k_time`** (Calzone units per composite second; k_time = 1 is the
+    original).
+  - **Gene expression is anchored to Lipniacki; the sweep moves only the death machinery** ("anchor to Lipniacki,
+    sweep death"):
+    - Fate is a race between the death arms and NF-κB's protective genes, and `$TransRate` decides it. On the full
+      network with TNF on, Survival is 0.02 at MaBoSS's example TransRate 1/24 and 0.20 at 1. Calzone 2010 (PLoS
+      Comput Biol, Fig 4) reports about 0.30 / 0.60 / 0.10 survival / apoptosis / necrosis from rate-free asynchronous
+      reachability.
+    - So `$TransRate` becomes `$r_tx/$k_time`: target genes switch on at r_tx per second whatever k_time is.
+    - `anchor_transcription.py` measures r_tx from Lipniacki: from NFKB_nuc's half-rise to A20's half-rise is
+      2107 s, so r_tx = ln2/2107 = 3.29e-4 /s (`processed/transcription_anchor.json`).
+  - **Checks** (feat/boolean-layer): `transcription-anchor-fast` and `transcription-anchor-slow`. Each document sets
+    `parameters.k_time` and `parameters.r_tx`, from the anchor JSON.
 
 ### Coupling graph (→ is data flow; each store has one writer)
 
@@ -186,10 +202,28 @@ One composite and one parameter sweep give all three. Each is a workspace study 
     `k` over the whole domain. A sustained source would need a spatially varying source term upstream, outside v1. v1
     uses the bolus, and that limitation is recorded here.
 - **Resolution (measured 2026-11-04, `checks/spatial/gaussian-diffusion`):** the FV scheme's error in a front's tail converges with dx and dt. At r = 40 um, t = 1 s it is +1.15% at dx 2 um / dt 0.01 s and +0.29% at dx 1 um / dt 0.0025 s. Choose study 1's grid with the TNF value at the cell in mind, and confirm the choice with one refinement run.
-- **Cost:** one composite document, parameterized by D (bath) or by r and bolus size (source), and run per sweep
-  point. No runs are added for study 3.
+- **The death-clock axis `k_time` crosses all three studies** (Alex, 2026-11-04). It maps the race itself: how fast
+  the death machinery must be for TNF to kill, at each dose (study 2) and distance (study 1). Gene expression stays
+  anchored at r_tx = 3.29e-4 /s.
+- **Cost:** one composite document, parameterized by D (bath) or by r and bolus size (source), plus k_time, and run per
+  sweep point. No runs are added for study 3.
 
 ### Time scheme (d2, d3)
+- **d7 use 1, step 1: the kinetic layer, measured** (`analysis/d7/kinetic_timescales.py` → `.json`, 2026-11-04).
+  Jacobian eigenvalues of the driven Lipniacki model at the pre-equilibrated state and every 60 s for 6 h after
+  `TNF_R` = 1 (libRoadRunner; cross-checked against numpy's eigenvalues of the same Jacobian to 2e-16):
+  - **Decay timescales from ≈6 s to 8000 s (2.2 h)**, before and after the stimulus: about three orders of magnitude.
+    The disparity d7 asked about ("if/when present") is real in this layer.
+  - **One zero mode,** the conserved NF-κB total.
+  - **A damped oscillation of about 100 min.** The least-damped complex pair has a period of 99–106 min from 1 h on,
+    with an e-folding time of 55–105 min. It grows only during the first minute after the stimulus (1 of 360 points).
+    NF-κB's nuclear peaks therefore ring for a few cycles and decay: there is no limit cycle.
+  - **This settles d7 use 4's open question.** The core does oscillate, but damped, so the clock-related methods would
+    apply to this transient ringing, not to a sustained rhythm. Use 4 stays not-now.
+  - **Coupling reads:** by d7's rule (interval ≈ 0.1 × the fastest timescale among the inputs a layer reads), the
+    kinetic layer's own stiffness (≈6 s) is handled inside CVODE. What constrains the coupling intervals is the
+    timescale of what crosses each edge: TNF at the cell (spatial, measured by step 2) and the NF-κB nuclear fraction
+    f (minutes; the ~100 min ringing).
 - **Intervals:**
   - Every interval is a whole-number multiple of the base step: the spatial layer's interval, or that of the faster
     of the coupled pair.
