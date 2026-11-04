@@ -1,0 +1,116 @@
+"""Generate the spatial layer's standalone checks: viva-pde-particle's FVReactionDiffusion (the pinned 7043882) on the
+2D extracellular TNF field, against closed-form solutions. These are numerical checks of the engine and set-up the
+headline studies use (docs/design/plan-section-b.md, "Headline studies"); the diffusion and decay constants here are
+round numbers chosen for the check, not the studies' cited values.
+
+- gaussian-diffusion: study 1's moving front. A Gaussian field of width sigma0 diffuses with D in a reflecting box;
+  while its tail is far from the walls, the exact solution is the same Gaussian with sigma^2 = sigma0^2 + 2 D t and
+  the same mass, c(r, t) = A sigma0^2 / sigma^2 exp(-r^2 / 2 sigma^2). Checked at the centre and at r = 20, 40 um
+  every second, rel 1e-2. The error is the scheme's and converges (probe 2026-11-04, worst point r = 40 um at t = 1 s):
+  dx 2 um / dt 0.01 s gives +1.15%; dx 1 / dt 0.01, +0.47%; dx 2 / dt 0.0025, +0.97%; dx 1 / dt 0.0025, +0.29%. The
+  check runs at dx 1 um, dt 0.0025 s, so the worst measured error is about a third of the tolerance. The studies need
+  their resolution chosen with this table in mind.
+- uniform-bath-decay: study 2's control. A uniform field stays uniform under zero-flux walls, and with linear decay
+  k it follows c0 exp(-k t). The engine's reaction step is explicit Euler, (1 - k dt)^n, whose relative gap from the
+  exponential is about k^2 t dt / 2 (1.3e-7 at t = 10 s here), so the tolerance is rel 1e-5.
+
+    uv run --project compose python -I checks/spatial/make_spatial_checks.py
+"""
+
+from __future__ import annotations
+
+import json
+import math
+from pathlib import Path
+
+import numpy as np
+import yaml
+
+HERE = Path(__file__).resolve().parent
+GRID = {"origin": [-100.0, -100.0], "size": [200.0, 200.0], "num": [201, 201]}  # dx = 1 um
+CENTRE = 100  # node index of x = 0, y = 0
+DT, STEP, END = 0.0025, 1.0, 10.0
+ROWS = [int(t) for t in range(1, int(END) + 1)]
+
+
+def axes() -> tuple[np.ndarray, np.ndarray]:
+    x = GRID["origin"][0] + np.arange(GRID["num"][0]) * GRID["size"][0] / (GRID["num"][0] - 1)
+    y = GRID["origin"][1] + np.arange(GRID["num"][1]) * GRID["size"][1] / (GRID["num"][1] - 1)
+    return np.meshgrid(x, y)  # shape (ny, nx), the engine's (reversed num) order
+
+
+def document(field: np.ndarray, terms: list[dict], diffusion: float) -> dict:
+    return {
+        "state": {
+            "fields": {"TNF": field.tolist()},
+            "pde": {
+                "_type": "process",
+                "address": "local:viva_pde_particle.processes.fv_reaction_diffusion.FVReactionDiffusion",
+                "config": {"grid": GRID, "pde": {"species": {"TNF": {"diffusion": diffusion}}, "terms": terms},
+                           "dt": DT},
+                "interval": STEP,
+                "inputs": {"fields": ["fields"]},
+                "outputs": {"fields": ["fields"]},
+            },
+            "emitter": {
+                "_type": "step",
+                "address": "local:RAMEmitter",
+                "config": {"emit": {"fields": "map[array[float]]", "global_time": "float"}},
+                "inputs": {"fields": ["fields"], "global_time": ["global_time"]},
+            },
+        },
+        "global_time_precision": 6,
+    }
+
+
+def write(name: str, description: str, doc: dict, expect: list[dict]) -> None:
+    case_dir = HERE / name
+    case_dir.mkdir(exist_ok=True)
+    (case_dir / "document.pbg").write_text(json.dumps(doc) + "\n")
+    case = {"description": description, "scale_level": "abstract", "document": "document.pbg", "interval": END,
+            "expect": [{"kind": "rows", "emitter": "emitter", "min": len(ROWS) + 1}, *expect]}
+    (case_dir / "case.yaml").write_text(yaml.safe_dump(case, sort_keys=False, width=120))
+    print(f"wrote {name}: {len(expect)} expectations")
+
+
+def gaussian() -> None:
+    diffusion, sigma0, amplitude = 50.0, 10.0, 1.0
+    xx, yy = axes()
+    field = amplitude * np.exp(-(xx**2 + yy**2) / (2 * sigma0**2))
+    expect = []
+    for row in ROWS:
+        sigma2 = sigma0**2 + 2 * diffusion * row * STEP
+        for offset in (0, 20, 40):  # r = 0, 20, 40 um along x
+            r = 1.0 * offset
+            exact = amplitude * sigma0**2 / sigma2 * math.exp(-(r**2) / (2 * sigma2))
+            expect.append({"kind": "scalar", "emitter": "emitter", "field": f"fields.TNF.{CENTRE}.{CENTRE + offset}",
+                           "row": row, "expected": exact, "rel": 1e-2, "abs": 1e-9})
+    write("gaussian-diffusion",
+          "FVReactionDiffusion (viva-pde-particle 7043882) diffuses a 2D Gaussian TNF field (sigma0 10 um, D 50 um^2/s, "
+          "dx 1 um, dt 0.0025 s) in a reflecting 200 x 200 um box; at the centre and at r = 20 and 40 um, every second to "
+          "10 s, it matches the exact solution (a Gaussian with sigma^2 = sigma0^2 + 2 D t), rel 1e-2. The walls are "
+          "more than 2.5 sigma away throughout. Generated by checks/spatial/make_spatial_checks.py.",
+          document(field, [], diffusion), expect)
+
+
+def uniform_bath() -> None:
+    c0, decay = 0.5, 0.01
+    field = np.full((GRID["num"][1], GRID["num"][0]), c0)
+    terms = [{"species": "TNF", "coeff": -1.0, "k": decay, "reactants": {"TNF": 1}}]
+    expect = []
+    for row in ROWS:
+        exact = c0 * math.exp(-decay * row * STEP)
+        for iy, ix in ((CENTRE, CENTRE), (0, 0), (0, 200), (200, 73)):  # centre, corners, an edge node
+            expect.append({"kind": "scalar", "emitter": "emitter", "field": f"fields.TNF.{iy}.{ix}", "row": row,
+                           "expected": exact, "rel": 1e-5, "abs": 1e-12})
+    write("uniform-bath-decay",
+          "FVReactionDiffusion (viva-pde-particle 7043882) on a uniform TNF bath (0.5 uM) with linear decay "
+          "(k 0.01 /s, D 50 um^2/s, dt 0.0025 s) in a reflecting box: the field stays uniform (centre, corners and an "
+          "edge node agree) and follows 0.5 exp(-k t) every second to 10 s, rel 1e-5 (explicit Euler's gap is about "
+          "1e-7). Generated by checks/spatial/make_spatial_checks.py.",
+          document(field, terms, 50.0), expect)
+
+
+if __name__ == "__main__":
+    gaussian()
+    uniform_bath()

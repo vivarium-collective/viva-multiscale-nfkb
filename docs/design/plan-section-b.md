@@ -185,6 +185,7 @@ One composite and one parameter sweep give all three. Each is a workspace study 
   - A **sustained point source cannot be expressed today.** `FVReactionDiffusion`'s reaction terms take one scalar
     `k` over the whole domain. A sustained source would need a spatially varying source term upstream, outside v1. v1
     uses the bolus, and that limitation is recorded here.
+- **Resolution (measured 2026-11-04, `checks/spatial/gaussian-diffusion`):** the FV scheme's error in a front's tail converges with dx and dt. At r = 40 um, t = 1 s it is +1.15% at dx 2 um / dt 0.01 s and +0.29% at dx 1 um / dt 0.0025 s. Choose study 1's grid with the TNF value at the cell in mind, and confirm the choice with one refinement run.
 - **Cost:** one composite document, parameterized by D (bath) or by r and bolus size (source), and run per sweep
   point. No runs are added for study 3.
 
