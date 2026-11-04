@@ -1,0 +1,42 @@
+/* Dark mode with bright, multi-coloured accents. Each layer of the model has its own colour, used consistently. */
+html[data-theme="dark"] {
+  --pst-color-background: #0d0f1a;
+  --pst-color-on-background: #141729;
+  --pst-color-surface: #1a1e33;
+  --pst-color-text-base: #e8e9f3;
+  --pst-color-primary: #ff4fd8;      /* magenta */
+  --pst-color-secondary: #22e1ff;    /* cyan */
+  --pst-color-link: #ffd84f;         /* amber */
+  --pst-color-link-hover: #7dff6b;   /* lime */
+  --pst-color-inline-code: #7dff6b;
+  --layer-spatial: #22e1ff;
+  --layer-kinetic: #ffd84f;
+  --layer-boolean: #ff4fd8;
+  --layer-adapter: #7dff6b;
+}
+
+html[data-theme="dark"] .bd-article h1 {
+  background: linear-gradient(90deg, #ff4fd8, #ffd84f 50%, #22e1ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+html[data-theme="dark"] .bd-article h2 { color: #22e1ff; }
+html[data-theme="dark"] .bd-article h3 { color: #7dff6b; }
+html[data-theme="dark"] .bd-article h4 { color: #ffa94f; }
+
+html[data-theme="dark"] .admonition.note { border-left-color: #22e1ff; }
+html[data-theme="dark"] .admonition.tip { border-left-color: #7dff6b; }
+html[data-theme="dark"] .admonition.important { border-left-color: #ff4fd8; }
+html[data-theme="dark"] .admonition.warning { border-left-color: #ffa94f; }
+
+/* Layer badges: <span class="layer spatial">spatial</span> */
+.layer { padding: 0.05em 0.5em; border-radius: 0.6em; font-weight: 600; color: #0d0f1a; }
+.layer.spatial { background: var(--layer-spatial, #22e1ff); }
+.layer.kinetic { background: var(--layer-kinetic, #ffd84f); }
+.layer.boolean { background: var(--layer-boolean, #ff4fd8); }
+.layer.adapter { background: var(--layer-adapter, #7dff6b); }
+
+html[data-theme="dark"] table.table thead th { color: #ffd84f; border-bottom-color: #ff4fd8; }
+html[data-theme="dark"] .sd-card { border-color: #2c3155; }
+html[data-theme="dark"] .sd-card:hover { border-color: #ff4fd8; }

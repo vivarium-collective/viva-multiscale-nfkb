@@ -1,0 +1,95 @@
+# Time: three clocks, one composite
+
+The composite runs in **seconds**, Lipniacki's unit.
+- The spatial layer is also in seconds.
+- Calzone's Boolean network has **no time unit**: its rates are relative to 1.
+
+Putting it on the composite's clock was the hardest design decision in B, because it decides who wins the race
+between life and death.
+
+## What each model says, measured
+
+| | Lipniacki (seconds; fitted dynamics) | Calzone (its own units) |
+|---|---|---|
+| NF-κB reaches the nucleus | half-rise 5.6 min, first peak 24 min | rate 1 (fast) |
+| NF-κB's target protein appears | A20 half-rise 41 min; **35.1 min after NF-κB** | `TransRate = 1/24`: half-time 16.6 units |
+| Death after TNF, NF-κB blocked | not modelled | apoptosis half-time 8.5 units |
+
+These were measured with exploratory probes on libRoadRunner and on the MaBoSS engine. The transcription delay is
+committed as `anchor_transcription.py`.
+
+**One factor cannot fit both columns.**
+- **If Calzone's gene expression matches Lipniacki's:** 1 unit ≈ 2.1 min, and death comes about 18 min after TNF.
+  That looks far too fast against the hours usually reported for TNF-induced death (a citation is pending; it is not
+  needed by the design, because this axis is swept).
+- **If 1 unit = 1 hour:** death at about 8.5 h is plausible, but NF-κB's protective genes take about 17 h. That is
+  30 times slower than Lipniacki's own, so NF-κB could never protect the cell in time.
+
+## Decision 1: sweep, don't fix (Alex, 2026-11-04)
+
+Every rate in the reduced network is multiplied by `$k_time`, the number of Calzone units per composite second. This
+leaves Calzone's internal ratios unchanged, and `k_time = 1` reproduces the original timing. The headline studies sweep
+`k_time` instead of defending one value.
+
+**Check:** `pair-nfkb-seconds` runs the kinetic → Boolean coupling at `k_time = 1/600` over 1200 s, which is 2
+Calzone units. It must match the same analytic value as the 2-unit run, and it does. With the clock left unconverted,
+it fails (0.562 instead of 0.483).
+
+## Decision 2: gene expression on Lipniacki's clock; sweep only death (Alex: "anchor to Lipniacki, sweep death")
+
+**The race.** Under TNF, fate is a race between the death arms and NF-κB's protective genes, and Calzone's
+`$TransRate` sets the protective genes' speed. Measured on the full network, TNF on:
+
+| TransRate | Survival | Apoptosis | NonACD |
+|---|---|---|---|
+| 1/24 (MaBoSS's example) | 0.018 | 0.951 | 0.031 |
+| 1/8 | 0.050 | 0.865 | 0.085 |
+| 1/4 | 0.086 | 0.765 | 0.149 |
+| 1/2 | 0.138 | 0.639 | 0.224 |
+| 1 | 0.201 | 0.541 | 0.258 |
+| Calzone 2010 (rate-free reachability) | ~0.30 | ~0.60 | ~0.10 |
+
+**A uniform `k_time` sweep alone moves *when* things happen, not *who wins*.** At 1/24, the cell dies whatever the
+TNF dose or distance, so the headline curves would be flat.
+
+**What is grounded, and what is not:**
+- **Gene expression is grounded.** Lipniacki models NF-κB-driven transcription, translation and transport, fitted to
+  data. Its target protein half-rises **2107 s (35.1 min)** after nuclear NF-κB does. That's measured by
+  `anchor_transcription.py`, from the pre-equilibrated state with `TNF_R` stepped to 1.
+- **The death machinery's speed is not.** Calzone gives it no unit.
+
+**So:**
+
+$$
+\texttt{\$TransRate} \;\to\; \texttt{\$r\_tx} / \texttt{\$k\_time},
+\qquad r_\text{tx} = \frac{\ln 2}{2107\ \text{s}} = 3.29\times10^{-4}\ \text{s}^{-1}
+$$
+
+Every rate is multiplied by `$k_time`, so target genes switch on at exactly $r_\text{tx}$ per second **whatever**
+`k_time` is ({doc}`../math/clock`). `k_time` then sweeps only the death machinery's clock. **The sweep becomes the
+result:** how fast must the death machinery be for TNF to kill, at each dose and distance?
+
+**Checks:**
+- **`transcription-anchor-fast` and `transcription-anchor-slow`:** NF-κB is held on, and BCL2, cFLIP, mXIAP and
+  Survival each match the analytic switch at Lipniacki's delay (0.491). That holds at two `k_time` values 100× apart.
+- **Proven failing:** the uniform-clock form ($r_\text{tx} = k_\text{time}/24$), which gives 0.014.
+
+## Coupling intervals (d7 use 1)
+
+The Jacobian of Lipniacki's model, at the pre-equilibrated state and every 60 s for 6 h after TNF
+(`analysis/d7/kinetic_timescales.py`), gives:
+- **Decay timescales from about 6 s to 8000 s:** three orders of magnitude.
+- **One zero mode:** the conserved NF-κB total.
+- **A damped oscillation:** period 99–106 min, e-folding 55–105 min. It grows only in the first minute.
+
+NF-κB's peaks ring and decay; they don't form a limit cycle.
+
+**The rule:** each coupling interval is about 0.1 × the fastest timescale *of what crosses that edge*.
+- Lipniacki's own stiffness (≈6 s) stays inside its integrator (CVODE).
+- What crosses the edges is TNF at the cell (spatial, measured by d7 step 2) and $f$ (minutes, plus the ~100 min
+  ringing).
+
+**The constraints:**
+- Intervals are whole multiples of the base step, with `global_time_precision` 6.
+- A composite is accepted only if it matches the all-finest run on the reported observables, shows no coupling
+  oscillation, and runs faster (d7 step 5).

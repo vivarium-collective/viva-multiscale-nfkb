@@ -1,0 +1,33 @@
+# Scales: what makes this multiscale
+
+"Multiscale" here means two things, and the design has to respect both.
+
+## Scales of organisation
+
+| Scale | Layer | State |
+|---|---|---|
+| Tissue / extracellular medium (µm) | <span class="layer spatial">spatial</span> | a TNF concentration field on a grid |
+| Cell compartments (cytoplasm, nucleus) | <span class="layer kinetic">kinetic</span> | 16 molecular concentrations (µM), continuous and deterministic |
+| Cell phenotype | <span class="layer boolean">Boolean</span> | 27 on/off nodes; a probability distribution over fates |
+
+The layers don't share state. Each quantity is written by exactly one layer, and the adapters translate it for the
+layer that reads it. {doc}`../design/architecture` gives this rule ("one owner") and its reason.
+
+## Scales of time
+
+Measured, not assumed (d7 use 1, `analysis/d7/kinetic_timescales.py`, and the probes in {doc}`../design/time`):
+
+| Process | Timescale |
+|---|---|
+| TNF diffusion across 40 µm ($D = 50\ \mu\text{m}^2/\text{s}$) | seconds |
+| TNF–receptor binding ($k_\text{off} = 0.01\ \text{s}^{-1}$) | ~100 s |
+| Fastest kinetic mode (Jacobian of Lipniacki) | ~6 s |
+| NF-κB nuclear half-rise after TNF | 5.6 min |
+| NF-κB damped oscillation (least-damped pair) | period 99–106 min, e-folding 55–105 min |
+| NF-κB → target protein (A20) | 35.1 min |
+| Slowest kinetic mode | ~8000 s (2.2 h) |
+| Cell death | hours; its clock is the swept axis `k_time` |
+
+These span about four orders of magnitude. That spread is why each layer runs on its own interval, and why the
+coupling intervals are set by what crosses each edge rather than by the fastest process anywhere
+({doc}`../design/time`).

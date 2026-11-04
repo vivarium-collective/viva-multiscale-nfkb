@@ -49,6 +49,13 @@ multiscale-nfkb = "viva_multiscale_nfkb.cli.__main__:main"
 # dashboard extra into the image, so `vivarium-workbench serve` is always there.
 # Groups are not package metadata, so `pip install <workspace>` is unaffected.
 [dependency-groups]
+docs = [
+    "myst-parser>=4",
+    "pydata-sphinx-theme>=0.16",
+    "sphinx>=8",
+    "sphinx-copybutton>=0.5.2",
+    "sphinx-design>=0.7.0",
+]
 workbench = ["multiscale-nfkb[dashboard]"]
 
 [tool.uv]

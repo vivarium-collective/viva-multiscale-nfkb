@@ -1,0 +1,36 @@
+# The headline studies
+
+Alex asked for all three (2026-11-04). They nest, so they cost one composite document and one parameter sweep.
+
+| # | Study | Spatial setup | Swept | Readouts |
+|---|---|---|---|---|
+| 2 | **Fate vs uniform TNF dose.** The control | Uniform bath at dose D, optional linear decay | D, `k_time` | P(Survival), P(Apoptosis), P(NonACD); NF-κB's first nuclear peak (height, time) and period |
+| 1 | **Fate vs distance from a TNF bolus.** The headline: what space adds | Point bolus at distance r from the cell's surface region | r, bolus size, `k_time` | as 2, plus TNF at the cell over time (`RegionMean`) |
+| 3 | **NF-κB wave timing under a moving TNF front.** The mechanism | study 1's runs (no new runs) | r | TNF front arrival vs NF-κB nuclear peaks and phase |
+
+## The scientific test
+
+Map each study-1 run onto study 2's dose axis using the TNF dose that reached the cell, both at its peak and
+integrated over time.
+- **If fate collapses onto study 2's curve,** space acts only through dose.
+- **If it doesn't,** arrival timing matters.
+
+Study 3 shows the mechanism behind either answer.
+
+## The death clock
+
+`k_time` runs across all three studies ({doc}`time`). Gene expression stays anchored at
+$r_\text{tx} = 3.29\times10^{-4}\ \text{s}^{-1}$, so each study maps the race directly: how fast must the death
+machinery be for TNF to kill, at each dose (study 2) and each distance (study 1)?
+
+## Why a bolus
+
+A bolus is an initial condition of the `fields` store, which `FVReactionDiffusion` supports today. A sustained point
+source isn't expressible, because the reaction rate is one scalar over the whole domain ({doc}`spatial`). A bolus
+diffusing in a reflecting box *is* a moving front, and it has an exact solution (a Gaussian, with image terms at the
+walls).
+
+## Grid
+
+The grid is chosen from the convergence table in {doc}`spatial`, with the TNF value at the cell in mind, and confirmed
+by one refinement run.
