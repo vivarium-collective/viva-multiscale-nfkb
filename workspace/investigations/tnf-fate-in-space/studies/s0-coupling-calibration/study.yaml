@@ -43,7 +43,7 @@ runtime:
 
 baseline:
 - name: kinetic-boolean
-  composite: viva_multiscale_nfkb.composites.kinetic_boolean.kinetic-boolean
+  composite: viva_multiscale_nfkb.composites.kinetic_boolean
   params:
     interval: 30.0
     sample_count: 1
@@ -85,11 +85,15 @@ controls:
     kappa > 0 with the kinetic stimulus off (TNF_R 0) would leave f at rest (~0.0077); not yet run. The positive
     anchor for the fate network itself is checks/boolean/coupled-equals-full and coupled-nfkb-knockout (verified).
 
+# The composite emits node_state (per cell) and nfkb_fraction. The workbench's check-observables cannot build it,
+# because the simulators live only in the pinned compose/ env (Alex's environment split), so these readouts are
+# verified there instead: the recorded smoke runs emit both (parquet-runs/smoke-*/timeseries.parquet).
 readouts:
 - name: fate fractions at 8 h
-  observable: counts.n_Survival / n_Apoptosis / n_NonACD over cells
+  observable: node_state.Survival, node_state.Apoptosis, node_state.NonACD
+  aggregate: fraction of cells (run_grid.py counts them per tick)
 - name: NF-kB trajectory
-  observable: nfkb_fraction (f) over time, from the shared kinetic layer
+  observable: nfkb_fraction
 
 canonical_runs:
 - name: grid
