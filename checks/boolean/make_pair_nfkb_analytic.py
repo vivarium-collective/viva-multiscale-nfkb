@@ -11,7 +11,8 @@ workspace/datasets/calzone2010_cellfate/processed/cellfate_coupled.bnd, with its
 and 0). The question this check isolates is whether the node follows Lipniacki's f once Calzone's gate is open. The
 rest of the gate is checked against the full network in coupled-equals-full.
 
-The kinetic layer is held at Lipniacki's post-stimulus NFKB_nuc peak (BIOMD0000000786 sim1, t = 364014 s; COPASI and
+The kinetic layer is held at one state of Lipniacki's stimulated trajectory: the largest NFKB_nuc among the corpus's
+sampled points of BIOMD0000000786 sim1 (t = 364014 s, 414 s after the stimulus, while NF-kB is still rising; COPASI and
 Tellurium agree; viva-biomodels corpus_timecourse.parquet), where the rule gives NFKB_total = 0.06 (conserved over the
 whole run) and f = 0.5626781. With the gate open, NFkB switches on at rate f and off at 1 - f (times k_time). Starting
 off, P(t) = f (1 - exp(-k t)), and over MaBoSS's last window [a, b] (Calzone units) the reported average is
@@ -41,7 +42,8 @@ ROOT = Path(__file__).resolve().parents[2]
 COUPLED = ROOT / "workspace" / "datasets" / "calzone2010_cellfate" / "processed" / "cellfate_coupled.bnd"
 SBML = ROOT / "workspace" / "datasets" / "lipniacki2004" / "processed" / "lipniacki2004_driven.xml"
 HERE = Path(__file__).resolve().parent
-# Lipniacki's NF-kB-carrying species (uM) at its post-stimulus NFKB_nuc maximum, t = 364014 s of BIOMD0000000786 sim1
+# Lipniacki's NF-kB-carrying species (uM) at the corpus's largest sampled NFKB_nuc after the stimulus, t = 364014 s of
+# BIOMD0000000786 sim1 (414 s after it, still rising; the true first peak is 0.280 uM, f = 0.933, at 1420 s)
 # (COPASI; viva-biomodels corpus_timecourse.parquet). NFKB_total stays 0.0599999987 over the whole run there.
 PEAK = {
     "IKKactive_IkB_NFKB": 3.2746876968303695e-05,
@@ -151,7 +153,8 @@ def write(name: str, k_time: float, interval: float, rule: str, kv: float) -> No
     }
     case = {
         "description": (
-            "Kinetic -> Boolean coupling. Lipniacki's five NF-kB species held at its post-stimulus NFKB_nuc peak "
+            "Kinetic -> Boolean coupling. Lipniacki's five NF-kB species held at one stimulated state, the corpus's largest "
+            "sampled NFKB_nuc after the stimulus (414 s after it, still rising) "
             f"(NFKB_nuc {PEAK['NFKB_nuc']:.7f} uM, sim1 t = 364014 s) -> MathExpressionStep: NFKB_total from the "
             f"driven SBML's own rule, read from the SBML ({total:.10f}), f = (NFKB_nuc/Kv)/NFKB_total = {f:.7f} -> "
             "MaBoSSProcess parameters u_NFkB = f, d_NFkB = 1 - f, on the coupled network's NFkB node (verbatim) with "

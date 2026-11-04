@@ -1,8 +1,8 @@
 # 4. Sweep the death clock
 
 Gene expression is anchored to Lipniacki ($r_\text{tx} = 3.29\times10^{-4}\ \text{s}^{-1}$), and `k_time` sets how fast
-everything else in the fate network runs ({doc}`../design/time`). This sweep holds NF-κB at Lipniacki's post-stimulus
-fraction ($f = 0.5627$) with TNF on, and runs 8 hours:
+everything else in the fate network runs ({doc}`../design/time`). This sweep holds NF-κB at one of Lipniacki's stimulated
+values ($f = 0.5627$, 414 s after TNF) with TNF on, and runs 8 hours:
 
 ```{literalinclude} code/death_clock_sweep.py
 :language: python

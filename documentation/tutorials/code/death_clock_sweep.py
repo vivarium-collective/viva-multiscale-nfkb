@@ -1,6 +1,6 @@
 """Tutorial 4: sweep the death clock k_time with gene expression anchored to Lipniacki, and watch who wins.
 
-NF-kB's input is held at Lipniacki's post-stimulus nuclear fraction (f = 0.5627); TNF is on. Gene expression runs at
+NF-kB's input is held at one stimulated nuclear fraction of Lipniacki's (f = 0.5627, 414 s after TNF); TNF is on. Gene expression runs at
 r_tx (per second) from the anchor; k_time sets how fast everything else, including the death machinery, runs.
 
 Run from the repository root:  uv run --project compose python -I documentation/tutorials/code/death_clock_sweep.py
@@ -15,7 +15,7 @@ from viva_maboss.processes import MaBoSSProcess
 DATA = Path("workspace/datasets/calzone2010_cellfate/processed")
 NETWORK = (DATA / "cellfate_coupled.bnd").read_text()
 R_TX = json.loads((DATA / "transcription_anchor.json").read_text())["r_tx_per_s"]
-F = 0.5626781  # Lipniacki's nuclear NF-kB fraction at its post-stimulus peak (see the coupling page)
+F = 0.5626781  # Lipniacki's nuclear NF-kB fraction 414 s after TNF, still rising (see the coupling page)
 SECONDS = 8 * 3600.0  # eight hours of composite time
 
 

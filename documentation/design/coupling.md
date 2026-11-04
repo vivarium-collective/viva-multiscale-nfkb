@@ -32,7 +32,9 @@ $$
   - Total NF-κB is conserved (0.06 µM through the whole stimulated `sim1` run), so $f$ is a true fraction.
 - **Its range:**
   - At rest (the pre-equilibrated state), $f \approx 0.0077$.
-  - At the post-stimulus peak (NFKB_nuc 0.1688 µM), $f = 0.5627$.
+  - At NF-κB's first peak after TNF (NFKB_nuc 0.280 µM, 23.7 min), $f = 0.933$.
+  - The checks hold one sampled stimulated state, 414 s after TNF and still rising (NFKB_nuc 0.1688 µM), where
+    $f = 0.5627$.
 - **How it drives the node:** $u_\text{NFkB} = f$ and $d_\text{NFkB} = 1-f$. With caspase-3 off, the NFkB node is
   then a two-state switch with stationary P(on) $= f$ ({doc}`../math/switch`).
 

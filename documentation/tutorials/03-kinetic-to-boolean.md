@@ -2,7 +2,7 @@
 
 The coupling is a `MathExpressionStep` between Lipniacki's NF-κB species and MaBoSS's parameters
 ({doc}`../design/coupling`). The document `checks/boolean/pair-nfkb-analytic/document.pbg` is the coupling exactly as
-the composite wires it, with the kinetic layer held at its post-stimulus peak.
+the composite wires it, with the kinetic layer held at one stimulated state (414 s after TNF, NF-κB still rising).
 
 ## The adapter
 
