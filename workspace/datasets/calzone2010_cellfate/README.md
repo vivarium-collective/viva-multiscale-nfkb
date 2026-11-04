@@ -16,7 +16,7 @@ cell-fate decision in response to death receptor engagement", PLoS Comput Biol 6
 
 ## The composite's Boolean layer: `prep.py` → `processed/`
 
-`prep.py` writes `processed/cellfate_reduced.bnd` (27 nodes, sha256 `c696a536d9a57ca0e5a50dab634b35fba7a4bbe810bb4081cf703eb8bec1014c`,
+`prep.py` writes `processed/cellfate_reduced.bnd` (27 nodes, sha256 `a815a865585026beec94a032e675498293feff0d976cc57f545e35998add0378`,
 deterministic) and `processed/reduction.json` (every removed or rewritten node and why).
 
 Ownership, from Alex's ruling (2026-11-04: "the most biologically accurate and overall model-native option"):
@@ -39,3 +39,8 @@ Ownership, from Alex's ruling (2026-11-04: "the most biologically accurate and o
 
 The cut is checked as exact against the full network under Calzone's NF-kB mutants
 (`checks/boolean/reduction-high-nfkb`, `reduction-nfkb-knockout`): all 27 kept nodes agree.
+- **Time.** Every rate is multiplied by `$k_time` (Calzone time units per composite second), so Calzone's internal
+  rate ratios are untouched. Alex chose (2026-11-04) to **sweep `k_time` as a study axis** rather than fix one value.
+  The anchors to compare against, measured: Lipniacki's NF-kB → target protein (A20) delay is about 35 min. Calzone's
+  NF-kB target induction half-time is 16.6 units, and its apoptosis half-time after TNF is 8.5 units. One factor
+  cannot match both; see docs/design/plan-section-b.md. Checked by `checks/boolean/pair-nfkb-seconds`.

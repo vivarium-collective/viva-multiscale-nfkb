@@ -1,7 +1,7 @@
 {
   "source": "raw/cellfate.bnd (sysbio-curie/MaBoSS@375ffad engine/tests/maboss/cellfate/cellfate.bnd)",
   "source_sha256": "cfef1e7054d77f4736d8e36e712946ad1043c2f967913e400ec449b56a3d26dc",
-  "output_sha256": "c696a536d9a57ca0e5a50dab634b35fba7a4bbe810bb4081cf703eb8bec1014c",
+  "output_sha256": "a815a865585026beec94a032e675498293feff0d976cc57f545e35998add0378",
   "nodes_in": 31,
   "nodes_out": 27,
   "removed": {
@@ -21,6 +21,7 @@
     "u_NFkB",
     "d_NFkB",
     "u_TNF",
-    "d_TNF"
+    "d_TNF",
+    "k_time"
   ]
 }

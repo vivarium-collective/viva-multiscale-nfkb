@@ -131,7 +131,7 @@ def main() -> None:
     if FULL_NFKB not in full:
         _fail("the full network's NFkB node is not the expected upstream text")
     reduced_parameters = {k: v for k, v in BASE.items() if k != "Low_cIAP"}
-    hold_tnf = {"u_TNF": 0.0, "d_TNF": 0.0}
+    hold_tnf = {"u_TNF": 0.0, "d_TNF": 0.0, "k_time": 1.0}
 
     _write(
         "reduction-high-nfkb",

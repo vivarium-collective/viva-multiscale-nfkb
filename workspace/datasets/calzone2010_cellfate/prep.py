@@ -15,6 +15,10 @@ layers drive into rate-driven inputs:
 - TNF: its self-holding logic becomes the rates `$u_TNF` / `$d_TNF`, so the same signal that drives Lipniacki's
   TNF_R drives the receptor here.
 
+- every rate: multiplied by `$k_time` (Calzone time units per composite second), so the time conversion is one
+  parameter the studies sweep (Alex, 2026-11-04) and Calzone's internal rate ratios are unchanged. `k_time = 1`
+  reproduces the original timing.
+
 Everything else is kept byte for byte. The script refuses to write unless the input is the pinned file, each rewritten
 node's text is exactly what it expects, and no kept node refers to a removed one.
 
@@ -70,7 +74,8 @@ REPLACED = {
     ),
 }
 PARAMETERS_REMOVED = {"Low_cIAP": "used only by cIAP (removed)"}
-PARAMETERS_ADDED = ("u_NFkB", "d_NFkB", "u_TNF", "d_TNF")
+PARAMETERS_ADDED = ("u_NFkB", "d_NFkB", "u_TNF", "d_TNF", "k_time")
+_RATE = re.compile(r"(rate_up|rate_down)\s*=\s*([^;]+);")
 _BLOCK = re.compile(r"^node\s+(\w+)\s*\{.*?^\}", re.MULTILINE | re.DOTALL)
 
 
@@ -97,6 +102,12 @@ def main() -> None:
             block = replacement
         kept.append(block)
     network = "\n\n".join(kept) + "\n"
+    # Calzone's rates are per abstract time unit; the composite runs in seconds. Every rate is multiplied by
+    # $k_time (Calzone units per second), so Calzone's internal ratios are untouched and the conversion is one study
+    # parameter (Alex, 2026-11-04: sweep it as a study axis rather than fix one value). k_time = 1 is the original.
+    network, scaled = _RATE.subn(lambda m: f"{m.group(1)} = $k_time * ({m.group(2).strip()});", network)
+    if scaled != 2 * len(kept):
+        _fail(f"expected a rate_up and a rate_down in each of {len(kept)} nodes, scaled {scaled}")
 
     names = set(blocks)
     for name, block in zip([n for n in blocks if n not in REMOVED], kept, strict=True):
