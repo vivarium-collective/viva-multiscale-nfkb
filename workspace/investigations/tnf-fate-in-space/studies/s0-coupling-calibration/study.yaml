@@ -1,0 +1,147 @@
+# s0-coupling-calibration/study.yaml — schema v4
+#
+# Study 0 of tnf-fate-in-space: calibrate the two clocks the composite cannot take from either model alone, before the
+# headline studies (1-3) run on it. Runs execute in the workspace's pinned compose/ environment through compose-api's
+# own runner (Alex, 2026-11-04: "Pinned env; workbench records"); run_grid.py registers each grid point in runs.db and
+# writes its population time series to parquet-runs/<run_id>/.
+
+schema_version: 4
+name: s0-coupling-calibration
+investigation: tnf-fate-in-space
+title: Coupling calibration (NF-kB switching speed and the death clock)
+created: '2026-11-04'
+status: planned
+phase: Simulate
+
+objective: >
+  Simulate Lipniacki's NF-kB kinetics coupled to Calzone's cell-fate network under TNF, across the Boolean NF-kB node's
+  switching speed kappa and the death-machinery clock k_time, and measure the fraction of cells reaching each fate
+  after 8 h, to decide which kappa the composite uses and whether the plausible death clocks leave room for TNF's dose
+  and timing to change fate.
+
+question: >
+  How fast must the Boolean NF-kB node follow Lipniacki's nuclear NF-kB (kappa), and how fast is the death machinery
+  (k_time), for the composite's survival / apoptosis / necrosis split under TNF to depend on NF-kB at all?
+
+hypothesis: >
+  With Calzone's own flicker (kappa = k_time, about once per Calzone unit) the protective genes cannot accumulate and
+  survival stays near zero whatever NF-kB does (tutorial 02, measured with held f). Anchoring kappa to Lipniacki's own
+  NF-kB timescale lets the node stay on through NF-kB's first wave, so survival should rise with slower death clocks.
+  This is a prediction from the held-f probes, not yet a measurement with the real kinetic layer.
+
+assumptions:
+- text: >
+    Each run's kinetic layer is deterministic and shared by all cells; each cell's fate network is an independent
+    stochastic cell (MaBoSSProcess, sample_count 1, its own seed), carrying one sampled joint state between
+    intervals (viva-maboss F1). Population fractions are fractions of cells.
+- text: >
+    Transcription-scale steps switch on at r_tx = ln2/2107 s from Lipniacki (anchor_transcription.py); their
+    switch-off rates remain on k_time.
+
+runtime:
+  default_emitter: parquet
+
+baseline:
+- name: kinetic-boolean
+  composite: viva_multiscale_nfkb.composites.kinetic_boolean.kinetic-boolean
+  params:
+    interval: 30.0
+    sample_count: 1
+
+# The grid (run_grid.py builds and runs every point; each is one run in runs.db):
+#   kappa:  calzone-flicker (= k_time), lipniacki-nfkb (ln2 / 337 s, NF-kB's own nuclear half-rise),
+#           lipniacki-gene (ln2 / 2107 s, the NF-kB -> target-protein delay; a slow bracket)
+#   k_time: one Calzone unit per 2, 10, 30 or 120 min
+#   cells:  200 per point (seeds base..base+199); 8 h of composite time; coupling interval 30 s
+simulation_set:
+- name: calibration-grid
+  kind: sweep
+  composite: kinetic-boolean
+  axes:
+    kappa: [calzone-flicker, lipniacki-nfkb, lipniacki-gene]
+    minutes_per_calzone_unit: [2, 10, 30, 120]
+  seeds: 200
+  metrics: [survival_fraction, apoptosis_fraction, nonacd_fraction, undecided_fraction, nfkb_first_peak_time]
+- name: kinetic-boolean-baseline
+  kind: single
+  base_model: viva_multiscale_nfkb.composites.kinetic_boolean.kinetic-boolean
+  is_baseline: true
+  status: ran
+  params:
+    interval: 30.0
+    sample_count: 1
+  metrics:
+  - fate fractions at 8 h
+  - NF-kB trajectory
+
+robustness:
+  replicates: 200            # cells per grid point; Wilson 95% intervals reported per fraction
+  parameter_sweep: true
+
+controls:
+- name: nfkb-knockout
+  kind: negative
+  description: >
+    kappa > 0 with the kinetic stimulus off (TNF_R 0) would leave f at rest (~0.0077); not yet run. The positive
+    anchor for the fate network itself is checks/boolean/coupled-equals-full and coupled-nfkb-knockout (verified).
+
+readouts:
+- name: fate fractions at 8 h
+  observable: counts.n_Survival / n_Apoptosis / n_NonACD over cells
+- name: NF-kB trajectory
+  observable: nfkb_fraction (f) over time, from the shared kinetic layer
+
+canonical_runs:
+- name: grid
+  default: true
+  label: full calibration grid (3 kappa x 4 k_time x 200 cells, 8 h)
+  script: workspace/investigations/tnf-fate-in-space/studies/s0-coupling-calibration/run_grid.py
+  args: []
+- name: smoke
+  label: smoke (2 kappa x 1 k_time x 10 cells, 1 h)
+  script: workspace/investigations/tnf-fate-in-space/studies/s0-coupling-calibration/run_grid.py
+  args: [--smoke]
+
+limitations:
+- One cell type, one TNF stimulus (TNF_R stepped to 1 and held); no spatial layer yet (that is Studies 1-3).
+- Fate is read at 8 h; cells still undecided are reported as undecided, not assigned.
+- The death clock k_time has no measured anchor; the grid brackets it.
+
+falsifiability: >
+  If survival stays near zero for every kappa and k_time in the grid, NF-kB cannot protect in this composite at any
+  plausible clock, and the headline studies have nothing to find; that would send the design back to the coupling,
+  not forward.
+
+runs:
+- name: smoke-lipniacki-nfkb-10min
+  status: complete
+  timestamp: 1793827346.452693
+  emitter:
+    kind: parquet
+    store: parquet-runs/smoke-lipniacki-nfkb-10min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 10, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 1.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 10}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-04T21:22:26.491988+00:00'
+      inputs_hash: c4894adc8c84460b
+      store: resolved
+- name: smoke-calzone-flicker-10min
+  status: complete
+  timestamp: 1793827344.081536
+  emitter:
+    kind: parquet
+    store: parquet-runs/smoke-calzone-flicker-10min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 10, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 1.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0016666666666666668, \"kappa_name\": \"calzone-flicker\", \"minutes_per_calzone_unit\": 10}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-04T21:22:26.492101+00:00'
+      inputs_hash: 9adbc883f5a40c6e
+      store: resolved
+pipeline_gate:
+  gate_evaluator:
+    result: not_started
+    blocked_by: []
+    evaluated_by: code
+    diverges_from_authored: false

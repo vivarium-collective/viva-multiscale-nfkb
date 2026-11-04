@@ -1,0 +1,64 @@
+[
+ {
+  "run_id": "smoke-calzone-flicker-10min",
+  "kappa_name": "calzone-flicker",
+  "kappa": 0.0016666666666666668,
+  "minutes_per_calzone_unit": 10,
+  "k_time": 0.0016666666666666668,
+  "cells": 10,
+  "hours": 1.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.0,
+  "Apoptosis_fraction": 0.0,
+  "NonACD_fraction": 0.1,
+  "Survival_ci95": [
+   0.0,
+   0.2775401687666166
+  ],
+  "Apoptosis_ci95": [
+   0.0,
+   0.2775401687666166
+  ],
+  "NonACD_ci95": [
+   0.01787574951572113,
+   0.4041563854975721
+  ],
+  "undecided_fraction": 0.9,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "0b652215af55db8b784ad6bc2c3be42ae36882122c0f7a5eb9b5486f11a28080"
+ },
+ {
+  "run_id": "smoke-lipniacki-nfkb-10min",
+  "kappa_name": "lipniacki-nfkb",
+  "kappa": 0.0020568165595250603,
+  "minutes_per_calzone_unit": 10,
+  "k_time": 0.0016666666666666668,
+  "cells": 10,
+  "hours": 1.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.0,
+  "Apoptosis_fraction": 0.0,
+  "NonACD_fraction": 0.1,
+  "Survival_ci95": [
+   0.0,
+   0.2775401687666166
+  ],
+  "Apoptosis_ci95": [
+   0.0,
+   0.2775401687666166
+  ],
+  "NonACD_ci95": [
+   0.01787574951572113,
+   0.4041563854975721
+  ],
+  "undecided_fraction": 0.9,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "922325cc76d69ab79d179b0bdf2d3be3aab3195bd6b1a8d3d35270448664651f"
+ }
+]

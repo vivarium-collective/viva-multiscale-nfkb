@@ -44,7 +44,7 @@ def build(kappa: float, k_time: float, cells: int, seed: int, interval: float) -
     spec = json.loads(SPEC.read_text())
     values = {name: p["default"] for name, p in spec["parameters"].items()}
     values.update({"kappa": kappa, "k_time": k_time, "interval": interval, "sample_count": 1})
-    state = _substitute(spec["state"], {**values, "seed": seed})
+    state: dict = _substitute(spec["state"], {**values, "seed": seed})
     one = state.pop("cellfate")
     template = {k: state.pop(k) for k in ("node_state", "node_probabilities", "steps")}
     state.pop("emitter")
