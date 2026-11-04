@@ -1,4 +1,4 @@
-"""Write checks/boolean/coupled-{equals-full,equals-full-seconds,equals-full-early,nfkb-knockout}/: the coupled cell-fate network
+"""Write checks/boolean/coupled-{equals-full,equals-full-early,equals-full-seconds,equals-full-early-seconds,nfkb-knockout}/: the coupled cell-fate network
 (MaBoSSProcess) must reproduce the FULL, unmodified Calzone network (the MaBoSS engine run directly on raw/cellfate.bnd,
 not through the Process) wherever its inputs say what Calzone itself would.
 
@@ -9,10 +9,17 @@ only the rates: NFkB follows `$u_NFkB`/`$d_NFkB` while its own logic (IKK AND NO
 - `equals-full`: with u_NFkB = 1, d_NFkB = 0 (NF-kB switches like Calzone's own node), k_time = 1, r_tx = 1/24 and TNF
   held on, the coupled network IS Calzone's network. Every one of the 31 nodes must match, under TNF, where the death arms
   are active and caspase-3 does shut NF-kB down. That also covers the rule "caspase-3 still forces NF-kB off".
-- `equals-full-seconds`: the same, with the clock converted, k_time = 1/60 (one Calzone unit per minute) over 2400 s =
-  40 units, and r_tx = k_time / 24, which leaves `$r_tx / $k_time` at 1/24 so that every rate scales by the same factor.
-  A continuous-time Markov chain with every rate scaled by k satisfies P_k(t) = P_1(k t), so the expected values are the
-  same as `equals-full`. Any rate left off the `$k_time` clock (a death arm included) breaks it.
+- `equals-full-seconds` and `equals-full-early-seconds`: the same comparisons with the clock converted, k_time = 1/60
+  (one Calzone unit per minute) and r_tx = k_time / 24, which leaves `$r_tx / $k_time` at 1/24, so every rate scales by
+  the same factor. A continuous-time Markov chain with every rate scaled by k satisfies P_k(t) = P_1(k t), so the
+  expected values are those of `equals-full` (2400 s) and `equals-full-early` ([420, 480] s). What these prove, and what
+  they don't:
+  - they catch an unclocked rate whose speed decides the race. CASP8 fails both; BAX and MOMP fail the early one;
+  - a downstream relay (MPT, ROS, ATP, Cyt_c, CASP3) left unclocked changes when things happen, not how the fates
+    split, and can pass both (adversarial re-review, 2026-11-04).
+
+  That every rate is on the clock is guaranteed by construction: prep.py refuses to write unless each of the 62 rates is
+  exactly `$k_time * (original rate)`.
 - `equals-full-early`: the same comparison over the window [7, 8], while caspase-3 is switching on. The gate's
   `NOT CASP3` term is visible only there (P(NFkB) 0.215 with it, 0.244 without). Later, caspase-8 has cleaved RIP1
   and closed the route anyway. It is invisible even under Calzone's `$Low_CASP8` mutant, where caspase-3 hardly ever
@@ -21,7 +28,8 @@ only the rates: NFkB follows `$u_NFkB`/`$d_NFkB` while its own logic (IKK AND NO
   (NFkB rate_up 0). The death arms must be intact.
 
 The full network runs 200000 trajectories with its own seed, the Process 50000 with another. Every node is compared over
-the last window [38, 40] (Calzone units) at abs 0.01, about 4 combined standard errors at p = 0.5.
+the case's last window (Calzone units: [38, 40] at t = 40, or [7, 8] for the early cases) at abs 0.01, about 4
+combined standard errors at p = 0.5.
 
     uv run --project compose python -I checks/boolean/make_coupled_equivalence.py
 """
@@ -141,6 +149,7 @@ def main() -> None:
         _fail("the coupled network does not have exactly the full network's nodes")
     as_calzone = {"u_NFkB": 1.0, "d_NFkB": 0.0}
     wild_type = _full_marginals(full)
+    early = _full_marginals(full, units=8.0, windows=8)
 
     _write("coupled-equals-full", coupled, {**as_calzone, "k_time": 1.0, "r_tx": TRANSRATE}, UNITS, wild_type,
            "The coupled network with NF-kB switching as Calzone's own node (u_NFkB = 1, d_NFkB = 0), k_time = 1, "
@@ -151,9 +160,16 @@ def main() -> None:
            wild_type,
            "As coupled-equals-full, with the clock converted: k_time = 1/60 (one Calzone unit per 60 s) over 2400 s, "
            "and r_tx = k_time/24, so every rate scales by k_time and the chain at 2400 s equals the original at 40 "
-           "units. The expected values are the same as coupled-equals-full. Any rate left off the k_time clock fails it.")
+           "units. The expected values are the same as coupled-equals-full. It catches an unclocked rate that decides "
+           "the race (CASP8 fails it); downstream relays may not show at t = 40, and prep.py guarantees by construction "
+           "that every rate is on the clock.")
+    _write("coupled-equals-full-early-seconds", coupled, {**as_calzone, "k_time": k, "r_tx": k * TRANSRATE}, 8.0 / k,
+           early,
+           "As coupled-equals-full-early ([7, 8] Calzone units), with the clock converted: k_time = 1/60, last window "
+           "[420, 480] s, r_tx = k_time/24. While the death cascade is still moving, an unclocked relay shows (BAX and "
+           "MOMP fail it).", windows=8)
     _write("coupled-equals-full-early", coupled, {**as_calzone, "k_time": 1.0, "r_tx": TRANSRATE}, 8.0,
-           _full_marginals(full, units=8.0, windows=8),
+           early,
            "As coupled-equals-full, over the window [7, 8] while caspase-3 is switching on. Calzone's NOT CASP3 term in "
            "NF-kB's gate is visible only here: later, caspase-8 has cleaved RIP1 and closed NF-kB's route anyway. Without "
            "the term, P(NFkB) in this window is 0.244 rather than 0.215 (probed on the engine, 200000 trajectories).",

@@ -19,12 +19,20 @@ The other changes:
 - **TNF:** its self-holding logic becomes the rates `$u_TNF` / `$d_TNF`. The same receptor-occupancy signal that drives
   Lipniacki's TNF_R drives the receptor here.
 - **Every rate is multiplied by `$k_time`** (Calzone time units per composite second). This is the death-machinery
-  clock that the studies sweep (Alex, 2026-11-04). k_time = 1 is the original timing.
-- **`$TransRate` (NF-kB target-gene induction, in 7 nodes) becomes `$r_tx / $k_time`.** After the k_time scaling, target
-  genes switch ON at `r_tx` per second, Lipniacki's own NF-kB -> target-protein timing (anchor_transcription.py), at
-  any k_time (Alex: "anchor to Lipniacki, sweep death"). Their switch-OFF rates when NF-kB is off stay on the k_time
-  clock; the calibration study decides whether they should move. With k_time = 1 and r_tx = 1/24 the network is
-  Calzone's MaBoSS example exactly.
+  clock that the studies sweep (Alex, 2026-11-04). k_time = 1 is the original timing; k_time must be > 0.
+- **`$TransRate` becomes `$r_tx / $k_time` in the 7 nodes that use it.** These are Calzone's slow,
+  transcription-scale steps:
+  - NF-kB-induced production of cFLIP, BCL2, mXIAP and mcIAP;
+  - cIAP's production from mcIAP;
+  - mROS, which is induced when NF-kB is OFF (`logic = NOT NFkB`);
+  - the Survival phenotype node.
+
+  After the k_time scaling, each of these switches ON at `r_tx` per second at any k_time, so they keep Lipniacki's
+  own NF-kB -> target-protein timing (anchor_transcription.py; Alex: "anchor to Lipniacki, sweep death"). Their
+  switch-OFF rates are unchanged in form (cFLIP, BCL2, mXIAP, mcIAP, mROS and Survival when their logic fails, cIAP
+  when SMAC is on) and stay on the k_time clock; the calibration study decides whether they should move.
+- With u_NFkB = 1, d_NFkB = 0, TNF held (u_TNF = d_TNF = 0), k_time = 1 and r_tx = 1/24, the network is Calzone's
+  MaBoSS example exactly (checks/boolean/coupled-equals-full).
 
 Everything else is kept byte for byte. The script refuses to write unless the input is the pinned file and each
 rewritten node's text is exactly what it expects.
@@ -88,6 +96,16 @@ def _fail(message: str) -> NoReturn:
     sys.exit(f"prep.py: {message}")
 
 
+def _encloses_all(text: str) -> bool:
+    """True when `text` is balanced, so the parentheses that wrap it enclose the whole expression."""
+    depth = 0
+    for ch in text:
+        depth += {"(": 1, ")": -1}.get(ch, 0)
+        if depth < 0:
+            return False
+    return depth == 0
+
+
 def main() -> None:
     data = RAW.read_bytes()
     if hashlib.sha256(data).hexdigest() != RAW_SHA256:
@@ -113,9 +131,15 @@ def main() -> None:
     network, scaled = _RATE.subn(lambda m: f"{m.group(1)} = $k_time * ({m.group(2).strip()});", network)
     if scaled != 2 * len(nodes):
         _fail(f"expected a rate_up and a rate_down in each of {len(nodes)} nodes, scaled {scaled}")
-    # every rate line, as written above, reads exactly "rate_xx = $k_time * (" (the substitution emits one space)
-    if re.search(r"rate_(up|down)(?! = \$k_time \* \()", network):
-        _fail("a rate is not wrapped in $k_time * (...)")
+    # Every rate must be EXACTLY $k_time times its original expression: the whole right-hand side is
+    # "$k_time * (<expr>)", where the outer parentheses enclose all of <expr> (balanced), and nothing follows them.
+    for kind, rhs in re.findall(r"(?i)(rate_up|rate_down)\s*=\s*([^;]+);", network):
+        inner = re.fullmatch(r"\$k_time \* \((.*)\)", rhs.strip(), re.DOTALL)
+        if inner is None or not _encloses_all(inner.group(1)):
+            _fail(f"{kind} = {rhs.strip()} is not exactly $k_time * (original rate)")
+    for name, block in zip(blocks, nodes, strict=True):
+        if len(re.findall(r"(?i)rate_(up|down)\s*=", block)) != 2:
+            _fail(f"node {name} does not have exactly one rate_up and one rate_down")
     for parameter in PARAMETERS_REMOVED:
         if f"${parameter}" in network:
             _fail(f"${parameter} is still used")

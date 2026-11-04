@@ -47,23 +47,29 @@ The models now divide the work as follows:
 ### Time
 
 - **Every rate is multiplied by `$k_time`** (Calzone time units per composite second). Alex chose (2026-11-04) to
-  **sweep `k_time` as a study axis** for the death machinery's clock. With r_tx = k_time / 24, every rate scales
-  together and k_time is a pure change of clock (`coupled-equals-full-seconds`).
-- **Target-gene induction keeps Lipniacki's clock** (Alex: "anchor to Lipniacki, sweep death"). `$TransRate` (7 nodes:
-  cIAP, cFLIP, BCL2, mROS, mcIAP, mXIAP, Survival) becomes `$r_tx / $k_time`, so these genes switch ON at `r_tx` per
-  second whatever `k_time` is.
+  **sweep `k_time` as a study axis** for the death machinery's clock. k_time must be > 0. With r_tx = k_time / 24,
+  every rate scales together and k_time is a pure change of clock. `prep.py` guarantees that every rate is wrapped:
+  it refuses to write unless each of the 62 rates is exactly `$k_time * (original rate)`. The `-seconds` checks show
+  that the rates which decide the race are on the clock.
+- **Transcription-scale steps keep Lipniacki's clock** (Alex: "anchor to Lipniacki, sweep death"). `$TransRate`
+  becomes `$r_tx / $k_time` in the 7 nodes that use it, so each switches ON at `r_tx` per second whatever `k_time` is:
+  - NF-kB-induced cFLIP, BCL2, mXIAP and mcIAP;
+  - cIAP's production from mcIAP;
+  - mROS, induced when NF-kB is *off* (`NOT NFkB`);
+  - the Survival phenotype node.
 - **How `r_tx` is measured.** `anchor_transcription.py` takes it from Lipniacki itself: NFKB_nuc half-rise to A20
   half-rise is 2107 s (35.1 min), so r_tx = ln 2 / 2107 s = 3.29e-4/s, written to `processed/transcription_anchor.json`.
 - **Why the anchor matters.** Fate is a race between the death arms and NF-kB's protective genes, and TransRate decides
-  it. Under TNF the full network's Survival is 0.02 at MaBoSS's example 1/24 and 0.20 at 1. Calzone 2010 reports about
+  it. Under TNF (t = 40) the full network's Survival is 0.014 at MaBoSS's example 1/24 and 0.20 at 1. Calzone 2010 reports about
   0.30 / 0.60 / 0.10 from rate-free asynchronous reachability.
 - **Not yet anchored:**
-  - the genes' switch-OFF rates when NF-kB is off stay on the `k_time` clock;
-  - the NF-kB node's own switching speed (u + d = 1, in Calzone units) flickers too fast for the genes to accumulate.
+  - those nodes' switch-OFF rates (when their logic fails; cIAP's when SMAC is on) stay on the `k_time` clock;
+  - the NF-kB node's own switching speed (u + d = 1, in Calzone units) flickers too fast for its target genes to
+    accumulate.
 
   The calibration study (Study 0) decides both.
 - **The measured anchors.** Lipniacki's NF-kB → A20 delay is about 35 min. Calzone's target-induction half-time is 16.6
-  units and its apoptosis half-time after TNF 8.5 units, so one conversion factor cannot match both.
+  units and its apoptosis half-time after TNF about 8.5 units, so one conversion factor cannot match both.
 
 ### Checks (`checks/boolean/`)
 
@@ -74,7 +80,8 @@ Each check has an independent oracle and a negative that has been run and failed
 | `calzone-reference` | MaBoSS's own reference run | `MaBoSSProcess` on the full network |
 | `coupled-equals-full` | the full network on the engine | with u = 1, d = 0 and TNF on, the coupled network equals the full one on all 31 nodes, at t = 40 |
 | `coupled-equals-full-early` | the full network on the engine | the same over [7, 8], where the gate's NOT CASP3 term is visible |
-| `coupled-equals-full-seconds` | the full network on the engine | every rate, death arms included, is on the k_time clock |
+| `coupled-equals-full-seconds` | the full network on the engine | k_time is a change of clock at t = 40; an unclocked race-deciding rate (CASP8) fails it |
+| `coupled-equals-full-early-seconds` | the full network on the engine | the same over [420, 480] s, while the cascade moves; unclocked BAX or MOMP fail it |
 | `coupled-nfkb-knockout` | the full network with NF-kB loss of function | the death arms intact without NF-kB |
 | `pair-nfkb-analytic`, `pair-nfkb-seconds` | closed form | the coupling, with the NF-kB rule read from the SBML; the node taken verbatim with its gate held open |
-| `transcription-anchor-fast`, `-slow` | closed form | target genes on Lipniacki's clock |
+| `transcription-anchor-fast`, `-slow` | closed form | NF-kB's target genes switch on at Lipniacki's rate at any k_time |
