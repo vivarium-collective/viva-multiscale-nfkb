@@ -682,7 +682,7 @@ requires-dist = [
     { name = "viva-basic-processes", git = "https://github.com/vivarium-collective/viva-basic-processes?rev=9a1a624dc925cf700c3f89a8cc008a8fa4b4e5d4" },
     { name = "viva-maboss", git = "https://github.com/vivarium-collective/viva-maboss?rev=3fdccd7bb605109f3284e6ff9be2616b50b19ca7" },
     { name = "viva-pde-particle", git = "https://github.com/vivarium-collective/viva-pde-particle?rev=70438826a348cfb3feddbc928e2c9038129ff69e" },
-    { name = "viva-tellurium", git = "https://github.com/vivarium-collective/viva-tellurium?rev=967d5dd721627561bff3472b662b97dffa212a7f" },
+    { name = "viva-tellurium", git = "https://github.com/vivarium-collective/viva-tellurium?rev=846f87c57058a6bfa383619c9ae7587f0d81453c" },
 ]
 
 [[package]]
@@ -1484,8 +1484,8 @@ dependencies = [
 
 [[package]]
 name = "viva-tellurium"
-version = "0.2.1"
-source = { git = "https://github.com/vivarium-collective/viva-tellurium?rev=967d5dd721627561bff3472b662b97dffa212a7f#967d5dd721627561bff3472b662b97dffa212a7f" }
+version = "0.2.3"
+source = { git = "https://github.com/vivarium-collective/viva-tellurium?rev=846f87c57058a6bfa383619c9ae7587f0d81453c#846f87c57058a6bfa383619c9ae7587f0d81453c" }
 dependencies = [
     { name = "bigraph-schema" },
     { name = "libroadrunner" },

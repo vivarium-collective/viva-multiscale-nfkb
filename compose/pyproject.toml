@@ -12,7 +12,9 @@ dependencies = [
     "process-bigraph==1.9.1",
     "bigraph-schema==1.8.1",
     "tellurium==2.2.13.1",
-    "viva-tellurium @ git+https://github.com/vivarium-collective/viva-tellurium@967d5dd721627561bff3472b662b97dffa212a7f",
+    # v0.2.3 (846f87c, viva-tellurium#37: the parameters_in port). One step ahead of compose-api's manifest, which pins
+    # 967d5dd (v0.2.1) until its pin-bump PR merges; move back in step with it then.
+    "viva-tellurium @ git+https://github.com/vivarium-collective/viva-tellurium@846f87c57058a6bfa383619c9ae7587f0d81453c",
     "viva-maboss @ git+https://github.com/vivarium-collective/viva-maboss@3fdccd7bb605109f3284e6ff9be2616b50b19ca7",
     "viva-basic-processes @ git+https://github.com/vivarium-collective/viva-basic-processes@9a1a624dc925cf700c3f89a8cc008a8fa4b4e5d4",
     "viva-pde-particle @ git+https://github.com/vivarium-collective/viva-pde-particle@70438826a348cfb3feddbc928e2c9038129ff69e",
