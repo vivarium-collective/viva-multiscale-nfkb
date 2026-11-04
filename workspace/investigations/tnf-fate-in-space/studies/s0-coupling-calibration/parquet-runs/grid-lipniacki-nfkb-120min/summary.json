@@ -1,0 +1,31 @@
+{
+ "run_id": "grid-lipniacki-nfkb-120min",
+ "kappa_name": "lipniacki-nfkb",
+ "kappa": 0.0020568165595250603,
+ "minutes_per_calzone_unit": 120,
+ "k_time": 0.0001388888888888889,
+ "cells": 200,
+ "hours": 8.0,
+ "interval": 30.0,
+ "base_seed": 1,
+ "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+ "Survival_fraction": 0.17,
+ "Apoptosis_fraction": 0.01,
+ "NonACD_fraction": 0.045,
+ "Survival_ci95": [
+  0.12427835351105657,
+  0.22816001039503528
+ ],
+ "Apoptosis_ci95": [
+  0.0027466006037749346,
+  0.03572248519617954
+ ],
+ "NonACD_ci95": [
+  0.023852271724704166,
+  0.08329759366096785
+ ],
+ "undecided_fraction": 0.775,
+ "nfkb_first_peak_time_s": 1410.0,
+ "nfkb_first_peak_f": 0.9329194602460603,
+ "document_sha256": "8ff9eaa97e96d442a876e63a69e6aa2c0679bdaeecbac81f13b86185339dc239"
+}

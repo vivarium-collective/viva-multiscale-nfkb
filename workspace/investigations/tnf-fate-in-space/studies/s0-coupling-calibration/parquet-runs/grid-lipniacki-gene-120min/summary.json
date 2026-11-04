@@ -1,0 +1,31 @@
+{
+ "run_id": "grid-lipniacki-gene-120min",
+ "kappa_name": "lipniacki-gene",
+ "kappa": 0.0003289735076221857,
+ "minutes_per_calzone_unit": 120,
+ "k_time": 0.0001388888888888889,
+ "cells": 200,
+ "hours": 8.0,
+ "interval": 30.0,
+ "base_seed": 1,
+ "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+ "Survival_fraction": 0.125,
+ "Apoptosis_fraction": 0.01,
+ "NonACD_fraction": 0.065,
+ "Survival_ci95": [
+  0.0861191515921568,
+  0.1780153528465839
+ ],
+ "Apoptosis_ci95": [
+  0.0027466006037749346,
+  0.03572248519617954
+ ],
+ "NonACD_ci95": [
+  0.03837598764975976,
+  0.10802003749917945
+ ],
+ "undecided_fraction": 0.8,
+ "nfkb_first_peak_time_s": 1410.0,
+ "nfkb_first_peak_f": 0.9329194602460603,
+ "document_sha256": "9698b77e20efb9fe00562b08f70522691d5b99dd34d95a4c7c984749957421f1"
+}

@@ -1,0 +1,31 @@
+{
+ "run_id": "grid-calzone-flicker-30min",
+ "kappa_name": "calzone-flicker",
+ "kappa": 0.0005555555555555556,
+ "minutes_per_calzone_unit": 30,
+ "k_time": 0.0005555555555555556,
+ "cells": 200,
+ "hours": 8.0,
+ "interval": 30.0,
+ "base_seed": 1,
+ "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+ "Survival_fraction": 0.0,
+ "Apoptosis_fraction": 0.605,
+ "NonACD_fraction": 0.365,
+ "Survival_ci95": [
+  0.0,
+  0.018846005918320894
+ ],
+ "Apoptosis_ci95": [
+  0.5358822087449843,
+  0.6701601300121683
+ ],
+ "NonACD_ci95": [
+  0.3014041621876483,
+  0.4336842594102984
+ ],
+ "undecided_fraction": 0.030000000000000027,
+ "nfkb_first_peak_time_s": 1410.0,
+ "nfkb_first_peak_f": 0.9329194602460603,
+ "document_sha256": "ca78ebec287e8f5bd65733f4d3bd8b0509b7aea0dd0f96a5dc4892a51ca72d4f"
+}

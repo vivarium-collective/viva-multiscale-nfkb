@@ -1,0 +1,374 @@
+[
+ {
+  "run_id": "grid-calzone-flicker-2min",
+  "kappa_name": "calzone-flicker",
+  "kappa": 0.008333333333333333,
+  "minutes_per_calzone_unit": 2,
+  "k_time": 0.008333333333333333,
+  "cells": 200,
+  "hours": 8.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.0,
+  "Apoptosis_fraction": 0.95,
+  "NonACD_fraction": 0.05,
+  "Survival_ci95": [
+   0.0,
+   0.018846005918320894
+  ],
+  "Apoptosis_ci95": [
+   0.9104209437021562,
+   0.9726176509713551
+  ],
+  "NonACD_ci95": [
+   0.027382349028644986,
+   0.08957905629784384
+  ],
+  "undecided_fraction": 0.0,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "f36c90aa8d6433c0cc5416c3cf1e592ad9e2415750229c27db49d721068ddc95"
+ },
+ {
+  "run_id": "grid-calzone-flicker-10min",
+  "kappa_name": "calzone-flicker",
+  "kappa": 0.0016666666666666668,
+  "minutes_per_calzone_unit": 10,
+  "k_time": 0.0016666666666666668,
+  "cells": 200,
+  "hours": 8.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.0,
+  "Apoptosis_fraction": 0.78,
+  "NonACD_fraction": 0.22,
+  "Survival_ci95": [
+   0.0,
+   0.018846005918320894
+  ],
+  "Apoptosis_ci95": [
+   0.7176107720803744,
+   0.8318354646053661
+  ],
+  "NonACD_ci95": [
+   0.16816453539463405,
+   0.2823892279196257
+  ],
+  "undecided_fraction": 0.0,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "62260f51e5dde221da19cf28cccef6a6e3654e36120c099351878bec9f77dbfa"
+ },
+ {
+  "run_id": "grid-calzone-flicker-30min",
+  "kappa_name": "calzone-flicker",
+  "kappa": 0.0005555555555555556,
+  "minutes_per_calzone_unit": 30,
+  "k_time": 0.0005555555555555556,
+  "cells": 200,
+  "hours": 8.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.0,
+  "Apoptosis_fraction": 0.605,
+  "NonACD_fraction": 0.365,
+  "Survival_ci95": [
+   0.0,
+   0.018846005918320894
+  ],
+  "Apoptosis_ci95": [
+   0.5358822087449843,
+   0.6701601300121683
+  ],
+  "NonACD_ci95": [
+   0.3014041621876483,
+   0.4336842594102984
+  ],
+  "undecided_fraction": 0.030000000000000027,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "ca78ebec287e8f5bd65733f4d3bd8b0509b7aea0dd0f96a5dc4892a51ca72d4f"
+ },
+ {
+  "run_id": "grid-calzone-flicker-120min",
+  "kappa_name": "calzone-flicker",
+  "kappa": 0.0001388888888888889,
+  "minutes_per_calzone_unit": 120,
+  "k_time": 0.0001388888888888889,
+  "cells": 200,
+  "hours": 8.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.085,
+  "Apoptosis_fraction": 0.01,
+  "NonACD_fraction": 0.055,
+  "Survival_ci95": [
+   0.05374529946985246,
+   0.13189688544235392
+  ],
+  "Apoptosis_ci95": [
+   0.0027466006037749346,
+   0.03572248519617954
+  ],
+  "NonACD_ci95": [
+   0.030985020801370097,
+   0.0957879244659355
+  ],
+  "undecided_fraction": 0.85,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "0b98165fb17dc65f437fb89b04388dff203287ddf80dcc7eeffdbc1e06417322"
+ },
+ {
+  "run_id": "grid-lipniacki-nfkb-2min",
+  "kappa_name": "lipniacki-nfkb",
+  "kappa": 0.0020568165595250603,
+  "minutes_per_calzone_unit": 2,
+  "k_time": 0.008333333333333333,
+  "cells": 200,
+  "hours": 8.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.0,
+  "Apoptosis_fraction": 0.935,
+  "NonACD_fraction": 0.065,
+  "Survival_ci95": [
+   0.0,
+   0.018846005918320894
+  ],
+  "Apoptosis_ci95": [
+   0.8919799625008207,
+   0.9616240123502404
+  ],
+  "NonACD_ci95": [
+   0.03837598764975976,
+   0.10802003749917945
+  ],
+  "undecided_fraction": 0.0,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "a0ba4f83039d2cb54f1550cd982c0273c1e238220a8f5b17730ff8589e3b1537"
+ },
+ {
+  "run_id": "grid-lipniacki-nfkb-10min",
+  "kappa_name": "lipniacki-nfkb",
+  "kappa": 0.0020568165595250603,
+  "minutes_per_calzone_unit": 10,
+  "k_time": 0.0016666666666666668,
+  "cells": 200,
+  "hours": 8.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.0,
+  "Apoptosis_fraction": 0.79,
+  "NonACD_fraction": 0.21,
+  "Survival_ci95": [
+   0.0,
+   0.018846005918320894
+  ],
+  "Apoptosis_ci95": [
+   0.7283526118460081,
+   0.8407167047213658
+  ],
+  "NonACD_ci95": [
+   0.15928329527863416,
+   0.271647388153992
+  ],
+  "undecided_fraction": 0.0,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "43149f0c0f12a91948d9ed51c3237a7f6618c33712ff235f376409343ef463ed"
+ },
+ {
+  "run_id": "grid-lipniacki-nfkb-30min",
+  "kappa_name": "lipniacki-nfkb",
+  "kappa": 0.0020568165595250603,
+  "minutes_per_calzone_unit": 30,
+  "k_time": 0.0005555555555555556,
+  "cells": 200,
+  "hours": 8.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.005,
+  "Apoptosis_fraction": 0.665,
+  "NonACD_fraction": 0.31,
+  "Survival_ci95": [
+   0.0008831459893662054,
+   0.02777439986977148
+  ],
+  "Apoptosis_ci95": [
+   0.5970206277343806,
+   0.7267601903125736
+  ],
+  "NonACD_ci95": [
+   0.24998842733633997,
+   0.377173054912622
+  ],
+  "undecided_fraction": 0.020000000000000018,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "d8ba04993ac664245c3b4aeb2d83804c49929cd8c2348b5c533b77f66d4335df"
+ },
+ {
+  "run_id": "grid-lipniacki-nfkb-120min",
+  "kappa_name": "lipniacki-nfkb",
+  "kappa": 0.0020568165595250603,
+  "minutes_per_calzone_unit": 120,
+  "k_time": 0.0001388888888888889,
+  "cells": 200,
+  "hours": 8.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.17,
+  "Apoptosis_fraction": 0.01,
+  "NonACD_fraction": 0.045,
+  "Survival_ci95": [
+   0.12427835351105657,
+   0.22816001039503528
+  ],
+  "Apoptosis_ci95": [
+   0.0027466006037749346,
+   0.03572248519617954
+  ],
+  "NonACD_ci95": [
+   0.023852271724704166,
+   0.08329759366096785
+  ],
+  "undecided_fraction": 0.775,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "8ff9eaa97e96d442a876e63a69e6aa2c0679bdaeecbac81f13b86185339dc239"
+ },
+ {
+  "run_id": "grid-lipniacki-gene-2min",
+  "kappa_name": "lipniacki-gene",
+  "kappa": 0.0003289735076221857,
+  "minutes_per_calzone_unit": 2,
+  "k_time": 0.008333333333333333,
+  "cells": 200,
+  "hours": 8.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.0,
+  "Apoptosis_fraction": 0.915,
+  "NonACD_fraction": 0.085,
+  "Survival_ci95": [
+   0.0,
+   0.018846005918320894
+  ],
+  "Apoptosis_ci95": [
+   0.8681031145576462,
+   0.9462547005301477
+  ],
+  "NonACD_ci95": [
+   0.05374529946985246,
+   0.13189688544235392
+  ],
+  "undecided_fraction": 0.0,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "8ab5b143cf2146b03b763ee9b3b84c07f936d8662c52103dd56f11e626b186ce"
+ },
+ {
+  "run_id": "grid-lipniacki-gene-10min",
+  "kappa_name": "lipniacki-gene",
+  "kappa": 0.0003289735076221857,
+  "minutes_per_calzone_unit": 10,
+  "k_time": 0.0016666666666666668,
+  "cells": 200,
+  "hours": 8.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.0,
+  "Apoptosis_fraction": 0.75,
+  "NonACD_fraction": 0.25,
+  "Survival_ci95": [
+   0.0,
+   0.018846005918320894
+  ],
+  "Apoptosis_ci95": [
+   0.6856577652038048,
+   0.8049192318370347
+  ],
+  "NonACD_ci95": [
+   0.19508076816296532,
+   0.3143422347961952
+  ],
+  "undecided_fraction": 0.0,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "d5f2a4372c245b4276d7b1fc8d2819bd74036fb93a3eb3580663f6f6cca368f8"
+ },
+ {
+  "run_id": "grid-lipniacki-gene-30min",
+  "kappa_name": "lipniacki-gene",
+  "kappa": 0.0003289735076221857,
+  "minutes_per_calzone_unit": 30,
+  "k_time": 0.0005555555555555556,
+  "cells": 200,
+  "hours": 8.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.0,
+  "Apoptosis_fraction": 0.565,
+  "NonACD_fraction": 0.425,
+  "Survival_ci95": [
+   0.0,
+   0.018846005918320894
+  ],
+  "Apoptosis_ci95": [
+   0.4957060908195922,
+   0.631843928411026
+  ],
+  "NonACD_ci95": [
+   0.35853495209243025,
+   0.4942919487953179
+  ],
+  "undecided_fraction": 0.010000000000000009,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "af0f36d8afa08a700dd4ece953e2a00d70597a7e4592ffa54cc3dd72a58fc9bf"
+ },
+ {
+  "run_id": "grid-lipniacki-gene-120min",
+  "kappa_name": "lipniacki-gene",
+  "kappa": 0.0003289735076221857,
+  "minutes_per_calzone_unit": 120,
+  "k_time": 0.0001388888888888889,
+  "cells": 200,
+  "hours": 8.0,
+  "interval": 30.0,
+  "base_seed": 1,
+  "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+  "Survival_fraction": 0.125,
+  "Apoptosis_fraction": 0.01,
+  "NonACD_fraction": 0.065,
+  "Survival_ci95": [
+   0.0861191515921568,
+   0.1780153528465839
+  ],
+  "Apoptosis_ci95": [
+   0.0027466006037749346,
+   0.03572248519617954
+  ],
+  "NonACD_ci95": [
+   0.03837598764975976,
+   0.10802003749917945
+  ],
+  "undecided_fraction": 0.8,
+  "nfkb_first_peak_time_s": 1410.0,
+  "nfkb_first_peak_f": 0.9329194602460603,
+  "document_sha256": "9698b77e20efb9fe00562b08f70522691d5b99dd34d95a4c7c984749957421f1"
+ }
+]
