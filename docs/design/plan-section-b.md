@@ -11,15 +11,21 @@ v2's membrane-flux plan is [`task-plan-membrane-flux.md`](task-plan-membrane-flu
 D1–D6 await Alex).
 
 **Progress:**
-- **U1 is done on a local branch, and nothing is pushed.** viva-tellurium `feat/parameter-inputs` (`05731d8`,
-  `e962e93`), version 0.2.3.
+- **U1 is live in production (2026-11-04).**
+  - viva-tellurium#37 was squash-merged as `846f87c`, tagged `v0.2.3`, released and published to PyPI.
+  - Its image is `sha-846f87c`, which built once the `IMAGE_PLATFORMS=linux/amd64` repo variable was set:
+    libroadrunner has no aarch64 wheel.
+  - compose-api#502 pins it and adds the case `viva-tellurium/stimulus-through-port`. It passed in three composed
+    linux-64 sets.
+  - Release 0.7.79 (compose-api#503) is deployed. compose.cam.uchc.edu reports `0.7.79`, and its registry serves
+    viva-tellurium `846f87c` at `tested`.
   - The port is named **`parameters_in`**, matching the repo's own `model_in`/`model_out`.
   - It validates the whole map before setting anything, so an unknown id, a rule-defined id, or a non-finite value
     raises.
   - 22 tests on real roadrunner. Re-run in this session: all pass, and on 0.2.2's `processes.py` 18 fail. A
     `constant="true"` parameter can be set at runtime on roadrunner 2.11.0.
-- **U2 is done on a local branch, and nothing is pushed.** viva-pde-particle `feat/region-mean` (`6064b57`,
-  `1e1f9d3`).
+- **U2 is in review.** viva-pde-particle#70 (`feat/region-mean`: `6064b57`, `1e1f9d3`), with jcschaff asked to
+  review.
   - It adds **`RegionMean`** (outputs `mean_conc: map[overwrite[float]]`, µM) and **`RegionTotal`** (outputs
     `molecules`). Both are weighted by each node's control volume, as the FV engine conserves it.
   - `region` takes the same `{mask, volume_fraction}` as `FVReactionDiffusion`'s `domain`.
@@ -64,7 +70,7 @@ linking here.
 | F5 | **viva-smoldyn and viva-fenics cannot be the coupled spatial layer.** `SmoldynProcess.inputs()` is `{}`, it has no compartments, and its counts are global. viva-fenics meshes the unit square only. | viva-smoldyn@54c56a1 `processes.py:96-97`; viva-fenics `fem.py:24,31` |
 | F6 | **viva-pde-particle is the spatial engine** (`tested`, composed with registry_env in 7c, run 8816): `SmoldynHybrid`, `FVReactionDiffusion`/`FenicsxReactionDiffusion`, `SplittingCoordinator`, and the `steps/transfer.py` adapters. **Limits:** one domain only. The mask is a single subdomain with zero flux at its boundary; the Smoldyn walls only reflect; and `external_conc` is a read-only reactant. **There is no flux between regions**, so no nuclear envelope. There is also no adapter from a field to a well-mixed scalar. | viva-pde-particle@7043882 `fv_reaction_diffusion.py:1-45,79-110`; `model/smoldyn_config.py:28-45,64-67`; `steps/transfer.py` |
 | F7 | **Lipniacki's transport and volumes, from libSBML:**<br>• Import and export are one-way first-order fluxes over four parameters: `i1` (NF-κB in), `i1a` (IκB in), `e1a` (IκB out), `e2a` (IκB:NF-κB out). Free NF-κB has no export reaction.<br>• The rule `NFKB_total = … + NFKB_nuc/Kv` gives **Kv = V_cyt/V_nuc = 5**.<br>• `TNF` is a boundary species, set by the rule `TNF := TNF_R`. The event `TNF_stimulation` sets `TNF_R = 1` at t > 363600 s, after a roughly 101 h pre-equilibration. Time is in seconds. | BIOMD0000000786 `Lipniacki2004.xml` (reactions `NFKB_export`, `IkB_export`, `IkBnuc_export`, `IkB_NFKB_n_export`, …) |
-| F8 | **Adapters fire on every tick, not on change.** A Step runs whenever an input path is touched, including by a zero delta. "Event-driven" coupling is therefore just scheduling, not change detection. `MathExpressionStep` (`tested`) maps float symbols through expressions. Wiring a float port to a map key (`["node_probabilities","NFkB"]`) is valid. | process-bigraph 1.9.1 `composite.py:2541-2563`; viva-basic-processes@9a1a624 `math_expression.py:164-165` |
+| F8 | **Adapters are triggered by path, not by change.**<br>• A Step runs when an updated path, or a prefix of it, equals one of its input paths, even for a zero delta. So "event-driven" coupling is scheduling, not change detection.<br>• *Corrected 2026-11-04:* a process that writes a whole map (`species`, `node_state`) does NOT trigger a Step whose input is one key of that map (`["species","NFKB_nuc"]`). See the second wiring rule below.<br>• `MathExpressionStep` (`tested`) maps float symbols through expressions, and wiring a float port to a map key is valid. Its symbols must avoid sympy's reserved names (`S`, `N`, `E`, `I`, …). | process-bigraph 1.9.1 `composite.py:2541-2563`; viva-basic-processes@9a1a624 `math_expression.py:164-165` |
 | F9 | **Execution in compose-api:**<br>• One `composite.run(interval)`, so process-bigraph's chunking caveat holds when `interval_time` ≥ the largest process interval.<br>• Every address must sit under a `tested` entry, and a new pin restarts at `listed`.<br>• A run that names no environment gets a mash-up.<br>• The viva-tellurium compliance case covers `TelluriumUTCStep`, not `TelluriumProcess`. | `environments/runner.py:155-156`; `docs/plan-environment-composition.md` (safe component, D7.2–D7.4); manifest viva-tellurium evidence |
 
 ## The design (v1)
@@ -195,6 +201,15 @@ linking here.
 ### Coupling graph (→ is data flow; each store has one writer)
 
 **Wiring rules found by running composites (2026-11-04), each with a check that fails when the rule is broken:**
+- **A step that reads map keys also needs an exact-path trigger.**
+  - Why: `trigger_steps` (process-bigraph 1.9.1 `composite.py:2541-2569`) matches a step's input paths against the
+    prefixes of each updated path, and a process's update lands at its port's path. So TelluriumProcess writing
+    `species`, or MaBoSSProcess writing `node_state`, never re-runs a step whose input is `["species","NFKB_nuc"]`.
+  - Seen in Study 0: the NF-κB adapter ran once at t = 0, and f stayed at rest while NFKB_nuc rose to 0.28 µM.
+  - Fix: give the step an input at a path the upstream layer writes each step. The adapter outputs
+    `f_time = kinetic_time`, for provenance and as the trigger. A population counter uses `global_time`.
+  - It applies to every adapter in the integration document that reads keys: `species.*`, `node_probabilities.*`, and
+    `RegionMean`'s `mean_conc.TNF` if read by key.
 - **Seed every map key that a step writes into.** In process-bigraph 1.9.1, a step's write to a `map[float]` key the
   store doesn't hold yet is silently dropped. An overwrite to `["parameters","u"]` on an empty map leaves it empty;
   the same write lands once the key is in the document. So the document seeds every such key: MaBoSS's `parameters`
