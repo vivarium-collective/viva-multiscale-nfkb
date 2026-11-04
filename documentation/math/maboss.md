@@ -27,7 +27,7 @@ With $N$ trajectories, an estimated probability $p$ has standard error about $\s
 At $N = 50{,}000$ that's at most 0.0022, and at $N = 100{,}000$ at most 0.0016. The checks set tolerances at about 3.5–4
 standard errors, combined over both runs when two ensembles are compared.
 
-## Rates in this workspace's reduced network
+## Rates in this workspace's coupled network
 
 Every rate is multiplied by `$k_time` ({doc}`clock`). Calzone's transcription rate `$TransRate` becomes
 `$r_tx / $k_time`. The NFkB and TNF nodes take their rates from inputs: `$u_NFkB`, `$d_NFkB`, `$u_TNF` and `$d_TNF`.

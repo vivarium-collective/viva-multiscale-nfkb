@@ -27,7 +27,7 @@ committed as `anchor_transcription.py`.
 
 ## Decision 1: sweep, don't fix (Alex, 2026-11-04)
 
-Every rate in the reduced network is multiplied by `$k_time`, the number of Calzone units per composite second. This
+Every rate in the coupled network is multiplied by `$k_time`, the number of Calzone units per composite second. This
 leaves Calzone's internal ratios unchanged, and `k_time = 1` reproduces the original timing. The headline studies sweep
 `k_time` instead of defending one value.
 

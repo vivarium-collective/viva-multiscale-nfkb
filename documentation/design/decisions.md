@@ -16,7 +16,8 @@ measurement cited in the evidence column. The plan of record is
 | 8 | Bolus, not a sustained source | source | Reaction rate is one scalar over the domain | viva-pde-particle `kinetics.py` | {doc}`spatial` |
 | 9 | `RegionMean`/`RegionTotal` added upstream | design (U2) | No field → scalar adapter existed | viva-pde-particle#70 | {doc}`spatial` |
 | 10 | Boolean engine is MaBoSS | source | BoolNet is R-only with no wrapper; MaBoSS is Python-native and rate-based | viva-maboss | {doc}`boolean` |
-| 11 | Cut only RIP1ub, IKK, cIAP, mcIAP; keep TNF/TNFR/RIP1 | Alex ("most biologically accurate, model-native") | The first cut made death unreachable (Apoptosis = NonACD = 0) | `reduction-*` checks | {doc}`boolean` |
+| 11 | ~~Cut only RIP1ub, IKK, cIAP, mcIAP~~ (superseded by 11b) | Alex ("most biologically accurate, model-native") | The first cut (TNF/TNFR/RIP1) made death unreachable | probe | {doc}`boolean` |
+| 11b | **Remove nothing; Calzone gates.** NFkB keeps `IKK AND NOT CASP3` and follows Lipniacki's $f$ while it holds | Alex | Round-2 cut dropped Calzone's death → NF-κB feedbacks (adversarial review; NonACD 0.029 → 0.0001) | `coupled-*` checks | {doc}`boolean` |
 | 12 | NF-κB drives the Boolean layer via the nuclear fraction $f$ | design, under 11 | Lipniacki's own rule; dimensionless; no fitted constant | `pair-nfkb-analytic` | {doc}`coupling` |
 | 13 | One `tnf_occupancy` store drives both `TNF_R` and the Boolean TNF node | design, under 11 | One owner, two readers | plan coupling graph | {doc}`coupling` |
 | 14 | Seed every map key a Step writes into | measured | process-bigraph 1.9.1 drops writes to unseeded map keys | `pair-nfkb-analytic` negative | {doc}`coupling` |

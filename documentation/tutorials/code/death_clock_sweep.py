@@ -13,7 +13,7 @@ from process_bigraph import allocate_core
 from viva_maboss.processes import MaBoSSProcess
 
 DATA = Path("workspace/datasets/calzone2010_cellfate/processed")
-NETWORK = (DATA / "cellfate_reduced.bnd").read_text()
+NETWORK = (DATA / "cellfate_coupled.bnd").read_text()
 R_TX = json.loads((DATA / "transcription_anchor.json").read_text())["r_tx_per_s"]
 F = 0.5626781  # Lipniacki's nuclear NF-kB fraction at its post-stimulus peak (see the coupling page)
 SECONDS = 8 * 3600.0  # eight hours of composite time
@@ -23,9 +23,9 @@ def fates(k_time: float) -> dict[str, float]:
     process = MaBoSSProcess(
         config={
             "network": NETWORK,
-            "parameters": {"High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "u_TNF": 0.0, "d_TNF": 0.0,
+            "parameters": {"High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0, "u_TNF": 0.0, "d_TNF": 0.0,
                            "u_NFkB": F, "d_NFkB": 1.0 - F, "k_time": k_time, "r_tx": R_TX},
-            "initial_state": {"FADD": 1, "ATP": 1, "TNF": 1},
+            "initial_state": {"FADD": 1, "ATP": 1, "cIAP": 1, "TNF": 1},
             "sample_count": 20000,
             "windows_per_interval": 20,
             "seed": 2,

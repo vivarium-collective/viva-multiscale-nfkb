@@ -31,7 +31,7 @@ installs the same packages at the same versions the service's composed image doe
 bash compose/check.sh harness    # compose-api's own maboss and tellurium cases: proves the harness
 bash compose/check.sh kinetic    # Lipniacki vs COPASI; the pre-equilibrated steady state
 bash compose/check.sh spatial    # diffusion and decay against closed-form solutions
-bash compose/check.sh boolean    # MaBoSS reference, the exact reduction, the couplings, the clock
+bash compose/check.sh boolean    # MaBoSS reference, equivalence with the full network, the couplings, the clock
 ```
 
 Each check prints `PASS` or one `FAIL` line per expectation it missed. The runs write to `.checks-out/<group>/<case>/`

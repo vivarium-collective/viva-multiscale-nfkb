@@ -2,7 +2,7 @@
 
 ## Scaling every rate converts time
 
-Let the reduced network's rates be $\rho_i(s)$ in Calzone units. Multiplying every rate by $k$ (`$k_time`, Calzone
+Let the coupled network's rates be $\rho_i(s)$ in Calzone units. Multiplying every rate by $k$ (`$k_time`, Calzone
 units per second) gives a chain whose law at time $t$ seconds equals the original chain's law at time $kt$ Calzone
 units:
 
@@ -16,7 +16,7 @@ checks: $k = 1/600$ over 1200 s gives the same value as $k = 1$ over 2 units.
 
 ## The transcription term is invariant to $k$
 
-The reduction writes Calzone's transcription rate as `$r_tx / $k_time` *inside* a rate that is then multiplied by
+`prep.py` writes Calzone's transcription rate as `$r_tx / $k_time` *inside* a rate that is then multiplied by
 `$k_time`:
 
 $$

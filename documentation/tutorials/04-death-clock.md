@@ -12,20 +12,24 @@ Output (20,000 trajectories):
 
 ```text
 r_tx = 0.000329 /s (gene expression, fixed); 8 h of composite time
-1 Calzone unit =   0.5 min:  Survival 0.000  Apoptosis 1.000  NonACD 0.000
-1 Calzone unit =   2.0 min:  Survival 0.000  Apoptosis 1.000  NonACD 0.000
-1 Calzone unit =  10.0 min:  Survival 0.014  Apoptosis 0.958  NonACD 0.009
-1 Calzone unit =  30.0 min:  Survival 0.323  Apoptosis 0.353  NonACD 0.165
-1 Calzone unit = 120.0 min:  Survival 0.611  Apoptosis 0.008  NonACD 0.035
+1 Calzone unit =   0.5 min:  Survival 0.000  Apoptosis 0.988  NonACD 0.012
+1 Calzone unit =   2.0 min:  Survival 0.000  Apoptosis 0.958  NonACD 0.042
+1 Calzone unit =  10.0 min:  Survival 0.000  Apoptosis 0.830  NonACD 0.170
+1 Calzone unit =  30.0 min:  Survival 0.023  Apoptosis 0.601  NonACD 0.300
+1 Calzone unit = 120.0 min:  Survival 0.122  Apoptosis 0.018  NonACD 0.074
 ```
 
 ## Reading it
 
-The race has a winner that depends on the death clock:
-- **Fast death machinery** (a unit of half a minute to two minutes): death wins before any protective gene is made.
-- **Slow death machinery** (two hours a unit): the genes arrive first, and most cells survive.
-- **Around half an hour a unit:** all three fates occur. That is the regime in which TNF dose and arrival time can
-  tip the balance, and so where the headline studies have something to find.
+The death clock changes both who wins and how the cell dies:
+- **Fast death machinery** (half a minute to 10 minutes per unit): apoptosis dominates, before any protective gene is
+  made.
+- **Slower death machinery:** a growing share dies by necrosis (30% at 30 min per unit), and survival appears.
+- **At two hours per unit:** most cells (about 79%) have reached no fate after 8 hours, and survival leads among
+  those that have.
+
+So the time axis is not a nuisance. It decides whether TNF's dose and arrival time can matter at all, which is why the
+studies sweep it.
 
 ```{admonition} Provisional
 :class: warning

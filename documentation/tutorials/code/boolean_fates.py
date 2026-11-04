@@ -1,4 +1,4 @@
-"""Tutorial 2: run the reduced cell-fate network on its own and read the three fates.
+"""Tutorial 2: run the coupled cell-fate network on its own and read the three fates.
 
 Run from the repository root:  uv run --project compose python -I documentation/tutorials/code/boolean_fates.py
 """
@@ -8,9 +8,9 @@ from pathlib import Path
 from process_bigraph import allocate_core
 from viva_maboss.processes import MaBoSSProcess
 
-NETWORK = Path("workspace/datasets/calzone2010_cellfate/processed/cellfate_reduced.bnd").read_text()
+NETWORK = Path("workspace/datasets/calzone2010_cellfate/processed/cellfate_coupled.bnd").read_text()
 BASE = {
-    "High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0,  # Calzone's mutant switches, all off (wild type)
+    "High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0,  # Calzone's mutant switches, all off (wild type)
     "u_TNF": 0.0, "d_TNF": 0.0,                           # TNF held where it starts (on, below)
     "k_time": 1.0, "r_tx": 1 / 24,                         # Calzone's own units and MaBoSS's example TransRate
 }
@@ -22,7 +22,7 @@ def fates(nfkb_on: float, interval: float = 40.0) -> dict[str, float]:
         config={
             "network": NETWORK,
             "parameters": {**BASE, "u_NFkB": nfkb_on, "d_NFkB": 1.0 - nfkb_on},
-            "initial_state": {"FADD": 1, "ATP": 1, "TNF": 1},
+            "initial_state": {"FADD": 1, "ATP": 1, "cIAP": 1, "TNF": 1},
             "sample_count": 20000,
             "windows_per_interval": 20,
             "seed": 1,

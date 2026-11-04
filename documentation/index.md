@@ -11,7 +11,7 @@ running in its own engine and each responsible for one part of the biology:
 |---|---|---|---|
 | <span class="layer spatial">spatial</span> | TNF diffusing through the medium around the cell | finite-volume reaction–diffusion | viva-pde-particle `FVReactionDiffusion` |
 | <span class="layer kinetic">kinetic</span> | TNF → IKK → NF-κB activation; NF-κB's nuclear oscillations and target genes | Lipniacki 2004 (BioModels BIOMD0000000786) | viva-tellurium `TelluriumProcess` (libRoadRunner) |
-| <span class="layer boolean">Boolean</span> | The cell-fate decision: survival, apoptosis or necrosis | Calzone 2010 cell-fate network, reduced | viva-maboss `MaBoSSProcess` (MaBoSS) |
+| <span class="layer boolean">Boolean</span> | The cell-fate decision: survival, apoptosis or necrosis | Calzone 2010 cell-fate network, all 31 nodes, gating Lipniacki's NF-κB | viva-maboss `MaBoSSProcess` (MaBoSS) |
 | <span class="layer adapter">adapters</span> | Unit and meaning conversions between layers | — | `MathExpressionStep`, `RegionMean` |
 
 TNF spreads through the medium. The receptors at the cell surface turn the TNF that reaches them into a

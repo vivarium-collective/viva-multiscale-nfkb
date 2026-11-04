@@ -10,8 +10,8 @@ A check counts as evidence only if it could fail. Every check here:
    - an analytic solution;
    - another engine's output;
    - the upstream project's own reference output;
-   - an exact equivalence against the unreduced model.
-3. **Has a proven-failing negative.** A mutated copy (a wrong expected value, a wrong rate, a wrong reduction) was run
+   - an exact equivalence against the unmodified upstream model.
+3. **Has a proven-failing negative.** A mutated copy (a wrong expected value, a wrong rate, a wrong network) was run
    and failed on exactly the expectation it should. The negatives are listed below.
 
 ## How a check runs: exactly as compose-api runs it
@@ -39,8 +39,10 @@ exactly that value.
 | `spatial/gaussian-diffusion` | FV diffusion of a Gaussian bolus | closed form | — |
 | `spatial/uniform-bath-decay` | a uniform bath stays uniform and decays | closed form | — |
 | `boolean/calzone-reference` | `MaBoSSProcess` = MaBoSS's own reference run of Calzone, all 31 nodes | upstream reference + analytic mROS | mROS expected 0.30: fails; TransRate 1/12: fails on mROS |
-| `boolean/reduction-high-nfkb` | the cut is exact with NF-κB forced on | full network on the MaBoSS engine | dropping cFLIP: CASP8 1.0 vs 0.21 |
-| `boolean/reduction-nfkb-knockout` | the cut is exact with NF-κB knocked out; death arms intact | full network on the MaBoSS engine | the first plan's cut: apoptosis 0 vs 0.91 |
+| `boolean/coupled-equals-full` | at $u = 1, d = 0$ the coupled network is Calzone's, all 31 nodes, TNF on, t = 40 | full network on the MaBoSS engine | the round-2 4-node cut: survival 0.25 vs 0.014 |
+| `boolean/coupled-equals-full-early` | the same over [7, 8], where the gate's `NOT CASP3` term is visible | full network on the MaBoSS engine | CASP3 term removed: NF-κB 0.243 vs 0.215 |
+| `boolean/coupled-equals-full-seconds` | every rate, death arms included, is on the `k_time` clock | full network on the MaBoSS engine | CASP8 off the clock: apoptosis 0.972 vs 0.953 |
+| `boolean/coupled-nfkb-knockout` | death arms intact without NF-κB | full network with NF-κB loss of function | — |
 | `boolean/pair-nfkb-analytic` | kinetic → Boolean coupling through Lipniacki's own NF-κB rule | analytic switch | $K_v = 4$; an unseeded `parameters` store |
 | `boolean/pair-nfkb-seconds` | `$k_time` converts time and nothing else | the same analytic value | clock unconverted: 0.562 vs 0.483 |
 | `boolean/transcription-anchor-fast`, `-slow` | target genes keep Lipniacki's clock at any `k_time` | analytic absorbing switch | uniform clock: 0.014 vs 0.491 |

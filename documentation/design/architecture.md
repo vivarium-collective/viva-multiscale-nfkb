@@ -15,8 +15,8 @@
         │                       │ u_TNF = occ, d_TNF = 1 − occ
         │ parameters_in.TNF_R   ▼
 ┌───────▼──── kinetic ────┐   ┌──────────── Boolean ────────────┐
-│ TelluriumProcess:       │   │ MaBoSSProcess: reduced Calzone  │
-│ Lipniacki 2004          │   │ (27 nodes)                      │
+│ TelluriumProcess:       │   │ MaBoSSProcess: Calzone, gated   │
+│ Lipniacki 2004          │   │ (all 31 nodes)                  │
 └───────┬─────────────────┘   └───────────────▲─────────────────┘
         │ five NF-κB species                    │ u_NFkB = f, d_NFkB = 1 − f
         └── nuclear fraction f (adapter) ───────┘
@@ -32,7 +32,8 @@ Every quantity is written by exactly one layer. Other layers read it, and an ada
   has no way to say which is right. One owner removes the question.
 - **How it shows up:**
   - The spatial layer owns TNF transport, and the kinetic layer only reads TNF at the cell.
-  - Lipniacki owns NF-κB activation, so the Boolean network's duplicate of it is removed ({doc}`boolean`).
+  - Lipniacki owns *how much* NF-κB is active; Calzone owns *whether its route is open*, so nothing is removed and
+    Calzone's own logic gates the NF-κB input ({doc}`boolean`).
   - One `tnf_occupancy` store is read by two layers.
 
 ### 2. Reuse published models, and change them only by script

@@ -35,70 +35,80 @@ Calzone 2010's network as MaBoSS ships it: `cellfate.bnd`, `cellfate.cfg` and Ma
 reference configuration. Every node matches MaBoSS's own reference output (abs 0.008). The one node that moves, mROS,
 also matches its analytic value: run 0.339387, reference 0.339405, analytic 0.339384.
 
-## The ownership boundary: what to cut
+## The ownership boundary: what each model owns
 
-### The question
+This decision changed twice. Both rounds are recorded here, because the reasons are the design.
 
-Lipniacki already models TNF → IKK → NF-κB. Calzone's network has its own version of that chain. Under the
-one-owner principle ({doc}`architecture`), one of them has to go. Which nodes exactly?
+### Round 1: cutting TNF, TNFR, RIP1 and IKK made death unreachable
 
-### The first plan, and why it was wrong
-
-The plan first cut **TNF, TNFR, RIP1 and IKK**. Reading the network shows that in Calzone, TNF→TNFR does more than
-lead to NF-κB. It also drives **both death arms**:
-
-- apoptosis: TNFR → DISC_TNF → CASP8 → BAX → MOMP → … → CASP3 → Apoptosis;
+Lipniacki already models TNF → IKK → NF-κB, and Calzone has its own version of that chain. Under the one-owner
+principle ({doc}`architecture`), the first plan cut Calzone's copy: TNF, TNFR, RIP1 and IKK. In Calzone, though,
+TNF→TNFR also drives **both death arms**:
+- apoptosis: TNFR → DISC_TNF → CASP8 → BAX → MOMP → … → CASP3;
 - necrosis: TNFR → RIP1 → RIP1K → ROS → MPT → NonACD.
 
-Measured through `MaBoSSProcess`, with TNF on and t = 40:
+Measured through `MaBoSSProcess` with TNF on at t = 40, that cut left P(Apoptosis) = P(NonACD) = 0, whatever NF-κB did.
+
+### Round 2: cutting only the "duplicated" arm dropped death's feedback on NF-κB
+
+The next version kept TNF, TNFR and RIP1, and removed only RIP1ub, IKK, cIAP and mcIAP. Those looked like they served
+only the activation route. That cut was exact *with NF-κB clamped*. An adversarial review showed the composite never
+runs that way, because those nodes are also how death **shuts NF-κB down**:
+- **caspase-8 cleaves RIP1:** CASP8 ⊣ RIP1 → RIP1ub → IKK → NF-κB;
+- **SMAC sequesters cIAP:** SMAC ⊣ cIAP → RIP1ub;
+- **NF-κB keeps cIAP topped up:** NF-κB → mcIAP → cIAP, a pro-survival loop.
+
+Lipniacki has none of these. On the full network with TNF on, t = 40:
 
 | Network | Survival | Apoptosis | NonACD |
 |---|---|---|---|
-| Full Calzone, TNF off | 0.00 | 0.00 | 0.00 |
-| Full Calzone, TNF on | 0.015 | 0.949 | 0.032 |
-| **First plan's cut**, NF-κB driven on | 0.794 | **0.000** | **0.000** |
-| **First plan's cut**, NF-κB driven off | 0.000 | **0.000** | **0.000** |
+| Calzone, unmodified | 0.0136 | 0.9534 | 0.0291 |
+| Only those loops cut | 0.1281 | 0.8312 | 0.0001 |
 
-The first cut made death unreachable. Every headline study would then show only survival.
+The loops carry almost all of Calzone's necrosis.
 
-### The decision (Alex, 2026-11-04: "the most biologically accurate and overall model-native option")
+### The decision (Alex, 2026-11-04): "Remove nothing; Calzone gates"
 
-Cut **only the nodes whose sole role is the arm Lipniacki models**. Lipniacki's lumped TNF→IKK step stands in for
-Calzone's RIP1 → RIP1ub → IKK → NFkB, so:
+The two models don't describe the same *thing*, so there is nothing to remove:
+
+- **Lipniacki owns how much.** Its fitted kinetics say how much NF-κB is free in the nucleus over time once TNF acts:
+  the nuclear fraction $f$.
+- **Calzone owns whether the route is open.** Its chain says whether NF-κB activation is still possible: the receptor
+  complex is intact, RIP1 isn't cleaved, the cIAPs aren't sequestered, and caspase-3 is off. That is crosstalk with
+  the death machinery, which Lipniacki lacks.
+
+All 31 Calzone nodes and every logic rule are kept. Only rates change:
 
 | Node | Change | Why |
 |---|---|---|
-| RIP1ub | removed | its only output is IKK |
-| IKK | removed | its only output is NFkB; Lipniacki models IKK |
-| cIAP | removed | its only output was RIP1ub |
-| mcIAP | removed | its only output was cIAP |
-| `$Low_cIAP` | removed | used only by cIAP |
-| TNF, TNFR, RIP1, RIP1K, DISC_TNF | **kept** | the death arms need them |
-| NFkB | `logic = NOT CASP3`, rates `$u_NFkB` / `$d_NFkB` | NF-κB activity comes from Lipniacki; caspase-3 can still shut NF-κB off, as in Calzone; `$High_NFkB` is kept |
+| NFkB | logic kept (`IKK AND NOT CASP3`); rates `@logic ? $u_NFkB : 0`, `@logic ? $d_NFkB : 1` | while the route is open, NF-κB follows Lipniacki ($u = f$, $d = 1-f$); when it closes, NF-κB switches off as in Calzone; `$High_NFkB` is kept |
 | TNF | rates `$u_TNF` / `$d_TNF` | driven by the same receptor-occupancy signal as Lipniacki's `TNF_R` |
+| every node | each rate × `$k_time` | the death-machinery clock the studies sweep ({doc}`time`) |
+| cIAP, cFLIP, BCL2, mROS, mcIAP, mXIAP, Survival | `$TransRate` → `$r_tx / $k_time` | target-gene induction on Lipniacki's clock ({doc}`time`) |
 
-`workspace/datasets/calzone2010_cellfate/prep.py` does this and writes `processed/cellfate_reduced.bnd` (27 nodes) and
-`processed/reduction.json`, which records each change and why. It refuses to write unless:
+`workspace/datasets/calzone2010_cellfate/prep.py` writes `processed/cellfate_coupled.bnd` (31 nodes) and
+`processed/coupling.json`. It refuses to write unless:
 - the input is the pinned file;
 - each node it rewrites is exactly the expected upstream text;
-- no kept node still refers to a removed one.
+- every rate is wrapped in `$k_time`.
 
-### Proof that the cut is exact
+### Proof that the coupling is Calzone wherever it should be
 
-If the removed nodes act on the rest of the network only through NFkB, then once NFkB is fixed, the reduced and full
-networks must agree on every kept node. Calzone's own mutants fix NFkB:
+At $u = 1$, $d = 0$ (NF-κB switching like Calzone's own node), $k_	ext{time} = 1$ and $r_	ext{tx} = 1/24$, the
+coupled network **is** Calzone's network. Four checks compare it with the unmodified network run on the MaBoSS engine
+directly, TNF on, all 31 nodes, abs 0.01:
 
-- **`reduction-high-nfkb`:** reduced vs full, both with `$High_NFkB = 1` (NF-κB forced on). Survival 0.80,
-  apoptosis 0.065; all 27 kept nodes agree within 0.01.
-- **`reduction-nfkb-knockout`:** reduced with no NF-κB input vs full with NF-κB loss of function. Apoptosis 0.91,
-  necrosis 0.09; all 27 agree.
+| Check | What it adds |
+|---|---|
+| `coupled-equals-full` | t = 40, where the death arms have acted |
+| `coupled-equals-full-early` | the window [7, 8], while caspase-3 switches on. The gate's `NOT CASP3` term is visible only here: P(NF-κB) is 0.215 with it and 0.244 without. Later, caspase-8 has closed the route anyway. |
+| `coupled-equals-full-seconds` | `k_time = 1/60` over 2400 s with $r_\text{tx} = k_\text{time}/24$: every rate, death arms included, is on the clock |
+| `coupled-nfkb-knockout` | no nuclear NF-κB against Calzone's NF-κB loss of function: the death arms are intact |
 
-The full network runs on the MaBoSS engine directly, and the reduced one through `MaBoSSProcess`. Both checks have
-been shown to fail on wrong reductions:
-- **the first plan's cut:** apoptosis 0 instead of 0.91;
-- **a cut that also drops cFLIP:** CASP8 locks on (1.0 instead of 0.21).
-
-These two mutants also reproduce the paper's central point: NF-κB protects the cell from TNF.
+**Proven to fail:**
+- the caspase-3 term removed: NF-κB 0.243 instead of 0.215;
+- caspase-8's rates left off the clock: apoptosis 0.972 instead of 0.953;
+- Round 2's cut: survival 0.25 instead of 0.014, necrosis 4e-5 instead of 0.029.
 
 ## Clock
 
