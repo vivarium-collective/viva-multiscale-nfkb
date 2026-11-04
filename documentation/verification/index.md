@@ -41,7 +41,7 @@ exactly that value.
 | `boolean/calzone-reference` | `MaBoSSProcess` = MaBoSS's own reference run of Calzone, all 31 nodes | upstream reference + analytic mROS | mROS expected 0.30: fails; TransRate 1/12: fails on mROS |
 | `boolean/coupled-equals-full` | at $u = 1, d = 0$ the coupled network is Calzone's, all 31 nodes, TNF on, t = 40 | full network on the MaBoSS engine | the round-2 4-node cut: survival 0.25 vs 0.014 |
 | `boolean/coupled-equals-full-early` | the same over [7, 8], where the gate's `NOT CASP3` term is visible | full network on the MaBoSS engine | CASP3 term removed: NF-κB 0.243 vs 0.215 |
-| `boolean/coupled-equals-full-seconds` | every rate, death arms included, is on the `k_time` clock | full network on the MaBoSS engine | CASP8 off the clock: apoptosis 0.972 vs 0.953 |
+| `boolean/coupled-equals-full-seconds`, `-early-seconds` | `k_time` is a pure change of clock; the race-deciding rates are on it. That *every* rate is on it is guaranteed by `prep.py` (each of the 62 rates must be exactly `$k_time * (original)`) | full network on the MaBoSS engine | CASP8 off the clock: apoptosis 0.972 vs 0.953; BAX off the clock (early): 0.449 vs 0.323 |
 | `boolean/coupled-nfkb-knockout` | death arms intact without NF-κB | full network with NF-κB loss of function | — |
 | `boolean/pair-nfkb-analytic` | kinetic → Boolean coupling through Lipniacki's own NF-κB rule | analytic switch | $K_v = 4$; an unseeded `parameters` store |
 | `boolean/pair-nfkb-seconds` | `$k_time` converts time and nothing else | the same analytic value | clock unconverted: 0.562 vs 0.483 |

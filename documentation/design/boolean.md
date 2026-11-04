@@ -84,7 +84,7 @@ All 31 Calzone nodes and every logic rule are kept. Only rates change:
 | NFkB | logic kept (`IKK AND NOT CASP3`); rates `@logic ? $u_NFkB : 0`, `@logic ? $d_NFkB : 1` | while the route is open, NF-κB follows Lipniacki ($u = f$, $d = 1-f$); when it closes, NF-κB switches off as in Calzone; `$High_NFkB` is kept |
 | TNF | rates `$u_TNF` / `$d_TNF` | driven by the same receptor-occupancy signal as Lipniacki's `TNF_R` |
 | every node | each rate × `$k_time` | the death-machinery clock the studies sweep ({doc}`time`) |
-| cIAP, cFLIP, BCL2, mROS, mcIAP, mXIAP, Survival | `$TransRate` → `$r_tx / $k_time` | target-gene induction on Lipniacki's clock ({doc}`time`) |
+| cIAP, cFLIP, BCL2, mROS, mcIAP, mXIAP, Survival | `$TransRate` → `$r_tx / $k_time` | Calzone's transcription-scale steps (NF-κB-induced cFLIP, BCL2, mXIAP, mcIAP; cIAP from mcIAP; mROS, induced when NF-κB is *off*; the Survival phenotype) switch on at Lipniacki's rate ({doc}`time`) |
 
 `workspace/datasets/calzone2010_cellfate/prep.py` writes `processed/cellfate_coupled.bnd` (31 nodes) and
 `processed/coupling.json`. It refuses to write unless:
@@ -102,12 +102,14 @@ directly, TNF on, all 31 nodes, abs 0.01:
 |---|---|
 | `coupled-equals-full` | t = 40, where the death arms have acted |
 | `coupled-equals-full-early` | the window [7, 8], while caspase-3 switches on. The gate's `NOT CASP3` term is visible only here: P(NF-κB) is 0.215 with it and 0.244 without. Later, caspase-8 has closed the route anyway. |
-| `coupled-equals-full-seconds` | `k_time = 1/60` over 2400 s with $r_\text{tx} = k_\text{time}/24$: every rate, death arms included, is on the clock |
+| `coupled-equals-full-seconds` | `k_time = 1/60` over 2400 s with $r_\text{tx} = k_\text{time}/24$: a pure change of clock at t = 40. An unclocked race-deciding rate (CASP8) fails it. |
+| `coupled-equals-full-early-seconds` | the same over [420, 480] s, while the cascade moves: unclocked BAX or MOMP fail it |
 | `coupled-nfkb-knockout` | no nuclear NF-κB against Calzone's NF-κB loss of function: the death arms are intact |
 
 **Proven to fail:**
 - the caspase-3 term removed: NF-κB 0.243 instead of 0.215;
 - caspase-8's rates left off the clock: apoptosis 0.972 instead of 0.953;
+- BAX's rates left off the clock (early window): apoptosis 0.449 instead of 0.323;
 - Round 2's cut: survival 0.25 instead of 0.014, necrosis 4e-5 instead of 0.029.
 
 ## Clock
