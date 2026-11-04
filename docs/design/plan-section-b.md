@@ -6,16 +6,30 @@ Section B of `agenda-onboarding.md` (lines 113–191) asks for the design of one
 from the simulators onboarded in A. Its layers are Boolean → ODE kinetic core → optional rule-based → spatial particle +
 PDE. d7 (eDMD/VAC) is already scoped there. This plan does not redo d7; its timing step is d7's "use 1".
 
-**Status (2026-11-04): approved by Alex, not started.** Implementation waits for a GO from the
-compose-api-targeted-onboarding session. This document sits beside [`eDMD.md`](eDMD.md) (d7's source). v2's
-membrane-flux plan is [`task-plan-membrane-flux.md`](task-plan-membrane-flux.md) (scoped and reviewed; decisions D1–D6
-await Alex).
+**Status (2026-11-04): in progress (GO received).** This document sits beside [`eDMD.md`](eDMD.md) (d7's source).
+v2's membrane-flux plan is [`task-plan-membrane-flux.md`](task-plan-membrane-flux.md) (scoped and reviewed; decisions
+D1–D6 await Alex).
 
-**Execution at GO (Alex, 2026-11-04): maximize concurrency.**
-- **Two background lanes**, each in its own fresh clone and branch, each stopping at an open PR. There is no push,
-  merge or release without Alex's in-session confirmation.
-  - U1: viva-tellurium `parameter_inputs`.
-  - U2: viva-pde-particle `RegionMean`.
+**Progress:**
+- **U1 is done on a local branch, and nothing is pushed.** viva-tellurium `feat/parameter-inputs` (`05731d8`,
+  `e962e93`), version 0.2.3.
+  - The port is named **`parameters_in`**, matching the repo's own `model_in`/`model_out`.
+  - It validates the whole map before setting anything, so an unknown id, a rule-defined id, or a non-finite value
+    raises.
+  - 22 tests on real roadrunner. Re-run in this session: all pass, and on 0.2.2's `processes.py` 18 fail. A
+    `constant="true"` parameter can be set at runtime on roadrunner 2.11.0.
+- **U2 is done on a local branch, and nothing is pushed.** viva-pde-particle `feat/region-mean` (`6064b57`,
+  `1e1f9d3`).
+  - It adds **`RegionMean`** (outputs `mean_conc: map[overwrite[float]]`, µM) and **`RegionTotal`** (outputs
+    `molecules`). Both are weighted by each node's control volume, as the FV engine conserves it.
+  - `region` takes the same `{mask, volume_fraction}` as `FVReactionDiffusion`'s `domain`.
+  - 9 tests, including a real composite that conserves mass to rel 1e-12. Re-run in this session: all pass.
+  - The package has no version (it is pinned by commit), so nothing was bumped.
+- **Workspace:** https://github.com/vivarium-collective/viva-multiscale-nfkb (public, Alex, 2026-11-04).
+  - The compose-api check harness is in `compose/`. Kinetic checks `sim1-original` and `preequilibrated-steady`
+    pass.
+  - The Boolean layer and the d1 dose-response are with the compose-api-targeted-onboarding session, in worktree
+    `feat/boolean-layer`.
 - **Foreground: everything that doesn't need U1 or U2.**
   - the workspace scaffold;
   - the SBML event-removal transform and the pre-equilibration run;
@@ -94,13 +108,35 @@ linking here.
 ### Boolean layer: **the decision half of Calzone 2010 cell fate, on `MaBoSSProcess`** (d1)
 - **Source:** `cellfate.bnd` and `.cfg`, shipped in the MaBoSS repo (fetched, HTTP 200). The nodes TNF, NFkB,
   Apoptosis, Survival and NonACD exist.
-- **Ownership rule:** Lipniacki already models TNF → IKK → NF-κB activation, so the Boolean layer must not repeat it.
-  A committed, scripted `.bnd` transform does three things:
-  - cuts the duplicated TNF/TNFR/RIP1/IKK activation chain;
-  - replaces NFkB's logic with rates driven by `$u_NFkB`;
-  - keeps the cell-fate decision downstream of it (CASP8/CASP3, cIAP, XIAP, Survival, Apoptosis, NonACD).
+- **Ownership boundary.** Alex's ruling (2026-11-04): "choose the most biologically accurate and overall
+  model-native option". This replaces the original plan to cut TNF/TNFR/RIP1/IKK, because in Calzone TNF→TNFR also
+  drives both death arms: DISC_TNF→CASP8 (apoptosis) and RIP1→RIP1K→ROS (necrosis). Lipniacki has neither, so that cut
+  left P(Apoptosis) = P(NonACD) = 0 whatever NF-κB does. Probe through `MaBoSSProcess` at t = 40, full network with
+  TNF on: Survival 0.015, Apoptosis 0.949, NonACD 0.032.
 
-  Every removed node, and the reason, is recorded.
+  The committed, scripted `.bnd` transform therefore makes these changes:
+  - **Removed (the duplicated arm only):** Lipniacki's lumped TNF→IKK activation stands in for Calzone's
+    RIP1→RIP1ub→IKK→NFkB, so RIP1ub and IKK are removed. cIAP and mcIAP fed only RIP1ub, so they are removed too.
+    Every removed node is logged with its reason.
+  - **Kept:** TNF, TNFR, RIP1, RIP1K, DISC_TNF, and both death arms.
+  - **NFkB:** rate-driven, and CASP3 still blocks it:
+    - `rate_up = CASP3 ? 0 : $u_NFkB`
+    - `rate_down = CASP3 ? 1 : $d_NFkB`
+    - with u = f and d = 1 − f, so with CASP3 off the stationary P(on) = f.
+  - **f is Lipniacki's own nuclear fraction of NF-κB,** `(NFKB_nuc/Kv) / NFKB_total`, from its `NFKB_total` rule. It is
+    dimensionless and has no fitted constant. `NFKB_total` is a rule variable, not a floating species, so the adapter
+    computes it from the floating species in that rule: `IKKactive_IkB_NFKB + NFKB + IkB_NFKB + (NFKB_nuc + IkB_NFKB_nuc)/Kv`.
+  - **TNF node:** driven by `$u_TNF`/`$d_TNF` from the same receptor-occupancy value that drives Lipniacki's
+    `TNF_R` (d1). That value has one writer and two readers.
+- **Checks that the cut is exact:**
+  - With NF-κB clamped on, the reduced network matches the full one with `$High_NFkB = 1`.
+  - With NF-κB clamped off, it matches the full network with NFkB knocked out.
+  - Fate probabilities must agree within sampling error.
+  - Then the kinetic → Boolean pair: TNF off and f held fixed, so P(NFkB on) matches its analytic window average.
+- **Baseline already passing** (worktree `feat/boolean-layer`): `MaBoSSProcess` on the full 31-node network matches
+  MaBoSS's own reference output (`refer/res_probtraj.csv`, sysbio-curie/MaBoSS@375ffad) within 0.008 on every node.
+- **Config keys,** verified at viva-maboss@3fdccd7: `network`, `parameters`, `initial_state` (0 or 1 per node),
+  `sample_count`, `windows_per_interval`, `seed`.
 - **Porting the `.cfg`:** its `$` defaults (`High_NFkB`, `Low_CASP8`, `Low_RIP1` and `Low_cIAP` = 0; `TransRate` =
   0.041666…, as a number) and its istates go into `config.parameters` and `config.initial_state`, because
   `MaBoSSProcess` writes its own `.cfg`.
@@ -112,9 +148,11 @@ linking here.
 | From | Port | Adapter | To | Port |
 |---|---|---|---|---|
 | PDE `FVReactionDiffusion` | `fields.TNF` | **`RegionMean`** (new, U2: masked mean over the cell-surface voxels) | store `tnf_at_cell` | |
-| `tnf_at_cell` | | `MathExpressionStep` (a cited dose-response → `TNF_R`, fitted offline in BioNetGen, d1) | Tellurium | **`parameter_inputs.TNF_R`** (new, U1; its own store, separate from the `parameters` output) |
-| Tellurium | `species.NFKB_nuc` (`bulk_species: false`) | `MathExpressionStep` (concentration → rate) | MaBoSS | `parameters.u_NFkB` |
-| MaBoSS | `node_probabilities.Apoptosis`/`NonACD` | `MathExpressionStep` (gate) | Tellurium | `parameter_inputs.c1…` (U1). This is a candidate edge; its biological basis must be cited before it ships, otherwise v1 is Boolean read-out only. |
+| `tnf_at_cell` | | `MathExpressionStep` (a cited dose-response, fitted offline in BioNetGen, d1) | store `tnf_occupancy` | |
+| `tnf_occupancy` | | (direct) | Tellurium | **`parameters_in.TNF_R`** (new, U1; its own store, separate from the `parameters` output; the writer must declare `overwrite[...]`) |
+| `tnf_occupancy` | | `MathExpressionStep` (u = occ, d = 1 − occ) | MaBoSS | `parameters.u_TNF`, `parameters.d_TNF` |
+| Tellurium | `species` (`bulk_species: false`): `NFKB_nuc`, `IkB_NFKB_nuc`, `NFKB`, `IkB_NFKB`, `IKKactive_IkB_NFKB` | `MathExpressionStep` (f = nuclear fraction; u = f, d = 1 − f) | MaBoSS | `parameters.u_NFkB`, `parameters.d_NFkB` |
+| MaBoSS | `node_probabilities.Apoptosis`/`NonACD` | `MathExpressionStep` (gate) | Tellurium | `parameters_in.c1…` (U1). This is a candidate edge; its biological basis must be cited before it ships, otherwise v1 is Boolean read-out only. |
 
 ### Headline studies (Alex, 2026-11-04: all three)
 One composite and one parameter sweep give all three. Each is a workspace study (`/viva-study`).
@@ -192,7 +230,7 @@ One composite and one parameter sweep give all three. Each is a workspace study 
 
 ## Phases (each atomic and independently verifiable; each upstream change is one BOJ unit)
 
-1. **U1, viva-tellurium: a `parameter_inputs: map[float]` input** on `TelluriumProcess`, applied every update with
+1. **U1, viva-tellurium: a `parameters_in: map[float]` input** on `TelluriumProcess`, applied every update with
    the `self._rr[pid] = v` the config overrides already use.
    - The PR carries a real-roadrunner regression test: changing `k1` mid-run changes the rate, and the test fails
      without the port. That also settles whether `constant="true"` parameters can be set at runtime.
@@ -241,7 +279,7 @@ One composite and one parameter sweep give all three. Each is a workspace study 
 
 ## Decisions (Alex, 2026-11-04)
 - **Q1, kinetic core:** Lipniacki 2004 (BIOMD0000000786).
-- **Q2, U1:** yes, add the viva-tellurium `parameter_inputs` port.
+- **Q2, U1:** yes, add the viva-tellurium `parameters_in` port.
 - **Q3, spatial layer in v1:** the extracellular TNF field. In parallel, a background agent scopes **v2**: an upstream
   membrane-flux feature in viva-pde-particle, and an operator split carrying `i1`, `i1a`, `e1a` and `e2a` at a 1:Kv
   volume ratio. It writes its plan to `docs/ref/multiscale-compositions/task-plan-membrane-flux.md`; Alex authorized
