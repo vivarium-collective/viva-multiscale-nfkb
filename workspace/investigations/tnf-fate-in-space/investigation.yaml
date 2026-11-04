@@ -9,7 +9,8 @@ description: 'What decides whether a cell survives or dies when TNF reaches it b
   space act only through the dose that arrives, or also through when it arrives?
 
   '
-studies: []
+studies:
+- s0-coupling-calibration
 expert_docs: []
 acceptance_criteria: []
 question: 'What decides whether a cell survives or dies when TNF reaches it by diffusion, and does space

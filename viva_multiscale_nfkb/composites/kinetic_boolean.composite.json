@@ -1,0 +1,343 @@
+{
+ "name": "kinetic-boolean",
+ "description": "One cell: Lipniacki 2004 NF-kB (TelluriumProcess, pre-equilibrated, TNF_R stepped to 1 through parameters_in) -> NF-kB nuclear fraction f (the SBML's own rule) -> Calzone 2010 cell fate (MaBoSSProcess, all 31 nodes, NF-kB gated by Calzone's own logic). The Boolean NF-kB node switches at kappa per second; the death machinery runs on k_time.",
+ "tags": [
+  "kinetics",
+  "sbml",
+  "ode",
+  "systems-biology"
+ ],
+ "requires": {
+  "processes": [
+   "TelluriumProcess",
+   "MathExpressionStep",
+   "MaBoSSProcess",
+   "RAMEmitter"
+  ]
+ },
+ "parameters": {
+  "kappa": {
+   "type": "float",
+   "default": 0.016666666666666666,
+   "description": "NF-kB node switching rate (1/s)"
+  },
+  "k_time": {
+   "type": "float",
+   "default": 0.0016666666666666668,
+   "description": "death-machinery clock (Calzone units per s), > 0"
+  },
+  "r_tx": {
+   "type": "float",
+   "default": 0.0003289735076221857,
+   "description": "transcription-scale steps' ON rate (1/s), from Lipniacki"
+  },
+  "seed": {
+   "type": "int",
+   "default": 1,
+   "description": "MaBoSS seed for this cell"
+  },
+  "interval": {
+   "type": "float",
+   "default": 30.0,
+   "description": "coupling step (s) for both layers"
+  },
+  "sample_count": {
+   "type": "int",
+   "default": 1,
+   "description": "MaBoSS trajectories per interval"
+  }
+ },
+ "state": {
+  "stimulus": {
+   "TNF_R": 1.0
+  },
+  "species": {
+   "IKK_neutral": 0.19999999999999998,
+   "IKK_active": 5.360693719995987e-28,
+   "IKK_inact": 5.098700743695883e-27,
+   "IKKactive_IkB": 2.695407643368284e-30,
+   "IkB": 0.0025066291993849194,
+   "IKKactive_IkB_NFKB": 3.245202370383302e-28,
+   "IkB_NFKB": 0.059209565687822846,
+   "NFKB": 0.0003155054774972614,
+   "NFKB_nuc": 0.002295766799242719,
+   "IkB_nuc": 0.0034357309572257922,
+   "IkB_NFKB_nuc": 7.887637063700855e-05,
+   "IkB_mRNA": 2.8697085790772093e-06,
+   "A20_mRNA": 2.8697085790772084e-06,
+   "A20": 0.004782847514569224,
+   "cgen_mRNA": 2.869708579077208e-06
+  },
+  "kinetic": {
+   "_type": "process",
+   "address": "local:viva_tellurium.processes.TelluriumProcess",
+   "config": {
+    "model_file": "lipniacki2004_driven.xml",
+    "bulk_species": false,
+    "species_overrides": {
+     "IKK_neutral": 0.19999999999999998,
+     "IKK_active": 5.360693719995987e-28,
+     "IKK_inact": 5.098700743695883e-27,
+     "IKKactive_IkB": 2.695407643368284e-30,
+     "IkB": 0.0025066291993849194,
+     "IKKactive_IkB_NFKB": 3.245202370383302e-28,
+     "IkB_NFKB": 0.059209565687822846,
+     "NFKB": 0.0003155054774972614,
+     "NFKB_nuc": 0.002295766799242719,
+     "IkB_nuc": 0.0034357309572257922,
+     "IkB_NFKB_nuc": 7.887637063700855e-05,
+     "IkB_mRNA": 2.8697085790772093e-06,
+     "A20_mRNA": 2.8697085790772084e-06,
+     "A20": 0.004782847514569224,
+     "cgen_mRNA": 2.869708579077208e-06
+    }
+   },
+   "interval": "${interval}",
+   "inputs": {
+    "parameters_in": [
+     "stimulus"
+    ]
+   },
+   "outputs": {
+    "species": [
+     "species"
+    ],
+    "time": [
+     "kinetic_time"
+    ]
+   }
+  },
+  "nfkb_total": 0.0,
+  "nfkb_fraction": 0.0,
+  "nfkb_fraction_time": 0.0,
+  "kinetic_time": 0.0,
+  "parameters": {
+   "u_NFkB": 0.0,
+   "d_NFkB": 0.0
+  },
+  "nuclear_fraction": {
+   "_type": "step",
+   "address": "local:viva_basic_processes.math_expression.MathExpressionStep",
+   "config": {
+    "expressions": [
+     {
+      "out": "NFKB_total",
+      "expr": "IKKactive_IkB_NFKB + NFKB + IkB_NFKB + (1 / Kv) * NFKB_nuc + (1 / Kv) * IkB_NFKB_nuc"
+     },
+     {
+      "out": "f",
+      "expr": "(NFKB_nuc / Kv) / NFKB_total"
+     },
+     {
+      "out": "u_NFkB",
+      "expr": "f * kappa / k_time"
+     },
+     {
+      "out": "d_NFkB",
+      "expr": "(1 - f) * kappa / k_time"
+     },
+     {
+      "out": "f_time",
+      "expr": "kinetic_time"
+     }
+    ],
+    "params": {
+     "Kv": 5.0,
+     "kappa": "${kappa}",
+     "k_time": "${k_time}"
+    }
+   },
+   "inputs": {
+    "IKKactive_IkB_NFKB": [
+     "species",
+     "IKKactive_IkB_NFKB"
+    ],
+    "NFKB": [
+     "species",
+     "NFKB"
+    ],
+    "IkB_NFKB": [
+     "species",
+     "IkB_NFKB"
+    ],
+    "NFKB_nuc": [
+     "species",
+     "NFKB_nuc"
+    ],
+    "IkB_NFKB_nuc": [
+     "species",
+     "IkB_NFKB_nuc"
+    ],
+    "kinetic_time": [
+     "kinetic_time"
+    ]
+   },
+   "outputs": {
+    "NFKB_total": [
+     "nfkb_total"
+    ],
+    "f": [
+     "nfkb_fraction"
+    ],
+    "f_time": [
+     "nfkb_fraction_time"
+    ],
+    "u_NFkB": [
+     "parameters",
+     "u_NFkB"
+    ],
+    "d_NFkB": [
+     "parameters",
+     "d_NFkB"
+    ]
+   }
+  },
+  "node_state": {
+   "ATP": 1.0,
+   "Apoptosis": 0.0,
+   "BAX": 0.0,
+   "BCL2": 0.0,
+   "CASP3": 0.0,
+   "CASP8": 0.0,
+   "Cyt_c": 0.0,
+   "DISC_FAS": 0.0,
+   "DISC_TNF": 0.0,
+   "FADD": 1.0,
+   "FASL": 0.0,
+   "IKK": 0.0,
+   "MOMP": 0.0,
+   "MPT": 0.0,
+   "NFkB": 0.0,
+   "NonACD": 0.0,
+   "RIP1": 0.0,
+   "RIP1K": 0.0,
+   "RIP1ub": 0.0,
+   "ROS": 0.0,
+   "SMAC": 0.0,
+   "Survival": 0.0,
+   "TNF": 1.0,
+   "TNFR": 0.0,
+   "XIAP": 0.0,
+   "apoptosome": 0.0,
+   "cFLIP": 0.0,
+   "cIAP": 1.0,
+   "mROS": 0.0,
+   "mXIAP": 0.0,
+   "mcIAP": 0.0
+  },
+  "node_probabilities": {
+   "ATP": 1.0,
+   "Apoptosis": 0.0,
+   "BAX": 0.0,
+   "BCL2": 0.0,
+   "CASP3": 0.0,
+   "CASP8": 0.0,
+   "Cyt_c": 0.0,
+   "DISC_FAS": 0.0,
+   "DISC_TNF": 0.0,
+   "FADD": 1.0,
+   "FASL": 0.0,
+   "IKK": 0.0,
+   "MOMP": 0.0,
+   "MPT": 0.0,
+   "NFkB": 0.0,
+   "NonACD": 0.0,
+   "RIP1": 0.0,
+   "RIP1K": 0.0,
+   "RIP1ub": 0.0,
+   "ROS": 0.0,
+   "SMAC": 0.0,
+   "Survival": 0.0,
+   "TNF": 1.0,
+   "TNFR": 0.0,
+   "XIAP": 0.0,
+   "apoptosome": 0.0,
+   "cFLIP": 0.0,
+   "cIAP": 1.0,
+   "mROS": 0.0,
+   "mXIAP": 0.0,
+   "mcIAP": 0.0
+  },
+  "steps": 0,
+  "cellfate": {
+   "_type": "process",
+   "address": "local:viva_maboss.processes.MaBoSSProcess",
+   "config": {
+    "network": "node FASL {\n  rate_up = $k_time * (0);\n  rate_down = $k_time * (0);\n}\n\nnode TNF {\n  rate_up = $k_time * ($u_TNF);\n  rate_down = $k_time * ($d_TNF);\n}\n\nnode TNFR {\n  logic = TNF;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode FADD {\n  rate_up = $k_time * (0);\n  rate_down = $k_time * (0);\n}\n\nnode DISC_TNF {\n  logic = FADD AND TNFR;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode DISC_FAS {\n  logic = FASL AND FADD;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode CASP8 {\n  logic = (DISC_TNF OR (DISC_FAS OR CASP3)) AND (NOT cFLIP);\n  rate_up = $k_time * (($Low_CASP8 ? 0 : (@logic ? 1 : 0)));\n  rate_down = $k_time * (($Low_CASP8 ? 1e+100 : (@logic ? 0 : 1)));\n}\n\nnode RIP1 {\n  logic = (DISC_FAS OR TNFR) AND (NOT CASP8);\n  rate_up = $k_time * (($Low_RIP1 ? 0 : (@logic ? 1 : 0)));\n  rate_down = $k_time * (($Low_RIP1 ? 1e+100 : (@logic ? 0 : 1)));\n}\n\nnode cIAP {\n  logic = (mcIAP AND (NOT SMAC));\n  rate_up = $k_time * (($Low_cIAP ? 0 : (@logic ? ($r_tx / $k_time) : 0)));\n  rate_down = $k_time * (($Low_cIAP ? 1e+100 : ((SMAC) ? 1 : 0)));\n}\n\nnode RIP1ub {\n  logic = cIAP AND RIP1;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode RIP1K {\n  logic = RIP1;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode IKK {\n  logic = RIP1ub;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode CASP3 {\n  logic = apoptosome AND (NOT XIAP);\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode NFkB {\n  logic = IKK AND (NOT CASP3);\n  rate_up = $k_time * (($High_NFkB ? 1e+100 : (@logic ? $u_NFkB : 0)));\n  rate_down = $k_time * (($High_NFkB ? 0 : (@logic ? $d_NFkB : 1)));\n}\n\nnode cFLIP {\n  logic = NFkB;\n  rate_up = $k_time * ((@logic) ? ($r_tx / $k_time) : 0);\n  rate_down = $k_time * ((@logic ? 0 : 1));\n}\n\nnode BCL2 {\n  logic = NFkB;\n  rate_up = $k_time * ((@logic ? ($r_tx / $k_time) : 0));\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode BAX {\n  logic = CASP8 AND (NOT BCL2);\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode mROS {\n  logic = (NOT NFkB);\n  rate_up = $k_time * (@logic ? ($r_tx / $k_time) : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode MPT {\n  logic = (NOT BCL2) AND ROS;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode ROS {\n  logic = (mROS) AND (MPT OR RIP1K);\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode ATP {\n  logic = NOT MPT;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode MOMP {\n  logic = BAX OR MPT;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode SMAC {\n  logic = MOMP;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode mcIAP {\n  logic = (NFkB);\n  rate_up = $k_time * (@logic ? ($r_tx / $k_time) : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode Cyt_c {\n  logic = MOMP;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode mXIAP {\n  logic = (NFkB);\n  rate_up = $k_time * (@logic ? ($r_tx / $k_time) : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode XIAP {\n  logic = (NOT SMAC) AND mXIAP;\n  rate_up = $k_time * ((@logic) ? 1 : 0);\n  rate_down = $k_time * ((@logic ? 0 : 1));\n}\n\nnode apoptosome {\n  logic = Cyt_c AND (ATP AND (NOT XIAP));\n  rate_up = $k_time * ((@logic) ? 1 : 0);\n  rate_down = $k_time * ((@logic ? 0 : 1));\n}\n\nnode NonACD {\n  logic = NOT ATP;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode Apoptosis {\n  logic = CASP3;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode Survival {\n  logic = NFkB;\n  rate_up = $k_time * (@logic ? ($r_tx / $k_time) : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n",
+    "parameters": {
+     "High_NFkB": 0.0,
+     "Low_CASP8": 0.0,
+     "Low_RIP1": 0.0,
+     "Low_cIAP": 0.0,
+     "u_NFkB": 0.0,
+     "d_NFkB": 0.0,
+     "u_TNF": 0.0,
+     "d_TNF": 0.0,
+     "k_time": "${k_time}",
+     "r_tx": "${r_tx}"
+    },
+    "initial_state": {
+     "FADD": 1.0,
+     "ATP": 1.0,
+     "cIAP": 1.0,
+     "TNF": 1.0
+    },
+    "sample_count": "${sample_count}",
+    "windows_per_interval": 10,
+    "seed": "${seed}"
+   },
+   "interval": "${interval}",
+   "inputs": {
+    "node_state": [
+     "node_state"
+    ],
+    "node_probabilities": [
+     "node_probabilities"
+    ],
+    "parameters": [
+     "parameters"
+    ],
+    "steps": [
+     "steps"
+    ]
+   },
+   "outputs": {
+    "node_state": [
+     "node_state"
+    ],
+    "node_probabilities": [
+     "node_probabilities"
+    ],
+    "steps": [
+     "steps"
+    ]
+   }
+  },
+  "emitter": {
+   "_type": "step",
+   "address": "local:RAMEmitter",
+   "config": {
+    "emit": {
+     "node_state": "map[float]",
+     "nfkb_fraction": "float",
+     "nfkb_fraction_time": "float",
+     "global_time": "float"
+    }
+   },
+   "inputs": {
+    "node_state": [
+     "node_state"
+    ],
+    "nfkb_fraction": [
+     "nfkb_fraction"
+    ],
+    "nfkb_fraction_time": [
+     "nfkb_fraction_time"
+    ],
+    "global_time": [
+     "global_time"
+    ]
+   }
+  }
+ }
+}
