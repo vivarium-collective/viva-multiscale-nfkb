@@ -60,7 +60,10 @@ def _fail(message: str) -> NoReturn:
 
 def _rule_from_sbml() -> tuple[str, float]:
     """The driven SBML's NFKB_total rule as an expression in species names and Kv, and Kv's value."""
-    model = libsbml.readSBMLFromFile(str(SBML)).getModel()
+    # Keep the document referenced while its model is used: libsbml frees a temporary document's model with it, and a
+    # value read through a freed model is garbage (it read Kv as 0.0 in the composite generator, 2026-11-04).
+    document = libsbml.readSBMLFromFile(str(SBML))
+    model = document.getModel()
     rule = model.getRule("NFKB_total")
     if rule is None or not rule.isAssignment():
         _fail("the SBML has no NFKB_total assignment rule")
@@ -70,7 +73,10 @@ def _rule_from_sbml() -> tuple[str, float]:
     expression = libsbml.formulaToL3String(rule.getMath()).replace("ModelValue_1", "Kv")
     if {str(s) for s in sympy.sympify(expression).free_symbols} != {*PEAK, "Kv"}:
         _fail(f"the NFKB_total rule's symbols are not the five NF-kB species and Kv: {expression}")
-    return expression, model.getParameter("Kv").getValue()
+    kv = model.getParameter("Kv").getValue()
+    if not kv > 0:
+        _fail(f"Kv read as {kv}; expected Lipniacki's V_cyt/V_nuc = 5")
+    return expression, kv
 
 
 def _fragment() -> str:
