@@ -136,15 +136,28 @@ linking here.
     - `rate_down = @logic ? $d_NFkB : 1`
     - with u = f and d = 1 − f, from Lipniacki. Study 0 calibrates the switching speed: u + d = κ on Lipniacki's
       clock, because at u + d = 1 the node flickers too fast for survival genes to hold.
-  - **Every rate is multiplied by `$k_time`,** and `$TransRate` → `$r_tx/$k_time` in all 7 nodes that use it, cIAP and
-    mcIAP included.
-  - **Key check:** at u = 1, d = 0 (k_time = 1, r_tx = 1/24), the coupled network equals Calzone's original exactly,
-    on all 31 nodes, with TNF on.
-  - **Negatives, for coverage gaps the review found:**
-    - a mutant where CASP3 doesn't force NFkB off must fail;
-    - stripping `$k_time` from a death-arm node must fail.
-
-    The NF-κB rule is read from the SBML, not hand-typed.
+  - **Every one of the 62 rates is multiplied by `$k_time`.**
+    - `prep.py` requires each rate to be exactly `$k_time * (original)`, so the clock holds by construction.
+    - `$TransRate` → `$r_tx/$k_time` in the 7 nodes that use it. These are transcription-scale steps, not all of them
+      NF-κB targets: mROS is induced when NF-κB is off, cIAP switches off via SMAC, and Survival is a phenotype node.
+    - k_time must be > 0.
+  - **Outputs:** `workspace/datasets/calzone2010_cellfate/processed/cellfate_coupled.bnd` and `coupling.json`.
+    `prep.py` reproduces both byte for byte.
+  - **Checks** (`checks/boolean/`, 10, merged on main at 4dbf4cb):
+    - `calzone-reference` (MaBoSS's own reference output);
+    - `coupled-equals-full`, `-early`, `-seconds` and `-early-seconds`. At u = 1, d = 0 (k_time = 1,
+      r_tx = 1/24) the coupled network equals Calzone's original on all 31 nodes, TNF on. The `-seconds` variants show
+      that the race-deciding rates are on the clock;
+    - `coupled-nfkb-knockout`;
+    - `pair-nfkb-analytic` and `-seconds`, where `NFKB_total` is read from the SBML;
+    - `transcription-anchor-fast` and `-slow`.
+  - **Negatives proven to fail:**
+    - the CASP3 term removed;
+    - CASP8 or BAX off the clock;
+    - the old 4-node cut;
+    - an unseeded store;
+    - Kv = 4;
+    - a uniform clock.
   - **f is Lipniacki's own nuclear fraction of NF-κB,** `(NFKB_nuc/Kv) / NFKB_total`, from its `NFKB_total` rule. It is
     dimensionless and has no fitted constant. `NFKB_total` is a rule variable, not a floating species, so the adapter
     computes it from the floating species in that rule: `IKKactive_IkB_NFKB + NFKB + IkB_NFKB + (NFKB_nuc + IkB_NFKB_nuc)/Kv`.
@@ -314,8 +327,9 @@ One composite and one parameter sweep give all three. Each is a workspace study 
      corpus reference.
    - **Kinetic, transformed model:** after pre-equilibration, stepping `TNF_R` to 1 through U1 reproduces the
      post-event part of `sim1`.
-   - **Boolean:** the reduced `.bnd` over **one** interval matches the MaBoSS CLI on the same `.bnd` (F1: across
-     several intervals the process carries one sampled state, not the ensemble).
+   - **Boolean:** done, as the 10 `checks/boolean` cases listed under "Boolean layer". The coupled `.bnd` is compared
+     with Calzone's original on cmaboss over single intervals (F1: across several intervals the process carries one
+     sampled state, not the ensemble).
    - **Spatial:** a PDE-only TNF field with no sink conserves mass; a point source matches the analytic diffusion
      solution.
    - **Dose-response (d1):** McMillan 2021's BNGL, run through BioNetGen's ODE, reproduces the paper's binding
