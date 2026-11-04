@@ -1,0 +1,158 @@
+"""Write checks/boolean/reduction-{high-nfkb,nfkb-knockout}/: the reduced cell-fate network (MaBoSSProcess) must
+reproduce the FULL Calzone network (the MaBoSS engine run directly, not through the Process) wherever NF-kB is fixed.
+
+The reduction (workspace/datasets/calzone2010_cellfate/prep.py) removes RIP1ub, IKK, cIAP and mcIAP on the claim that
+their only effect on the rest of the network runs through NFkB. If that claim holds, then once NFkB is fixed the
+removed nodes are irrelevant, and the two networks agree on the probability of every kept node. Two of Calzone's
+conditions fix NFkB:
+
+- `high-nfkb`: Calzone's own mutant switch `$High_NFkB = 1` (NFkB forced on), in both networks.
+- `nfkb-knockout`: NF-kB loss of function, the paper's other NF-kB mutant. In the full network NFkB's rate_up is set to
+  0; in the reduced network `$u_NFkB = 0`, `$d_NFkB = 1` (the input says no nuclear NF-kB).
+
+Both run with TNF on (the reference configuration's initial states, TNF.istate = 1; in the reduced network TNF is held
+on with `$u_TNF = $d_TNF = 0`) for 40 time units, so the death arms are active. The full network runs 200000
+trajectories; the Process runs 50000. Every kept node is compared over the last window [38, 40] at abs 0.01, about
+4 combined standard errors.
+
+    uv run --project compose python -I checks/boolean/make_reduction_equivalence.py
+"""
+
+from __future__ import annotations
+
+import json
+import re
+import sys
+import tempfile
+from pathlib import Path
+from typing import NoReturn
+
+import cmaboss
+import yaml
+
+ROOT = Path(__file__).resolve().parents[2]
+DATA = ROOT / "workspace" / "datasets" / "calzone2010_cellfate"
+HERE = Path(__file__).resolve().parent
+INTERVAL, WINDOWS = 40.0, 20
+FULL_SAMPLES, PROCESS_SAMPLES, ABS_TOL = 200_000, 50_000, 0.01
+BASE = {"High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0, "TransRate": 1 / 24}
+ISTATE_ON = {"FADD", "ATP", "cIAP", "TNF"}  # cellfate.cfg's istates, plus TNF on
+FULL_NFKB = (
+    "node NFkB {\n"
+    "  logic = IKK AND (NOT CASP3);\n"
+    "  rate_up = ($High_NFkB ? 1e+100 : (@logic ? 1 : 0));\n"
+)
+
+
+def _fail(message: str) -> NoReturn:
+    sys.exit(f"make_reduction_equivalence.py: {message}")
+
+
+def _nodes(network: str) -> list[str]:
+    return sorted(re.findall(r"^node\s+(\w+)", network, re.MULTILINE | re.IGNORECASE))
+
+
+def _full_marginals(network: str, parameters: dict[str, float]) -> dict[str, float]:
+    """The full network's last-window node probabilities, from the MaBoSS engine itself."""
+    nodes = _nodes(network)
+    lines = [f"${k} = {v!r};" for k, v in parameters.items()]
+    lines += [f"max_time = {INTERVAL!r};", f"time_tick = {INTERVAL / WINDOWS!r};",
+              f"sample_count = {FULL_SAMPLES};", "seed_pseudorandom = 20101;"]
+    lines += [f"{n}.istate = {int(n in ISTATE_ON)};" for n in nodes]
+    with tempfile.TemporaryDirectory() as tmp:
+        bnd, cfg = Path(tmp, "full.bnd"), Path(tmp, "full.cfg")
+        bnd.write_text(network)
+        cfg.write_text("\n".join(lines) + "\n")
+        probs, _, labels, _ = cmaboss.MaBoSSSim(str(bnd), str(cfg)).run().get_last_nodes_probtraj()
+    marginals = dict.fromkeys(nodes, 0.0)
+    marginals.update({str(n): float(p) for n, p in zip(labels, probs[0], strict=True)})
+    return marginals
+
+
+def _write(name: str, reduced: str, process_parameters: dict[str, float], expected: dict[str, float],
+           description: str) -> None:
+    nodes = _nodes(reduced)
+    initial = {n: float(n in ISTATE_ON) for n in nodes}
+    document = {
+        "global_time_precision": 6,
+        "state": {
+            "node_state": initial,
+            "node_probabilities": dict(initial),
+            "parameters": {},
+            "steps": 0,
+            "cellfate": {
+                "_type": "process",
+                "address": "local:viva_maboss.processes.MaBoSSProcess",
+                "config": {
+                    "network": reduced,
+                    "parameters": process_parameters,
+                    "initial_state": {n: 1.0 for n in nodes if n in ISTATE_ON},
+                    "sample_count": PROCESS_SAMPLES,
+                    "windows_per_interval": WINDOWS,
+                    "seed": 7,
+                },
+                "interval": INTERVAL,
+                "inputs": {"node_state": ["node_state"], "node_probabilities": ["node_probabilities"],
+                           "parameters": ["parameters"], "steps": ["steps"]},
+                "outputs": {"node_state": ["node_state"], "node_probabilities": ["node_probabilities"],
+                            "steps": ["steps"]},
+            },
+            "emitter": {
+                "_type": "step",
+                "address": "local:RAMEmitter",
+                "config": {"emit": {"node_probabilities": "map[float]", "steps": "integer"}},
+                "inputs": {"node_probabilities": ["node_probabilities"], "steps": ["steps"]},
+            },
+        },
+    }
+    case = {
+        "description": description + " Generated by checks/boolean/make_reduction_equivalence.py.",
+        "document": "document.pbg",
+        "interval": INTERVAL,
+        "scale_level": "molecule",
+        "expect": [
+            {"kind": "rows", "emitter": "emitter", "min": 2},
+            {"kind": "scalar", "emitter": "emitter", "field": "steps", "expected": 1},
+            *({"kind": "scalar", "emitter": "emitter", "field": f"node_probabilities.{n}",
+               "expected": round(expected[n], 6), "abs": ABS_TOL} for n in nodes),
+        ],
+    }
+    out = HERE / name
+    out.mkdir(exist_ok=True)
+    (out / "document.pbg").write_text(json.dumps(document, indent=2) + "\n")
+    (out / "case.yaml").write_text(yaml.safe_dump(case, sort_keys=False, width=120))
+    fates = {k: round(expected[k], 4) for k in ("Survival", "Apoptosis", "NonACD", "NFkB")}
+    print(f"wrote checks/boolean/{name}: full network {fates}")
+
+
+def main() -> None:
+    full = (DATA / "raw" / "cellfate.bnd").read_text()
+    reduced = (DATA / "processed" / "cellfate_reduced.bnd").read_text()
+    if FULL_NFKB not in full:
+        _fail("the full network's NFkB node is not the expected upstream text")
+    reduced_parameters = {k: v for k, v in BASE.items() if k != "Low_cIAP"}
+    hold_tnf = {"u_TNF": 0.0, "d_TNF": 0.0}
+
+    _write(
+        "reduction-high-nfkb",
+        reduced,
+        {**reduced_parameters, "High_NFkB": 1.0, "u_NFkB": 0.0, "d_NFkB": 0.0, **hold_tnf},
+        _full_marginals(full, {**BASE, "High_NFkB": 1.0}),
+        "Reduced network vs the full Calzone network under Calzone's own mutant switch $High_NFkB = 1 (NFkB forced "
+        "on), TNF on, t = 40. Agreement on all 27 kept nodes shows the removed RIP1ub, IKK, cIAP and mcIAP act on the "
+        "rest only through NFkB.",
+    )
+    knockout = full.replace(FULL_NFKB, FULL_NFKB.replace("(@logic ? 1 : 0)", "0"))
+    _write(
+        "reduction-nfkb-knockout",
+        reduced,
+        {**reduced_parameters, "u_NFkB": 0.0, "d_NFkB": 1.0, **hold_tnf},
+        _full_marginals(knockout, BASE),
+        "Reduced network with no nuclear NF-kB ($u_NFkB = 0) vs the full Calzone network with NF-kB loss of function "
+        "(NFkB rate_up 0), TNF on, t = 40. Agreement on all 27 kept nodes shows the reduction keeps the death arms "
+        "intact: TNF still reaches apoptosis and necrosis without NF-kB.",
+    )
+
+
+if __name__ == "__main__":
+    main()

@@ -13,3 +13,29 @@ cell-fate decision in response to death receptor engagement", PLoS Comput Biol 6
 
 `MaBoSSProcess` (viva-maboss@3fdccd7) writes its own `.cfg`, so the composite carries the `$` parameters in
 `config.parameters` and the initial states (0 or 1 only; a value >= 0.5 is on) in `config.initial_state`.
+
+## The composite's Boolean layer: `prep.py` → `processed/`
+
+`prep.py` writes `processed/cellfate_reduced.bnd` (27 nodes, sha256 `c696a536d9a57ca0e5a50dab634b35fba7a4bbe810bb4081cf703eb8bec1014c`,
+deterministic) and `processed/reduction.json` (every removed or rewritten node and why).
+
+Ownership, from Alex's ruling (2026-11-04: "the most biologically accurate and overall model-native option"):
+- **Lipniacki 2004 owns NF-kB activation.** Its lumped TNF → IKK step stands in for Calzone's RIP1 → RIP1ub → IKK → NFkB.
+  The reduction removes the nodes whose only role is that arm: RIP1ub and IKK, plus cIAP and mcIAP, which only fed
+  RIP1ub. `$Low_cIAP` goes with them.
+- **Calzone owns the death arms** and how NF-kB's targets hold them back:
+  - DISC_TNF → CASP8 → BAX → MOMP → … → CASP3 → Apoptosis;
+  - RIP1 → RIP1K → ROS → MPT → NonACD;
+  - cFLIP, BCL2, XIAP.
+
+  TNF, TNFR and RIP1 are kept for these arms. Removing them, as first planned, makes death unreachable (see
+  `checks/boolean/reduction-nfkb-knockout`).
+- **NFkB** becomes `logic = NOT CASP3` with rates `$u_NFkB` / `$d_NFkB` in place of IKK's 1 and 0, and `$High_NFkB` is
+  kept. The composite sets `u = f`, `d = 1 − f`, where `f` is Lipniacki's free nuclear NF-kB as a fraction of all NF-kB,
+  `(NFKB_nuc / Kv) / NFKB_total`, from its own `NFKB_total` rule (Kv = 5; NFKB_total = 0.06, conserved). It is
+  dimensionless, with no fitted constant: about 0.0077 at the unstimulated steady state.
+- **TNF** becomes an input with rates `$u_TNF` / `$d_TNF`, driven by the same receptor-occupancy signal as Lipniacki's
+  TNF_R.
+
+The cut is checked as exact against the full network under Calzone's NF-kB mutants
+(`checks/boolean/reduction-high-nfkb`, `reduction-nfkb-knockout`): all 27 kept nodes agree.

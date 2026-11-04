@@ -1,0 +1,26 @@
+{
+  "source": "raw/cellfate.bnd (sysbio-curie/MaBoSS@375ffad engine/tests/maboss/cellfate/cellfate.bnd)",
+  "source_sha256": "cfef1e7054d77f4736d8e36e712946ad1043c2f967913e400ec449b56a3d26dc",
+  "output_sha256": "c696a536d9a57ca0e5a50dab634b35fba7a4bbe810bb4081cf703eb8bec1014c",
+  "nodes_in": 31,
+  "nodes_out": 27,
+  "removed": {
+    "RIP1ub": "only input is cIAP AND RIP1, only output is IKK: the ubiquitination step of the NF-kB arm Lipniacki owns",
+    "IKK": "only output is NFkB: Lipniacki models IKK activation and its action on IkB:NF-kB",
+    "cIAP": "only output was RIP1ub (removed); its effect on the kept network is nil",
+    "mcIAP": "only output was cIAP (removed)"
+  },
+  "rewritten": {
+    "NFkB": "IKK's activation is Lipniacki's; the kinetic layer's nuclear NF-kB drives $u_NFkB/$d_NFkB, CASP3 still blocks",
+    "TNF": "an input: the receptor-occupancy signal that drives Lipniacki's TNF_R drives $u_TNF/$d_TNF"
+  },
+  "parameters_removed": {
+    "Low_cIAP": "used only by cIAP (removed)"
+  },
+  "parameters_added": [
+    "u_NFkB",
+    "d_NFkB",
+    "u_TNF",
+    "d_TNF"
+  ]
+}
