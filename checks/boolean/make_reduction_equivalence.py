@@ -130,7 +130,7 @@ def main() -> None:
     reduced = (DATA / "processed" / "cellfate_reduced.bnd").read_text()
     if FULL_NFKB not in full:
         _fail("the full network's NFkB node is not the expected upstream text")
-    reduced_parameters = {k: v for k, v in BASE.items() if k != "Low_cIAP"}
+    reduced_parameters = {k: v for k, v in BASE.items() if k not in ("Low_cIAP", "TransRate")} | {"r_tx": BASE["TransRate"]}
     hold_tnf = {"u_TNF": 0.0, "d_TNF": 0.0, "k_time": 1.0}
 
     _write(

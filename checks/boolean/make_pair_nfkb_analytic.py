@@ -91,7 +91,7 @@ def write(name: str, k_time: float, interval: float) -> None:
                 "address": "local:viva_maboss.processes.MaBoSSProcess",
                 "config": {
                     "network": network,
-                    "parameters": {"High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "TransRate": 1 / 24,
+                    "parameters": {"High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "r_tx": 1 / 24,
                                    "u_NFkB": 0.0, "d_NFkB": 0.0, "u_TNF": 0.0, "d_TNF": 0.0,
                                    "k_time": k_time},
                     "initial_state": {n: 1.0 for n in on},

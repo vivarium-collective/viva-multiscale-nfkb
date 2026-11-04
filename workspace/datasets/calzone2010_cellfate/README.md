@@ -16,7 +16,7 @@ cell-fate decision in response to death receptor engagement", PLoS Comput Biol 6
 
 ## The composite's Boolean layer: `prep.py` → `processed/`
 
-`prep.py` writes `processed/cellfate_reduced.bnd` (27 nodes, sha256 `a815a865585026beec94a032e675498293feff0d976cc57f545e35998add0378`,
+`prep.py` writes `processed/cellfate_reduced.bnd` (27 nodes, sha256 `a6b32632ecfad48522db1d564985d67a5c61cc8231bd16bccc3afee895550745`,
 deterministic) and `processed/reduction.json` (every removed or rewritten node and why).
 
 Ownership, from Alex's ruling (2026-11-04: "the most biologically accurate and overall model-native option"):
@@ -44,3 +44,11 @@ The cut is checked as exact against the full network under Calzone's NF-kB mutan
   The anchors to compare against, measured: Lipniacki's NF-kB → target protein (A20) delay is about 35 min. Calzone's
   NF-kB target induction half-time is 16.6 units, and its apoptosis half-time after TNF is 8.5 units. One factor
   cannot match both; see docs/design/plan-section-b.md. Checked by `checks/boolean/pair-nfkb-seconds`.
+- **Gene expression keeps Lipniacki's clock** (Alex, 2026-11-04: "anchor to Lipniacki, sweep death"). Fate is a race
+  between the death arms and NF-kB's protective genes. Under TNF the full network's split depends on `$TransRate`:
+  Survival 0.02 at 1/24 (MaBoSS's example), 0.20 at 1; Calzone 2010 reports about 0.30 / 0.60 / 0.10 from
+  rate-free asynchronous reachability. So `$TransRate` becomes `$r_tx / $k_time`, and target genes switch on at
+  `r_tx` per second whatever `k_time` is. `anchor_transcription.py` measures `r_tx` from Lipniacki itself:
+  NFKB_nuc half-rise to A20 half-rise is 2107 s (35.1 min), so r_tx = ln 2 / 2107 s = 3.29e-4/s, written to
+  `processed/transcription_anchor.json`. `k_time` then sweeps only the death machinery's clock. Checked by
+  `checks/boolean/transcription-anchor-{fast,slow}`.

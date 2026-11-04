@@ -1,0 +1,12 @@
+{
+  "model": "lipniacki2004_driven.xml",
+  "model_sha256": "e3d357b9ac0a1e508ea68d690aea107f3fd7408ffb13d618d307901cd8d17718",
+  "stimulus": "TNF_R stepped 0 -> 1 from the pre-equilibrated steady state",
+  "nfkb_nuc_half_rise_s": 337.0,
+  "nfkb_nuc_first_peak_s": 1420.0,
+  "a20_half_rise_s": 2444.0,
+  "a20_first_peak_s": 4979.0,
+  "target_delay_s": 2107.0,
+  "r_tx_per_s": 0.0003289735076221857,
+  "definition": "r_tx = ln 2 / (A20 half-rise - NFKB_nuc half-rise); each half-rise is relative to its first peak"
+}

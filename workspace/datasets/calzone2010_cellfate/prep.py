@@ -18,6 +18,10 @@ layers drive into rate-driven inputs:
 - every rate: multiplied by `$k_time` (Calzone time units per composite second), so the time conversion is one
   parameter the studies sweep (Alex, 2026-11-04) and Calzone's internal rate ratios are unchanged. `k_time = 1`
   reproduces the original timing.
+- `$TransRate` (NF-kB target-gene induction): replaced by `$r_tx / $k_time`, so after the k_time scaling, target genes
+  switch on at `r_tx` per second, Lipniacki's own NF-kB -> target-protein timing (anchor_transcription.py). k_time
+  then sweeps only the death machinery's clock (Alex, 2026-11-04). With k_time = 1 and r_tx = 1/24 this is Calzone's
+  MaBoSS example exactly.
 
 Everything else is kept byte for byte. The script refuses to write unless the input is the pinned file, each rewritten
 node's text is exactly what it expects, and no kept node refers to a removed one.
@@ -73,8 +77,11 @@ REPLACED = {
         "an input: the receptor-occupancy signal that drives Lipniacki's TNF_R drives $u_TNF/$d_TNF",
     ),
 }
-PARAMETERS_REMOVED = {"Low_cIAP": "used only by cIAP (removed)"}
-PARAMETERS_ADDED = ("u_NFkB", "d_NFkB", "u_TNF", "d_TNF", "k_time")
+PARAMETERS_REMOVED = {
+    "Low_cIAP": "used only by cIAP (removed)",
+    "TransRate": "replaced by $r_tx / $k_time: gene expression on Lipniacki's clock (anchor_transcription.py)",
+}
+PARAMETERS_ADDED = ("u_NFkB", "d_NFkB", "u_TNF", "d_TNF", "k_time", "r_tx")
 _RATE = re.compile(r"(rate_up|rate_down)\s*=\s*([^;]+);")
 _BLOCK = re.compile(r"^node\s+(\w+)\s*\{.*?^\}", re.MULTILINE | re.DOTALL)
 
@@ -105,6 +112,12 @@ def main() -> None:
     # Calzone's rates are per abstract time unit; the composite runs in seconds. Every rate is multiplied by
     # $k_time (Calzone units per second), so Calzone's internal ratios are untouched and the conversion is one study
     # parameter (Alex, 2026-11-04: sweep it as a study axis rather than fix one value). k_time = 1 is the original.
+    # Gene expression keeps Lipniacki's clock (Alex, 2026-11-04: "anchor to Lipniacki, sweep death"): $TransRate becomes
+    # $r_tx / $k_time, so once every rate is multiplied by $k_time below, target genes switch on at r_tx per second
+    # (anchor_transcription.py) whatever k_time the study sweeps.
+    network, swapped = re.subn(r"\$TransRate\b", "($r_tx / $k_time)", network)
+    if swapped != 5:
+        _fail(f"expected $TransRate in 5 kept nodes (cFLIP, BCL2, mROS, mXIAP, Survival), found {swapped}")
     network, scaled = _RATE.subn(lambda m: f"{m.group(1)} = $k_time * ({m.group(2).strip()});", network)
     if scaled != 2 * len(kept):
         _fail(f"expected a rate_up and a rate_down in each of {len(kept)} nodes, scaled {scaled}")

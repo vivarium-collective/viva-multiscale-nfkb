@@ -1,7 +1,7 @@
 {
   "source": "raw/cellfate.bnd (sysbio-curie/MaBoSS@375ffad engine/tests/maboss/cellfate/cellfate.bnd)",
   "source_sha256": "cfef1e7054d77f4736d8e36e712946ad1043c2f967913e400ec449b56a3d26dc",
-  "output_sha256": "a815a865585026beec94a032e675498293feff0d976cc57f545e35998add0378",
+  "output_sha256": "a6b32632ecfad48522db1d564985d67a5c61cc8231bd16bccc3afee895550745",
   "nodes_in": 31,
   "nodes_out": 27,
   "removed": {
@@ -15,13 +15,15 @@
     "TNF": "an input: the receptor-occupancy signal that drives Lipniacki's TNF_R drives $u_TNF/$d_TNF"
   },
   "parameters_removed": {
-    "Low_cIAP": "used only by cIAP (removed)"
+    "Low_cIAP": "used only by cIAP (removed)",
+    "TransRate": "replaced by $r_tx / $k_time: gene expression on Lipniacki's clock (anchor_transcription.py)"
   },
   "parameters_added": [
     "u_NFkB",
     "d_NFkB",
     "u_TNF",
     "d_TNF",
-    "k_time"
+    "k_time",
+    "r_tx"
   ]
 }

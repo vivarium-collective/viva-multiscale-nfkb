@@ -63,13 +63,13 @@ node NFkB {
 
 node cFLIP {
   logic = NFkB;
-  rate_up = $k_time * ((@logic) ? $TransRate : 0);
+  rate_up = $k_time * ((@logic) ? ($r_tx / $k_time) : 0);
   rate_down = $k_time * ((@logic ? 0 : 1));
 }
 
 node BCL2 {
   logic = NFkB;
-  rate_up = $k_time * ((@logic ? $TransRate : 0));
+  rate_up = $k_time * ((@logic ? ($r_tx / $k_time) : 0));
   rate_down = $k_time * (@logic ? 0 : 1);
 }
 
@@ -81,7 +81,7 @@ node BAX {
 
 node mROS {
   logic = (NOT NFkB);
-  rate_up = $k_time * (@logic ? $TransRate : 0);
+  rate_up = $k_time * (@logic ? ($r_tx / $k_time) : 0);
   rate_down = $k_time * (@logic ? 0 : 1);
 }
 
@@ -123,7 +123,7 @@ node Cyt_c {
 
 node mXIAP {
   logic = (NFkB);
-  rate_up = $k_time * (@logic ? $TransRate : 0);
+  rate_up = $k_time * (@logic ? ($r_tx / $k_time) : 0);
   rate_down = $k_time * (@logic ? 0 : 1);
 }
 
@@ -153,6 +153,6 @@ node Apoptosis {
 
 node Survival {
   logic = NFkB;
-  rate_up = $k_time * (@logic ? $TransRate : 0);
+  rate_up = $k_time * (@logic ? ($r_tx / $k_time) : 0);
   rate_down = $k_time * (@logic ? 0 : 1);
 }
