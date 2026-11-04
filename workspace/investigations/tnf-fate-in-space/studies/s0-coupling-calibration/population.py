@@ -26,6 +26,15 @@ ROOT = Path(__file__).resolve().parents[5]
 SPEC = ROOT / "viva_multiscale_nfkb" / "composites" / "kinetic_boolean.composite.json"
 SBML = ROOT / "workspace" / "datasets" / "lipniacki2004" / "processed" / "lipniacki2004_driven.xml"
 FATES = ("Survival", "Apoptosis", "NonACD")
+# Named network edits for knockout variants. Each is an exact (old, new) replacement in the coupled network; build()
+# refuses an edit whose old text is not present exactly once, so a variant can never silently be the baseline.
+EDITS = {
+    # caspase-8 no longer cleaves RIP1
+    "casp8-rip1-ko": [("logic = (DISC_FAS OR TNFR) AND (NOT CASP8);", "logic = (DISC_FAS OR TNFR);")],
+    # SMAC no longer sequesters cIAP: it acts twice in Calzone, in cIAP's logic and in its decay rate
+    "smac-ciap-ko": [("logic = (mcIAP AND (NOT SMAC));", "logic = (mcIAP);"),
+                     ("(($Low_cIAP ? 1e+100 : ((SMAC) ? 1 : 0)))", "(($Low_cIAP ? 1e+100 : 0))")],
+}
 
 
 def _substitute(node, values):
@@ -40,12 +49,17 @@ def _substitute(node, values):
     return node
 
 
-def build(kappa: float, k_time: float, cells: int, seed: int, interval: float) -> dict:
+def build(kappa: float, k_time: float, cells: int, seed: int, interval: float, edits: tuple[str, ...] = ()) -> dict:
     spec = json.loads(SPEC.read_text())
     values = {name: p["default"] for name, p in spec["parameters"].items()}
     values.update({"kappa": kappa, "k_time": k_time, "interval": interval, "sample_count": 1})
     state: dict = _substitute(spec["state"], {**values, "seed": seed})
     one = state.pop("cellfate")
+    for edit in edits:
+        for old, new in EDITS[edit]:
+            if one["config"]["network"].count(old) != 1:
+                raise SystemExit(f"edit {edit}: {old!r} is not in the network exactly once")
+            one["config"]["network"] = one["config"]["network"].replace(old, new)
     template = {k: state.pop(k) for k in ("node_state", "node_probabilities", "steps")}
     state.pop("emitter")
     state["cells"] = {}
@@ -107,8 +121,10 @@ def main() -> None:
     a.add_argument("--interval", type=float, default=30.0)
     a.add_argument("--seed", type=int, default=1)
     a.add_argument("--out", type=Path, required=True)
+    a.add_argument("--edit", action="append", default=[], choices=sorted(EDITS), help="named network edit (repeatable)")
     args = a.parse_args()
-    pber = run(build(args.kappa, args.k_time, args.cells, args.seed, args.interval), args.hours, args.out)
+    pber = run(build(args.kappa, args.k_time, args.cells, args.seed, args.interval, tuple(args.edit)), args.hours,
+               args.out)
     rows = json.loads(pber.read_text())["emitter"]
     last = rows[-1]
     print(json.dumps({"pber": str(pber), "rows": len(rows), "t_end_s": last["global_time"],

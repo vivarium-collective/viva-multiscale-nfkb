@@ -64,7 +64,8 @@ def _wilson(k: float, n: int, z: float = 1.96) -> tuple[float, float]:
     return (max(0.0, centre - half), min(1.0, centre + half))
 
 
-def run_point(name: str, kappa_name: str, minutes: float, cells: int, hours: float, runs_db: Path) -> dict:
+def run_point(name: str, kappa_name: str, minutes: float, cells: int, hours: float, runs_db: Path,
+              edits: tuple[str, ...] = ()) -> dict:
     from discovery_engine import run_registry
     import pyarrow as pa
     import pyarrow.parquet as pq
@@ -72,7 +73,7 @@ def run_point(name: str, kappa_name: str, minutes: float, cells: int, hours: flo
     k_time = 1.0 / (60.0 * minutes)
     kappa = k_time if KAPPA[kappa_name] is None else KAPPA[kappa_name]
     params = {"kappa_name": kappa_name, "kappa": kappa, "minutes_per_calzone_unit": minutes, "k_time": k_time,
-              "cells": cells, "hours": hours, "interval": 30.0, "base_seed": BASE_SEED,
+              "cells": cells, "hours": hours, "interval": 30.0, "base_seed": BASE_SEED, "edits": list(edits),
               "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)"}
     out = HERE / "parquet-runs" / name
     run_registry.register_run(runs_db, name, spec_id=SPEC_ID, status="running", params=params,
@@ -80,7 +81,7 @@ def run_point(name: str, kappa_name: str, minutes: float, cells: int, hours: flo
     result = subprocess.run(
         ["uv", "run", "--project", str(ROOT / "compose"), "--frozen", "python", "-I", str(HERE / "population.py"),
          "--kappa", repr(kappa), "--k-time", repr(k_time), "--cells", str(cells), "--hours", str(hours),
-         "--seed", str(BASE_SEED), "--out", str(out / "raw")],
+         "--seed", str(BASE_SEED), "--out", str(out / "raw"), *[f"--edit={e}" for e in edits]],
         cwd=ROOT, capture_output=True, text=True)
     if result.returncode != 0:
         run_registry.register_run(runs_db, name, status="failed", completed_at=time.time())
@@ -135,7 +136,30 @@ def main() -> None:
     _relaunch_in_workbench_env()
     a = argparse.ArgumentParser()
     a.add_argument("--smoke", action="store_true", help="2 kappa x 1 k_time x 10 cells, 1 h")
+    a.add_argument("--followups", action="store_true",
+                   help="the gate knockouts (10, 30 min/unit) and the 24 h horizon at 120 min/unit")
     args = a.parse_args()
+    if args.followups:
+        # (name, kappa, minutes, hours, edits), same 200 cell seeds as the grid
+        points = [
+            *[(f"ko-casp8-rip1-lipniacki-nfkb-{m}min", "lipniacki-nfkb", m, 8.0, ("casp8-rip1-ko",)) for m in (10, 30)],
+            *[(f"ko-gate-lipniacki-nfkb-{m}min", "lipniacki-nfkb", m, 8.0, ("casp8-rip1-ko", "smac-ciap-ko"))
+              for m in (10, 30)],
+            *[(f"long24h-{k}-120min", k, 120, 24.0, ()) for k in KAPPA],
+        ]
+        runs_db = HERE / "runs.db"
+        summaries = []
+        for name, kappa_name, minutes, hours, edits in points:
+            started = time.time()
+            summary = run_point(name, kappa_name, minutes, 200, hours, runs_db, edits)
+            summaries.append(summary)
+            print(f"{name}: survival {summary['Survival_fraction']:.3f}  apoptosis {summary['Apoptosis_fraction']:.3f}  "
+                  f"nonacd {summary['NonACD_fraction']:.3f}  undecided {summary['undecided_fraction']:.3f}  "
+                  f"({time.time() - started:.0f} s)", flush=True)
+        (HERE / "data").mkdir(exist_ok=True)
+        (HERE / "data" / "followups-summary.json").write_text(json.dumps(summaries, indent=1) + "\n")
+        _sync_workbench()
+        return
     if args.smoke:
         grid = [(k, 10) for k in ("calzone-flicker", "lipniacki-nfkb")]
         cells, hours, prefix = 10, 1.0, "smoke"
