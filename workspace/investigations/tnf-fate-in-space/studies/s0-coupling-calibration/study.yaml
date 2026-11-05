@@ -16,7 +16,7 @@ phase: Simulate
 objective: >
   Simulate Lipniacki's NF-kB kinetics coupled to Calzone's cell-fate network under TNF, across the Boolean NF-kB node's
   switching speed kappa and the death-machinery clock k_time, and measure the fraction of cells reaching each fate
-  after 8 h, to decide which kappa the composite uses and whether the plausible death clocks leave room for TNF's dose
+  after 24 h (each cell counted once, by the first fate it reaches), to decide which kappa the composite uses and whether the plausible death clocks leave room for TNF's dose
   and timing to change fate.
 
 question: >
@@ -52,7 +52,8 @@ baseline:
 #   kappa:  calzone-flicker (= k_time), lipniacki-nfkb (ln2 / 337 s, NF-kB's own nuclear half-rise),
 #           lipniacki-gene (ln2 / 2107 s, the NF-kB -> target-protein delay; a slow bracket)
 #   k_time: one Calzone unit per 2, 10, 30 or 120 min
-#   cells:  200 per point (seeds base..base+199); 8 h of composite time; coupling interval 30 s
+#   cells:  200 per point (seeds base..base+199); 24 h of composite time (Alex, 2026-11-04: "24 hours everywhere";
+#           at 8 h, 77-85% of cells were still undecided at 120 min/unit); coupling interval 30 s
 simulation_set:
 - name: calibration-grid
   kind: sweep
@@ -71,7 +72,7 @@ simulation_set:
     interval: 30.0
     sample_count: 1
   metrics:
-  - fate fractions at 8 h
+  - first-fate fractions at 24 h
   - NF-kB trajectory
 
 robustness:
@@ -89,16 +90,19 @@ controls:
 # because the simulators live only in the pinned compose/ env (Alex's environment split), so these readouts are
 # verified there instead: the recorded smoke runs emit both (parquet-runs/smoke-*/timeseries.parquet).
 readouts:
-- name: fate fractions at 8 h
+- name: first-fate fractions at 24 h
   observable: node_state.Survival, node_state.Apoptosis, node_state.NonACD
-  aggregate: fraction of cells (run_grid.py counts them per tick)
+  aggregate: >-
+    each cell's fate code (Survival + 2*Apoptosis + 4*NonACD) per tick; each cell is counted once, by the first fate
+    it reaches (a tie when two switch on in one coupling step), and the end state is reported separately, because
+    Calzone's fate nodes are not mutually exclusive
 - name: NF-kB trajectory
   observable: nfkb_fraction
 
 canonical_runs:
 - name: grid
   default: true
-  label: full calibration grid (3 kappa x 4 k_time x 200 cells, 8 h)
+  label: full calibration grid (3 kappa x 4 k_time x 200 cells, 24 h)
   script: workspace/investigations/tnf-fate-in-space/studies/s0-coupling-calibration/run_grid.py
   args: []
 - name: smoke
@@ -108,7 +112,9 @@ canonical_runs:
 
 limitations:
 - One cell type, one TNF stimulus (TNF_R stepped to 1 and held); no spatial layer yet (that is Studies 1-3).
-- Fate is read at 8 h; cells still undecided are reported as undecided, not assigned.
+- Fate is read over 24 h; cells with no fate by then are reported as undecided, not assigned.
+- A first grid (8 h) summed the fate nodes as if they were exclusive. They are not (a cell can show caspase-3 and
+  ATP loss together), so its fractions double-counted and were VOID; it was superseded by this 24 h, first-fate grid.
 - The death clock k_time has no measured anchor; the grid brackets it.
 
 falsifiability: >
@@ -119,29 +125,29 @@ falsifiability: >
 runs:
 - name: smoke-lipniacki-nfkb-10min
   status: complete
-  timestamp: 1793827346.452693
+  timestamp: 1793836845.742097
   emitter:
     kind: parquet
     store: parquet-runs/smoke-lipniacki-nfkb-10min/timeseries.parquet
-  params: "{\"base_seed\": 1, \"cells\": 10, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 1.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 10}"
+  params: "{\"base_seed\": 1, \"cells\": 10, \"edits\": [], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 1.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 10}"
   computed_outcomes:
     _grader:
       version: 3-freshness
-      graded_at: '2026-11-04T21:22:26.491988+00:00'
-      inputs_hash: c4894adc8c84460b
+      graded_at: '2026-11-05T00:00:45.824399+00:00'
+      inputs_hash: 870c8a81e86e49e3
       store: resolved
 - name: smoke-calzone-flicker-10min
   status: complete
-  timestamp: 1793827344.081536
+  timestamp: 1793836843.34818
   emitter:
     kind: parquet
     store: parquet-runs/smoke-calzone-flicker-10min/timeseries.parquet
-  params: "{\"base_seed\": 1, \"cells\": 10, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 1.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0016666666666666668, \"kappa_name\": \"calzone-flicker\", \"minutes_per_calzone_unit\": 10}"
+  params: "{\"base_seed\": 1, \"cells\": 10, \"edits\": [], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 1.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0016666666666666668, \"kappa_name\": \"calzone-flicker\", \"minutes_per_calzone_unit\": 10}"
   computed_outcomes:
     _grader:
       version: 3-freshness
-      graded_at: '2026-11-04T21:22:26.492101+00:00'
-      inputs_hash: 9adbc883f5a40c6e
+      graded_at: '2026-11-05T00:00:45.824504+00:00'
+      inputs_hash: a712fd41eb3dbeb6
       store: resolved
 - name: grid-lipniacki-gene-120min
   status: complete
@@ -151,11 +157,12 @@ runs:
     store: parquet-runs/grid-lipniacki-gene-120min/timeseries.parquet
   params: "{\"base_seed\": 1, \"cells\": 200, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 8.0, \"interval\": 30.0, \"k_time\": 0.0001388888888888889, \"kappa\": 0.0003289735076221857, \"kappa_name\": \"lipniacki-gene\", \"minutes_per_calzone_unit\": 120}"
   computed_outcomes:
+    _status: store_unresolved
     _grader:
       version: 3-freshness
       graded_at: '2026-11-04T21:43:56.256961+00:00'
       inputs_hash: 78c936797981a079
-      store: resolved
+      store: unresolved
 - name: grid-lipniacki-gene-30min
   status: complete
   timestamp: 1793828534.781182
@@ -164,11 +171,12 @@ runs:
     store: parquet-runs/grid-lipniacki-gene-30min/timeseries.parquet
   params: "{\"base_seed\": 1, \"cells\": 200, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 8.0, \"interval\": 30.0, \"k_time\": 0.0005555555555555556, \"kappa\": 0.0003289735076221857, \"kappa_name\": \"lipniacki-gene\", \"minutes_per_calzone_unit\": 30}"
   computed_outcomes:
+    _status: store_unresolved
     _grader:
       version: 3-freshness
       graded_at: '2026-11-04T21:43:56.257254+00:00'
       inputs_hash: 513efbb3aa4403b2
-      store: resolved
+      store: unresolved
 - name: grid-lipniacki-gene-10min
   status: complete
   timestamp: 1793828430.1092741
@@ -177,11 +185,12 @@ runs:
     store: parquet-runs/grid-lipniacki-gene-10min/timeseries.parquet
   params: "{\"base_seed\": 1, \"cells\": 200, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 8.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0003289735076221857, \"kappa_name\": \"lipniacki-gene\", \"minutes_per_calzone_unit\": 10}"
   computed_outcomes:
+    _status: store_unresolved
     _grader:
       version: 3-freshness
       graded_at: '2026-11-04T21:43:56.257367+00:00'
       inputs_hash: c6d9e99a501bc49a
-      store: resolved
+      store: unresolved
 - name: grid-lipniacki-gene-2min
   status: complete
   timestamp: 1793828326.419136
@@ -190,11 +199,12 @@ runs:
     store: parquet-runs/grid-lipniacki-gene-2min/timeseries.parquet
   params: "{\"base_seed\": 1, \"cells\": 200, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 8.0, \"interval\": 30.0, \"k_time\": 0.008333333333333333, \"kappa\": 0.0003289735076221857, \"kappa_name\": \"lipniacki-gene\", \"minutes_per_calzone_unit\": 2}"
   computed_outcomes:
+    _status: store_unresolved
     _grader:
       version: 3-freshness
       graded_at: '2026-11-04T21:43:56.257444+00:00'
       inputs_hash: a66080976a27f037
-      store: resolved
+      store: unresolved
 - name: grid-lipniacki-nfkb-120min
   status: complete
   timestamp: 1793828228.2479281
@@ -203,11 +213,12 @@ runs:
     store: parquet-runs/grid-lipniacki-nfkb-120min/timeseries.parquet
   params: "{\"base_seed\": 1, \"cells\": 200, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 8.0, \"interval\": 30.0, \"k_time\": 0.0001388888888888889, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 120}"
   computed_outcomes:
+    _status: store_unresolved
     _grader:
       version: 3-freshness
       graded_at: '2026-11-04T21:43:56.257519+00:00'
       inputs_hash: 878223e173a46709
-      store: resolved
+      store: unresolved
 - name: grid-lipniacki-nfkb-30min
   status: complete
   timestamp: 1793828128.874959
@@ -216,11 +227,12 @@ runs:
     store: parquet-runs/grid-lipniacki-nfkb-30min/timeseries.parquet
   params: "{\"base_seed\": 1, \"cells\": 200, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 8.0, \"interval\": 30.0, \"k_time\": 0.0005555555555555556, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 30}"
   computed_outcomes:
+    _status: store_unresolved
     _grader:
       version: 3-freshness
       graded_at: '2026-11-04T21:43:56.257589+00:00'
       inputs_hash: 93f20d94a71fe164
-      store: resolved
+      store: unresolved
 - name: grid-lipniacki-nfkb-10min
   status: complete
   timestamp: 1793828032.9442098
@@ -229,11 +241,12 @@ runs:
     store: parquet-runs/grid-lipniacki-nfkb-10min/timeseries.parquet
   params: "{\"base_seed\": 1, \"cells\": 200, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 8.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 10}"
   computed_outcomes:
+    _status: store_unresolved
     _grader:
       version: 3-freshness
       graded_at: '2026-11-04T21:43:56.257654+00:00'
       inputs_hash: 0db1eb24e44ec05e
-      store: resolved
+      store: unresolved
 - name: grid-lipniacki-nfkb-2min
   status: complete
   timestamp: 1793827937.321963
@@ -242,11 +255,12 @@ runs:
     store: parquet-runs/grid-lipniacki-nfkb-2min/timeseries.parquet
   params: "{\"base_seed\": 1, \"cells\": 200, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 8.0, \"interval\": 30.0, \"k_time\": 0.008333333333333333, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 2}"
   computed_outcomes:
+    _status: store_unresolved
     _grader:
       version: 3-freshness
       graded_at: '2026-11-04T21:43:56.257719+00:00'
       inputs_hash: 9b462166821a3ee6
-      store: resolved
+      store: unresolved
 - name: grid-calzone-flicker-120min
   status: complete
   timestamp: 1793827841.836243
@@ -255,11 +269,12 @@ runs:
     store: parquet-runs/grid-calzone-flicker-120min/timeseries.parquet
   params: "{\"base_seed\": 1, \"cells\": 200, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 8.0, \"interval\": 30.0, \"k_time\": 0.0001388888888888889, \"kappa\": 0.0001388888888888889, \"kappa_name\": \"calzone-flicker\", \"minutes_per_calzone_unit\": 120}"
   computed_outcomes:
+    _status: store_unresolved
     _grader:
       version: 3-freshness
       graded_at: '2026-11-04T21:43:56.257782+00:00'
       inputs_hash: b5e8f02c16507671
-      store: resolved
+      store: unresolved
 - name: grid-calzone-flicker-30min
   status: complete
   timestamp: 1793827746.2091131
@@ -268,11 +283,12 @@ runs:
     store: parquet-runs/grid-calzone-flicker-30min/timeseries.parquet
   params: "{\"base_seed\": 1, \"cells\": 200, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 8.0, \"interval\": 30.0, \"k_time\": 0.0005555555555555556, \"kappa\": 0.0005555555555555556, \"kappa_name\": \"calzone-flicker\", \"minutes_per_calzone_unit\": 30}"
   computed_outcomes:
+    _status: store_unresolved
     _grader:
       version: 3-freshness
       graded_at: '2026-11-04T21:43:56.257846+00:00'
       inputs_hash: 6847a25041d7bafc
-      store: resolved
+      store: unresolved
 - name: grid-calzone-flicker-10min
   status: complete
   timestamp: 1793827650.312565
@@ -281,11 +297,12 @@ runs:
     store: parquet-runs/grid-calzone-flicker-10min/timeseries.parquet
   params: "{\"base_seed\": 1, \"cells\": 200, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 8.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0016666666666666668, \"kappa_name\": \"calzone-flicker\", \"minutes_per_calzone_unit\": 10}"
   computed_outcomes:
+    _status: store_unresolved
     _grader:
       version: 3-freshness
       graded_at: '2026-11-04T21:43:56.257910+00:00'
       inputs_hash: 78936f8e695b7d22
-      store: resolved
+      store: unresolved
 - name: grid-calzone-flicker-2min
   status: complete
   timestamp: 1793827554.1587598
@@ -294,11 +311,12 @@ runs:
     store: parquet-runs/grid-calzone-flicker-2min/timeseries.parquet
   params: "{\"base_seed\": 1, \"cells\": 200, \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 8.0, \"interval\": 30.0, \"k_time\": 0.008333333333333333, \"kappa\": 0.008333333333333333, \"kappa_name\": \"calzone-flicker\", \"minutes_per_calzone_unit\": 2}"
   computed_outcomes:
+    _status: store_unresolved
     _grader:
       version: 3-freshness
       graded_at: '2026-11-04T21:43:56.257971+00:00'
       inputs_hash: da678243d295c114
-      store: resolved
+      store: unresolved
 pipeline_gate:
   gate_evaluator:
     result: not_started

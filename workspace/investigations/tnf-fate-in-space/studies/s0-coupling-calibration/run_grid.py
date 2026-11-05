@@ -36,6 +36,8 @@ KAPPA = {  # name -> rate (1/s), or None for Calzone's own flicker (kappa = k_ti
     "lipniacki-gene": math.log(2) / 2107.0,  # the NF-kB -> target-protein delay (a slow bracket)
 }
 MINUTES = (2, 10, 30, 120)
+# Alex, 2026-11-04: "24 hours everywhere". At 8 h, 77-85% of cells were still undecided at 120 min per Calzone unit.
+HOURS = 24.0
 
 
 def _relaunch_in_workbench_env() -> None:
@@ -62,6 +64,34 @@ def _wilson(k: float, n: int, z: float = 1.96) -> tuple[float, float]:
     centre = (p + z * z / (2 * n)) / (1 + z * z / n)
     half = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / (1 + z * z / n)
     return (max(0.0, centre - half), min(1.0, centre + half))
+
+
+BIT = {"Survival": 1, "Apoptosis": 2, "NonACD": 4}
+
+
+def classify(codes: dict[str, list[int]], times: list[float]) -> tuple[dict, dict]:
+    """Each cell's FIRST fate (the first tick its code is non-zero), counted once; and the end state, which can overlap.
+
+    A cell whose first non-zero code carries more than one fate bit is a `tie` (two fates switched on within one coupling
+    step). `undecided` means no fate by the end of the run. End-state counts are not exclusive: `Apoptosis_and_NonACD`
+    counts cells that show both at the end."""
+    counts = {"Survival": 0, "Apoptosis": 0, "NonACD": 0, "tie": 0, "undecided": 0}
+    first_times = []
+    for series in codes.values():
+        hit = next((i for i, code in enumerate(series) if code), None)
+        if hit is None:
+            counts["undecided"] += 1
+            continue
+        on = [fate for fate, bit in BIT.items() if series[hit] & bit]
+        counts[on[0] if len(on) == 1 else "tie"] += 1
+        first_times.append(times[hit])
+    first_times.sort()
+    median = first_times[len(first_times) // 2] if first_times else None
+    finals = [series[-1] for series in codes.values()]
+    end = {fate: sum(1 for c in finals if c & bit) for fate, bit in BIT.items()}
+    end["Apoptosis_and_NonACD"] = sum(1 for c in finals if c & 2 and c & 4)
+    end["none"] = sum(1 for c in finals if c == 0)
+    return {"counts": counts, "median_time_s": median}, end
 
 
 def run_point(name: str, kappa_name: str, minutes: float, cells: int, hours: float, runs_db: Path,
@@ -92,23 +122,28 @@ def run_point(name: str, kappa_name: str, minutes: float, cells: int, hours: flo
     import hashlib
     document_sha256 = hashlib.sha256((out / "raw" / "document.pbg").read_bytes()).hexdigest()
     rows = json.loads(pber.read_text())["emitter"][1:]  # row 0 is t = 0, before any process has written
+    cell_ids = sorted(rows[0]["fate_codes"], key=lambda c: int(c[1:]))
+    times = [r["global_time"] for r in rows]
+    codes = {c: [int(round(r["fate_codes"][c])) for r in rows] for c in cell_ids}
     table = pa.table({
-        "time_s": [r["global_time"] for r in rows],
+        "time_s": times,
         "nfkb_fraction": [r["nfkb_fraction"] for r in rows],
         "nfkb_fraction_time_s": [r["nfkb_fraction_time"] for r in rows],
-        "counted_at_s": [r["counted_at"] for r in rows],
-        **{f"n_{fate}": [r["counts"][f"n_{fate}"] for r in rows] for fate in FATES},
+        "coded_at_s": [r["coded_at"] for r in rows],
+        **{f"code_{c}": codes[c] for c in cell_ids},  # Survival + 2*Apoptosis + 4*NonACD per cell per tick
     })
     pq.write_table(table, out / "timeseries.parquet")
-    last = rows[-1]
-    decided = sum(last["counts"][f"n_{fate}"] for fate in FATES)
+    first, end = classify(codes, times)
     f_series = table.column("nfkb_fraction").to_pylist()
     peak = max(range(len(f_series)), key=f_series.__getitem__)
     summary = {
         "run_id": name, **params,
-        **{f"{fate}_fraction": last["counts"][f"n_{fate}"] / cells for fate in FATES},
-        **{f"{fate}_ci95": _wilson(last["counts"][f"n_{fate}"], cells) for fate in FATES},
-        "undecided_fraction": 1.0 - decided / cells,
+        # each cell counted once, by the FIRST fate it reaches (fates can co-occur in Calzone)
+        **{f"first_{k}_fraction": v / cells for k, v in first["counts"].items()},
+        **{f"first_{k}_ci95": _wilson(v, cells) for k, v in first["counts"].items()},
+        "first_fate_time_s_median": first["median_time_s"],
+        # the state at the end of the run, which can overlap
+        **{f"end_{k}_fraction": v / cells for k, v in end.items()},
         "nfkb_first_peak_time_s": table.column("time_s")[peak].as_py(),
         "nfkb_first_peak_f": f_series[peak],
         "document_sha256": document_sha256,
@@ -117,6 +152,12 @@ def run_point(name: str, kappa_name: str, minutes: float, cells: int, hours: flo
     run_registry.register_run(runs_db, name, status="complete", n_steps=len(rows), completed_at=time.time(),
                               emitter_path=str((out / "timeseries.parquet").relative_to(HERE)))
     return summary
+
+
+def _line(summary: dict) -> str:
+    first = "  ".join(f"{k} {summary[f'first_{k}_fraction']:.3f}"
+                      for k in ("Survival", "Apoptosis", "NonACD", "tie", "undecided"))
+    return f"first fate: {first} | end A&N {summary['end_Apoptosis_and_NonACD_fraction']:.3f}"
 
 
 def _sync_workbench() -> None:
@@ -137,15 +178,15 @@ def main() -> None:
     a = argparse.ArgumentParser()
     a.add_argument("--smoke", action="store_true", help="2 kappa x 1 k_time x 10 cells, 1 h")
     a.add_argument("--followups", action="store_true",
-                   help="the gate knockouts (10, 30 min/unit) and the 24 h horizon at 120 min/unit")
+                   help="the gate knockouts at 10 and 30 min/unit (24 h, the grid's seeds)")
     args = a.parse_args()
     if args.followups:
         # (name, kappa, minutes, hours, edits), same 200 cell seeds as the grid
         points = [
-            *[(f"ko-casp8-rip1-lipniacki-nfkb-{m}min", "lipniacki-nfkb", m, 8.0, ("casp8-rip1-ko",)) for m in (10, 30)],
-            *[(f"ko-gate-lipniacki-nfkb-{m}min", "lipniacki-nfkb", m, 8.0, ("casp8-rip1-ko", "smac-ciap-ko"))
+            *[(f"ko-casp8-rip1-lipniacki-nfkb-{m}min", "lipniacki-nfkb", m, HOURS, ("casp8-rip1-ko",))
               for m in (10, 30)],
-            *[(f"long24h-{k}-120min", k, 120, 24.0, ()) for k in KAPPA],
+            *[(f"ko-gate-lipniacki-nfkb-{m}min", "lipniacki-nfkb", m, HOURS, ("casp8-rip1-ko", "smac-ciap-ko"))
+              for m in (10, 30)],
         ]
         runs_db = HERE / "runs.db"
         summaries = []
@@ -153,9 +194,7 @@ def main() -> None:
             started = time.time()
             summary = run_point(name, kappa_name, minutes, 200, hours, runs_db, edits)
             summaries.append(summary)
-            print(f"{name}: survival {summary['Survival_fraction']:.3f}  apoptosis {summary['Apoptosis_fraction']:.3f}  "
-                  f"nonacd {summary['NonACD_fraction']:.3f}  undecided {summary['undecided_fraction']:.3f}  "
-                  f"({time.time() - started:.0f} s)", flush=True)
+            print(f"{name}: {_line(summary)}  ({time.time() - started:.0f} s)", flush=True)
         (HERE / "data").mkdir(exist_ok=True)
         (HERE / "data" / "followups-summary.json").write_text(json.dumps(summaries, indent=1) + "\n")
         _sync_workbench()
@@ -165,7 +204,7 @@ def main() -> None:
         cells, hours, prefix = 10, 1.0, "smoke"
     else:
         grid = [(k, m) for k in KAPPA for m in MINUTES]
-        cells, hours, prefix = 200, 8.0, "grid"
+        cells, hours, prefix = 200, HOURS, "grid"
     runs_db = HERE / "runs.db"
     summaries = []
     for kappa_name, minutes in grid:
@@ -173,9 +212,7 @@ def main() -> None:
         started = time.time()
         summary = run_point(name, kappa_name, minutes, cells, hours, runs_db)
         summaries.append(summary)
-        print(f"{name}: survival {summary['Survival_fraction']:.3f}  apoptosis {summary['Apoptosis_fraction']:.3f}  "
-              f"nonacd {summary['NonACD_fraction']:.3f}  undecided {summary['undecided_fraction']:.3f}  "
-              f"({time.time() - started:.0f} s)", flush=True)
+        print(f"{name}: {_line(summary)}  ({time.time() - started:.0f} s)", flush=True)
     (HERE / "data").mkdir(exist_ok=True)
     (HERE / "data" / f"{prefix}-summary.json").write_text(json.dumps(summaries, indent=1) + "\n")
     _sync_workbench()

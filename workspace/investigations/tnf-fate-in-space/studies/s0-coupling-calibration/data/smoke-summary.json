@@ -9,26 +9,42 @@
   "hours": 1.0,
   "interval": 30.0,
   "base_seed": 1,
+  "edits": [],
   "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
-  "Survival_fraction": 0.0,
-  "Apoptosis_fraction": 0.0,
-  "NonACD_fraction": 0.1,
-  "Survival_ci95": [
+  "first_Survival_fraction": 0.0,
+  "first_Apoptosis_fraction": 0.0,
+  "first_NonACD_fraction": 0.1,
+  "first_tie_fraction": 0.0,
+  "first_undecided_fraction": 0.9,
+  "first_Survival_ci95": [
    0.0,
    0.2775401687666166
   ],
-  "Apoptosis_ci95": [
+  "first_Apoptosis_ci95": [
    0.0,
    0.2775401687666166
   ],
-  "NonACD_ci95": [
+  "first_NonACD_ci95": [
    0.01787574951572113,
    0.4041563854975721
   ],
-  "undecided_fraction": 0.9,
+  "first_tie_ci95": [
+   0.0,
+   0.2775401687666166
+  ],
+  "first_undecided_ci95": [
+   0.5958436145024278,
+   0.9821242504842788
+  ],
+  "first_fate_time_s_median": 3210.0,
+  "end_Survival_fraction": 0.0,
+  "end_Apoptosis_fraction": 0.0,
+  "end_NonACD_fraction": 0.1,
+  "end_Apoptosis_and_NonACD_fraction": 0.0,
+  "end_none_fraction": 0.9,
   "nfkb_first_peak_time_s": 1410.0,
   "nfkb_first_peak_f": 0.9329194602460603,
-  "document_sha256": "0b652215af55db8b784ad6bc2c3be42ae36882122c0f7a5eb9b5486f11a28080"
+  "document_sha256": "1dee7a7f5c0ae01c7528350d351297b606bf5407a93b27f32235f1b20c0ce0b7"
  },
  {
   "run_id": "smoke-lipniacki-nfkb-10min",
@@ -40,25 +56,41 @@
   "hours": 1.0,
   "interval": 30.0,
   "base_seed": 1,
+  "edits": [],
   "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
-  "Survival_fraction": 0.0,
-  "Apoptosis_fraction": 0.0,
-  "NonACD_fraction": 0.1,
-  "Survival_ci95": [
+  "first_Survival_fraction": 0.0,
+  "first_Apoptosis_fraction": 0.0,
+  "first_NonACD_fraction": 0.1,
+  "first_tie_fraction": 0.0,
+  "first_undecided_fraction": 0.9,
+  "first_Survival_ci95": [
    0.0,
    0.2775401687666166
   ],
-  "Apoptosis_ci95": [
+  "first_Apoptosis_ci95": [
    0.0,
    0.2775401687666166
   ],
-  "NonACD_ci95": [
+  "first_NonACD_ci95": [
    0.01787574951572113,
    0.4041563854975721
   ],
-  "undecided_fraction": 0.9,
+  "first_tie_ci95": [
+   0.0,
+   0.2775401687666166
+  ],
+  "first_undecided_ci95": [
+   0.5958436145024278,
+   0.9821242504842788
+  ],
+  "first_fate_time_s_median": 3210.0,
+  "end_Survival_fraction": 0.0,
+  "end_Apoptosis_fraction": 0.0,
+  "end_NonACD_fraction": 0.1,
+  "end_Apoptosis_and_NonACD_fraction": 0.0,
+  "end_none_fraction": 0.9,
   "nfkb_first_peak_time_s": 1410.0,
   "nfkb_first_peak_f": 0.9329194602460603,
-  "document_sha256": "922325cc76d69ab79d179b0bdf2d3be3aab3195bd6b1a8d3d35270448664651f"
+  "document_sha256": "6fd6fd4eccb8d19b0f044c6a9bbad1620afcb27a070e38294a817b94dc48837e"
  }
 ]

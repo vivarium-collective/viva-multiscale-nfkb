@@ -1,8 +1,9 @@
 """Build and run one population document for Study 0: one kinetic layer, N independent cell-fate networks.
 
 Lipniacki's kinetics are deterministic, so every cell sees the same NF-kB trajectory; each cell's fate network
-(MaBoSSProcess, sample_count 1, its own seed) is one stochastic cell. A summing MathExpressionStep counts the cells in
-each fate at every tick, so the results file holds the population counts and NF-kB's f, not N x 31 nodes per tick.
+(MaBoSSProcess, sample_count 1, its own seed) is one stochastic cell. A MathExpressionStep records, at every tick,
+each cell's fate code (Survival + 2*Apoptosis + 4*NonACD), so the results file holds one number per cell
+per tick and NF-kB's f, not N x 31 nodes per tick.
 
 The document is built from the registered composite spec (viva_multiscale_nfkb/composites/kinetic_boolean.composite.json)
 and run through compose-api's own runner (compose/runner.py, vendored at 0.7.78) in the pinned environment compose/,
@@ -72,26 +73,30 @@ def build(kappa: float, k_time: float, cells: int, seed: int, interval: float, e
         cell["outputs"] = {"node_state": ["node_state"], "node_probabilities": ["node_probabilities"],
                            "steps": ["steps"]}
         state["cells"][name] = {**copy.deepcopy(template), "fate": cell}
-    sums = [{"out": f"n_{fate}", "expr": " + ".join(f"{fate}_{i}" for i in range(cells))} for fate in FATES]
-    # the time of the count; reading global_time is also what triggers this Step every tick, because each cell's
+    # Each cell's fate CODE every tick: Survival + 2*Apoptosis + 4*NonACD. Calzone's fate nodes are not mutually
+    # exclusive (a cell can show caspase-3 and ATP loss together), so fates are never summed across nodes; run_grid.py
+    # classifies each cell by the first fate it reaches and reports overlaps separately.
+    codes = [{"out": f"code_{i}", "expr": f"Survival_{i} + 2*Apoptosis_{i} + 4*NonACD_{i}"} for i in range(cells)]
+    # the time of the coding; reading global_time is also what triggers this Step every tick, because each cell's
     # MaBoSSProcess writes its whole node_state map, a parent of the per-node inputs (see the composite spec)
-    sums.append({"out": "counted_at", "expr": "global_time"})
-    state["counts"] = {f"n_{fate}": 0.0 for fate in FATES}
-    state["counted_at"] = 0.0
-    state["count_fates"] = {
+    codes.append({"out": "coded_at", "expr": "global_time"})
+    # every key the Step writes is seeded: process-bigraph 1.9.1 drops a write to a map key the store lacks
+    state["fate_codes"] = {f"c{i}": 0.0 for i in range(cells)}
+    state["coded_at"] = 0.0
+    state["code_fates"] = {
         "_type": "step",
         "address": "local:viva_basic_processes.math_expression.MathExpressionStep",
-        "config": {"expressions": sums},
+        "config": {"expressions": codes},
         "inputs": {**{f"{fate}_{i}": ["cells", f"c{i}", "node_state", fate] for fate in FATES for i in range(cells)},
                    "global_time": ["global_time"]},
-        "outputs": {**{f"n_{fate}": ["counts", f"n_{fate}"] for fate in FATES}, "counted_at": ["counted_at"]},
+        "outputs": {**{f"code_{i}": ["fate_codes", f"c{i}"] for i in range(cells)}, "coded_at": ["coded_at"]},
     }
     state["emitter"] = {
         "_type": "step",
         "address": "local:RAMEmitter",
-        "config": {"emit": {"counts": "map[float]", "counted_at": "float", "nfkb_fraction": "float",
+        "config": {"emit": {"fate_codes": "map[float]", "coded_at": "float", "nfkb_fraction": "float",
                             "nfkb_fraction_time": "float", "global_time": "float"}},
-        "inputs": {"counts": ["counts"], "counted_at": ["counted_at"], "nfkb_fraction": ["nfkb_fraction"],
+        "inputs": {"fate_codes": ["fate_codes"], "coded_at": ["coded_at"], "nfkb_fraction": ["nfkb_fraction"],
                    "nfkb_fraction_time": ["nfkb_fraction_time"], "global_time": ["global_time"]},
     }
     return {"global_time_precision": 6, "state": state}
@@ -128,7 +133,7 @@ def main() -> None:
     rows = json.loads(pber.read_text())["emitter"]
     last = rows[-1]
     print(json.dumps({"pber": str(pber), "rows": len(rows), "t_end_s": last["global_time"],
-                      "f_end": last["nfkb_fraction"], **{k: v / args.cells for k, v in last["counts"].items()}}))
+                      "f_end": last["nfkb_fraction"], "coded_at_end": last["coded_at"]}))
 
 
 if __name__ == "__main__":
