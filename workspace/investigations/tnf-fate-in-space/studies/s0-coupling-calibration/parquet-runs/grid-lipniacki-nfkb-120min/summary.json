@@ -1,0 +1,47 @@
+{
+ "run_id": "grid-lipniacki-nfkb-120min",
+ "kappa_name": "lipniacki-nfkb",
+ "kappa": 0.0020568165595250603,
+ "minutes_per_calzone_unit": 120,
+ "k_time": 0.0001388888888888889,
+ "cells": 200,
+ "hours": 24.0,
+ "interval": 30.0,
+ "base_seed": 1,
+ "edits": [],
+ "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+ "first_Survival_fraction": 0.425,
+ "first_Apoptosis_fraction": 0.36,
+ "first_NonACD_fraction": 0.185,
+ "first_tie_fraction": 0.0,
+ "first_undecided_fraction": 0.03,
+ "first_Survival_ci95": [
+  0.35853495209243025,
+  0.4942919487953179
+ ],
+ "first_Apoptosis_ci95": [
+  0.29669087731339805,
+  0.42858600434373184
+ ],
+ "first_NonACD_ci95": [
+  0.13730116322736063,
+  0.2445718205011816
+ ],
+ "first_tie_ci95": [
+  0.0,
+  0.018846005918320894
+ ],
+ "first_undecided_ci95": [
+  0.013820125830748327,
+  0.06389511973247333
+ ],
+ "first_fate_time_s_median": 39450.0,
+ "end_Survival_fraction": 0.07,
+ "end_Apoptosis_fraction": 0.455,
+ "end_NonACD_fraction": 0.355,
+ "end_Apoptosis_and_NonACD_fraction": 0.045,
+ "end_none_fraction": 0.175,
+ "nfkb_first_peak_time_s": 1410.0,
+ "nfkb_first_peak_f": 0.9329194602460603,
+ "document_sha256": "4d852bba591af6c7d79864b11958cda68d07a410dc158fb1361a60b1a2e7f98a"
+}

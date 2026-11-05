@@ -1,0 +1,47 @@
+{
+ "run_id": "grid-calzone-flicker-30min",
+ "kappa_name": "calzone-flicker",
+ "kappa": 0.0005555555555555556,
+ "minutes_per_calzone_unit": 30,
+ "k_time": 0.0005555555555555556,
+ "cells": 200,
+ "hours": 24.0,
+ "interval": 30.0,
+ "base_seed": 1,
+ "edits": [],
+ "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)",
+ "first_Survival_fraction": 0.14,
+ "first_Apoptosis_fraction": 0.545,
+ "first_NonACD_fraction": 0.315,
+ "first_tie_fraction": 0.0,
+ "first_undecided_fraction": 0.0,
+ "first_Survival_ci95": [
+  0.09866918625271481,
+  0.19489993800847627
+ ],
+ "first_Apoptosis_ci95": [
+  0.4757848503696115,
+  0.6125190090977398
+ ],
+ "first_NonACD_ci95": [
+  0.25462218077944276,
+  0.38235084141033604
+ ],
+ "first_tie_ci95": [
+  0.0,
+  0.018846005918320894
+ ],
+ "first_undecided_ci95": [
+  0.0,
+  0.018846005918320894
+ ],
+ "first_fate_time_s_median": 12420.0,
+ "end_Survival_fraction": 0.0,
+ "end_Apoptosis_fraction": 0.62,
+ "end_NonACD_fraction": 0.38,
+ "end_Apoptosis_and_NonACD_fraction": 0.0,
+ "end_none_fraction": 0.0,
+ "nfkb_first_peak_time_s": 1410.0,
+ "nfkb_first_peak_f": 0.9329194602460603,
+ "document_sha256": "d1afed10f2c8284e0e46ce4e4e4b8b8dcce232a810181e16fa89c9108dc7fc67"
+}
