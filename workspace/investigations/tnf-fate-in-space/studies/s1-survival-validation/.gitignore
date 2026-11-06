@@ -1,0 +1,2 @@
+parquet-runs/*/raw/
+__pycache__/
