@@ -9,7 +9,7 @@ studies ({doc}`studies`) run on the composite:
 - **`k_time`, how fast the death machinery runs** ({doc}`time`): one Calzone unit per 2, 10, 30 or 120 minutes.
 
 It then asks whether NF-κB's protective proteins could save cells if they lasted longer, in three follow-ups (the
-variants table below):
+variants table below; they are Study 0's variants, also called Studies 0b–0d):
 - **0b** anchors their decay to Lipniacki's measured protein turnover, but its edit also touched two other nodes, so
   it is confounded;
 - **0c** is an upper bound: they never decay;
@@ -27,13 +27,13 @@ tables quoted here.
 | Population | 1 deterministic kinetic layer, 200 independent stochastic fate networks (one MaBoSS trajectory each, own seed) | Lipniacki is deterministic, so every cell sees the same NF-κB. The cells differ only in their fate network's random draws, so fractions are fractions of cells. |
 | Composite | The NF-κB model ({doc}`../science/lipniacki-model`) and the fate network ({doc}`../science/calzone-network`), coupled through NF-κB's nuclear fraction $f$ ({doc}`coupling`). No spatial layer and no dose–response | Calibrates the coupling on its own, before space and dose are added |
 | Stimulus | TNF at saturation from t = 0 and held: the NF-κB model's `TNF_R` = 1 from its rest state, and the fate network's TNF node on from the start with rates `u_TNF` = `d_TNF` = 0, so it stays on | The simplest stimulus. It is the case Calzone's own network was built for. |
-| Grid | κ × clock: κ ∈ {Calzone's own flicker, κ = `k_time`; $\ln 2/337$ s, Lipniacki's NF-κB half-rise; $\ln 2/2107$ s, Lipniacki's NF-κB → protein delay}, and 2, 10, 30 or 120 min per Calzone unit (`k_time` = 1/(60 × minutes) per second). 12 points, 200 cells each, cell seeds 1–200 | Brackets κ between the fastest and slowest NF-κB timescale in Lipniacki's model, and the clock across two orders of magnitude |
+| Grid | κ × clock: κ ∈ {κ = `k_time`, NF-κB flipping at Calzone's unit rate; $\ln 2/337$ s, Lipniacki's NF-κB half-rise; $\ln 2/2107$ s, Lipniacki's NF-κB → protein delay}, and 2, 10, 30 or 120 min per Calzone unit (`k_time` = 1/(60 × minutes) per second). 12 points, 200 cells each, cell seeds 1–200 | Spans κ from NF-κB's own rise in Lipniacki's model (337 s) to its NF-κB → protein delay (2107 s), plus the Calzone-unit rate, and the clock across two orders of magnitude |
 | Coupling | Every 30 s. Each cell's fate network is one `MaBoSSProcess` with one trajectory per interval, so it records one sampled on/off state per node every 30 s ({doc}`../math/maboss`) | Each cell is a single history, as a real cell is |
 | Duration | 24 h of model time at every clock (Alex: "24 hours everywhere") | At 8 h, 77–85% of cells were still undecided at the slowest clock. |
 | Recording | Each cell's fate code every 30 s: Survival + 2·Apoptosis + 4·NonACD | Calzone's fate nodes are not mutually exclusive: a cell can show caspase-3 and ATP loss together. A first 8 h grid summed them as if they were exclusive, double-counted, and was discarded. |
 | Readout | **Alive**: no death node on at any tick in 24 h. **Durable survival**: alive with Survival on at 24 h. End state and first fate alongside | Death is irreversible, but Calzone's death nodes are not absorbing: Apoptosis follows CASP3 and NonACD follows ATP loss, and both switch off when their logic fails. Read by end state, up to 27% of a run's cells (with Calzone's gates removed) looked alive after they had died. |
 | Seeds | Every variant reuses the grid's 200 seeds | Differences between runs then come from the change, not from new random draws. Variants are compared with the grid **cell by cell** (exact McNemar test), which an adversarial review showed is needed. Comparing two fractions as if independent hid a consistent shift. |
-| Environment | The workspace's pinned `compose/` environment, through compose-api's own runner; the workbench only records the runs (Alex: "Pinned env; workbench records") | The results are what compose-api would produce in production. |
+| Environment | The workspace's pinned `compose/` environment, through compose-api's own runner; vivarium-workbench, the study dashboard, only records the runs (Alex: "Pinned env; workbench records") | The results are what compose-api would produce in production. |
 
 ### Variants
 
@@ -87,7 +87,7 @@ two columns don't sum to "dead".
 6. **Calzone's gates divert death but don't prevent it.** The gates are caspase-8's cleavage of RIP1 and SMAC's
    sequestration of cIAP.
    - Removing only the RIP1 cleavage turns every death into necrosis.
-   - Removing both still kills every cell at some point in 24 h (200 of 200). The 22–27% that the end state showed as
+   - Removing both still kills every cell at some point in 24 h (200 of 200, at 10 and at 30 min per unit). The 22–27% that the end state showed as
      alive had died and then lost the death signal. Counting those cells as alive was the error that made *alive* the
      readout.
 
@@ -137,7 +137,6 @@ Cell by cell against the grid:
   faster loss of the protective products is enough to cost all 9, though 0d cannot show that Survival's own decay
   added nothing in 0b.
 
-(The page's first version quoted 12 cells falling to 2, from the end-state readout. With the alive readout it is 9 to 0.)
 
 **The lesson for the composite.** "NF-κB target" is not the same as "protective". Each edit to Calzone's network is now
 limited to nodes whose biological role is the one the edit is about.

@@ -16,6 +16,22 @@ changes, U1 and U2:
 | d1 | TNF's dose–response at the receptor (McMillan 2021; decision 27, the next lever) | next, after the documentation pass |
 | compose-api | Pin bumps: viva-tellurium 0.2.3 **done** (compose-api 0.7.79, #502); viva-pde-particle after U2 merges | one compose-api release at a time |
 
+## Open questions
+
+These are unresolved, and each is stated where it is used:
+- **Is receptor binding fast enough to use its equilibrium (d1)?** It relaxes within about 100 s, against NF-κB's 337 s
+  half-rise: a factor of about 3 ({doc}`rule-based`). To be checked when d1 is built.
+- **How fast should the fate network's TNF node flip?** Its rates are the occupancy scaled by `k_time`, so it follows
+  the death clock, while the NF-κB node's speed is deliberately independent of it ({doc}`coupling`). No page argues
+  this choice yet.
+- **How is the cell represented on the spatial grid?** Its size, its position, and which grid cells count as its
+  surface ({doc}`coupling`, `RegionMean`) are not yet specified.
+- **Why a 2D grid?** Not yet argued ({doc}`../math/diffusion`).
+- **What counts as "collapses onto the dose curve"** in the headline studies' test: the statistic and threshold are to
+  be fixed before study 1 runs ({doc}`studies`).
+- **Measured values still to be cited:** TNF's diffusion coefficient ({doc}`../science/scales`), and how fast and how
+  often TNF kills cells in experiments ({doc}`time`).
+
 ## Later
 
 - **v2 spatial:** the nuclear envelope as a membrane flux between regions sized 1 : $K_v$ ({doc}`spatial`).

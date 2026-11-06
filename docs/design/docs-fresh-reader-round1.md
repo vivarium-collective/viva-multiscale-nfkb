@@ -106,7 +106,7 @@ The legend says how far each one has got:
 - [x] (batch B) :63: "edge" is used before the primer defines it, with no link.
 
 **math/diffusion.md**
-- [ ] (OPEN, a modelling question) :11: why the grid is 2D is not argued (an admitted gap).
+- [x] (batch E: listed as open on the roadmap) :11: why the grid is 2D is not argued (an admitted gap).
 - [x] (batch B) :44: "rel" is undefined.
 - [x] (145c27d) :49–50: RegionTotal is called "added upstream", but it is an open PR.
 
@@ -155,34 +155,34 @@ The legend says how far each one has got:
 - [x] (145c27d) :95: "base step" and global_time_precision are used before they are explained.
 
 **design/rule-based.md**
-- [ ] :1, 8: the name "d1".
-- [ ] :16–17: the BNGL `~` states and `R(l,l)` are undefined.
-- [ ] :19–21: quasi-steady fails as stated: binding takes ~100 s against NF-κB's 337 s half-rise, which is not a
+- [x] (batch C: the plan's label) :1, 8: the name "d1".
+- [x] (batch E) :16–17: the BNGL `~` states and `R(l,l)` are undefined.
+- [x] (batch E: stated honestly as a factor of ~3, open on the roadmap) :19–21: quasi-steady fails as stated: binding takes ~100 s against NF-κB's 337 s half-rise, which is not a
   separation of timescales.
-- [ ] :33–34: "not on this branch yet" is internal.
-- [ ] :58: "the plan" is internal.
-- [ ] :72: "chunked" is undefined.
+- [x] (batch E) :33–34: "not on this branch yet" is internal.
+- [x] (batch E) :58: "the plan" is internal.
+- [x] (batch E) :72: "chunked" is undefined.
 
 **design/coupling.md**
-- [ ] :7: the cell's size, position and representation on the grid are never specified ("cell-surface voxels").
-- [ ] :10: why the TNF node's flip speed is scaled by k_time while NF-κB's is not is never argued.
-- [ ] :47 against :63: peak against 414 s (top-10 item 7).
-- [ ] :54: κ (top-10 item 5).
-- [ ] :74: the seeded parameter list omits absorb_death.
-- [ ] :81: when a step runs (top-10 item 10).
+- [x] (batch E: listed as open on the roadmap) :7: the cell's size, position and representation on the grid are never specified ("cell-surface voxels").
+- [x] (batch E: listed as open on the roadmap; a design question for Alex) :10: why the TNF node's flip speed is scaled by k_time while NF-κB's is not is never argued.
+- [x] (145c27d) :47 against :63: peak against 414 s (top-10 item 7).
+- [x] (145c27d) :54: κ (top-10 item 5).
+- [x] (batch E) :74: the seeded parameter list omits absorb_death.
+- [x] (145c27d) :81: when a step runs (top-10 item 10).
 
 **design/calibration.md**
-- [ ] :11–16, 86, 106: 0b, 0c and 0d are called "follow-ups/variants" in one place and "Studies" in another.
-- [ ] :30: "Calzone's own flicker" for κ = k_time, while coupling.md:59 says Calzone's own node does not flicker.
-- [ ] :30: "brackets κ between the fastest and slowest NF-κB timescale" does not follow: κ = k_time spans 1/120 to
+- [x] (batch E) :11–16, 86, 106: 0b, 0c and 0d are called "follow-ups/variants" in one place and "Studies" in another.
+- [x] (batch E) :30: "Calzone's own flicker" for κ = k_time, while coupling.md:59 says Calzone's own node does not flicker.
+- [x] (batch E) :30: "brackets κ between the fastest and slowest NF-κB timescale" does not follow: κ = k_time spans 1/120 to
   1/7200 s⁻¹.
-- [ ] :36: "workbench" is undefined.
-- [ ] :90: the clock is not stated for "200 of 200".
-- [ ] :97–98: κ (top-10 item 5).
-- [ ] :138: refers to the page's own edit history.
+- [x] (batch E) :36: "workbench" is undefined.
+- [x] (batch E) :90: the clock is not stated for "200 of 200".
+- [x] (145c27d) :97–98: κ (top-10 item 5).
+- [x] (batch E) :138: refers to the page's own edit history.
 
 **design/studies.md**
-- [ ] :9: "phase" is undefined for a damped signal.
+- [x] (batch E) :9: "phase" is undefined for a damped signal.
 
 **design/decisions.md**
 - [ ] :20: row 11's first cut is "TNF/TNFR/RIP1", while boolean.md:51 says it also included IKK.

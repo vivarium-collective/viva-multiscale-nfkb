@@ -13,12 +13,17 @@ The strongest runtime role for viva-nfsim was a receptor-binding layer: TNF trim
 between the TNF field and Lipniacki's `TNF_R`. It fails in v1 for three reasons, each checked at the source:
 
 1. **The wrapper drops bound complexes between intervals.** `NFSimProcess` carries state between intervals only for
-   molecule types with no binding sites, or with `~` states. Types like `R(l,l)` and `T(1,2,3)` belong to neither
+   molecule types with no binding sites, or with `~` states (sites that carry a modification state, such as
+   phosphorylated or not, written `site~state`). Types like `R(l,l)` (a receptor with two binding sites, both named `l`)
+   and `T(1,2,3)` belong to neither
    group, so every bound complex vanishes at the end of each interval (viva-nfsim@76ff7fc `processes.py:84-96,340-350`).
 2. **No parameter port, and the same RNG seed every interval** (`:109-113`).
 3. **The timescales make it unnecessary.** Binding equilibrates in about 100 s ($k_\text{off} = 0.01\ \text{s}^{-1}$),
-   which is quasi-steady on NF-κB's timescale of hours: when one process relaxes in minutes and everything that reads
-   it changes over hours, it can be treated as always at its equilibrium. Lipniacki's `TNF` is also an on/off gate, so one scalar carries
+   Quasi-steady means: when one process relaxes much faster than everything that reads it, it can be treated as always at
+   its equilibrium. Binding relaxes toward equilibrium at rate $k_\text{off} + k_\text{on}[R] \ge k_\text{off}$, so
+   within about 100 s or less, depending on receptor density. That is only about a third of NF-κB's 337 s half-rise, so
+   the separation is a factor of about 3, not orders of magnitude, and the equilibrium is an approximation to be checked
+   when d1 is built (an open question; {doc}`roadmap`). Lipniacki's `TNF` is also an on/off gate, so one scalar carries
    all the information the core can use.
 
 Using NFSim for IKK or IκB:NF-κB complexes instead would duplicate what Lipniacki already owns.
@@ -31,7 +36,7 @@ published rule-based model, using BioNetGen's own ODE network generation (no viv
 committed, and applied by a `MathExpressionStep`.
 
 - **Source:** RuleWorld/RuleHub `Published/McMillan2021/McMillan_2021.bngl` at b84f0a7. It will be committed unedited,
-  with its sha256, under `workspace/datasets/mcmillan2021_tnfr/raw/` when d1 lands; it is not on this branch yet.
+  with its sha256, under `workspace/datasets/mcmillan2021_tnfr/raw/` when d1 lands; it is not in the repository yet.
 - **Model:** the TNF trimer `T(1,2,3)` has three receptor-binding sites. The receptor `R(p,a)` binds TNF with its
   site `a`; its site `p`, for receptor–receptor pairing, stays unbound, because the published file leaves the pairing
   rules commented out. Receptors bind in three steps, each weaker than the last: dissociation constants $K_1 = 10$,
@@ -55,7 +60,7 @@ committed, and applied by a `MathExpressionStep`.
 ```{admonition} Assumption, recorded wherever the curve is used
 :class: warning
 The curve maps a receptor-engagement fraction onto Lipniacki's `TNF_R`, which the original model only ever sets to 0 or
-1. The plan records Lipniacki et al. 2007 (*BMC Bioinformatics* 8:376, in which receptor activation by single TNF trimers
+1. The plan of record (`docs/design/plan-section-b.md`) records Lipniacki et al. 2007 (*BMC Bioinformatics* 8:376, in which receptor activation by single TNF trimers
 is a stochastic on/off switch) as the precedent for that mapping; d1 will quote the relevant passage when it lands. The binding constants come from soluble
 receptor in vitro, not from a cell membrane.
 ```
@@ -69,5 +74,5 @@ upstream viva-nfsim fixes first:
 - give TNF its own clamped input;
 - use a new RNG seed each interval.
 
-Its oracles would be chunked against continuous NFsim runs, and the Goldstein–Perelson equilibrium theory for
+Its oracles would be runs split into coupling intervals compared against one continuous NFsim run, and the Goldstein–Perelson equilibrium theory for
 trivalent ligands clustering cell-surface receptors (Goldstein and Perelson 1984; {doc}`../reference/bibliography`).

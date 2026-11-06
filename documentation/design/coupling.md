@@ -71,7 +71,7 @@ Each rule was found by running composites, and each is enforced by a check that 
 
 - **Seed every map key a Step writes into.** In process-bigraph 1.9.1, a Step's write to a `map[float]` key the store
   doesn't hold yet is **silently dropped**. An overwrite to `["parameters","u"]` on an empty map leaves it empty. So
-  every document seeds MaBoSS's `parameters` (`u_NFkB`, `d_NFkB`, `u_TNF`, `d_TNF`, `k_time`, `r_tx`) and Tellurium's
+  every document seeds MaBoSS's `parameters` (`u_NFkB`, `d_NFkB`, `u_TNF`, `d_TNF`, `k_time`, `r_tx`, `absorb_death`) and Tellurium's
   `parameters_in` (`TNF_R`). Negative check: `pair-nfkb-analytic` with an empty store leaves NF-κB at 0.
 - **A writer to `parameters_in` must declare `overwrite[...]`.** A plain `map[float]` output adds to the store on every
   update (viva-tellurium 0.2.3).

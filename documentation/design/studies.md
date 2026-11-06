@@ -6,7 +6,7 @@ Alex asked for all three (2026-11-04). They nest, so they cost one composite doc
 |---|---|---|---|---|
 | 2 | **Fate vs uniform TNF dose.** The control | Uniform bath at concentration $c_0$, optional linear decay | $c_0$, `k_time` | fraction of cells alive (no death node ever on) and with durable survival; the death mode (apoptosis, necrosis) ({doc}`calibration`); NF-κB's first nuclear peak (height, time) and period |
 | 1 | **Fate vs distance from a TNF bolus.** The headline: what space adds | Point bolus at distance r from the cell's surface region | r, bolus size, `k_time` | as 2, plus TNF at the cell over time (`RegionMean`) |
-| 3 | **NF-κB wave timing under a moving TNF front.** The mechanism | study 1's runs (no new runs) | r | TNF front arrival vs NF-κB nuclear peaks and phase |
+| 3 | **NF-κB wave timing under a moving TNF front.** The mechanism | study 1's runs (no new runs) | r | TNF front arrival vs the times of NF-κB's nuclear peaks |
 
 ## The scientific test
 
