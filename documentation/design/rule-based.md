@@ -1,6 +1,13 @@
 # The rule-based layer, and the dose–response (d1)
 
-## No rule-based layer at runtime in v1 (Alex, Q4)
+**Rule-based models** describe molecules with binding sites, and rules for which sites bind, instead of listing every
+complex as its own species. They are written in the BioNetGen language (BNGL): `T(1,2,3)` is a molecule `T` with three
+sites named 1, 2 and 3, `!1` marks a bond (both ends carry the same label), and `!+` means "bound to something". A
+simulator such as NFSim follows the molecules one by one; BioNetGen can also expand the rules into ordinary
+differential equations. This page explains why the composite uses a rule-based model only offline, to compute TNF's
+dose–response at the receptor, the step called **d1**.
+
+## No rule-based layer at runtime in v1 (Alex)
 
 The strongest runtime role for viva-nfsim was a receptor-binding layer: TNF trimers binding and clustering receptors,
 between the TNF field and Lipniacki's `TNF_R`. It fails in v1 for three reasons, each checked at the source:
@@ -10,7 +17,8 @@ between the TNF field and Lipniacki's `TNF_R`. It fails in v1 for three reasons,
    group, so every bound complex vanishes at the end of each interval (viva-nfsim@76ff7fc `processes.py:84-96,340-350`).
 2. **No parameter port, and the same RNG seed every interval** (`:109-113`).
 3. **The timescales make it unnecessary.** Binding equilibrates in about 100 s ($k_\text{off} = 0.01\ \text{s}^{-1}$),
-   which is quasi-steady on NF-κB's timescale of hours. Lipniacki's `TNF` is also an on/off gate, so one scalar carries
+   which is quasi-steady on NF-κB's timescale of hours: when one process relaxes in minutes and everything that reads
+   it changes over hours, it can be treated as always at its equilibrium. Lipniacki's `TNF` is also an on/off gate, so one scalar carries
    all the information the core can use.
 
 Using NFSim for IKK or IκB:NF-κB complexes instead would duplicate what Lipniacki already owns.
@@ -22,13 +30,24 @@ at the cell to receptor engagement, $\text{occ} = g([\text{TNF}])$. It is comput
 published rule-based model, using BioNetGen's own ODE network generation (no viva-nfsim). It is then fitted and
 committed, and applied by a `MathExpressionStep`.
 
-- **Source:** RuleWorld/RuleHub `Published/McMillan2021/McMillan_2021.bngl` at b84f0a7, kept unedited in
-  `workspace/datasets/mcmillan2021_tnfr/raw/` with its sha256.
-- **Model:** the TNF trimer `T(1,2,3)` binds receptors `R(p,a)` in three steps, with $K_1 = 10$, $K_2 = 100$ and
-  $K_3 = 1000$ nM and $k_\text{off} = 0.01\ \text{s}^{-1}$. McMillan et al. fitted these constants to native
-  mass-spectrometry fractions of TNF with 0–3 receptors bound, solving the equilibria with BioNetGen (Methods).
-- **The oracle:** the equilibrium of stepwise binding is the solution of the mass-action equations. Solving them
-  independently gives a check on BioNetGen's ODE steady state.
+- **Source:** RuleWorld/RuleHub `Published/McMillan2021/McMillan_2021.bngl` at b84f0a7. It will be committed unedited,
+  with its sha256, under `workspace/datasets/mcmillan2021_tnfr/raw/` when d1 lands; it is not on this branch yet.
+- **Model:** the TNF trimer `T(1,2,3)` has three receptor-binding sites. The receptor `R(p,a)` binds TNF with its
+  site `a`; its site `p`, for receptor–receptor pairing, stays unbound, because the published file leaves the pairing
+  rules commented out. Receptors bind in three steps, each weaker than the last: dissociation constants $K_1 = 10$,
+  $K_2 = 100$ and $K_3 = 1000$ nM for the first, second and third receptor, all with $k_\text{off} = 0.01\ \text{s}^{-1}$.
+  McMillan et al. fitted these constants to native mass-spectrometry fractions of TNF with 0–3 receptors bound,
+  solving the equilibria with BioNetGen (Methods).
+- **The equilibrium, from the rules.** Each free site binds a receptor at rate $k_n [R]$, where $[R]$ is the free
+  receptor concentration and $n$ the number of receptors the trimer will then hold, and each bond breaks at
+  $k_\text{off}$, with $K_n = k_\text{off}/k_n$. At equilibrium every binding step is balanced by its reverse, so a
+  trimer with one more particular site bound is $[R]/K_n$ times as likely as without it. There are $\binom{3}{n}$ ways
+  to choose which $n$ sites are bound, so the fraction of trimers with $n$ receptors is
+  $$
+  P(n) \propto \binom{3}{n} \prod_{i=1}^{n} \frac{[R]}{K_i}, \qquad n = 0, 1, 2, 3,
+  $$
+  with free $[R]$ and free TNF fixed by conservation of total receptor and total TNF.
+- **The oracle:** that closed form, solved independently, checks BioNetGen's ODE steady state.
 - **Open choices, to be documented when d1 lands:**
   - which observable counts as "engaged" (any bound receptor, or ≥ 2 receptors per trimer, which clustering needs);
   - the receptor density on a cell surface, as against the paper's soluble ectodomain.
@@ -49,5 +68,5 @@ upstream viva-nfsim fixes first:
 - give TNF its own clamped input;
 - use a new RNG seed each interval.
 
-Its oracles would be chunked against continuous NFsim runs, and the Goldstein–Perelson equilibrium for trivalent
-ligands.
+Its oracles would be chunked against continuous NFsim runs, and the Goldstein–Perelson equilibrium theory for
+trivalent ligands clustering cell-surface receptors (citation to be added with the bibliography pass).

@@ -79,6 +79,11 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
       - kinetic.md: internal ids (Q1, Q2, U1, plan F3, d7) replaced in prose; NRMSE, sim1 and species_overrides
         defined. The unverified "couples the rest state to coupling intervals" claim was dropped.
       - models.md: boundary species, IKKn/IKKa and NRMSE defined; TNF_R is 0 to 1 (not 0/1); links to the new pages.
+      - rule-based.md: what rule-based models and BNGL notation are; quasi-steady defined; the McMillan model's sites
+        (a binds TNF; p, for pairing, stays unbound because the published pairing rules are commented out); the
+        stepwise-binding equilibrium P(n) ∝ C(3,n)·∏[R]/K_i derived from the rules. The stale claim that the BNGL
+        is committed is fixed (it is untracked in the -boolean worktree). Q4 is gone. Lipniacki 2007 and
+        Goldstein–Perelson citations wait for step 7, with web verification.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)
