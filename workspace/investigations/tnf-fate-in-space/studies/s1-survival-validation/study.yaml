@@ -34,9 +34,8 @@ assumptions:
     r_tx * 60 m read after 24 * 60 / m units, because the genes run at r_tx per second and every other rate, including
     NF-kB's activation route (TNFR, RIP1, RIP1ub, IKK), runs on k_time; only the final NFkB node runs at f * kappa.
 - text: >
-    The standard (most NF-kB-competent cells survive TNF alone; NF-kB loss sensitises) comes from literature NOT
-    provided by the expert. It is recorded on the investigation as proposed_inputs, status pending, and is not cited as
-    sanctioned evidence until Alex accepts it.
+    The standard (most NF-kB-competent cells survive TNF alone; NF-kB loss sensitises) comes from Micheau & Tschopp
+    2003 and Lee et al. 2016, proposed by the agent and accepted by Alex on 2026-11-06 (investigation inputs.references).
 
 conditions:
   baseline: "NF-kB intact, TNF held on, absorbing death (decision 28)."
@@ -65,7 +64,8 @@ alternative_hypotheses:
 - hypothesis: "The limit is Calzone's own race, upstream of the genes."
   status: supported
   how_tested: >
-    The knockouts match the comparator at every clock, and the composite never protects more than Calzone alone. The
+    The knockouts match the comparator within about 2 standard errors at every clock, and the composite never protects
+    significantly more than Calzone alone. The
     ceiling saturates as induction speeds up (f1), and NF-kB's activation route runs on the death clock in both.
 
 falsifiability: >
@@ -74,15 +74,16 @@ falsifiability: >
   standard.
 
 limitations: >
-  The standard is qualitative, from two cell lines in the literature, and pending acceptance. The 24 h horizon is only
+  The standard is qualitative, from the two accepted sources; reading "survive" as Survival held through the last 2 h
+  (not merely undecided) was fixed after Phase B. The 24 h horizon is only
   3 to 12 Calzone units at 120-480 min per unit, so at slow clocks many cells are undecided and protection is still
   changing. The p values are not corrected for the six comparisons. The pairing by seed is partial (trajectories share
   random numbers only until they diverge), so the paired p values overstate the separation somewhat. Only rates are
   varied; the network's structure is not.
 
 claim: >
-  Under held, saturating TNF the composite does not meet the proposed standard at any death clock: NF-kB saves about
-  10-13% of cells at 24 h at best, and where most intact cells are alive (200 min per unit and slower) it is because
+  Under held, saturating TNF the composite does not meet the standard at any death clock: NF-kB's net protection is at
+  most about 10-13 points at 24 h, and where most intact cells are alive (200 min per unit and slower) it is because
   many have not yet reached any fate. The limit is Calzone's own race between caspase-8 and NF-kB's activation route,
   both on the death clock; the coupling lowers protection further only at fast and middle clocks.
 confidence: Investigating
