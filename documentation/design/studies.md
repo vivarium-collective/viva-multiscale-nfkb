@@ -23,6 +23,13 @@ Study 3 shows the mechanism behind either answer.
 $r_\text{tx} = 3.29\times10^{-4}\ \text{s}^{-1}$, so each study maps the race directly: how fast must the death
 machinery be for TNF to kill, at each dose (study 2) and each distance (study 1)?
 
+## What Study 0 changes
+
+Study 0 ({doc}`calibration`) found that TNF held on at saturation kills nearly every cell at every death clock. So the
+signal these studies look for has to come from exposure: how much TNF reaches a cell, when, and for how long. That
+is what dose (study 2), distance (study 1) and front arrival (study 3) vary. The persistence bound (Study 0c) decides
+whether NF-κB protection can also contribute.
+
 ## Why a bolus
 
 A bolus is an initial condition of the `fields` store, which `FVReactionDiffusion` supports today. A sustained point

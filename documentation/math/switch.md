@@ -22,6 +22,17 @@ $$
 with stationary value exactly $f$, Lipniacki's nuclear fraction. This is why the coupling is model-native: the Boolean
 node's long-run probability of being on is the kinetic model's own fraction of active NF-κB, with no new constant.
 
+**In the composite** the same switch is scaled by κ, the node's flipping speed in s⁻¹: $u = f\kappa$ and
+$d = (1-f)\kappa$, written to MaBoSS as $f\kappa/k_\text{time}$ and $(1-f)\kappa/k_\text{time}$ because MaBoSS
+multiplies every rate by `$k_time`. Then $u + d = \kappa$ and
+
+$$
+P(t) = f\,(1 - e^{-\kappa t}),
+$$
+
+with the same stationary value $f$. The node's mean time on is $1/((1-f)\kappa)$ and its mean time off is
+$1/(f\kappa)$. The checks use κ = 1 per Calzone unit. The composite uses κ = ln 2 / 337 s ({doc}`../design/calibration`).
+
 ## Absorbing switch
 
 If $d = 0$ (a node that turns on and stays on, like a target gene while NF-κB is on), then

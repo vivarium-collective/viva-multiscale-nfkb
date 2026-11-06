@@ -26,3 +26,11 @@ measurement cited in the evidence column. The plan of record is
 | 17 | No runtime rule-based layer in v1; offline dose–response instead | Alex (Q4) | Wrapper drops bound complexes; binding is quasi-steady | viva-nfsim `processes.py:84-96` | {doc}`rule-based` |
 | 18 | Three headline studies from one composite | Alex ("all 1, 2, and 3") | They nest: control, headline, mechanism | — | {doc}`studies` |
 | 19 | The design record lives in this workspace | Alex | Design next to the model it describes | `docs/design/` | — |
+| 20 | Calibrate κ and the death clock in a study (Study 0) before the headline studies | Alex ("investigation + studies") | Neither model gives either speed; the headline studies depend on both | `s0-coupling-calibration/study.yaml` | {doc}`calibration` |
+| 21 | Studies run in the pinned `compose/` environment; the workbench only records them | Alex ("Pinned env; workbench records") | Results are what compose-api produces; the workbench needs a newer process-bigraph | `run_grid.py` | {doc}`calibration` |
+| 22 | 24 h of model time at every clock | Alex ("24 hours everywhere") | At 8 h, 77–85% of cells were undecided at 120 min per unit | void 8 h grid | {doc}`calibration` |
+| 23 | Count each cell once, by its end state (first fate alongside); never sum fate nodes | measured | Calzone's fate nodes overlap; the 8 h grid double-counted and was voided | `analysis.py` | {doc}`calibration` |
+| 24 | Variants reuse the grid's seeds and are compared cell by cell (exact McNemar) | adversarial review | Unpaired fractions hid a consistent shift | `data/paired.json` | {doc}`calibration` |
+| 25 | κ = ln 2 / 337 s, Lipniacki's NF-κB speed | Alex | Measured, not fitted; independent of the death clock; durable survival insensitive to κ | `data/fate-table.json` | {doc}`coupling` |
+| 26 | ~~Protective-protein decay at A20's turnover (Study 0b)~~ (confounded; superseded by 26b) | Alex ("Anchor protein decay") | The edit also slowed mROS (a necrosis driver) and the Survival readout | `data/paired.json` (decay-*) | {doc}`calibration` |
+| 26b | Persistence bound first (Study 0c): cFLIP, BCL2, mXIAP, mcIAP never switch off | Alex ("Run 0c bound first"); node set from review | Decides whether persistence is a lever at all before modelling its rate | `population.py` `persist-protective` | {doc}`calibration` |

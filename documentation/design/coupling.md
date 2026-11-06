@@ -8,7 +8,7 @@ Each edge is data flowing from the layer that owns a quantity to the layer that 
 | `tnf_at_cell` | | `MathExpressionStep`: the dose–response (d1) | store `tnf_occupancy` (0–1) | |
 | `tnf_occupancy` | | direct (writer declares `overwrite`) | <span class="layer kinetic">kinetic</span> Tellurium | `parameters_in.TNF_R` |
 | `tnf_occupancy` | | `MathExpressionStep`: $u = \text{occ}$, $d = 1-\text{occ}$ (on Calzone's unit rate, then scaled by `$k_time` like every rate) | <span class="layer boolean">Boolean</span> MaBoSS | `parameters.u_TNF`, `parameters.d_TNF` |
-| Tellurium | five NF-κB species | `MathExpressionStep`: nuclear fraction $f$; $u = f$, $d = 1-f$ | MaBoSS | `parameters.u_NFkB`, `parameters.d_NFkB` |
+| Tellurium | five NF-κB species | `MathExpressionStep`: nuclear fraction $f$; $u = f\kappa/k_\text{time}$, $d = (1-f)\kappa/k_\text{time}$ | MaBoSS | `parameters.u_NFkB`, `parameters.d_NFkB` |
 | MaBoSS | `node_probabilities.Apoptosis`/`NonACD` | gate (*candidate*) | Tellurium | `parameters_in.…` |
 
 The last edge, fate feeding back into kinetics, ships only with a cited biological basis. Without one, the Boolean
@@ -35,8 +35,17 @@ $$
   - At NF-κB's first peak after TNF (NFKB_nuc 0.280 µM, 23.7 min), $f = 0.933$.
   - The checks hold one sampled stimulated state, 414 s after TNF and still rising (NFKB_nuc 0.1688 µM), where
     $f = 0.5627$.
-- **How it drives the node:** $u_\text{NFkB} = f$ and $d_\text{NFkB} = 1-f$. With caspase-3 off, the NFkB node is
-  then a two-state switch with stationary P(on) $= f$ ({doc}`../math/switch`).
+- **How it drives the node:** $u_\text{NFkB} = f\,\kappa/k_\text{time}$ and
+  $d_\text{NFkB} = (1-f)\,\kappa/k_\text{time}$. MaBoSS multiplies every rate by `$k_time`, so in seconds the node
+  switches on at $f\kappa$ and off at $(1-f)\kappa$. While its gate holds (IKK on, caspase-3 off), the NFkB node is a
+  two-state switch with stationary P(on) $= f$ ({doc}`../math/switch`).
+  - **$f$ sets how often the node is on; κ sets how fast it flips.** Neither model gives κ.
+  - **Study 0 chose κ = ln 2 / 337 s,** Lipniacki's own nuclear half-rise (Alex, 2026-11-06; {doc}`calibration`). The
+    checks below use the special case κ = `k_time`, where $u = f$ and $d = 1 - f$.
+  - **The consequence: graded NF-κB becomes a duty cycle.** Once $f$ settles at 0.28 under held TNF, the node stays on
+    for about 11 min at a time ($1/((1-f)\kappa)$) and off for about 29 min ($1/(f\kappa)$).
+  - **Calzone's NFkB is different:** it switches on at rate 1 per unit and stays on while its gate holds. Study 0
+    measured what that difference does to fate.
 
 **Check:** `pair-nfkb-analytic` wires exactly this.
 - **Inputs:** the five species, held at the peak; the adapter evaluates the rule; MaBoSS runs the coupled network's NF-κB node verbatim, with its gate held open
