@@ -50,6 +50,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "workspace" / "datasets" / "calzone2010_cellfate"
 HERE = Path(__file__).resolve().parent
+R_ACT = json.loads((DATA / "processed" / "activation_anchor.json").read_text())["r_act_per_s_for_ikk_half_rise"]
 UNITS, WINDOWS = 40.0, 20
 FULL_SAMPLES, PROCESS_SAMPLES, ABS_TOL = 200_000, 50_000, 0.01
 TRANSRATE = 1 / 24
@@ -148,7 +149,7 @@ def main() -> None:
         _fail("the full network's NFkB node is not the expected upstream text")
     if _nodes(full) != _nodes(coupled):
         _fail("the coupled network does not have exactly the full network's nodes")
-    as_calzone = {"u_NFkB": 1.0, "d_NFkB": 0.0, "absorb_death": 0.0, "anchor_activation": 0.0, "r_act": 0.0}
+    as_calzone = {"u_NFkB": 1.0, "d_NFkB": 0.0, "absorb_death": 0.0, "anchor_activation": 0.0, "r_act": R_ACT}
     wild_type = _full_marginals(full)
     early = _full_marginals(full, units=8.0, windows=8)
 
@@ -177,7 +178,7 @@ def main() -> None:
            windows=8)
     knockout = full.replace(FULL_NFKB, FULL_NFKB.replace("(@logic ? 1 : 0)", "0"))
     _write("coupled-nfkb-knockout", coupled,
-           {"u_NFkB": 0.0, "d_NFkB": 1.0, "k_time": 1.0, "r_tx": TRANSRATE, "absorb_death": 0.0, "anchor_activation": 0.0, "r_act": 0.0}, UNITS,
+           {"u_NFkB": 0.0, "d_NFkB": 1.0, "k_time": 1.0, "r_tx": TRANSRATE, "absorb_death": 0.0, "anchor_activation": 0.0, "r_act": R_ACT}, UNITS,
            _full_marginals(knockout),
            "The coupled network with no nuclear NF-kB (u_NFkB = 0) against the full Calzone network with NF-kB loss of "
            "function (NFkB rate_up 0), TNF on, t = 40. All 31 nodes agree: TNF still reaches apoptosis and necrosis.")

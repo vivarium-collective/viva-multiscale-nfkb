@@ -26,6 +26,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "workspace" / "datasets" / "calzone2010_cellfate" / "processed"
 HERE = Path(__file__).resolve().parent
+R_ACT = json.loads((DATA / "activation_anchor.json").read_text())["r_act_per_s_for_ikk_half_rise"]
 TARGETS = ("BCL2", "cFLIP", "mXIAP", "Survival")
 WINDOWS, SAMPLES, ABS_TOL = 20, 50_000, 0.01
 
@@ -50,7 +51,7 @@ def write(name: str, k_time: float, network: str, r_tx: float, interval: float) 
                     "network": network,
                     "parameters": {"High_NFkB": 1.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0, "u_NFkB": 0.0,
                                    "d_NFkB": 0.0, "u_TNF": 0.0, "d_TNF": 0.0, "k_time": k_time, "r_tx": r_tx,
-                                   "absorb_death": 0.0, "anchor_activation": 0.0, "r_act": 0.0},
+                                   "absorb_death": 0.0, "anchor_activation": 0.0, "r_act": R_ACT},
                     "initial_state": {n: 1.0 for n in sorted(on)},
                     "sample_count": SAMPLES,
                     "windows_per_interval": WINDOWS,

@@ -87,7 +87,7 @@
           "r_tx": 0.041666666666666664,
           "absorb_death": 0.0,
           "anchor_activation": 0.0,
-          "r_act": 0.0
+          "r_act": 0.023875538515388928
         },
         "initial_state": {
           "ATP": 1.0,

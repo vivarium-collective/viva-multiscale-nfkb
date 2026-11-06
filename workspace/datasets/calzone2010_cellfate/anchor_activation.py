@@ -14,7 +14,9 @@ a species first reaches half-way from its start to its first peak (as in anchor_
 The Boolean route RIP1 -> RIP1ub -> IKK is three steps in series. If each switches on at rate r, the time to IKK on is
 Erlang(3, r), whose median is q / r with 1 - e^{-q} (1 + q + q^2 / 2) = 1/2, q = 2.6741. So the route's median equals
 a measured time T when r = q / T. This script reports r for T = IKK_active's half-rise; which T the composite uses is a
-modelling decision recorded in documentation/design/decisions.md, not made here.
+modelling decision recorded in documentation/design/decisions.md, not made here. IKK_active peaks early because active
+IKK is also being inactivated as it forms, so the script also reports a slower readout of the same activation: the
+time at which half of the IKK pool has left its neutral form, 1 - IKK_neutral(t) / IKK_neutral(0) = 1/2.
 
     uv run --project compose --frozen python -I workspace/datasets/calzone2010_cellfate/anchor_activation.py
 """
@@ -74,11 +76,16 @@ def main() -> None:
     for species, value in steady["species"].items():
         rr[f"[{species}]"] = value
     rr["TNF_R"] = 1.0
-    result = rr.simulate(0, DURATION_S, POINTS, selections=["time", "[IKK_active]", "[NFKB_nuc]"])
+    result = rr.simulate(0, DURATION_S, POINTS, selections=["time", "[IKK_active]", "[NFKB_nuc]", "[IKK_neutral]"])
     t = np.asarray(result[:, 0])
     ikk_peak, ikk_half = _half_rise(t, np.asarray(result[:, 1]))
     nfkb_peak, nfkb_half = _half_rise(t, np.asarray(result[:, 2]))
     q = erlang_median_factor(STEPS)
+    neutral = np.asarray(result[:, 3])
+    left = 1.0 - neutral / neutral[0]
+    if left.max() < 0.5:
+        _fail("less than half of the IKK pool ever leaves its neutral form")
+    pool_half = float(t[int(np.flatnonzero(left >= 0.5)[0])])
     OUT.write_text(json.dumps({
         "model": MODEL.name,
         "model_sha256": model_sha,
@@ -90,10 +97,13 @@ def main() -> None:
         "route_steps": STEPS,
         "erlang_median_factor": q,
         "r_act_per_s_for_ikk_half_rise": q / ikk_half,
+        "ikk_pool_half_left_neutral_s": pool_half,
+        "r_act_per_s_for_pool_half": q / pool_half,
         "definition": "r_act = q / T: three steps at rate r_act reach IKK on with median T; T = IKK_active half-rise",
     }, indent=2) + "\n")
     print(f"IKK_active half-rise {ikk_half:.0f} s (peak {ikk_peak:.0f} s); NFKB_nuc half-rise {nfkb_half:.0f} s "
-          f"(peak {nfkb_peak:.0f} s); q = {q:.4f}; r_act = {q / ikk_half:.4g} /s")
+          f"(peak {nfkb_peak:.0f} s); half the IKK pool non-neutral at {pool_half:.0f} s; q = {q:.4f}; "
+          f"r_act = {q / ikk_half:.4g} /s (pool readout: {q / pool_half:.4g} /s)")
 
 
 if __name__ == "__main__":

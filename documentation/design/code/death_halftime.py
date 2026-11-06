@@ -9,6 +9,7 @@ read over a last window of 1/200 of the run.
 """
 
 import itertools
+import json
 from pathlib import Path
 
 from process_bigraph import allocate_core
@@ -16,9 +17,10 @@ from viva_maboss.processes import MaBoSSProcess
 
 ROOT = Path(__file__).resolve().parents[3]
 NETWORK = (ROOT / "workspace" / "datasets" / "calzone2010_cellfate" / "processed" / "cellfate_coupled.bnd").read_text()
+R_ACT = json.loads((ROOT / "workspace" / "datasets" / "calzone2010_cellfate" / "processed" / "activation_anchor.json").read_text())["r_act_per_s_for_ikk_half_rise"]
 NO_NFKB = {"High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0, "u_TNF": 0.0, "d_TNF": 0.0,
            "u_NFkB": 0.0, "d_NFkB": 1.0, "k_time": 1.0, "r_tx": 1 / 24, "absorb_death": 0.0,
-           "anchor_activation": 0.0, "r_act": 0.0}
+           "anchor_activation": 0.0, "r_act": R_ACT}
 
 
 def apoptosis_at(units: float) -> float:

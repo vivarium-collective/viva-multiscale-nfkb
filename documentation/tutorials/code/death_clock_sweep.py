@@ -14,6 +14,7 @@ from viva_maboss.processes import MaBoSSProcess
 
 DATA = Path("workspace/datasets/calzone2010_cellfate/processed")
 NETWORK = (DATA / "cellfate_coupled.bnd").read_text()
+R_ACT = json.loads((DATA / "activation_anchor.json").read_text())["r_act_per_s_for_ikk_half_rise"]
 R_TX = json.loads((DATA / "transcription_anchor.json").read_text())["r_tx_per_s"]
 F = 0.5626781  # Lipniacki's nuclear NF-kB fraction 414 s after TNF, still rising (see the coupling page)
 SECONDS = 8 * 3600.0  # eight hours of composite time
@@ -25,7 +26,7 @@ def fates(k_time: float) -> dict[str, float]:
             "network": NETWORK,
             "parameters": {"High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0, "u_TNF": 0.0, "d_TNF": 0.0,
                            "u_NFkB": F, "d_NFkB": 1.0 - F, "k_time": k_time, "r_tx": R_TX,
-                           "absorb_death": 1.0, "anchor_activation": 0.0, "r_act": 0.0},  # the composite: a cell that dies stays dead
+                           "absorb_death": 1.0, "anchor_activation": 0.0, "r_act": R_ACT},  # the composite: a cell that dies stays dead
             "initial_state": {"FADD": 1, "ATP": 1, "cIAP": 1, "TNF": 1},
             "sample_count": 20000,
             "windows_per_interval": 20,

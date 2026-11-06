@@ -13,7 +13,8 @@ comparison of each intact cell with its knocked-out twin (rescued, lost, exact M
 `--variant activation-anchored` reruns the same points with NF-kB's activation route on Lipniacki's clock
 (population.py --anchor-activation=1.0; decision 30), as parquet-runs/anchored-<name>/, and writes
 data/phase_b_anchored.json: the same summary, the pre-registered criterion per clock (study.yaml tests:
-anchored-meets-standard, fixed before these runs), and each anchored intact cell paired with its unanchored twin.
+anchored-meets-standard, fixed before these runs), each anchored cell paired with its unanchored twin (intact and
+knocked out), and the death mode (apoptosis, necrosis) in every arm.
 
     uv run --project ~/viva/viva-multiscale-nfkb --no-sync python -I \
         workspace/investigations/tnf-fate-in-space/studies/s1-survival-validation/phase_b.py
@@ -109,10 +110,24 @@ def main_anchored() -> None:
         lost = sum(1 for x, y in zip(anchored_cells, baseline_cells, strict=True) if dead(x) and not dead(y))
         r.update({"alive_by_anchoring": saved, "dead_by_anchoring": lost,
                   "anchoring_net": (saved - lost) / r["cells"], "anchoring_p_mcnemar_exact": _mcnemar_exact(saved, lost)})
+        # Death mode at 24 h (death is absorbing, so on at the end = ever on; the two are not exclusive), both arms:
+        # anchoring RIP1 also speeds RIP1K, necrosis's start, so saved apoptosis could reappear as necrosis.
+        _, ko_cells = _cells(paths["knocked_out"])
+        _, ko_baseline = _cells(run_point("knocked_out", minutes))
+        for arm, cells in (("intact", anchored_cells), ("knocked_out", ko_cells),
+                           ("intact_unanchored", baseline_cells), ("knocked_out_unanchored", ko_baseline)):
+            r[f"apoptosis_{arm}"] = sum(1 for c in cells if c[-1] & 2) / len(cells)
+            r[f"necrosis_{arm}"] = sum(1 for c in cells if c[-1] & 4) / len(cells)
+        ko_saved = sum(1 for x, y in zip(ko_cells, ko_baseline, strict=True) if not dead(x) and dead(y))
+        ko_lost = sum(1 for x, y in zip(ko_cells, ko_baseline, strict=True) if dead(x) and not dead(y))
+        r.update({"knocked_out_alive_by_anchoring": ko_saved, "knocked_out_dead_by_anchoring": ko_lost,
+                  "knocked_out_anchoring_p_mcnemar_exact": _mcnemar_exact(ko_saved, ko_lost)})
         summaries.append(r)
         print(f"{minutes:4d} min/unit: alive intact {r['alive_intact']:.3f}, knocked out {r['alive_knocked_out']:.3f}; "
               f"held {r['held_survival_intact']:.3f}; meets {r['meets_standard']}; net protection "
-              f"{r['net_protection']:.3f}; vs unanchored +{saved}/-{lost}", flush=True)
+              f"{r['net_protection']:.3f}; vs unanchored +{saved}/-{lost}; apoptosis/necrosis intact "
+              f"{r['apoptosis_intact']:.3f}/{r['necrosis_intact']:.3f} (unanchored {r['apoptosis_intact_unanchored']:.3f}/"
+              f"{r['necrosis_intact_unanchored']:.3f})", flush=True)
     (HERE / "data" / "phase_b_anchored.json").write_text(json.dumps(
         {"cells": CELLS, "hours": HOURS, "seed": SEED, "absorb_death": 1.0, "anchor_activation": 1.0,
          "criterion": "held_survival_intact >= 0.5 and alive_knocked_out <= 0.5 at one or more clocks (fixed before "

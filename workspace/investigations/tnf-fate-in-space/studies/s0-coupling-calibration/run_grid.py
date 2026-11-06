@@ -123,6 +123,8 @@ def run_point(name: str, kappa_name: str, minutes: float, cells: int, hours: flo
     # document's sha256 is recorded instead, so a rerun can be checked against it. Runs recorded before decision 28
     # (absorbing death, 2026-11-06) hashed the network without the absorb_death switch; their rebuilt documents differ
     # by the death nodes' two rate lines and the absorb_death = 0 key, with every rate numerically unchanged (f11).
+    # Decision 30 (2026-11-06) changed them again: three switch-on lines (RIP1, RIP1ub, IKK) and the anchor_activation
+    # = 0 and r_act keys; at anchor_activation = 0 every rate is still numerically unchanged.
     import hashlib
     document_sha256 = hashlib.sha256((out / "raw" / "document.pbg").read_bytes()).hexdigest()
     rows = json.loads(pber.read_text())["emitter"][1:]  # row 0 is t = 0, before any process has written

@@ -9,5 +9,7 @@
   "route_steps": 3,
   "erlang_median_factor": 2.67406031372356,
   "r_act_per_s_for_ikk_half_rise": 0.023875538515388928,
+  "ikk_pool_half_left_neutral_s": 284.0,
+  "r_act_per_s_for_pool_half": 0.009415705330012535,
   "definition": "r_act = q / T: three steps at rate r_act reach IKK on with median T; T = IKK_active half-rise"
 }

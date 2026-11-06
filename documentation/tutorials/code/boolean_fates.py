@@ -3,18 +3,20 @@
 Run from the repository root:  uv run --project compose python -I documentation/tutorials/code/boolean_fates.py
 """
 
+import json
 from pathlib import Path
 
 from process_bigraph import allocate_core
 from viva_maboss.processes import MaBoSSProcess
 
 NETWORK = Path("workspace/datasets/calzone2010_cellfate/processed/cellfate_coupled.bnd").read_text()
+R_ACT = json.loads(Path("workspace/datasets/calzone2010_cellfate/processed/activation_anchor.json").read_text())["r_act_per_s_for_ikk_half_rise"]
 BASE = {
     "High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0,  # Calzone's mutant switches, all off (wild type)
     "u_TNF": 0.0, "d_TNF": 0.0,                           # TNF held where it starts (on, below)
     "k_time": 1.0, "r_tx": 1 / 24,                         # Calzone's own units and MaBoSS's example TransRate
-    "absorb_death": 0.0,
-    "anchor_activation": 0.0, "r_act": 0.0,                # NF-kB's activation route on Calzone's clock                                   # Calzone's death nodes, which can switch off again
+    "absorb_death": 0.0,                                   # Calzone's death nodes, which can switch off again
+    "anchor_activation": 0.0, "r_act": R_ACT,              # NF-kB's activation route on Calzone's clock
 }
 
 

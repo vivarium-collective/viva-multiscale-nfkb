@@ -71,6 +71,7 @@ but not checked. The MVP's record is `compose/live/tnf_field_cell.yaml`
 | `boolean/pair-nfkb-seconds` | `$k_time` converts time and nothing else | the same analytic value | clock unconverted: 0.562 vs 0.483 |
 | `boolean/absorbing-death` | with `absorb_death = 1`, Apoptosis and NonACD stay on once on ({doc}`../design/boolean`) | analytic: $\alpha/(\alpha+r)\,(1 - e^{-(\alpha+r)t}) = 0.5$ | `absorb_death = 0`: 0.0048 and 0.0042 vs 0.5 |
 | `boolean/activation-anchor-fast`, `-slow` | NF-κB's activation route keeps Lipniacki's clock at any `k_time` when `anchor_activation` is on ({doc}`../design/boolean`) | analytic Erlang(3, $r_\text{act}$) average: 0.457723 | `anchor_activation = 0`: 0.2562 and 0.0 vs 0.4577 |
+| `boolean/activation-anchor-off` | with the anchor on, the route still switches off on `k_time` ({doc}`../design/boolean`) | analytic: $e^{-kt}$, $e^{-kt}(1+kt)$ averages 0.174, 0.174, 0.478 | $r_\text{act}$ on switch-off: 0.081, 0.082, 0.286 |
 | `boolean/transcription-anchor-fast`, `-slow` | target genes keep Lipniacki's clock at any `k_time` | analytic absorbing switch | uniform clock: 0.014 vs 0.491 |
 
 "—" means a negative for that check is not yet recorded in this documentation.

@@ -190,28 +190,55 @@ Lipniacki's measured time.
 **The change.** The switch-on rate of RIP1, RIP1ub and IKK becomes `($anchor_activation ? ($r_act / $k_time) : 1)`.
 After the `$k_time` scaling, each switches on at $r_\text{act}$ per second when `anchor_activation` is nonzero, and at
 Calzone's rate when it is 0. Three choices, each read from the network's rules:
-- **TNFR is not moved.** It starts both routes (DISC_TNF needs it), so moving it would speed caspase-8's start too.
-  It belongs with the receptor dose–response (d1).
-- **Only switch-on moves.** Each node's switch-off is its loss; RIP1's is caspase-8 cleaving it. That is death
-  machinery, so it stays on `$k_time`, as the protective genes' switch-off does. Calzone's mutant switch `$Low_RIP1`
-  keeps its meaning.
+- **TNFR is not moved.** It starts both routes (DISC_TNF needs it), so moving it would speed caspase-8's route too. It
+  belongs with the receptor dose–response (d1). Both routes therefore still wait for TNFR, one death-clock step.
+- **Only switch-on moves.** RIP1's switch-off is caspase-8 cleaving it, which is death machinery; RIP1ub's and IKK's
+  are deactivation once their inputs go. All stay on `$k_time`, as the protective genes' switch-off does, so the route
+  now opens in minutes but still closes on the death clock. Calzone's mutant switch `$Low_RIP1` keeps its meaning.
 - **The rate is Lipniacki's own.** Stepping `TNF_R` to 1 from the pre-equilibrated state, `IKK_active` reaches half
   its first peak at 112 s (`workspace/datasets/calzone2010_cellfate/anchor_activation.py`, written to
   `processed/activation_anchor.json`). Three steps in series at rate $r$ reach IKK at an Erlang(3, $r$) time, whose
   median is $q/r$ with $1 - e^{-q}(1 + q + q^2/2) = 1/2$, $q = 2.674$. So $r_\text{act} = q / 112\ \text{s} =
-  0.0239\ \text{s}^{-1}$.
+  0.0239\ \text{s}^{-1}$. That readout is a choice: active IKK peaks early because it is also being inactivated as it
+  forms. A slower readout of the same activation, half of the IKK pool having left its neutral form, comes at 284 s and
+  would give 0.0094 s⁻¹. Both are minutes.
 
-**What it leaves open.** The NFkB node already flips at κ = ln 2 / 337 s, nuclear NF-κB's half-rise from the moment
-TNF arrives, which spans the whole route. With the route anchored, TNF → NF-κB takes about the route's 112 s plus
-the node's own delay: roughly 1.3 times Lipniacki's 337 s. That is minutes against the hours caspase-8's route takes
-even at the fastest death clock studied (two steps of at least 30 min), so it should barely affect the race; Alex kept
-κ as decided on Study 0's data (decision 25), so the variant changes one thing.
+**What it changes.**
+- **It decides the opening race rather than re-timing it.** Once TNFR is on, caspase-8 needs DISC_TNF and then CASP8
+  (two death-clock steps, rate $k$ each) before RIP1 switches on (rate $r_\text{act}$). Each step is memoryless, so
+  caspase-8 wins with probability $\bigl(k/(k + r_\text{act})\bigr)^2 = 1/(1+\rho)^2$, with
+  $\rho = r_\text{act}/k = r_\text{act}\cdot 60m$ at $m$ minutes per unit. In Calzone's network $\rho = 1$, so 1/4;
+  anchored at 30 min per unit, $\rho \approx 43$, so about $5\times10^{-4}$. NF-κB's route is then nearly always open
+  first. That is the order Micheau & Tschopp describe: TNF receptor signalling forms two sequential complexes, and
+  "when NF-κB is activated by complex I, complex II harbors the caspase-8 inhibitor FLIP(L) and the cell survives"
+  ({doc}`../reference/bibliography`). The cell's fate then turns on the protection race: whether NF-κB's products
+  (cFLIP blocks caspase-8; Calzone's CASP8 rule has `NOT cFLIP`) arrive before caspase-8 does.
+- **The protection race is close only at the fastest clock.** After TNFR, caspase-8 needs two steps of mean one unit:
+  an Erlang(2) time with median 1.68 units, about 50 min at 30 min per unit, with 26% of cells within 30 min
+  ($1 - 2/e$). cFLIP needs NF-κB on (its node switches on at $f\kappa$, with $f$ from the kinetic layer) and then its
+  own induction, median $\ln 2 / r_\text{tx}$ = 35 min. So the two are comparable at 30 min per unit; from 120 min per
+  unit caspase-8's median is 3.4 h.
+- **It speeds necrosis's start too.** RIP1 also feeds RIP1K (logic `RIP1`), the start of necrosis
+  (RIP1K → ROS → MPT → NonACD). With RIP1 on early and no longer cleaved by caspase-8, RIP1K is on more of the time;
+  necrosis is then held back by NF-κB's side of the network (mROS, `NOT NFkB`, and BCL2). Saving cells from apoptosis
+  can therefore shift deaths to necrosis, so the variant reports the death mode as well as survival.
+- **The knocked-out arm changes too.** With κ = 0, RIP1 still opens on Lipniacki's clock, so knocked-out cells' necrosis
+  route changes as well; the variant compares its knocked-out arm with Study 1's directly.
+
+**What it leaves open.** The NFkB node flips at κ = ln 2 / 337 s, nuclear NF-κB's half-rise from the moment TNF
+arrives, which already spans the whole route. With the route anchored, the route's minutes come on top. Alex kept κ as
+decided on Study 0's data (decision 25), so the variant changes one thing.
 
 **Checked.**
 - `activation-anchor-fast` and `-slow` take RIP1, RIP1ub and IKK verbatim, with TNFR and cIAP held on and caspase-8
   held off. IKK is then on at an Erlang(3, $r_\text{act}$) time at any `k_time`. Over the last window ending at 112 s
   the analytic average is 0.457723, at `k_time` = 1/60 and 1/6000 alike. Both pass. With `anchor_activation` = 0 the
-  route runs on `k_time` and reads 0.2562 and 0.0, and fails.
+  route runs on `k_time` and reads 0.2562 and 0.0, and fails. The generator also asserts that $r_\text{act}$ puts the
+  Erlang(3) median exactly at 112 s.
+- `activation-anchor-off` starts the three nodes on with their logic false (caspase-8 held on, cIAP held off) and the
+  anchor on: they must still switch off on `k_time`. Analytic: $e^{-kt}$ for RIP1 and RIP1ub, $e^{-kt}(1 + kt)$ for IKK
+  (0.174, 0.174, 0.478 over the last window). It passes; with $r_\text{act}$ put on the switch-off lines it reads
+  0.081, 0.082 and 0.286, and fails.
 - With the switch at 0, every earlier check still passes (11 of 11), and rerunning Study 1's 120-min-per-unit point
   reproduces all 200 cells' fate codes exactly, at every one of 2,880 time points.
 

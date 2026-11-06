@@ -46,6 +46,7 @@ The other changes:
     machinery, so it stays on k_time, as the TransRate nodes' switch-off does.
   - TNFR is not moved: it starts both routes, so moving it would speed caspase-8's start too. It belongs with the
     receptor dose-response (d1).
+  - RIP1 also feeds RIP1K (necrosis's start), which is not moved but now sees RIP1 on earlier and longer.
   - `$Low_RIP1` (Calzone's mutant switch) keeps its meaning: it still holds RIP1 off.
   - `r_act` comes from anchor_activation.py (Lipniacki's IKK_active half-rise, matched by the three steps' median).
 - With u_NFkB = 1, d_NFkB = 0, TNF held (u_TNF = d_TNF = 0), k_time = 1, r_tx = 1/24, absorb_death = 0 and
