@@ -177,6 +177,8 @@ def main() -> None:
     _relaunch_in_workbench_env()
     a = argparse.ArgumentParser()
     a.add_argument("--smoke", action="store_true", help="2 kappa x 1 k_time x 10 cells, 1 h")
+    a.add_argument("--decay", action="store_true",
+                   help="Study 0b: the grid with the protective products' decay on Lipniacki's turnover (decay-lipniacki)")
     a.add_argument("--followups", action="store_true",
                    help="the gate knockouts at 10 and 30 min/unit (24 h, the grid's seeds)")
     args = a.parse_args()
@@ -199,9 +201,13 @@ def main() -> None:
         (HERE / "data" / "followups-summary.json").write_text(json.dumps(summaries, indent=1) + "\n")
         _sync_workbench()
         return
+    edits: tuple[str, ...] = ()
     if args.smoke:
         grid = [(k, 10) for k in ("calzone-flicker", "lipniacki-nfkb")]
         cells, hours, prefix = 10, 1.0, "smoke"
+    elif args.decay:
+        grid = [(k, m) for k in KAPPA for m in MINUTES]
+        cells, hours, prefix, edits = 200, HOURS, "decay", ("decay-lipniacki",)
     else:
         grid = [(k, m) for k in KAPPA for m in MINUTES]
         cells, hours, prefix = 200, HOURS, "grid"
@@ -210,7 +216,7 @@ def main() -> None:
     for kappa_name, minutes in grid:
         name = f"{prefix}-{kappa_name}-{minutes}min"
         started = time.time()
-        summary = run_point(name, kappa_name, minutes, cells, hours, runs_db)
+        summary = run_point(name, kappa_name, minutes, cells, hours, runs_db, edits)
         summaries.append(summary)
         print(f"{name}: {_line(summary)}  ({time.time() - started:.0f} s)", flush=True)
     (HERE / "data").mkdir(exist_ok=True)

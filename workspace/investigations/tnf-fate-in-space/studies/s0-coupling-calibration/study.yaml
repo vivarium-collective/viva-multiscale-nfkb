@@ -100,6 +100,13 @@ readouts:
   observable: nfkb_fraction
 
 canonical_runs:
+- name: decay
+  label: >-
+    Study 0b (Alex, 2026-11-06: "Anchor protein decay"): the same grid with the transcription-scale products (cFLIP,
+    BCL2, mROS, mcIAP, mXIAP, Survival) switching OFF at Lipniacki's protein turnover (A20's c5 = 3e-4/s, half-life
+    38.5 min; anchor_turnover.py) instead of Calzone's unit rate x k_time
+  script: workspace/investigations/tnf-fate-in-space/studies/s0-coupling-calibration/run_grid.py
+  args: [--decay]
 - name: grid
   default: true
   label: full calibration grid (3 kappa x 4 k_time x 200 cells, 24 h)

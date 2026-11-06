@@ -1,0 +1,9 @@
+{
+  "model": "lipniacki2004_driven.xml",
+  "model_sha256": "e3d357b9ac0a1e508ea68d690aea107f3fd7408ffb13d618d307901cd8d17718",
+  "reaction": "A20_degradation",
+  "kinetic_law": "Cytosol * c5 * A20",
+  "r_deg_per_s": 0.0003,
+  "half_life_s": 2310.4906018664847,
+  "definition": "r_deg = Lipniacki's A20 protein degradation constant c5 (first-order, constitutive)"
+}

@@ -29,13 +29,48 @@ SBML = ROOT / "workspace" / "datasets" / "lipniacki2004" / "processed" / "lipnia
 FATES = ("Survival", "Apoptosis", "NonACD")
 # Named network edits for knockout variants. Each is an exact (old, new) replacement in the coupled network; build()
 # refuses an edit whose old text is not present exactly once, so a variant can never silently be the baseline.
+TURNOVER = ROOT / "workspace" / "datasets" / "calzone2010_cellfate" / "processed" / "turnover_anchor.json"
+# Each replacement is (node, old, new): `old` must occur exactly once inside that node's block (node None: in the whole
+# network), so an edit can never silently miss, or hit, the wrong node. `parameters` are added to the MaBoSS config.
 EDITS = {
     # caspase-8 no longer cleaves RIP1
-    "casp8-rip1-ko": [("logic = (DISC_FAS OR TNFR) AND (NOT CASP8);", "logic = (DISC_FAS OR TNFR);")],
+    "casp8-rip1-ko": {"replacements": [("RIP1", "logic = (DISC_FAS OR TNFR) AND (NOT CASP8);",
+                                        "logic = (DISC_FAS OR TNFR);")]},
     # SMAC no longer sequesters cIAP: it acts twice in Calzone, in cIAP's logic and in its decay rate
-    "smac-ciap-ko": [("logic = (mcIAP AND (NOT SMAC));", "logic = (mcIAP);"),
-                     ("(($Low_cIAP ? 1e+100 : ((SMAC) ? 1 : 0)))", "(($Low_cIAP ? 1e+100 : 0))")],
+    "smac-ciap-ko": {"replacements": [("cIAP", "logic = (mcIAP AND (NOT SMAC));", "logic = (mcIAP);"),
+                                      ("cIAP", "(($Low_cIAP ? 1e+100 : ((SMAC) ? 1 : 0)))",
+                                       "(($Low_cIAP ? 1e+100 : 0))")]},
+    # Study 0b (Alex, 2026-11-06: "Anchor protein decay"): the transcription-scale products switch OFF at Lipniacki's
+    # protein turnover, r_deg per second (A20's c5; anchor_turnover.py), whatever k_time is, instead of Calzone's unit
+    # rate x k_time. cIAP is left alone: it switches off only when SMAC sequesters it, which is not turnover.
+    "decay-lipniacki": {
+        "replacements": [
+            ("cFLIP", "rate_down = $k_time * ((@logic ? 0 : 1));", "rate_down = $k_time * ((@logic ? 0 : ($r_deg / $k_time)));"),
+            *[(node, "rate_down = $k_time * (@logic ? 0 : 1);", "rate_down = $k_time * (@logic ? 0 : ($r_deg / $k_time));")
+              for node in ("BCL2", "mROS", "mcIAP", "mXIAP", "Survival")],
+        ],
+        "parameters": {"r_deg": "turnover_anchor"},
+    },
 }
+
+
+def _apply(network: str, edit: str) -> tuple[str, dict]:
+    spec = EDITS[edit]
+    for node, old, new in spec["replacements"]:
+        if node is None:
+            if network.count(old) != 1:
+                raise SystemExit(f"edit {edit}: {old!r} is not in the network exactly once")
+            network = network.replace(old, new)
+            continue
+        match = re.search(rf"^node {node} \{{.*?^\}}", network, re.MULTILINE | re.DOTALL)
+        if match is None or match.group(0).count(old) != 1:
+            raise SystemExit(f"edit {edit}: {old!r} is not in node {node} exactly once")
+        network = network.replace(match.group(0), match.group(0).replace(old, new))
+    parameters = {}
+    for name, source in spec.get("parameters", {}).items():
+        if source == "turnover_anchor":
+            parameters[name] = json.loads(TURNOVER.read_text())["r_deg_per_s"]
+    return network, parameters
 
 
 def _substitute(node, values):
@@ -57,10 +92,8 @@ def build(kappa: float, k_time: float, cells: int, seed: int, interval: float, e
     state: dict = _substitute(spec["state"], {**values, "seed": seed})
     one = state.pop("cellfate")
     for edit in edits:
-        for old, new in EDITS[edit]:
-            if one["config"]["network"].count(old) != 1:
-                raise SystemExit(f"edit {edit}: {old!r} is not in the network exactly once")
-            one["config"]["network"] = one["config"]["network"].replace(old, new)
+        one["config"]["network"], added = _apply(one["config"]["network"], edit)
+        one["config"]["parameters"].update(added)
     template = {k: state.pop(k) for k in ("node_state", "node_probabilities", "steps")}
     state.pop("emitter")
     state["cells"] = {}
