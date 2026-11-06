@@ -51,6 +51,18 @@ EDITS = {
         ],
         "parameters": {"r_deg": "turnover_anchor"},
     },
+    # Study 0c (Alex, 2026-11-06: "Run 0c bound first"): an upper bound, not a model. NF-kB's PROTECTIVE products never
+    # switch off once made. cFLIP blocks caspase-8, BCL2 blocks MOMP and MPT, and mXIAP and mcIAP are the transcripts of
+    # XIAP and cIAP. Unlike decay-lipniacki, this leaves alone:
+    # - mROS, which is on when NF-kB is OFF and licenses ROS, a necrosis driver;
+    # - Survival, the phenotype readout, not a protein.
+    # XIAP and cIAP still switch off when SMAC removes them, which is not turnover.
+    "persist-protective": {
+        "replacements": [
+            ("cFLIP", "rate_down = $k_time * ((@logic ? 0 : 1));", "rate_down = 0;"),
+            *[(node, "rate_down = $k_time * (@logic ? 0 : 1);", "rate_down = 0;") for node in ("BCL2", "mcIAP", "mXIAP")],
+        ],
+    },
 }
 
 

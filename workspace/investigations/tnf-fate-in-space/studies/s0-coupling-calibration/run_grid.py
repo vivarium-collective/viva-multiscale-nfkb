@@ -179,6 +179,8 @@ def main() -> None:
     a.add_argument("--smoke", action="store_true", help="2 kappa x 1 k_time x 10 cells, 1 h")
     a.add_argument("--decay", action="store_true",
                    help="Study 0b: the grid with the protective products' decay on Lipniacki's turnover (decay-lipniacki)")
+    a.add_argument("--persist", action="store_true",
+                   help="Study 0c: the bound where cFLIP, BCL2, mXIAP and mcIAP never switch off (persist-protective)")
     a.add_argument("--followups", action="store_true",
                    help="the gate knockouts at 10 and 30 min/unit (24 h, the grid's seeds)")
     args = a.parse_args()
@@ -208,6 +210,10 @@ def main() -> None:
     elif args.decay:
         grid = [(k, m) for k in KAPPA for m in MINUTES]
         cells, hours, prefix, edits = 200, HOURS, "decay", ("decay-lipniacki",)
+    elif args.persist:
+        # kappa fixed at lipniacki-nfkb (Alex, 2026-11-06); compare cell by cell with grid-lipniacki-nfkb-* (same seeds)
+        grid = [("lipniacki-nfkb", m) for m in MINUTES]
+        cells, hours, prefix, edits = 200, HOURS, "persist", ("persist-protective",)
     else:
         grid = [(k, m) for k in KAPPA for m in MINUTES]
         cells, hours, prefix = 200, HOURS, "grid"
