@@ -179,6 +179,8 @@ def main() -> None:
     a.add_argument("--smoke", action="store_true", help="2 kappa x 1 k_time x 10 cells, 1 h")
     a.add_argument("--decay", action="store_true",
                    help="Study 0b: the grid with the protective products' decay on Lipniacki's turnover (decay-lipniacki)")
+    a.add_argument("--decay-protective", action="store_true",
+                   help="Study 0d: cFLIP, BCL2, mXIAP and mcIAP switch off at Lipniacki's turnover (decay-protective)")
     a.add_argument("--persist", action="store_true",
                    help="Study 0c: the bound where cFLIP, BCL2, mXIAP and mcIAP never switch off (persist-protective)")
     a.add_argument("--followups", action="store_true",
@@ -210,6 +212,10 @@ def main() -> None:
     elif args.decay:
         grid = [(k, m) for k in KAPPA for m in MINUTES]
         cells, hours, prefix, edits = 200, HOURS, "decay", ("decay-lipniacki",)
+    elif args.decay_protective:
+        # Study 0d: the corrected Study 0b, at kappa = lipniacki-nfkb; compare cell by cell with grid-lipniacki-nfkb-*
+        grid = [("lipniacki-nfkb", m) for m in MINUTES]
+        cells, hours, prefix, edits = 200, HOURS, "decayp", ("decay-protective",)
     elif args.persist:
         # kappa fixed at lipniacki-nfkb (Alex, 2026-11-06); compare cell by cell with grid-lipniacki-nfkb-* (same seeds)
         grid = [("lipniacki-nfkb", m) for m in MINUTES]

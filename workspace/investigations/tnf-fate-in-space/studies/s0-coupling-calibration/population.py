@@ -40,6 +40,8 @@ EDITS = {
     "smac-ciap-ko": {"replacements": [("cIAP", "logic = (mcIAP AND (NOT SMAC));", "logic = (mcIAP);"),
                                       ("cIAP", "(($Low_cIAP ? 1e+100 : ((SMAC) ? 1 : 0)))",
                                        "(($Low_cIAP ? 1e+100 : 0))")]},
+    # CONFOUNDED (adversarial review, 2026-11-06): it also slows mROS (a necrosis driver) and Survival (the readout);
+    # superseded by decay-protective below.
     # Study 0b (Alex, 2026-11-06: "Anchor protein decay"): the transcription-scale products switch OFF at Lipniacki's
     # protein turnover, r_deg per second (A20's c5; anchor_turnover.py), whatever k_time is, instead of Calzone's unit
     # rate x k_time. cIAP is left alone: it switches off only when SMAC sequesters it, which is not turnover.
@@ -62,6 +64,17 @@ EDITS = {
             ("cFLIP", "rate_down = $k_time * ((@logic ? 0 : 1));", "rate_down = 0;"),
             *[(node, "rate_down = $k_time * (@logic ? 0 : 1);", "rate_down = 0;") for node in ("BCL2", "mcIAP", "mXIAP")],
         ],
+    },
+    # Study 0d, the corrected Study 0b (Alex's "Anchor protein decay"): ONLY the protective products of persist-protective
+    # switch off at Lipniacki's turnover r_deg. decay-lipniacki above also covered mROS and Survival, and is kept only so
+    # that its recorded runs stay reproducible.
+    "decay-protective": {
+        "replacements": [
+            ("cFLIP", "rate_down = $k_time * ((@logic ? 0 : 1));", "rate_down = $k_time * ((@logic ? 0 : ($r_deg / $k_time)));"),
+            *[(node, "rate_down = $k_time * (@logic ? 0 : 1);", "rate_down = $k_time * (@logic ? 0 : ($r_deg / $k_time));")
+              for node in ("BCL2", "mcIAP", "mXIAP")],
+        ],
+        "parameters": {"r_deg": "turnover_anchor"},
     },
 }
 
