@@ -4,6 +4,10 @@ Adapter
 : A Step that translates one layer's quantity into the form another layer reads, for example `RegionMean` and
   `MathExpressionStep`.
 
+Alive
+: A cell with no death node (Apoptosis, NonACD) on at any tick of the run. Death is irreversible, but Calzone's
+  death nodes can switch off again, so a cell's end state alone can show a dead cell as alive.
+
 Check
 : A compose-api compliance case: a document, an interval and expectations scored by `compliance.evaluate`. It always
   has an independent oracle and a proven-failing negative.
@@ -12,8 +16,8 @@ compose-api
 : The BioSimulations service that runs process-bigraph documents on HPC. Its runner and scorer are what the checks use.
 
 Durable survival
-: The fraction of cells whose end state at 24 h is Survival on with no death node (Apoptosis, NonACD) on. Calzone's
-  Survival node follows NF-κB, so Survival seen earlier is not final.
+: Alive at 24 h with the Survival node on. In the composite the Survival node follows the flickering NFkB node,
+  so most protected cells are alive with Survival off; *alive* is the primary readout.
 
 End state
 : A cell's fate nodes at the end of a run, encoded as Survival + 2·Apoptosis + 4·NonACD. Fate nodes can overlap,
