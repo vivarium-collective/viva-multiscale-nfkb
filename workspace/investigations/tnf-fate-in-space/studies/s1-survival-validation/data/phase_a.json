@@ -1,92 +1,178 @@
 {
- "units": 40.0,
- "cells": 50000,
+ "cells": 20000,
  "windows": 40,
- "seed": 3,
- "rows": [
+ "seed": 11,
+ "absorb_death": 1.0,
+ "ceiling": [
   {
-   "nfkb": "intact",
    "transrate": "1/24",
-   "Survival": 0.014,
-   "Apoptosis": 0.9522,
-   "NonACD": 0.0302
+   "transrate_per_unit": 0.0417,
+   "units": 40.0,
+   "intact": {
+    "alive": 0.0173,
+    "survival_on": 0.0139
+   },
+   "knocked_out": {
+    "alive": 0,
+    "survival_on": 0
+   },
+   "gap": 0.0173
   },
   {
-   "nfkb": "intact",
    "transrate": "1/4",
-   "Survival": 0.0866,
-   "Apoptosis": 0.7621,
-   "NonACD": 0.1513
+   "transrate_per_unit": 0.25,
+   "units": 40.0,
+   "intact": {
+    "alive": 0.0778,
+    "survival_on": 0.0868
+   },
+   "knocked_out": {
+    "alive": 0,
+    "survival_on": 0
+   },
+   "gap": 0.0778
   },
   {
-   "nfkb": "intact",
    "transrate": "1",
-   "Survival": 0.2007,
-   "Apoptosis": 0.5402,
-   "NonACD": 0.2591
+   "transrate_per_unit": 1.0,
+   "units": 40.0,
+   "intact": {
+    "alive": 0.1561,
+    "survival_on": 0.2013
+   },
+   "knocked_out": {
+    "alive": 0,
+    "survival_on": 0
+   },
+   "gap": 0.1561
   },
   {
-   "nfkb": "intact",
    "transrate": "4",
-   "Survival": 0.286,
-   "Apoptosis": 0.468,
-   "NonACD": 0.246
+   "transrate_per_unit": 4.0,
+   "units": 40.0,
+   "intact": {
+    "alive": 0.2174,
+    "survival_on": 0.2828
+   },
+   "knocked_out": {
+    "alive": 0,
+    "survival_on": 0
+   },
+   "gap": 0.2174
   },
   {
-   "nfkb": "intact",
    "transrate": "16",
-   "Survival": 0.3131,
-   "Apoptosis": 0.4527,
-   "NonACD": 0.2342
+   "transrate_per_unit": 16.0,
+   "units": 40.0,
+   "intact": {
+    "alive": 0.2416,
+    "survival_on": 0.3098
+   },
+   "knocked_out": {
+    "alive": 0,
+    "survival_on": 0
+   },
+   "gap": 0.2416
   },
   {
-   "nfkb": "intact",
    "transrate": "64",
-   "Survival": 0.3196,
-   "Apoptosis": 0.4507,
-   "NonACD": 0.2297
+   "transrate_per_unit": 64.0,
+   "units": 40.0,
+   "intact": {
+    "alive": 0.2521,
+    "survival_on": 0.3194
+   },
+   "knocked_out": {
+    "alive": 0,
+    "survival_on": 0
+   },
+   "gap": 0.2521
+  }
+ ],
+ "matched": [
+  {
+   "minutes_per_unit": 30,
+   "transrate_per_unit": 0.5922,
+   "units": 48.0,
+   "intact": {
+    "alive": 0.1247,
+    "survival_on": 0.1545
+   },
+   "knocked_out": {
+    "alive": 0,
+    "survival_on": 0
+   },
+   "gap": 0.1247
   },
   {
-   "nfkb": "knocked_out",
-   "transrate": "1/24",
-   "Survival": 0.0,
-   "Apoptosis": 0.9113,
-   "NonACD": 0.0887
+   "minutes_per_unit": 120,
+   "transrate_per_unit": 2.3686,
+   "units": 12.0,
+   "intact": {
+    "alive": 0.2741,
+    "survival_on": 0.278
+   },
+   "knocked_out": {
+    "alive": 0.059,
+    "survival_on": 0
+   },
+   "gap": 0.2151
   },
   {
-   "nfkb": "knocked_out",
-   "transrate": "1/4",
-   "Survival": 0.0,
-   "Apoptosis": 0.6761,
-   "NonACD": 0.3239
+   "minutes_per_unit": 180,
+   "transrate_per_unit": 3.5529,
+   "units": 8.0,
+   "intact": {
+    "alive": 0.5101,
+    "survival_on": 0.3412
+   },
+   "knocked_out": {
+    "alive": 0.3388,
+    "survival_on": 0
+   },
+   "gap": 0.1713
   },
   {
-   "nfkb": "knocked_out",
-   "transrate": "1",
-   "Survival": 0.0,
-   "Apoptosis": 0.5284,
-   "NonACD": 0.4716
+   "minutes_per_unit": 200,
+   "transrate_per_unit": 3.9477,
+   "units": 7.2,
+   "intact": {
+    "alive": 0.5813,
+    "survival_on": 0.3576
+   },
+   "knocked_out": {
+    "alive": 0.439,
+    "survival_on": 0
+   },
+   "gap": 0.1423
   },
   {
-   "nfkb": "knocked_out",
-   "transrate": "4",
-   "Survival": 0.0,
-   "Apoptosis": 0.5099,
-   "NonACD": 0.4901
+   "minutes_per_unit": 240,
+   "transrate_per_unit": 4.7372,
+   "units": 6.0,
+   "intact": {
+    "alive": 0.7095,
+    "survival_on": 0.3613
+   },
+   "knocked_out": {
+    "alive": 0.6211,
+    "survival_on": 0
+   },
+   "gap": 0.0884
   },
   {
-   "nfkb": "knocked_out",
-   "transrate": "16",
-   "Survival": 0.0,
-   "Apoptosis": 0.5103,
-   "NonACD": 0.4897
-  },
-  {
-   "nfkb": "knocked_out",
-   "transrate": "64",
-   "Survival": 0.0,
-   "Apoptosis": 0.5099,
-   "NonACD": 0.4901
+   "minutes_per_unit": 480,
+   "transrate_per_unit": 9.4744,
+   "units": 3.0,
+   "intact": {
+    "alive": 0.9702,
+    "survival_on": 0.1334
+   },
+   "knocked_out": {
+    "alive": 0.9676,
+    "survival_on": 0
+   },
+   "gap": 0.0026
   }
  ]
 }

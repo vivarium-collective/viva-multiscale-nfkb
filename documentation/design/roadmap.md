@@ -13,17 +13,19 @@ changes, U1 and U2:
 | 6 | A live run on compose-api as an inferred mash-up | after Alex's go |
 | Study 0 | Calibration of the coupling ({doc}`calibration`): κ decided; under held, saturating TNF nearly every cell dies; protein persistence saves cells only well beyond the measured turnover | **done** |
 | Decision 28 | Absorbing death in the network ({doc}`boolean`) | **done** |
-| Study 1, validation | Can NF-κB protect cells in the composite? ({doc}`validation`, decision 29) | **done**: no death clock meets the standard; NF-κB protects ≤ ~10% |
+| Study 1, validation | Can NF-κB protect cells in the composite? ({doc}`validation`, decision 29) | **done**: no clock meets the standard with real survival; the limit is Calzone's own race |
 | d1 | TNF's dose–response at the receptor (McMillan 2021; decision 27) | after the validation study |
 | compose-api | Pin bumps: viva-tellurium 0.2.3 **done** (compose-api 0.7.79, #502); viva-pde-particle after U2 merges | one compose-api release at a time |
 
 ## Open questions
 
 These are unresolved, and each is stated where it is used:
-- **Why does the composite weaken NF-κB's protection?** NF-κB saves at most about 10% of cells in the composite under
-  held TNF, against up to 32 percentage points in Calzone's network alone, so the cited standard (most NF-κB-competent
-  cells survive TNF) is not met at any death clock ({doc}`validation`). Candidates: the NF-κB node's duty cycle, and
-  the protective genes' induction speed. A decision for Alex before d1.
+- **Should NF-κB's activation route run on Lipniacki's clock?** Under held TNF, NF-κB saves at most about 10-13% of
+  cells in the composite, and no death clock meets the proposed standard with real survival ({doc}`validation`). The
+  limit is Calzone's own race between caspase-8 and NF-κB's activation route (TNFR, RIP1, RIP1ub, IKK), which runs on
+  the death clock even though Lipniacki already times that activation (337 s). Anchoring it to Lipniacki, as
+  $r_\text{tx}$ does for the genes, is the model-native option, to be tested as a Study 1 variant first. A decision for
+  Alex before d1.
 - **Is receptor binding fast enough to use its equilibrium (d1)?** It relaxes within about 100 s, against NF-κB's 337 s
   half-rise: a factor of about 3 ({doc}`rule-based`). To be checked when d1 is built.
 - **How fast should the fate network's TNF node flip?** Its rates are the occupancy scaled by `k_time`, so it follows
