@@ -204,8 +204,8 @@ Calzone's rate when it is 0. Three choices, each read from the network's rules:
 **What it leaves open.** The NFkB node already flips at κ = ln 2 / 337 s, nuclear NF-κB's half-rise from the moment
 TNF arrives, which spans the whole route. With the route anchored, TNF → NF-κB takes about the route's 112 s plus
 the node's own delay: roughly 1.3 times Lipniacki's 337 s. That is minutes against the hours caspase-8's route takes
-even at the fastest death clock studied (two steps of at least 30 min), so it should barely affect the race; it is
-recorded rather than corrected, because κ was decided on Study 0's data (decision 25).
+even at the fastest death clock studied (two steps of at least 30 min), so it should barely affect the race; Alex kept
+κ as decided on Study 0's data (decision 25), so the variant changes one thing.
 
 **Checked.**
 - `activation-anchor-fast` and `-slow` take RIP1, RIP1ub and IKK verbatim, with TNFR and cIAP held on and caspase-8
@@ -216,7 +216,9 @@ recorded rather than corrected, because κ was decided on Study 0's data (decisi
   reproduces all 200 cells' fate codes exactly, at every one of 2,880 time points.
 
 **Status.** Built, and off by default (`anchor_activation` = 0 in the composite). Whether the composite adopts it
-waits on a Study 1 variant that reruns Phase B with the switch on, against a success criterion fixed before the run.
+waits on a Study 1 variant that reruns Phase B with the switch on. Alex fixed its criterion before the run: at
+one or more death clocks, at least half the NF-κB-intact cells hold survival (alive, with Survival on through the last
+2 h) and at most half the knocked-out cells are alive.
 
 ## Clock
 

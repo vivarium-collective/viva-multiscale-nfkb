@@ -56,10 +56,30 @@ conditions:
     description: "Phase A ceiling: TransRate 1/24, 1/4, 1, 4, 16, 64 per unit, read at t = 40 units, 20,000 trajectories."
   - name: death-clocks
     description: "Phase A matched and Phase B: death clocks 30, 120, 180, 200, 240, 480 min per unit; 24 h."
+  - name: activation-anchored
+    description: >-
+      Option A (decision 30): NF-kB's activation route (RIP1, RIP1ub, IKK) switches on at r_act = 0.0239/s (Lipniacki's
+      IKK_active half-rise, 112 s), not on k_time; TNFR and every switch-off stay on k_time; kappa kept at ln 2/337 s
+      (Alex, 2026-11-06). Phase B's six clocks rerun on the same 200 seeds, intact and knocked out.
+    parameter_overrides:
+      anchor_activation: 1.0
   model_settings:
   - name: phase-b-cells
     gate: optional
     description: "Phase B: 200 cells on Study 0's seeds 1-200, coupling every 30 s, kappa = ln 2/337 s when intact."
+
+tests:
+# Fixed BEFORE the activation-anchored runs (Alex, 2026-11-06), so the criterion cannot be chosen after the data.
+- name: anchored-meets-standard
+  description: >-
+    The activation-anchored variant meets the survival standard at a death clock if at least half the NF-kB-intact
+    cells hold survival (alive, with Survival on through the last 2 h of the 24 h run; undecided cells do not count)
+    AND at most half the knocked-out cells are alive. The variant meets the standard if this holds at one or more of
+    the six clocks.
+  measure:
+    source: data/phase_b_anchored.json
+    per_clock: [held_survival_intact, alive_knocked_out]
+  pass_if: "held_survival_intact >= 0.5 and alive_knocked_out <= 0.5 at one or more clocks"
 
 controls:
   negative: "NF-kB knocked out: no cell can show Survival (its rule is NFkB); cells die, or stay undecided at slow clocks."
