@@ -11,6 +11,15 @@ Each edge is data flowing from the layer that owns a quantity to the layer that 
 | Tellurium | five NF-κB species | `MathExpressionStep`: nuclear fraction $f$; $u = f\kappa/k_\text{time}$, $d = (1-f)\kappa/k_\text{time}$ | MaBoSS | `parameters.u_NFkB`, `parameters.d_NFkB` |
 | MaBoSS | `node_probabilities.Apoptosis`/`NonACD` | gate (*candidate*) | Tellurium | `parameters_in.…` |
 
+Symbols in the table:
+- **occ** is the fraction of TNF receptors occupied, between 0 and 1. The dose–response step **d1** computes it from the
+  TNF concentration at the cell ({doc}`rule-based`). Through $u = \text{occ}$, $d = 1 - \text{occ}$, the fate network's
+  TNF node is on a fraction occ of the time ({doc}`../math/switch`).
+- **$f$** is NF-κB's nuclear fraction (below; derived on {doc}`../science/lipniacki-model`).
+- **κ** is how fast the fate network's NF-κB node flips, in s⁻¹ (below).
+- **`k_time`** is the death clock, Calzone units per second ({doc}`time`). Every network rate is multiplied by it, so
+  dividing by it here makes the NF-κB node's speed independent of it.
+
 The last edge, fate feeding back into kinetics, ships only with a cited biological basis. Without one, the Boolean
 layer in v1 is a readout.
 
@@ -29,7 +38,9 @@ $$
   - It is dimensionless, in [0, 1], and has no fitted constant.
   - `NFKB_total` is the curated SBML's own assignment rule. It is a rule variable, not a species output, so the
     adapter evaluates the rule verbatim from the five species.
-  - Total NF-κB is conserved (0.06 µM through the whole stimulated `sim1` run), so $f$ is a true fraction.
+  - Total NF-κB is conserved (0.06 µM through the whole stimulated `sim1` run), so $f$ is a true fraction. Why each
+    nuclear term is divided by $K_v$, and a proof of the conservation from the reactions:
+    {doc}`../science/lipniacki-model`.
 - **Its range:**
   - At rest (the pre-equilibrated state), $f \approx 0.0077$.
   - At NF-κB's first peak after TNF (NFKB_nuc 0.280 µM, 23.7 min), $f = 0.933$.
@@ -42,7 +53,8 @@ $$
   - **$f$ sets how often the node is on; κ sets how fast it flips.** Neither model gives κ.
   - **Study 0 chose κ = ln 2 / 337 s,** Lipniacki's own nuclear half-rise (Alex, 2026-11-06; {doc}`calibration`). The
     checks below use the special case κ = `k_time`, where $u = f$ and $d = 1 - f$.
-  - **The consequence: graded NF-κB becomes a duty cycle.** Once $f$ settles at 0.28 under held TNF, the node stays on
+  - **The consequence: graded NF-κB becomes a duty cycle.** Once $f$ settles at 0.28 under held TNF (from about 6 h;
+    measured in Study 0's runs, {doc}`../science/lipniacki-model`), the node stays on
     for about 11 min at a time ($1/((1-f)\kappa)$) and off for about 29 min ($1/(f\kappa)$).
   - **Calzone's NFkB is different:** it switches on at rate 1 per unit and stays on while its gate holds. Study 0
     measured what that difference does to fate.

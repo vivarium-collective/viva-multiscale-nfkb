@@ -71,6 +71,11 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
       - analysis/d7/kinetic_timescales.py now records the least-damped oscillating pair per state. From 2 h after
         TNF it has period 98–102 min and e-folding 55–90 min. That figure replaces the unsourced "99–106 min,
         55–105 min" in time.md, scales.md and timescales.md; every pre-existing JSON value is unchanged.
+      - coupling.md: a symbols legend (occ, d1, f, κ, k_time, each linked), and links for the NFKB_total derivation and
+        the source of "f settles at 0.28";
+      - switch.md: links the derivation of its ODE, and shows k_time·fκ/k_time = fκ;
+      - boolean.md: a prerequisites intro (network, primer, MaBoSS; "the race" defined), and how NF-κB loss of
+        function is set.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)

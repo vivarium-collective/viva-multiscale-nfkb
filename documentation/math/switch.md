@@ -11,7 +11,8 @@ $$
 P(t) = \frac{u}{u+d}\left(1 - e^{-(u+d)t}\right).
 $$
 
-It solves $\dot P = u(1-P) - dP$ with $P(0) = 0$, and its stationary value is $u/(u+d)$.
+It solves $\dot P = u(1-P) - dP$ with $P(0) = 0$, the forward equation of a single node ({doc}`maboss`, the one-node
+example), and its stationary value, where $\dot P = 0$, is $u/(u+d)$.
 
 **The kinetic → Boolean coupling** sets $u = f$ and $d = 1 - f$, so $u + d = 1$ and
 
@@ -24,7 +25,7 @@ node's long-run probability of being on is the kinetic model's own fraction of a
 
 **In the composite** the same switch is scaled by κ, the node's flipping speed in s⁻¹: $u = f\kappa$ and
 $d = (1-f)\kappa$, written to MaBoSS as $f\kappa/k_\text{time}$ and $(1-f)\kappa/k_\text{time}$ because MaBoSS
-multiplies every rate by `$k_time`. Then $u + d = \kappa$ and
+multiplies every rate by `$k_time`: $k_\text{time} \cdot f\kappa/k_\text{time} = f\kappa$, whatever $k_\text{time}$ is. Then $u + d = \kappa$ and
 
 $$
 P(t) = f\,(1 - e^{-\kappa t}),

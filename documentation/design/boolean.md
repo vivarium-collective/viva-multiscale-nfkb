@@ -1,5 +1,11 @@
 # The Boolean layer <span class="layer boolean">Boolean</span>
 
+This page records how Calzone's cell-fate network was brought into the composite and why. It assumes the network itself
+({doc}`../science/calzone-network`: every node, rule and rate, and how to read `@logic ? 1 : 0`), what a Boolean network
+and asynchronous updating are ({doc}`../science/boolean-networks`), and how MaBoSS turns rates into probabilities
+({doc}`../math/maboss`). The **race** this page refers to is the one explained there: a fast death route against
+NF-κB's slow protective genes.
+
 ## Engine: MaBoSS through `MaBoSSProcess`
 
 MaBoSS simulates a Boolean network as a continuous-time Markov chain. Every node flips with a rate given by the
@@ -105,7 +111,7 @@ directly, TNF on, all 31 nodes, abs 0.01:
 | `coupled-equals-full-early` | the window [7, 8], while caspase-3 switches on. The gate's `NOT CASP3` term is visible only here: P(NF-κB) is 0.215 with it and 0.244 without. Later, caspase-8 has closed the route anyway. |
 | `coupled-equals-full-seconds` | `k_time = 1/60` over 2400 s with $r_\text{tx} = k_\text{time}/24$: a pure change of clock at t = 40. An unclocked race-deciding rate (CASP8) fails it. |
 | `coupled-equals-full-early-seconds` | the same over [420, 480] s, while the cascade moves: unclocked BAX or MOMP fail it |
-| `coupled-nfkb-knockout` | no nuclear NF-κB against Calzone's NF-κB loss of function: the death arms are intact |
+| `coupled-nfkb-knockout` | no nuclear NF-κB ($u_\text{NFkB} = 0$, $d_\text{NFkB} = 1$) against Calzone's network with NF-κB's switch-on rate set to 0 (loss of function): the death arms are intact |
 
 **Proven to fail:**
 - the caspase-3 term removed: NF-κB 0.243 instead of 0.215;
