@@ -36,12 +36,14 @@ is switched on to saturation (361 states; results in `analysis/d7/kinetic_timesc
 | Zero mode | one, at every state | total NF-κB, which no reaction changes (proved on {doc}`../science/lipniacki-model`) |
 | Growing mode | only at 60 s after TNF, the first state sampled after it (growth e-folding 3.6 h) | |
 | Oscillating pairs | periods of 67–132 min in 355 of the 360 states after TNF | NF-κB's negative feedbacks ({doc}`../science/lipniacki-model`) |
+| Least-damped pair | from 2 h after TNF: period 98–102 min, e-folding 55–90 min (wider swings before 2 h) | the ringing that outlasts the others |
 
 Two things follow:
 
-- **NF-κB's waves ring down; they are not a sustained cycle.** Apart from that one state no mode grows, so the
-  oscillation the pairs describe decays. The measured waves settle by about 6 h ({doc}`../science/lipniacki-model`).
-  The JSON stores each pair's period but not its damping.
+- **NF-κB's waves ring down; they are not a sustained cycle.** Apart from that one state no mode grows, and the
+  slowest-decaying oscillation loses a factor $e$ in 55–90 min, a little less than its ~100 min period. So each wave is
+  well under half the size of the one before, which matches the measured waves settling by about 6 h
+  ({doc}`../science/lipniacki-model`).
 - **The model is stiff:** its timescales span more than three orders of magnitude, from 6 s to 8000 s. An explicit
   integrator would need steps of seconds for hours of time. So the model is solved by an implicit, adaptive integrator
   (CVODE, through libRoadRunner), which handles the fast modes internally.

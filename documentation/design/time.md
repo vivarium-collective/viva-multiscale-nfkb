@@ -79,7 +79,8 @@ The Jacobian of Lipniacki's model, at the pre-equilibrated state and every 60 s 
 (`analysis/d7/kinetic_timescales.py`), gives:
 - **Decay timescales from about 6 s to 8000 s:** three orders of magnitude.
 - **One zero mode:** the conserved NF-κB total.
-- **A damped oscillation:** period 99–106 min, e-folding 55–105 min. It grows only in the first minute.
+- **A damped oscillation:** from 2 h after TNF, the least-damped oscillating pair has a period of 98–102 min and an
+  e-folding time of 55–90 min. A mode grows only at 60 s, the first state sampled after TNF ({doc}`../math/timescales`).
 
 NF-κB's peaks ring and decay; they don't form a limit cycle.
 

@@ -8,6 +8,8 @@ to 1, the same 6 h BioModels' curation simulates. Per time point:
 - growing modes (Re > 0): e-folding time 1 / Re. After stimulation a complex pair turns unstable; that is the NF-kB
   oscillation, not an error;
 - oscillatory modes (Im != 0): period 2 pi / |Im|;
+- the least-damped decaying oscillatory pair (Im != 0, Re < 0, smallest |Re|): its period and e-folding time 1 / |Re|,
+  the ringing that outlasts the others;
 - zero modes (conserved totals: NF-kB) are excluded from timescales and counted.
 
 Cross-check, independent of roadrunner's eigen solver: every eigenvalue from ``getFullEigenValues`` has a match among
@@ -49,8 +51,13 @@ def classify(runner: te.roadrunner.ExtendedRoadRunner, after: float | None) -> d
     decaying = sorted(float(1.0 / -v.real) for v in live if v.real < 0)
     growing = sorted({round(float(1.0 / v.real), 6) for v in live if v.real > 0})
     periods = sorted({round(float(2 * np.pi / abs(v.imag)), 6) for v in live if abs(v.imag) > ZERO * scale})
+    ringing = [v for v in live if abs(v.imag) > ZERO * scale and v.real < 0]
+    slowest = min(ringing, key=lambda v: -v.real) if ringing else None
+    pair = ({"period_s": round(float(2 * np.pi / abs(slowest.imag)), 6), "efolding_s": round(float(1.0 / -slowest.real), 6)}
+            if slowest is not None else None)
     return {"t_after_stimulus_s": after, "fastest_decay_s": decaying[0], "slowest_decay_s": decaying[-1],
-            "growth_efolding_s": growing, "periods_s": periods, "zero_modes": int(zero.sum())}
+            "growth_efolding_s": growing, "periods_s": periods, "least_damped_pair": pair,
+            "zero_modes": int(zero.sum())}
 
 
 def main() -> None:
@@ -71,6 +78,7 @@ def main() -> None:
     post = rows[1:]
     growing = [r for r in post if r["growth_efolding_s"]]
     periods = [p for r in post for p in r["periods_s"]]
+    ringing = [r for r in post if r["least_damped_pair"]]
     summary = {
         "model": MODEL.name,
         "model_sha256": seed["model_sha256"],
@@ -81,13 +89,18 @@ def main() -> None:
         "post_growth_efolding_range_s": [min(min(r["growth_efolding_s"]) for r in growing),
                                          max(max(r["growth_efolding_s"]) for r in growing)] if growing else [],
         "post_period_range_s": [min(periods), max(periods)] if periods else [],
+        "post_least_damped_period_range_s": [min(r["least_damped_pair"]["period_s"] for r in ringing),
+                                             max(r["least_damped_pair"]["period_s"] for r in ringing)],
+        "post_least_damped_efolding_range_s": [min(r["least_damped_pair"]["efolding_s"] for r in ringing),
+                                               max(r["least_damped_pair"]["efolding_s"] for r in ringing)],
         "zero_modes": sorted({r["zero_modes"] for r in rows}),
         "rows": rows,
     }
     OUT.write_text(json.dumps(summary, indent=1) + "\n")
     print(f"wrote {OUT.relative_to(ROOT)}")
     for key in ("post_fastest_decay_range_s", "post_slowest_decay_range_s", "post_unstable_fraction_of_time",
-                "post_growth_efolding_range_s", "post_period_range_s", "zero_modes"):
+                "post_growth_efolding_range_s", "post_period_range_s", "post_least_damped_period_range_s",
+                "post_least_damped_efolding_range_s", "zero_modes"):
         print(f"  {key}: {summary[key]}")
     print(f"  pre_stimulus: {rows[0]}")
 

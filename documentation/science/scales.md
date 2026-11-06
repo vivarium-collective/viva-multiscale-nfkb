@@ -23,7 +23,7 @@ Measured, not assumed (d7 use 1, `analysis/d7/kinetic_timescales.py`, and the pr
 | TNF–receptor binding ($k_\text{off} = 0.01\ \text{s}^{-1}$) | ~100 s |
 | Fastest kinetic mode (Jacobian of Lipniacki) | ~6 s |
 | NF-κB nuclear half-rise after TNF | 5.6 min |
-| NF-κB damped oscillation (least-damped pair) | period 99–106 min, e-folding 55–105 min |
+| NF-κB damped oscillation (least-damped pair, from 2 h after TNF) | period 98–102 min, e-folding 55–90 min |
 | NF-κB → target protein (A20) | 35.1 min |
 | Slowest kinetic mode | ~8000 s (2.2 h) |
 | Cell death | hours; its clock is the swept axis `k_time` |
