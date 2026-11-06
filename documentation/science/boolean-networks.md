@@ -48,7 +48,8 @@ An asynchronous analysis without rates answers *which* fates can be reached from
 reached, every branch in the graph needs a probability: some rule for which enabled node goes first. Any such rule is a
 choice of relative rates. Rates turn out to decide the fractions. On Calzone's network, with TNF on and everything else
 fixed, changing only the rate of the transcription steps (`$TransRate`) moves the outcome a long way. Fractions of
-cells at t = 40 Calzone units, 50,000 cells each, every other rate 1 (`documentation/science/code/transrate_race.py`):
+cells at t = 40 Calzone units (the network's own time unit, {doc}`calzone-network`), 50,000 simulated cells each (each
+one a separate random run of the network, {doc}`../math/maboss`), every other rate 1 (`documentation/science/code/transrate_race.py`):
 
 | Transcription rate | Survival | Apoptosis | Necrosis |
 |---|---|---|---|

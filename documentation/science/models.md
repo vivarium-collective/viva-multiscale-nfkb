@@ -18,11 +18,14 @@ J Theor Biol 228:195–215. BioModels **BIOMD0000000786** (curated).
   - It has two sized compartments, so nuclear NF-κB is a real concentration.
   - Its stimulus is one external input, exactly the port a spatial layer drives.
   - COPASI and Tellurium agree on its own simulation: their trajectories differ by a normalised root-mean-square
-    error (NRMSE) of 3.6e-7 (viva-biomodels' screen of BioModels models).
+    error (NRMSE) of 3.6e-7 (viva-biomodels, a companion package that runs BioModels models in several engines and
+    compares the results; {doc}`../reference/datasets`).
 - **Rejected alternatives** ({doc}`../design/kinetic`):
   - BIOMD0000000027: one compartment, no stimulus input.
-  - BIOMD0000000407 (Schliemann 2011): three compartments, but 106 local parameters.
-  - BIOMD0000000140 (Hoffmann 2002): its stimulus is a rate rule plus an event.
+  - BIOMD0000000407 (Schliemann 2011), a runner-up: three sized compartments, but a much larger parameter set (106
+    parameters local to individual reactions) for the same role.
+  - BIOMD0000000140 (Hoffmann 2002), a runner-up: its stimulus is written as a rate rule (an equation that sets a
+    quantity's rate of change) plus an event (a timed change), not as one parameter another layer could set.
 
 ## Calzone 2010: the cell-fate decision <span class="layer boolean">Boolean</span>
 
@@ -45,8 +48,8 @@ of cell-fate decision in response to death receptor engagement.* PLoS Comput Bio
 McMillan D, Martinez-Fleites C, Porter J, et al. (2021). *Structural insights into the disruption of TNF-TNFR1
 signalling by small molecules stabilising a distorted TNF.* Nat Commun 12:582.
 
-- **What it is:** a rule-based (BioNetGen) model of the TNF trimer binding receptors one, two and three at a time,
-  with dissociation constants $K_1$, $K_2$, $K_3$ (10, 100 and 1000 nM in RuleHub's `Published/McMillan2021`) and
+- **What it is:** a rule-based model ({doc}`../design/rule-based`; BioNetGen is its software) of the TNF trimer binding receptors one, two and three at a time,
+  with dissociation constants $K_1$, $K_2$, $K_3$ (10, 100 and 1000 nM in the published model file, from RuleHub, RuleWorld's collection of rule-based models) and
   $k_\text{off} = 0.01\ \text{s}^{-1}$. The paper fitted these constants to native mass-spectrometry fractions of TNF
   with 0–3 receptors bound, using BioNetGen to solve the equilibria.
 - **Its role here:** an offline dose–response from TNF concentration to receptor engagement. It is not a runtime layer;

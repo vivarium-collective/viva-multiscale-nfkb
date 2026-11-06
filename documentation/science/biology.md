@@ -46,6 +46,9 @@ it, or also on the *timing* of its arrival.
 
 ## What the model does not include, and why
 
+v1 is the composite being built now (one cell, the layers on the landing page); v2 collects planned extensions
+({doc}`../design/roadmap`).
+
 | Not modelled | Why it is left out of v1 |
 |---|---|
 | TNFR2, membrane-bound TNF | The fate network and the NF-κB model are built around TNFR1 signalling. |

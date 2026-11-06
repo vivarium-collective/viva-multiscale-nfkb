@@ -4,8 +4,10 @@
 decision?**
 
 This workspace builds one multiscale model to answer that question. It is a
-[process-bigraph](https://github.com/vivarium-collective/process-bigraph) composite of three published models, each
-running in its own engine and each responsible for one part of the biology:
+[process-bigraph](https://github.com/vivarium-collective/process-bigraph) composite of two published models, Lipniacki's
+NF-κB model and Calzone's cell-fate network, and a TNF diffusion field. Each runs in its own engine and is responsible
+for one part of the biology. The engines are wrapped as processes by the `viva-*` packages (the vivarium-collective
+family of simulator wrappers); the adapters are small translation steps ({doc}`design/composite-primer`):
 
 | Layer | What it models | Model | Engine |
 |---|---|---|---|
@@ -23,7 +25,8 @@ and each coupling is checked against an independent oracle.
 reads and writes shared values. A *check* runs a small document and compares its results with an *oracle*, an expected
 value that does not come from the code under test, such as a formula or another engine's output. The pages build these
 up in order: the biology and the models ({doc}`science/index`), the mathematics the checks rely on
-({doc}`math/index`), and the design decisions ({doc}`design/index`), starting from {doc}`design/composite-primer`.
+({doc}`math/index`), and the design decisions ({doc}`design/index`), starting from {doc}`design/composite-primer`. Decisions marked "Alex" were made by Alex Patrie,
+who leads the project ({doc}`design/decisions`).
 
 ::::{grid} 2
 :gutter: 2

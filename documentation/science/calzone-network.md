@@ -25,7 +25,7 @@ $1/\lambda$ (an exponential waiting time). In the rate expressions below:
   MaBoSS example it is 1/24, so they take 24 units on average.
 - `$Low_CASP8`, `$Low_RIP1`, `$Low_cIAP` and `$High_NFkB` are Calzone's mutant switches: set to 1, they hold a node off
   (switch-on rate 0, switch-off rate effectively infinite) or on. They are 0 in the composite and the studies; the
-  `transcription-anchor` checks set `$High_NFkB = 1` to hold NF-κB on.
+  `transcription-anchor` checks ({doc}`../verification/index`) set `$High_NFkB = 1` to hold NF-κB on.
 
 Which node switches next, and when, is random. The engine, MaBoSS, simulates that random sequence
 ({doc}`../math/maboss`). Running many cells (many random sequences) gives the fraction that ends in each fate.
@@ -61,7 +61,7 @@ The survival route ends in steps that take 24 units on average (`$TransRate` = 1
 steps of one unit each from the bound receptor to caspase-3 (DISC_TNF, CASP8, BAX, MOMP, Cyt_c, apoptosome, CASP3). So in most cells caspase-8 is active long before cFLIP has been made to block it, and
 caspase-8 then cleaves RIP1, which closes the survival route. With TNF held on and Calzone's own rates, the network gives
 apoptosis 0.953, necrosis 0.029 and survival 0.014 at t = 40 units (the unmodified network on the MaBoSS engine,
-200,000 cells: the oracle of `checks/boolean/coupled-equals-full`). That race between a fast death route and slow protection is the question every
+200,000 cells: the oracle of the `coupled-equals-full` check, {doc}`../verification/index`). That race between a fast death route and slow protection is the question every
 study in this project varies ({doc}`../design/time`, {doc}`../design/calibration`).
 
 ## Every node

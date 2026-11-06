@@ -97,9 +97,10 @@ It has no fitted constant and lies between 0 and 1. How the fate network's NF-κ
 - **The rest state** is computed once, by running those same 101 h with no TNF, and every run starts from it
   ({doc}`../design/kinetic`).
 - **Three rates measured from this model**, used to put the fate network on a clock:
-  - $\kappa = \ln 2/337$ s: nuclear NF-κB's half-rise after TNF, the speed of the fate network's NF-κB node
+  - $\kappa = \ln 2/(337\ \text{s})$: from nuclear NF-κB's half-rise after TNF, 337 s (the time to reach half its first
+    peak), the speed of the fate network's NF-κB node
     ({doc}`../design/coupling`);
-  - $r_\text{tx} = \ln 2/2107$ s: the delay from nuclear NF-κB to A20 protein, the speed at which NF-κB's target genes
+  - $r_\text{tx} = \ln 2/(2107\ \text{s})$: from the delay from nuclear NF-κB to A20 protein, the speed at which NF-κB's target genes
     switch on ({doc}`../design/time`);
   - $r_\text{deg} = c_5 = 3\times10^{-4}$ s⁻¹: A20 protein's degradation rate, a 38.5 min half-life, used in Study 0's
     protein-turnover test ({doc}`../design/calibration`).
@@ -121,6 +122,11 @@ one reaction that removes the species on one side and one that adds it on the ot
 
 ```{include} _lipniacki_reactions.md
 ```
+
+Two naming quirks of the SBML file: the reactions `NFKB_export` and `IkB_export` *remove* NF-κB and IκBα from the
+cytoplasm on their way *into* the nucleus (each is paired with a reaction that adds them there), so they are imports
+as this page uses the word. `ModelValue_1` in the conservation rule is a parameter set to $K_v$ at the start of every
+run.
 
 ```{note}
 Regenerate both tables after any change to the SBML:

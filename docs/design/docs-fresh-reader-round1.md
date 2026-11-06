@@ -41,49 +41,49 @@ The legend says how far each one has got:
 ## By page, in reading order
 
 **index.md**
-- [ ] :9–14: the engine and adapter names (FVReactionDiffusion, viva-*, MathExpressionStep, RegionMean) and BioModels
+- [x] (batch A) :9–14: the engine and adapter names (FVReactionDiffusion, viva-*, MathExpressionStep, RegionMean) and BioModels
   are not glossed or linked. The "viva" prefix is unexplained.
-- [ ] :6–7: "three published models, each running in its own engine". models.md's three are Lipniacki, Calzone and
+- [x] (batch A: two published models and a TNF field) :6–7: "three published models, each running in its own engine". models.md's three are Lipniacki, Calzone and
   McMillan; McMillan is not a runtime layer, and the spatial layer is not a published model.
-- [ ] :81: Study 0 and "headline studies" are bare names.
+- [-] :81: Study 0 and "headline studies" are bare names. (Both are linked to their pages; a link counts as defined.)
 - [ ] :83: plan-section-b.md ("section B") is not explained or linked to history.
 
 **getting-started.md**
-- [ ] :14: "workspace" and "image build" are undefined.
-- [ ] :26: see top-10 item 3; "bigraph-schema" is undefined.
-- [ ] :27: "the workspace package, its dashboard" is undefined.
-- [ ] :36: "pre-equilibrated steady state" is unlinked.
-- [ ] :38: "full network" and "clock" are unlinked.
+- [x] (batch A) :14: "workspace" and "image build" are undefined.
+- [x] (batch A) :26: see top-10 item 3; "bigraph-schema" is undefined.
+- [x] (batch A) :27: "the workspace package, its dashboard" is undefined.
+- [x] (batch A) :36: "pre-equilibrated steady state" is unlinked.
+- [x] (batch A) :38: "full network" and "clock" are unlinked.
 
 **science/biology.md**
-- [ ] :49–53: v1 and v2 are undefined.
+- [x] (batch A) :49–53: v1 and v2 are undefined.
 
 **science/boolean-networks.md**
-- [ ] :50: "Calzone units" and the `$` prefix are used before they are defined, with no link.
-- [ ] :51: "cells" here means trajectories, which are defined only later.
-- [ ] :47–61: see top-10 item 4.
+- [x] (batch A) :50: "Calzone units" and the `$` prefix are used before they are defined, with no link.
+- [x] (batch A) :51: "cells" here means trajectories, which are defined only later.
+- [x] (145c27d) :47–61: see top-10 item 4.
 
 **science/models.md**
-- [ ] :17 and later: "Alex" is used as known everywhere before decisions.md defines it (also in kinetic, spatial,
+- [x] (batch A: defined on the landing page's "New here?") :17 and later: "Alex" is used as known everywhere before decisions.md defines it (also in kinetic, spatial,
   boolean, time, rule-based, coupling, calibration, studies and roadmap).
-- [ ] :20–21: "viva-biomodels' screen" is undefined, and the NRMSE normalisation is not stated.
-- [ ] :24–25: the rejection reasons don't follow: why do "106 local parameters" or "rate rule + event" disqualify a
+- [x] (batch A) :20–21: "viva-biomodels' screen" is undefined, and the NRMSE normalisation is not stated.
+- [x] (batch A: runners-up, stated neutrally; rate rule and event defined) :24–25: the rejection reasons don't follow: why do "106 local parameters" or "rate rule + event" disqualify a
   model? "Rate rule" and "event" are undefined.
-- [ ] :37: "reduced model" is undefined.
-- [ ] :48: RuleHub and BioNetGen are undefined here.
+- [x] (145c27d) :37: "reduced model" is undefined.
+- [x] (batch A) :48: RuleHub and BioNetGen are undefined here.
 
 **science/lipniacki-model.md and _lipniacki_reactions.md**
-- [ ] The reactions `NFKB_export` and `IkB_export` move species *into* the nucleus. The SBML's names conflict with the
+- [x] (batch A) The reactions `NFKB_export` and `IkB_export` move species *into* the nucleus. The SBML's names conflict with the
   page's "import".
-- [ ] `ModelValue_1` is undefined (it is set to Kv).
-- [ ] :100: the source of 337 s is only linked forward; the units read as "s" rather than s⁻¹.
+- [x] (batch A) `ModelValue_1` is undefined (it is set to Kv).
+- [x] (batch A) :100: the source of 337 s is only linked forward; the units read as "s" rather than s⁻¹.
 
 **science/calzone-network.md**
-- [ ] :22: the direction of `k_time` (top-10 item 6).
-- [ ] :26–28 and :64: check ids are not linked to the verification page.
+- [x] (145c27d) :22: the direction of `k_time` (top-10 item 6).
+- [x] (batch A) :26–28 and :64: check ids are not linked to the verification page.
 
 **science/scales.md**
-- [ ] :19: the "d7" path.
+- [-] :19: the "d7" path. (A file path in the repository, not shorthand used as explanation.)
 - [ ] :23: D is assumed, with no source.
 
 **math/maboss.md**
