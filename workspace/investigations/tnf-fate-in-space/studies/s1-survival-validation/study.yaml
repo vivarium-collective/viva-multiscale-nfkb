@@ -38,12 +38,28 @@ assumptions:
     2003 and Lee et al. 2016, proposed by the agent and accepted by Alex on 2026-11-06 (investigation inputs.references).
 
 conditions:
-  baseline: "NF-kB intact, TNF held on, absorbing death (decision 28)."
+  # Two arms, both NF-kB intact, TNF held on, absorbing death (decision 28).
+  baseline:
+  - name: composite
+    description: "Phase B: the kinetic-Boolean composite (phase_b.py)."
+    composite: viva_multiscale_nfkb.composites.kinetic_boolean
+    params:
+      interval: 30.0
+      sample_count: 1
+  - name: calzone-alone
+    description: "Phase A: Calzone's network alone in MaBoSSProcess, 20,000 trajectories (phase_a.py)."
+    process: viva_maboss.processes.MaBoSSProcess
   variants:
-  - "NF-kB knocked out: Calzone alone u_NFkB = 0, d_NFkB = 1; composite kappa = 0 (the NF-kB node never switches on)."
-  - "Phase A ceiling: TransRate 1/24, 1/4, 1, 4, 16, 64 per unit, read at t = 40 units, 20,000 trajectories."
-  - "Phase A matched and Phase B: death clocks 30, 120, 180, 200, 240, 480 min per unit; 24 h."
-  model_settings: "Phase B: 200 cells on Study 0's seeds 1-200, coupling every 30 s, kappa = ln 2/337 s when intact."
+  - name: nfkb-knockout
+    description: "NF-kB knocked out: Calzone alone u_NFkB = 0, d_NFkB = 1; composite kappa = 0 (the NF-kB node never switches on)."
+  - name: transrate-ceiling
+    description: "Phase A ceiling: TransRate 1/24, 1/4, 1, 4, 16, 64 per unit, read at t = 40 units, 20,000 trajectories."
+  - name: death-clocks
+    description: "Phase A matched and Phase B: death clocks 30, 120, 180, 200, 240, 480 min per unit; 24 h."
+  model_settings:
+  - name: phase-b-cells
+    gate: optional
+    description: "Phase B: 200 cells on Study 0's seeds 1-200, coupling every 30 s, kappa = ln 2/337 s when intact."
 
 controls:
   negative: "NF-kB knocked out: no cell can show Survival (its rule is NFkB); cells die, or stay undecided at slow clocks."
