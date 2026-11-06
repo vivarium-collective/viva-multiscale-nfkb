@@ -97,7 +97,7 @@ It has no fitted constant and lies between 0 and 1. How the fate network's NF-κ
 - **The rest state** is computed once, by running those same 101 h with no TNF, and every run starts from it
   ({doc}`../design/kinetic`).
 - **Three rates measured from this model**, used to put the fate network on a clock:
-  - $\kappa = \ln 2/(337\ \text{s})$: from nuclear NF-κB's half-rise after TNF, 337 s (the time to reach half its first
+  - $\kappa = \ln 2/(337\ \text{s})$: from nuclear NF-κB's half-rise after TNF, 337 s (the time to get half-way from its rest level to its first
     peak), the speed of the fate network's NF-κB node
     ({doc}`../design/coupling`);
   - $r_\text{tx} = \ln 2/(2107\ \text{s})$: from the delay from nuclear NF-κB to A20 protein, the speed at which NF-κB's target genes

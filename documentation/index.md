@@ -19,7 +19,7 @@ family of simulator wrappers); the adapters are small translation steps ({doc}`d
 TNF spreads through the medium. The receptors at the cell surface turn the TNF that reaches them into a
 receptor-activation signal. NF-κB then enters the nucleus in damped waves. The cell's fate network weighs NF-κB's
 protective genes against the death signals TNF itself starts. Each arrow in that chain is a coupling between two engines,
-and each coupling is checked against an independent oracle.
+and each coupling built so far is checked against an independent oracle.
 
 **New here?** A *composite* is one document that wires several models together; each model runs as a *process* that
 reads and writes shared values. A *check* runs a small document and compares its results with an *oracle*, an expected

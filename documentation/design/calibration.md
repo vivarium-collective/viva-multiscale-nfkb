@@ -84,7 +84,8 @@ two columns don't sum to "dead".
      time once $f$ settles. The death arms never pause under TNF.
 
    Studies 0c and 0d test both readings.
-6. **Calzone's gates divert death but don't prevent it.** The gates are caspase-8's cleavage of RIP1 and SMAC's
+6. **Calzone's gate on NF-κB diverts death but doesn't prevent it.** Two of the three ways the death machinery closes
+   the gate (glossary) can be removed: caspase-8's cleavage of RIP1 and SMAC's
    sequestration of cIAP.
    - Removing only the RIP1 cleavage turns every death into necrosis.
    - Removing both still kills every cell at some point in 24 h (200 of 200, at 10 and at 30 min per unit). The 22–27% that the end state showed as
@@ -94,8 +95,8 @@ two columns don't sum to "dead".
 ## Decision: κ
 
 **κ = ln 2 / 337 s, Lipniacki's own NF-κB speed** (Alex, 2026-11-06).
-- **Where it comes from:** 337 s is the half-rise of nuclear NF-κB after TNF in Lipniacki's model: the time to reach
-  half its first peak (`transcription_anchor.json`). With $f$ held, the node's probability of being on rises as
+- **Where it comes from:** 337 s is the half-rise of nuclear NF-κB after TNF in Lipniacki's model: the time to get
+  half-way from its rest level to its first peak (`anchor_transcription.py`). With $f$ held, the node's probability of being on rises as
   $f(1 - e^{-\kappa t})$ ({doc}`../math/switch`), which reaches half its level at $t = \ln 2/\kappa$. Setting
   $\kappa = \ln 2/337$ s⁻¹ makes the node rise as fast as nuclear NF-κB does, so κ is measured, not fitted.
 - **Why not Calzone's flicker (κ = `k_time`):** it ties NF-κB's speed to the assumed speed of the death machinery,

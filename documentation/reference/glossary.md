@@ -52,7 +52,8 @@ Continuous-time Markov chain
   current state. MaBoSS simulates the fate network as one ({doc}`../math/maboss`).
 
 Coupling interval
-: How often two layers exchange values: 30 s in the studies, which satisfies the rule in {doc}`../math/timescales` ($0.1 \times 337\ \text{s} \approx 34$ s).
+: How often two layers exchange values: 30 s for the kinetic → fate edge in Study 0, which satisfies the rule in {doc}`../math/timescales`
+  ($0.1 \times 337\ \text{s} \approx 34$ s); the spatial edge will need about 1 s.
   Each layer holds the last value it received in between.
 
 d1
@@ -79,8 +80,10 @@ First fate
   coupling interval (30 s in the studies).
 
 Gate
-: Calzone's conditions on NF-κB's route: caspase-8 cleaving RIP1, SMAC removing cIAP, and caspase-3 blocking NF-κB.
-  While the route is open, the NF-κB node follows Lipniacki ({doc}`../design/boolean`).
+: NF-κB's rule in Calzone's network, `IKK AND NOT CASP3`: NF-κB can be active only while IKK is on and caspase-3 is
+  off. The death machinery closes it in three ways: caspase-8 cleaves RIP1 and SMAC removes cIAP (both switch IKK off),
+  and caspase-3 blocks NF-κB directly. While the gate is open, the composite's NF-κB node follows Lipniacki
+  ({doc}`../design/boolean`).
 
 Generator
 : The matrix $Q$ of a Markov chain's switching rates; probabilities obey $dP/dt = PQ$ ({doc}`../math/maboss`).

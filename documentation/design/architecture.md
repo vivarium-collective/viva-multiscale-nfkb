@@ -68,7 +68,7 @@ released before the workspace uses it. The workspace does not carry a local copy
 ### 4. Every claim has a check that can fail
 
 Each layer and each coupling built so far has a check: a compose-api compliance case with an oracle independent of the code under
-test, and a mutated copy proven to fail. See {doc}`../verification/index`.
+test, and, where one is recorded, a mutated copy proven to fail. See {doc}`../verification/index`.
 
 ### 5. Run as compose-api runs it
 

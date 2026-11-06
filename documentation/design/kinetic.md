@@ -28,7 +28,7 @@ Nothing else changes:
 - **`checks/kinetic/sim1-original`:** the unmodified model in `TelluriumProcess` matches COPASI's run of `sim1`, the
   simulation BioModels ships with the model (its SED-ML file, the standard format for describing a simulation
   experiment: 0 to 385,200 s, TNF switched on at 101 h).
-  That's every floating species, at the last pre-stimulus point and every post-stimulus point (113 expectations), from
+  That's every floating species, at the last pre-stimulus point and every post-stimulus point (113 expectations: 16 species at each of 7 time points, plus one that checks the number of rows), from
   another engine's output.
 - **`checks/kinetic/preequilibrated-steady`:** seeded with the saved steady state and left unstimulated, the driven
   model holds that state for 10 h (rel 1e-6). The state also equals COPASI's `sim1` state just before the original

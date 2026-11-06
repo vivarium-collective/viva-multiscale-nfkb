@@ -11,24 +11,24 @@ The marks mean:
 
 ## The 10 most serious
 
-1. [ ] switch.md:66, coupling.md:63–65 and verification:55 say the pair checks hold the gate "open with TNF off". In the
+1. [x] (fixed: the pair checks run a 3-node fragment (read in make_pair_nfkb_analytic.py); 'death arms at 0' removed) switch.md:66, coupling.md:63–65 and verification:55 say the pair checks hold the gate "open with TNF off". In the
    full network, TNF off closes IKK. The check actually runs a reduced network with IKK and CASP3 as constant nodes
    (make_pair_nfkb_analytic.py), and no page says so. "The death arms stay at 0" cannot be followed either.
-2. [ ] architecture.md:70–71 says every check has "a mutated copy proven to fail"; six checks do not.
-3. [ ] index.md:22–23 says "each coupling is checked against an independent oracle", but the spatial→kinetic coupling and
+2. [x] (fixed) architecture.md:70–71 says every check has "a mutated copy proven to fail"; six checks do not.
+3. [x] (fixed: 'each coupling built so far') index.md:22–23 says "each coupling is checked against an independent oracle", but the spatial→kinetic coupling and
    d1 are not built.
-4. [ ] composite-primer.md:47–49 and glossary:55 justify 30 s from f alone. The TNF-at-cell edge changes over about
+4. [x] (fixed: 30 s is the kinetic→fate edge; the spatial edge will need ~1 s) composite-primer.md:47–49 and glossary:55 justify 30 s from f alone. The TNF-at-cell edge changes over about
    8 s, which by the 0.1× rule would need about 1 s. Either explain, or say that 30 s is the kinetic–Boolean interval
    (Study 0 had no spatial layer).
-5. [ ] kinetic.md:31 says "113 expectations" but not how they are made up (113 is prime).
-6. [ ] tutorial 02:26–32 says Survival is 0.014 at f = 1 but 0 at f ≤ 0.75, and neither reason given explains the drop.
+5. [x] (fixed: 16 species × 7 rows + 1 row count, read from the case) kinetic.md:31 says "113 expectations" but not how they are made up (113 is prime).
+6. [x] (fixed: flicker turns Survival off at rate 1) tutorial 02:26–32 says Survival is 0.014 at f = 1 but 0 at f ≤ 0.75, and neither reason given explains the drop.
    The real one: the node flickers off, and Survival (`NFkB`) switches off at rate 1.
-7. [ ] verification:53 says "62 rates exactly `$k_time * (original)`"; 11 nodes have rewritten rates.
-8. [ ] "Gate" is defined differently across pages: coupling:51 (IKK on, CASP3 off), glossary:82 (three conditions),
+7. [x] (fixed: 'its rate' (original or rewritten, 11 nodes)) verification:53 says "62 rates exactly `$k_time * (original)`"; 11 nodes have rewritten rates.
+8. [x] (fixed: one definition (NFkB's rule; three ways to close it) in glossary and calibration) "Gate" is defined differently across pages: coupling:51 (IKK on, CASP3 off), glossary:82 (three conditions),
    calibration:87 (two), boolean:84 (four). Use one definition.
-9. [ ] lipniacki-model:100 and calibration:97 define half-rise as "half its first peak", while clock.md:47 says
+9. [x] (fixed: anchor_transcription.py says half-way from start to peak; lipniacki-model and calibration corrected) lipniacki-model:100 and calibration:97 define half-rise as "half its first peak", while clock.md:47 says
    "half-way from its pre-stimulus value to the peak". Use one definition, verified against anchor_transcription.py.
-10. [ ] composite-primer:27–28 cites coupling.md for the whole-map write rule, but coupling.md does not state it.
+10. [x] (fixed: rule added to coupling.md's wiring rules with its source) composite-primer:27–28 cites coupling.md for the whole-map write rule, but coupling.md does not state it.
 
 ## Other items
 

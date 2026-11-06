@@ -63,5 +63,7 @@ $$
 
 **Why the switch is isolated in each check:**
 - **`calzone-reference`:** TNF is off, so NF-κB stays off and mROS's logic, `NOT NFkB`, is constantly true.
-- **The pair checks:** TNF is off, so no death signal reaches CASP8, and caspase-3 never blocks NFkB.
+- **The pair checks:** the document holds only three nodes: the NFkB node copied verbatim from the coupled network,
+  and IKK and CASP3 as constant nodes (rates 0; IKK starts on, CASP3 off). So NF-κB's gate, `IKK AND NOT CASP3`, is
+  always open, and the node is a switch with rates $u$ and $d$ alone.
 - **The anchor checks:** NF-κB is held on by `$High_NFkB = 1`, so each target's logic is constantly true.

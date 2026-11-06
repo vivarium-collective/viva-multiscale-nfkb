@@ -23,8 +23,10 @@ NF-kB input f = 1.00:  Survival 0.014  Apoptosis 0.950  NonACD 0.032
 - **f = 0 is NF-κB loss of function.** TNF kills by apoptosis (91%) and necrosis (9%), as `coupled-nfkb-knockout`
   checks.
 - **Less NF-κB, more necrosis.** Necrosis needs mROS, whose logic is `NOT NFkB`.
-- **Survival is rare under TNF at every f.** This is Calzone's own result at MaBoSS's example rates. Two things act
-  against NF-κB:
+- **Survival is rare under TNF at every f, and 0 below f = 1.** Below f = 1 the NF-κB node keeps switching off (it is
+  on only a fraction f of the time), and each time it is off the Survival node, whose rule is `NFkB`, switches off at
+  rate 1. At f = 1 the node stays on while its gate is open, and survival reaches Calzone's own 1.4%. Two things act
+  against NF-κB even then:
   - **Calzone's gate:** caspase-8 cleaves RIP1 and SMAC sequesters cIAP, which closes NF-κB's route, so a dying cell
     loses NF-κB whatever Lipniacki supplies.
   - **The race:** a protective gene, switching on at $\text{TransRate} = 1/24$ per unit while NF-κB is on, is on in

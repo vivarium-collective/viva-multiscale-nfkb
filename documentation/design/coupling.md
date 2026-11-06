@@ -60,9 +60,9 @@ $$
     measured what that difference does to fate.
 
 **Check:** `pair-nfkb-analytic` wires exactly this.
-- **Inputs:** the five species, held at the state 414 s after TNF (still rising, $f = 0.5627$); the adapter evaluates the rule; MaBoSS runs the coupled network's NF-κB node verbatim, with its gate held open
-  with TNF off.
-- **Result:** P(NFkB on) over the last window matches the analytic 0.48259, and the death arms stay at 0.
+- **Inputs:** the five species, held at the state 414 s after TNF (still rising, $f = 0.5627$); the adapter evaluates the rule; MaBoSS runs the coupled network's NF-κB node verbatim in a three-node document, with IKK and CASP3 as constant nodes
+  (IKK on, CASP3 off), so its gate is always open.
+- **Result:** P(NFkB on) over the last window matches the analytic 0.48259.
 - **Proven failing:** with $K_v = 4$ in the adapter, and with the `parameters` store unseeded.
 
 ## Wiring rules
@@ -80,3 +80,8 @@ Each rule was found by running composites, and each is enforced by a check that 
 - **Put no expectation on emitter row 0.** It is t = 0, before any process has written.
 - **Adapters fire on every tick their inputs are touched,** not on change, even for a zero delta. "Event-driven"
   coupling is therefore just scheduling (process-bigraph 1.9.1 `composite.py:2541-2563`).
+- **A write to a whole map does not trigger a Step that reads one of its keys.** A Step runs when an updated path, or
+  one of that path's prefixes, is one of its input paths. `TelluriumProcess` writes the whole `species` map, which is a
+  parent of the per-species paths the nuclear-fraction Step reads, so those inputs alone never trigger it. The
+  composite therefore also wires the kinetic layer's time into that Step, which is written every update (process-bigraph
+  1.9.1 `composite.py:2541-2569`; `make_kinetic_boolean.py`).
