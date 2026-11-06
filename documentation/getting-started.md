@@ -24,8 +24,7 @@ export COMPOSE_API_DIR=/path/to/compose-api
 
 | Environment | Where | What it is for |
 |---|---|---|
-| **The run environment** | `compose/` (its own `pyproject.toml` and `uv.lock`) | Pinned to exactly what compose-api's production mash-up installs: process-bigraph 1.9.1 and its type system,
-bigraph-schema 1.8.1, Python 3.12, and each simulator package at the commit compose-api's registry pins. Every check runs here. |
+| **The run environment** | `compose/` (its own `pyproject.toml` and `uv.lock`) | Pinned to exactly what compose-api's production mash-up installs: process-bigraph 1.9.1 and its type system, bigraph-schema 1.8.1, Python 3.12, and each simulator package at the commit compose-api's registry pins. Every check runs here. |
 | **The workspace environment** | the repository root | This repository's own Python package (`viva_multiscale_nfkb`), the vivarium-workbench dashboard that records study runs, and the `docs` group that builds this documentation. |
 
 They are separate because a check that passes here must pass the same way on compose-api. The run environment

@@ -57,12 +57,13 @@ def phase_a(a: dict) -> str:
 
 
 def phase_b(b: dict) -> str:
-    lines = ["| Clock (min per unit) | Alive, intact | Alive, knocked out | Net protection (points) "
-             "| No fate at all (intact / KO) |", "|---|---|---|---|---|"]
+    lines = ["| Clock (min per unit) | Alive, intact | Alive, knocked out | Held survival, intact "
+             "| Net protection (points) | Cells with no fate (intact / knocked out, of 200) |", "|---|---|---|---|---|---|"]
     for r in b["points"]:
         net = _points(r["net_protection"]) + _p(r["p_mcnemar_exact"])
+        held = r["survival_on_last_2h_intact"] / r["cells"]
         lines.append(f"| {r['minutes_per_unit']} | {_alive(r['alive_intact'])} | {_alive(r['alive_knocked_out'])} "
-                     f"| {net} | {r['no_fate_intact']} / {r['no_fate_knocked_out']} |")
+                     f"| {_alive(held)} | {net} | {r['no_fate_intact']} / {r['no_fate_knocked_out']} |")
     return "\n".join(lines) + "\n"
 
 

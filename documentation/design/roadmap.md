@@ -21,7 +21,7 @@ changes, U1 and U2:
 
 These are unresolved, and each is stated where it is used:
 - **Should NF-κB's activation route run on Lipniacki's clock?** Under held TNF, NF-κB's net protection in the composite is at most about 10 to 13
-  points (percent of cells), and no death clock meets the standard with real survival ({doc}`validation`). The
+  points (percent of cells), and no death clock meets the standard with held survival ({doc}`validation`). The
   limit is the activation race in Calzone's network, between caspase-8 and NF-κB's activation route (TNFR, RIP1, RIP1ub, IKK), which runs on
   the death clock even though Lipniacki already times that activation (337 s). Anchoring it to Lipniacki, as
   $r_\text{tx}$ does for the genes, is the model-native option, to be tested as a Study 1 variant first. A decision for

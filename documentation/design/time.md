@@ -28,7 +28,7 @@ the script prints both: half of the eventual apoptosis by 8.6 units, and P(Apopt
 - **If 1 unit = 1 hour:** death at about 8.6 h is plausible, but NF-κB's protective genes take about 16.6 h. That is
   16.6 h / 35.1 min ≈ 28 times slower than Lipniacki's own, so NF-κB could never protect the cell in time.
 
-## Decision 1: sweep, don't fix (Alex, 2026-11-04)
+## Decision 15: sweep, don't fix (Alex, 2026-11-04)
 
 Every rate in the coupled network is multiplied by `$k_time`, the number of Calzone units per composite second. This
 leaves Calzone's internal ratios unchanged, and `k_time = 1` reproduces the original timing. The headline studies sweep
@@ -38,7 +38,7 @@ leaves Calzone's internal ratios unchanged, and `k_time = 1` reproduces the orig
 Calzone units. It must match the same analytic value as the 2-unit run, and it does. With the clock left unconverted,
 it fails (0.562 instead of 0.483).
 
-## Decision 2: gene expression on Lipniacki's clock; sweep only death (Alex: "anchor to Lipniacki, sweep death")
+## Decision 16: gene expression on Lipniacki's clock; sweep death (Alex: "anchor to Lipniacki, sweep death")
 
 **The protection race** ({doc}`../science/calzone-network`). Under TNF, fate is a race between the death arms and NF-κB's protective genes, and Calzone's
 `$TransRate` sets the protective genes' speed. Measured on the full network, TNF on: the fraction of 50,000 cells with
@@ -70,7 +70,7 @@ $$
 
 Every rate is multiplied by `$k_time`, so target genes switch on at exactly $r_\text{tx}$ per second **whatever**
 `k_time` is ({doc}`../math/clock`). `k_time` then sweeps the rest of the network: the death
-machinery, and also NF-κB's activation route (TNFR, RIP1, RIP1ub, IKK), which Study 1 found limits protection
+machinery, the protective products' switch-off, and NF-κB's activation route (TNFR, RIP1, RIP1ub, IKK), which Study 1 found limits protection
 ({doc}`validation`). **The sweep becomes the
 result:** how fast must the death machinery be for TNF to kill, at each dose and distance?
 

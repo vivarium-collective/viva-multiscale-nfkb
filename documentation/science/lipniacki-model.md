@@ -6,7 +6,7 @@ fraction $f$, and the three rates taken from it can be followed back to the mode
 
 ## What kind of model it is
 
-It is a set of ordinary differential equations: each **species** (a molecule or complex) has a concentration in µM,
+It is a set of ordinary differential equations: each **species** (a molecule or complex) has a concentration in µM (except `TNF`, a signal between 0 and 1; below),
 and each **reaction** changes concentrations at a rate set by mass action (a rate constant times the concentrations
 that take part). Time is in seconds. Unlike the fate network ({doc}`calzone-network`), nothing is random: one stimulus
 gives one trajectory.

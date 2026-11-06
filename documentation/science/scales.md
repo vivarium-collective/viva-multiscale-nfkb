@@ -7,7 +7,7 @@
 | Scale | Layer | State |
 |---|---|---|
 | Tissue / extracellular medium (µm) | <span class="layer spatial">spatial</span> | a TNF concentration field on a grid |
-| Cell compartments (cytoplasm, nucleus) | <span class="layer kinetic">kinetic</span> | 16 molecular concentrations (µM), continuous and deterministic |
+| Cell compartments (cytoplasm, nucleus) | <span class="layer kinetic">kinetic</span> | 15 molecular concentrations (µM) and a TNF signal (0 to 1), continuous and deterministic |
 | Cell phenotype | <span class="layer boolean">Boolean</span> | 31 on/off nodes; a probability distribution over fates |
 
 The layers don't share state. Each quantity is written by exactly one layer, and the adapters translate it for the
@@ -21,7 +21,7 @@ come from simulating it (`anchor_transcription.py`); the others come from {doc}`
 
 | Process | Timescale |
 |---|---|
-| TNF diffusion across 40 µm ($D \approx 100\ \mu\text{m}^2/\text{s}$, measured for fluorescently labelled TNFα in solution by fluorescence correlation spectroscopy; Wu et al. 2011, a source proposed to the project lead and not yet accepted) | about 4 s ($L^2/4D$, the time for a mean squared displacement of $L^2$ in two dimensions) |
+| TNF diffusion across 40 µm (a cell-scale example: the diffusion check's read-out distance; the headline studies' distances are not chosen yet; $D \approx 100\ \mu\text{m}^2/\text{s}$, measured for fluorescently labelled TNFα in solution by fluorescence correlation spectroscopy; Wu et al. 2011, a source proposed to the project lead and not yet accepted) | about 4 s ($L^2/4D$, the time for a mean squared displacement of $L^2$ in two dimensions) |
 | TNF–receptor binding ($k_\text{off} = 0.01\ \text{s}^{-1}$) | ~100 s |
 | Fastest kinetic mode (Jacobian of Lipniacki) | ~6 s |
 | NF-κB nuclear half-rise after TNF | 5.6 min |

@@ -28,7 +28,8 @@ summed.
 
 Here the death clock changes both who wins and how the cell dies. It can change who wins because gene expression stays
 on Lipniacki's clock while `k_time` moves the rest of the network
-(the death machinery, and NF-κB's activation route); a uniform sweep of every rate would not
+(the death machinery, the products' switch-off, NF-κB's activation route and, in this sweep, the NF-κB node
+itself); a uniform sweep of every rate would not
 ({doc}`../design/time`):
 - **Fast death machinery** (half a minute to 10 minutes per unit): apoptosis dominates, before any protective gene is
   made.

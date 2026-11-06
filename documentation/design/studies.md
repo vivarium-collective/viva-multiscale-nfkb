@@ -1,11 +1,11 @@
 # The headline studies
 
-Alex asked for all three (2026-11-04). They are named, not numbered, so they are not confused with the
-investigation's numbered studies (Study 0, {doc}`calibration`; Study 1, {doc}`validation`). They nest, so they cost one composite document and one parameter sweep.
+Alex asked for all three (2026-11-04). They are named, not numbered, so they are not confused with the numbered studies of this
+project's investigation ({doc}`../reference/glossary`) (Study 0, {doc}`calibration`; Study 1, {doc}`validation`). They nest, so they cost one composite document and one parameter sweep.
 
 | Name | Study | Spatial setup | Swept | Readouts |
 |---|---|---|---|---|
-| Dose | **Fate vs uniform TNF dose.** The control | Uniform bath at concentration $c_0$, optional first-order decay (rate $\lambda$, {doc}`../math/diffusion`) | $c_0$, `k_time` | fraction of cells alive (no death node ever on) and with durable survival; the death mode (apoptosis, necrosis) ({doc}`calibration`); NF-κB's first nuclear peak (height, time) and period |
+| Dose | **Fate vs uniform TNF dose.** The control | Uniform bath at concentration $c_0$, optional first-order decay (rate $\lambda$, {doc}`../math/diffusion`) | $c_0$, `k_time` | fraction of cells alive (no death node ever on) and with durable survival (or Study 1's stricter held survival, {doc}`validation`; which one is reported is decided with the collapse statistic); the death mode (apoptosis, necrosis) ({doc}`calibration`); NF-κB's first nuclear peak (height, time) and period |
 | Distance | **Fate vs distance from a TNF bolus.** The headline: what space adds | Point bolus at distance r from the cell's surface region | r, bolus size, `k_time` | as the dose study, plus TNF at the cell over time (`RegionMean`) |
 | Wave timing | **NF-κB wave timing under a moving TNF front.** The mechanism | the distance study's runs (no new runs) | r | TNF front arrival vs the times of NF-κB's nuclear peaks |
 
@@ -25,7 +25,7 @@ The wave-timing study shows the mechanism behind either answer.
 ## The death clock
 
 `k_time` runs across all three studies ({doc}`time`). Gene expression stays anchored at
-$r_\text{tx} = 3.29\times10^{-4}\ \text{s}^{-1}$, so each study maps the race directly: how fast must the death
+$r_\text{tx} = 3.29\times10^{-4}\ \text{s}^{-1}$, so each study maps the protection race directly: how fast must the death
 machinery be for TNF to kill, at each dose and each distance?
 
 ## What Study 0 changes

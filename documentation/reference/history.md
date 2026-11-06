@@ -23,7 +23,8 @@ level `tested`, before Section A.
 
 **The releases.**
 - 0.7.77 (#500) released #499.
-- 0.7.78 (#501) fixed environment inference for documents that use a core short name such as `local:RAMEmitter`. The
+- 0.7.78 (#501) fixed environment inference for documents that use a process named by its class alone, such as `local:RAMEmitter` (no module path, so its environment
+  could not be inferred). The
   first live run had exposed the bug.
 
 The same day, all seven compliance cases passed on production, each in its own automatically inferred environment

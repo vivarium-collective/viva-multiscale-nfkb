@@ -208,7 +208,7 @@ linking here.
   - **The `.bnd` transform multiplies every rate by `$k_time`** (Calzone units per composite second; k_time = 1 is the
     original).
   - **Gene expression is anchored to Lipniacki; the sweep moves only the death machinery** ("anchor to Lipniacki,
-    sweep death"):
+    sweep death"; as built, `k_time` also runs NF-κB's activation route and the products' switch-off, Study 1):
     - Fate is a race between the death arms and NF-κB's protective genes, and `$TransRate` decides it. On the full
       network with TNF on, Survival is 0.02 at MaBoSS's example TransRate 1/24 and 0.20 at 1. Calzone 2010 (PLoS
       Comput Biol, Fig 4) reports about 0.30 / 0.60 / 0.10 survival / apoptosis / necrosis from rate-free asynchronous

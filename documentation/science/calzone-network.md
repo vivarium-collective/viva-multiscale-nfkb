@@ -70,8 +70,10 @@ Two races decide a cell's fate, one after the other.
 With TNF held on and Calzone's own rates, the network gives apoptosis 0.953, necrosis 0.029 and survival 0.014 at t =
 40 units (the unmodified network on the MaBoSS engine, 200,000 cells: the oracle of the `coupled-equals-full` check,
 {doc}`../verification/index`). Faster genes win more of the protection race, but the activation race caps what they
-can do: even infinitely fast genes leave only about a quarter of cells alive ({doc}`../design/validation`). Both
-races are what the studies in this project vary ({doc}`../design/time`, {doc}`../design/calibration`).
+can do: even infinitely fast genes leave only about a quarter of cells alive ({doc}`../design/validation`). The
+studies vary the protection race (through `k_time`, with the genes anchored; {doc}`../design/time`). The activation
+race runs wholly on `k_time`, so it sets the cap; whether to move it onto Lipniacki's clock is open
+({doc}`../design/roadmap`).
 
 ## Every node
 

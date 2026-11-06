@@ -15,16 +15,19 @@ and if not, where the limit is. It adds no mechanism. The study lives in
   on ({doc}`coupling`). In Calzone's network alone, $u_\text{NFkB} = 0$ and $d_\text{NFkB} = 1$.
 - **Alive.** No death node was ever on. Death is absorbing ({doc}`boolean`).
 - **Net protection.** Each intact cell is paired with its knocked-out twin, which has the same seed
-  ({doc}`../math/statistics`). It is the number of cells alive only with NF-κB, minus those alive only without it.
+  ({doc}`../math/statistics`). It is the number of cells alive only with NF-κB, minus those alive only without it, as a
+  percentage of the cells (percentage points).
 - **Meeting the standard.** Most NF-κB-competent cells survive and most knocked-out cells die. The design asked for a
   majority surviving. After Phase B showed that at slow clocks many alive cells have reached no fate at all, survival
-  was read as *held*: alive, with Survival on through the last 2 h of the run, not merely not dead yet. That reading
-  was fixed after the data, and the results below give both.
+  was read as *held*: alive, with Survival on through the last 2 h of the run, not merely not dead yet. Held survival
+  is stricter than Study 0's *durable survival* (Survival on at the 24 h snapshot; {doc}`calibration`). That reading
+  was fixed after the data, and the Phase B table gives both alive and held survival.
 - **The comparator.** In the composite, the protective genes switch on at $r_\text{tx}$ per second and every other rate,
   including NF-κB's whole activation route (TNFR, RIP1, RIP1ub, IKK), runs on the death clock `k_time`. Only the final
-  NF-κB node follows Lipniacki directly. So at a death clock of $m$ minutes per Calzone unit, the composite's fate
-  network is Calzone's network with TransRate $r_\text{tx} \cdot 60m$ per unit, read after $24 \cdot 60/m$ units.
-  Phase A runs Calzone's network alone at exactly those settings, as the like-for-like comparison.
+  NF-κB node follows Lipniacki directly, at $f\kappa$. So at a death clock of $m$ minutes per Calzone unit, the
+  composite's fate network is Calzone's network with TransRate $r_\text{tx} \cdot 60m$ per unit, read after
+  $24 \cdot 60/m$ units, in every node but NF-κB. Phase A runs Calzone's network alone at exactly those settings, so
+  the comparison isolates what the coupled NF-κB node does.
 
 ## Phase A: Calzone's network alone
 

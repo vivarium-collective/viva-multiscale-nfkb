@@ -54,4 +54,4 @@ v1 is the composite being built now (one cell, the layers on the landing page); 
 | TNFR2, membrane-bound TNF | The fate network and the NF-κB model are built around TNFR1 signalling. |
 | The nuclear envelope as a spatial boundary | The spatial engine has one domain and no flux between regions yet. Lipniacki's two well-mixed compartments carry nuclear transport. This is planned for v2 ({doc}`../design/spatial`). |
 | Several cells | v1 models one cell. The same TNF field can feed N cells later; see {doc}`../design/roadmap`. |
-| Receptor clustering dynamics at runtime | Receptor binding relaxes within about 100 s, faster than NF-κB's rise (337 s half-rise), so v1 uses its equilibrium as an approximation, to be checked when that step is built. See {doc}`../design/rule-based`. |
+| Receptor clustering dynamics at runtime | Receptor binding relaxes within about 100 s, faster than NF-κB's rise (337 s half-rise, {doc}`lipniacki-model`), so v1 uses its equilibrium as an approximation, to be checked when that step is built. See {doc}`../design/rule-based`. |

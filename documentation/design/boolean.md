@@ -3,7 +3,8 @@
 This page records how Calzone's cell-fate network was brought into the composite and why. It assumes the network itself
 ({doc}`../science/calzone-network`: every node, rule and rate, and how to read `@logic ? 1 : 0`), what a Boolean network
 and asynchronous updating are ({doc}`../science/boolean-networks`), and how MaBoSS turns rates into probabilities
-({doc}`../math/maboss`). The **races** this page refers to are the two explained there: caspase-8 against
+({doc}`../math/maboss`). The **races** this page refers to are the two explained on
+{doc}`../science/calzone-network`: caspase-8 against
 NF-κB's activation route (the activation race), and the death route against NF-κB's slow protective genes (the
 protection race).
 
@@ -60,7 +61,7 @@ Measured through `MaBoSSProcess` with TNF on, read at t = 40, that cut left P(Ap
 ### Round 2: cutting only the "duplicated" arm dropped death's feedback on NF-κB
 
 The next version kept TNF, TNFR and RIP1, and removed only RIP1ub, IKK, cIAP and mcIAP. Those looked like they served
-only the activation route. That cut was exact *with NF-κB clamped*. An adversarial review showed the composite never
+only the activation route. That cut was exact *with NF-κB clamped*. An adversarial review (an independent reviewer asked to find faults; {doc}`decisions`) showed the composite never
 runs that way, because those nodes are also how death **shuts NF-κB down**:
 - **caspase-8 cleaves RIP1:** CASP8 ⊣ RIP1 → RIP1ub → IKK → NF-κB;
 - **SMAC sequesters cIAP:** SMAC ⊣ cIAP → RIP1ub;

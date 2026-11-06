@@ -9,7 +9,7 @@ Each edge is data flowing from the layer that owns a quantity to the layer that 
 | `tnf_occupancy` | | direct (writer declares `overwrite`) | <span class="layer kinetic">kinetic</span> Tellurium | `parameters_in.TNF_R` |
 | `tnf_occupancy` | | `MathExpressionStep`: $u = \text{occ}$, $d = 1-\text{occ}$ (on Calzone's unit rate, then scaled by `$k_time` like every rate) | <span class="layer boolean">Boolean</span> MaBoSS | `parameters.u_TNF`, `parameters.d_TNF` |
 | Tellurium | five NF-κB species | `MathExpressionStep`: nuclear fraction $f$; $u = f\kappa/k_\text{time}$, $d = (1-f)\kappa/k_\text{time}$ | MaBoSS | `parameters.u_NFkB`, `parameters.d_NFkB` |
-| MaBoSS | `node_probabilities.Apoptosis`/`NonACD` | gate (*candidate*) | Tellurium | `parameters_in.…` |
+| MaBoSS | `node_probabilities.Apoptosis`/`NonACD` | feedback (*candidate*, not built; below) | Tellurium | `parameters_in.…` |
 
 Symbols in the table:
 - **occ** is a receptor-engagement fraction, between 0 and 1; which bound states count as engaged (any receptor bound

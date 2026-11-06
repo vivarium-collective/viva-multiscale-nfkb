@@ -5,8 +5,8 @@ changes, and from that how often the layers must exchange values.
 
 ## How fast does an ODE model change? Linearise it
 
-Write the NF-κB model ({doc}`../science/lipniacki-model`) as $\dot x = F(x)$, where $x$ is the vector of 16
-concentrations. Near a state $x^*$, a small deviation $\delta x = x - x^*$ evolves as
+Write the NF-κB model ({doc}`../science/lipniacki-model`) as $\dot x = F(x)$, where $x$ is the vector of the 15
+floating species' concentrations (the 16th species, `TNF`, is a boundary species set from outside, not a variable). Near a state $x^*$, a small deviation $\delta x = x - x^*$ evolves as
 
 $$
 \dot{\delta x} \approx J\,\delta x, \qquad J_{ij} = \frac{\partial F_i}{\partial x_j}\bigg|_{x^*},

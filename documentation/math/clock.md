@@ -24,14 +24,14 @@ $$
 \text{rate}_\text{target} = k \cdot \frac{r_\text{tx}}{k} = r_\text{tx}\quad\text{(per second)},
 $$
 
-whatever $k$ is. The death machinery's rates scale with $k$. NF-κB's own switching does not: the composite writes
+whatever $k$ is. The death machinery's rates scale with $k$. NF-κB's own switching, while its gate is open, does not: the composite writes
 $u = f\kappa/k$ and $d = (1-f)\kappa/k$, so the network's rates $k\,u = f\kappa$ and $k\,d = (1-f)\kappa$ are also
 independent of $k$ ({doc}`switch`; {doc}`../design/decisions`, row 25). Only in the checks that set $\kappa = k$ does
 NF-κB's switching scale with $k$. So:
 
 - **gene expression runs on Lipniacki's measured clock,** $r_\text{tx} = \ln 2 / 2107\ \text{s}$;
-- **`k_time` moves everything else** relative to it: the death machinery, and also NF-κB's activation route upstream
-  of the NFkB node (TNFR, RIP1, RIP1ub, IKK). Study 1 found that this limits protection ({doc}`../design/validation`).
+- **`k_time` moves everything else** relative to it: the death machinery, the protective products' switch-off, and NF-κB's
+  activation route upstream of the NFkB node (TNFR, RIP1, RIP1ub, IKK). Study 1 found that this limits protection ({doc}`../design/validation`).
 
 `transcription-anchor-fast` and `transcription-anchor-slow` check exactly this. At $k = 1/60$ and $k = 1/6000$, each
 target gene's probability over Lipniacki's delay is the same, 0.491235.

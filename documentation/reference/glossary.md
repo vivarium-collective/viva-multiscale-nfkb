@@ -92,6 +92,10 @@ Harness
 : Two of compose-api's own checks, copied unchanged into `checks/harness`, which show that this repository scores checks
   exactly as the service does ({doc}`../verification/index`).
 
+Held survival
+: Alive, with the Survival node on through the last 2 h of the run: Study 1's reading of "survives", stricter
+  than durable survival ({doc}`../design/validation`).
+
 Jacobian
 : The matrix of how each rate of change depends on each concentration. Its eigenvalues give the model's timescales
   ({doc}`../math/timescales`).
@@ -115,6 +119,10 @@ Mash-up (inferred mash-up)
 McNemar test
 : An exact test for whether a change shifts a yes/no outcome, using only the cells whose outcome changed
   ({doc}`../math/statistics`).
+
+Net protection
+: Cells alive only with NF-κB minus cells alive only without it, on the same seeds, in percentage points
+  ({doc}`../design/validation`, {doc}`../math/statistics`).
 
 NRMSE
 : Normalised root-mean-square error: the typical difference between two trajectories, relative to their size.
@@ -178,8 +186,9 @@ U1, U2
   it so these steps run at `r_tx` per second ({doc}`../design/time`).
 
 Variant
-: A run of Study 0 with one named change to the fate network, compared cell by cell with the baseline grid
-  ({doc}`../design/calibration`).
+: A run with one named change against its study's baseline, compared cell by cell on the same seeds: Study 0's
+  decay, persistence and gate-removal runs ({doc}`../design/calibration`), Study 1's NF-κB knockout
+  ({doc}`../design/validation`).
 
 Workbench, workspace
 : vivarium-workbench is the dashboard that records studies and their runs; a workspace is a research repository set up
