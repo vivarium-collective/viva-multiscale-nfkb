@@ -26,7 +26,8 @@ Reading the diagram (terms such as process, store, port and adapter: {doc}`compo
 - **`fields.TNF`**: the TNF concentration on the spatial grid, in µM ({doc}`spatial`).
 - **`RegionMean`**: an adapter that averages the field over the grid cells at the cell's surface, giving one
   concentration, `tnf_at_cell`.
-- **d1** (its label in the plan of record): the dose–response, which turns that concentration into **occ**, the fraction of TNF receptors occupied
+- **d1** (its label in the plan of record): the dose–response, which turns that concentration into **occ**, a receptor-engagement fraction between 0 and 1
+  (which bound states count as engaged is chosen when d1 is built)
   ({doc}`rule-based`).
 - **`parameters_in.TNF_R`**: the NF-κB model's TNF input ({doc}`../science/lipniacki-model`), set to occ.
 - **`u_TNF`, `d_TNF`**: the fate network's TNF node rates, so the node is on a fraction occ of the time.

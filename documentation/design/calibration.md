@@ -231,6 +231,6 @@ Alex's two decisions after Study 0 (2026-11-06; {doc}`decisions`, rows 27 and 28
 
 - **Exposure (d1) is the next lever**, not graded transcription, since nothing in Study 0 predicts a rescue from
   graded transcription.
-- **Death becomes absorbing in the network itself**, so that a death flag stays set, and the spatial studies can stop
+- **Death becomes absorbing in the network itself**, so that a death flag stays set, which a later edge can use to stop
   a dead cell signalling. Until now only the readout made death irreversible. No node reads Apoptosis or NonACD, and
   rerunning the baseline with absorbing death on the same seeds moved no cell's first death ({doc}`boolean`).

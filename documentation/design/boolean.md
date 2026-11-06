@@ -146,8 +146,8 @@ rate_down = $k_time * (@logic ? 0 : ($absorb_death ? 0 : 1));
 
 - $a = 0$ gives Calzone's network unchanged. Every check above sets it, so they still compare against Calzone exactly.
 - Any nonzero $a$ (the composite uses 1) gives a death node that never switches off, so a dead cell stays dead. The
-  rest of the network keeps running after death; what the change gives the spatial layer is a death flag that stays
-  set, which it can use to stop a dead cell signalling.
+  rest of the network keeps running after death; what the change gives is a death flag that stays set, which a later
+  edge can use to stop a dead cell signalling (none is built yet; {doc}`coupling`).
 - It is written as a switch rather than as a factor $1 - a$, so no value can make a rate negative.
 
 **What it should not change.** No node's logic reads Apoptosis or NonACD: they are outputs only. In MaBoSS's

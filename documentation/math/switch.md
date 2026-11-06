@@ -24,8 +24,8 @@ with stationary value exactly $f$, Lipniacki's nuclear fraction. This is why the
 node's long-run probability of being on is the kinetic model's own fraction of active NF-κB, with no new constant.
 
 **In the composite** the same switch is scaled by κ, the node's flipping speed in s⁻¹: $u = f\kappa$ and
-$d = (1-f)\kappa$, written to MaBoSS as $f\kappa/k_\text{time}$ and $(1-f)\kappa/k_\text{time}$ because MaBoSS
-multiplies every rate by `$k_time`: $k_\text{time} \cdot f\kappa/k_\text{time} = f\kappa$, whatever $k_\text{time}$ is. Then $u + d = \kappa$ and
+$d = (1-f)\kappa$, written to MaBoSS as $f\kappa/k_\text{time}$ and $(1-f)\kappa/k_\text{time}$ because the composite's
+network multiplies every rate by `$k_time` (written so by `workspace/datasets/calzone2010_cellfate/prep.py`, {doc}`clock`): $k_\text{time} \cdot f\kappa/k_\text{time} = f\kappa$, whatever $k_\text{time}$ is. Then $u + d = \kappa$ and
 
 $$
 P(t) = f\,(1 - e^{-\kappa t}),

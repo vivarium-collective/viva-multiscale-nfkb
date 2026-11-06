@@ -62,8 +62,9 @@ and on average the held value is $\Delta t/2$ old. So $\Delta t = 0.1\,\tau$ kee
 the current one at worst, and about 5% on average. That is the rule used here: **each coupling interval is about 0.1 ×
 the fastest timescale of the quantity that crosses that edge** (an edge is one layer's output wired to another layer's
 input, {doc}`../design/composite-primer`), not of the fastest process anywhere. The model's 6 s
-modes never cross an edge; they stay inside its integrator. What crosses is TNF at the cell and NF-κB's fraction $f$,
-which change over minutes ({doc}`../design/time`).
+modes never cross an edge; they stay inside its integrator. What crosses is TNF at the cell, which changes over seconds as a
+front passes (about 4 s across 40 µm, {doc}`../science/scales`), and NF-κB's fraction $f$, which changes over minutes
+({doc}`../design/time`).
 
 The rule is a bound to start from, not a proof. A composite's intervals are accepted only if it reproduces a run with
 the finest intervals on the reported quantities, shows no oscillation created by the coupling itself, and runs faster

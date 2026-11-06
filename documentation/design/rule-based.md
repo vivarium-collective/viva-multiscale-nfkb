@@ -18,10 +18,9 @@ between the TNF field and Lipniacki's `TNF_R`. It fails in v1 for three reasons,
    and `T(1,2,3)` belong to neither
    group, so every bound complex vanishes at the end of each interval (viva-nfsim@76ff7fc `processes.py:84-96,340-350`).
 2. **No parameter port, and the same RNG seed every interval** (`:109-113`).
-3. **The timescales make it unnecessary.** Binding equilibrates in about 100 s ($k_\text{off} = 0.01\ \text{s}^{-1}$),
-   Quasi-steady means: when one process relaxes much faster than everything that reads it, it can be treated as always at
-   its equilibrium. Binding relaxes toward equilibrium at rate $k_\text{off} + k_\text{on}[R] \ge k_\text{off}$, so
-   within about 100 s or less, depending on receptor density. That is only about a third of NF-κB's 337 s half-rise, so
+3. **The timescales may make it unnecessary.** Quasi-steady means: when one process relaxes much faster than everything that reads it, it can be treated as always at
+   its equilibrium. Binding relaxes toward equilibrium at rate $k_\text{off} + k_\text{on}[R] \ge k_\text{off}$
+   ($k_\text{off} = 0.01\ \text{s}^{-1}$), so within about 100 s or less, depending on receptor density. That is only about a third of NF-κB's 337 s half-rise, so
    the separation is a factor of about 3, not orders of magnitude, and the equilibrium is an approximation to be checked
    when d1 is built (an open question; {doc}`roadmap`). Lipniacki's `TNF` is also an on/off gate, so one scalar carries
    all the information the core can use.

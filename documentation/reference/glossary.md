@@ -57,7 +57,7 @@ Coupling interval
   Each layer holds the last value it received in between.
 
 d1
-: The dose–response step: TNF concentration at the cell to receptor occupancy, from McMillan 2021's binding model
+: The dose–response step: TNF concentration at the cell to a receptor-engagement fraction (occ), from McMillan 2021's binding model
   ({doc}`../design/rule-based`).
 
 Durable survival

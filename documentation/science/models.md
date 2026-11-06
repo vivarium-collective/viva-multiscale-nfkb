@@ -11,7 +11,7 @@ J Theor Biol 228:195–215. BioModels **BIOMD0000000786** (curated).
   concentrations in µM. The model, species by species and reaction by reaction: {doc}`lipniacki-model`.
 - **Its input:** `TNF` is a boundary species (one that no reaction changes; only a rule sets it), set by the rule
   `TNF := TNF_R`. `TNF_R` is a receptor-activity parameter between 0 and 1: the original model switches it from 0 to 1,
-  and in the composite it carries the receptor occupancy. It enters the IKK reactions as a modifier, in the rates
+  and in the composite it carries the receptor-engagement fraction. It enters the IKK reactions as a modifier, in the rates
   $k_1\,\text{TNF}\,\text{IKKn}$ (neutral IKK activated) and $k_2\,\text{TNF}\,\text{A20}\,\text{IKKa}$ (active IKK
   inactivated by A20).
 - **Why this model** (Alex, 2026-11-04):

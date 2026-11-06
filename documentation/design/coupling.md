@@ -12,7 +12,8 @@ Each edge is data flowing from the layer that owns a quantity to the layer that 
 | MaBoSS | `node_probabilities.Apoptosis`/`NonACD` | gate (*candidate*) | Tellurium | `parameters_in.…` |
 
 Symbols in the table:
-- **occ** is the fraction of TNF receptors occupied, between 0 and 1. The dose–response step **d1** computes it from the
+- **occ** is a receptor-engagement fraction, between 0 and 1; which bound states count as engaged (any receptor bound
+  to a TNF trimer, or at least two) is chosen when d1 is built ({doc}`rule-based`). The dose–response step **d1** computes it from the
   TNF concentration at the cell ({doc}`rule-based`). Through $u = \text{occ}$, $d = 1 - \text{occ}$, the fate network's
   TNF node is on a fraction occ of the time ({doc}`../math/switch`).
 - **$f$** is NF-κB's nuclear fraction (below; derived on {doc}`../science/lipniacki-model`).
@@ -20,8 +21,9 @@ Symbols in the table:
 - **`k_time`** is the death clock, Calzone units per second ({doc}`time`). Every network rate is multiplied by it, so
   dividing by it here makes the NF-κB node's speed independent of it.
 
-The last edge, fate feeding back into kinetics, ships only with a cited biological basis. Without one, the Boolean
-layer in v1 is a readout.
+The last edge, fate feeding back into kinetics, ships only with a cited biological basis. Without one, no edge leaves
+the Boolean layer in v1: it is a readout. Absorbing death (decision 28, {doc}`boolean`) keeps a death flag set so that
+a later edge can stop a dead cell signalling; no such edge is built yet.
 
 ## Kinetic → Boolean: the nuclear fraction
 
@@ -47,7 +49,8 @@ $$
   - The checks hold one sampled stimulated state, 414 s after TNF and still rising (NFKB_nuc 0.1688 µM), where
     $f = 0.5627$.
 - **How it drives the node:** $u_\text{NFkB} = f\,\kappa/k_\text{time}$ and
-  $d_\text{NFkB} = (1-f)\,\kappa/k_\text{time}$. MaBoSS multiplies every rate by `$k_time`, so in seconds the node
+  $d_\text{NFkB} = (1-f)\,\kappa/k_\text{time}$. The composite's network multiplies every rate by `$k_time`
+  (`workspace/datasets/calzone2010_cellfate/prep.py`, {doc}`../math/clock`), so in seconds the node
   switches on at $f\kappa$ and off at $(1-f)\kappa$. While its gate holds (IKK on, caspase-3 off), the NFkB node is a
   two-state switch with stationary P(on) $= f$ ({doc}`../math/switch`).
   - **$f$ sets how often the node is on; κ sets how fast it flips.** Neither model gives κ.

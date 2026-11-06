@@ -16,7 +16,8 @@ checks: $k = 1/600$ over 1200 s gives the same value as $k = 1$ over 2 units.
 
 ## The transcription term is invariant to $k$
 
-`prep.py` writes Calzone's transcription rate as `$r_tx / $k_time` *inside* a rate that is then multiplied by
+`workspace/datasets/calzone2010_cellfate/prep.py`, the script that writes the composite's version of Calzone's network
+(the original file is never edited; {doc}`../design/architecture`), writes Calzone's transcription rate as `$r_tx / $k_time` *inside* a rate that is then multiplied by
 `$k_time`:
 
 $$

@@ -67,7 +67,7 @@ study in this project varies ({doc}`../design/time`, {doc}`../design/calibration
 ## Every node
 
 Generated from the pinned network file (`raw/cellfate.bnd`, MaBoSS's copy of Calzone's model) and its initial states
-(`raw/cellfate.cfg`, with TNF switched on). *Read by* lists the nodes whose rule uses this node. *Composite* says how
+(`raw/cellfate.cfg`, which sets TNF off; the table shows it on, because every run here switches TNF on). *Read by* lists the nodes whose rule uses this node. *Composite* says how
 the composite changes the node ({doc}`../design/boolean`); in addition, every rate is multiplied by `$k_time`.
 
 ```{include} _calzone_nodes.md
@@ -82,7 +82,8 @@ Three things to notice in the table:
   with an input driven by the receptor signal.
 
 ```{note}
-Regenerate the table after any change to the network or to `prep.py`:
+Regenerate the table after any change to the network or to `workspace/datasets/calzone2010_cellfate/prep.py` (the script that writes the
+composite's version of the network; {doc}`../design/architecture`):
 `uv run --project compose python -I documentation/science/code/calzone_network.py`. Its `--check` mode fails when the
 committed table is stale.
 ```

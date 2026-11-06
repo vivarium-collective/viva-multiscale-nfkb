@@ -85,7 +85,8 @@ one interval to the next:
 
 1. It runs `sample_count` trajectories over the interval, starting from the carried state.
 2. From the last window's joint-state distribution it **samples one joint state**, which becomes the next interval's
-   start and is written to `node_state` (0 or 1 per node).
+   start and is written to `node_state` (0 or 1 per node). The process also writes `node_probabilities`: each node's
+   probability of being on over that last window (with one trajectory, the fraction of the window it was on).
 3. Both the engine's random seed and the sampler's come from `numpy.random.SeedSequence([seed, step])`, where `step` counts the intervals run so far, so a run is
    reproducible from its seed.
 
