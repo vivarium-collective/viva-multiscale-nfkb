@@ -14,28 +14,28 @@ The legend says how far each one has got:
 
 ## The 10 most serious
 
-1. [ ] index.md:80 and 25–26 say every pairwise coupling "has been built and checked". roadmap.md:10–11 says the
+1. [x] (fixed: index says only kinetic→Boolean is checked; spatial→kinetic and d1 next) index.md:80 and 25–26 say every pairwise coupling "has been built and checked". roadmap.md:10–11 says the
    spatial→kinetic coupling is next and d1 is in progress. The two contradict each other.
-2. [ ] composite-primer.md:67–71 and verification/index.md:5,14 say every check has a proven-failing negative, but the
+2. [x] (fixed: wording says negatives where recorded; six checks lack one (counted from the catalogue, not five or seven)) composite-primer.md:67–71 and verification/index.md:5,14 say every check has a proven-failing negative, but the
    catalogue (verification/index.md:44–53) shows "—" for 7 checks.
-3. [ ] getting-started.md:26, architecture.md:76–77 and history.md:31 say the run environment is "pinned exactly" to
+3. [x] (verified narrower: the run-env pins equal compose-api's manifest exactly (4 packages); viva-tellurium's bump landed in 0.7.79 (#502), so the roadmap row was stale; RegionMean (#70, open) needs a pin move later. Fixed in architecture, roadmap, diffusion) getting-started.md:26, architecture.md:76–77 and history.md:31 say the run environment is "pinned exactly" to
    production and that the composite needs "no new registry entry". Against that:
    - viva-tellurium 0.2.3's pin bump is still pending;
    - RegionMean is an unmerged PR (#70).
    It is unclear what environment the checks actually use.
-4. [ ] boolean-networks.md:47–61 (also models.md:36–37 and time.md:50–51) says rate-free reachability cannot give
+4. [x] (fixed: Calzone's method from the paper's own Methods (equal probability per transition; fraction of paths; 'a strong assumption'); reduced model defined) boolean-networks.md:47–61 (also models.md:36–37 and time.md:50–51) says rate-free reachability cannot give
    fractions, yet quotes the Calzone paper's 30/60/10%. "Reduced model" is never defined.
-5. [ ] calibration.md:97–98 and coupling.md:54 justify κ = ln 2/337 s only as "Lipniacki's half-rise". The step from a
+5. [x] (fixed: κ derived (half-rise of f(1−e^{−κt}) at ln2/κ; 337 s = NFKB_nuc half-rise to half its first peak, transcription_anchor.json)) calibration.md:97–98 and coupling.md:54 justify κ = ln 2/337 s only as "Lipniacki's half-rise". The step from a
    concentration's half-rise to a node's flip rate is never derived.
-6. [ ] glossary.md:36 and calzone-network.md:22 say `k_time` is "how many seconds a unit lasts". glossary.md:89,
+6. [x] (fixed: one unit lasts 1/k_time s (calzone-network, glossary)) glossary.md:36 and calzone-network.md:22 say `k_time` is "how many seconds a unit lasts". glossary.md:89,
    clock.md:5 and time.md:32 say it is units per second, the inverse.
-7. [ ] coupling.md:63 says the check's inputs are "held at the peak". coupling.md:47–48 and tutorial 03:5 say they are
+7. [x] (fixed: coupling.md inputs at 414 s) coupling.md:63 says the check's inputs are "held at the peak". coupling.md:47–48 and tutorial 03:5 say they are
    held at 414 s, still rising.
-8. [ ] boolean.md:72 gives Round 2 as survival 0.1281 and NonACD 0.0001. boolean.md:120 and verification:50 give
+8. [x] (fixed: two different manipulations, both stated (loops cut on the full network, against the Round 2 network in the check at u = 1, d = 0)) boolean.md:72 gives Round 2 as survival 0.1281 and NonACD 0.0001. boolean.md:120 and verification:50 give
    0.25 and 4e-5, and the conditions are not stated.
-9. [ ] The 30 s coupling interval is never derived. time.md:95 uses "base step" without defining it, and roadmap.md:12
+9. [x] (fixed: 30 s shown to satisfy the 0.1× rule (0.1 × 337 ≈ 34 s); base step and global_time_precision defined; roadmap's d7 labels replaced) The 30 s coupling interval is never derived. time.md:95 uses "base step" without defining it, and roadmap.md:12
    uses "d7 intervals" and "d7 step 5".
-10. [ ] composite-primer.md:26 and glossary.md:127 say a step runs when its input *changes*. coupling.md:81 says it
+10. [x] (fixed: a step runs when a store it reads is written to, even without change (process-bigraph 1.9.1; make_kinetic_boolean.py's note)) composite-primer.md:26 and glossary.md:127 say a step runs when its input *changes*. coupling.md:81 says it
     fires every tick its inputs are touched, even for a zero delta.
 
 ## By page, in reading order

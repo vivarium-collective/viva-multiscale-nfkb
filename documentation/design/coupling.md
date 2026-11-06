@@ -60,7 +60,7 @@ $$
     measured what that difference does to fate.
 
 **Check:** `pair-nfkb-analytic` wires exactly this.
-- **Inputs:** the five species, held at the peak; the adapter evaluates the rule; MaBoSS runs the coupled network's NF-κB node verbatim, with its gate held open
+- **Inputs:** the five species, held at the state 414 s after TNF (still rising, $f = 0.5627$); the adapter evaluates the rule; MaBoSS runs the coupled network's NF-κB node verbatim, with its gate held open
   with TNF off.
 - **Result:** P(NFkB on) over the last window matches the analytic 0.48259, and the death arms stay at 0.
 - **Proven failing:** with $K_v = 4$ in the adapter, and with the `parameters` store unseeded.

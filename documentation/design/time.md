@@ -92,6 +92,7 @@ NF-κB's peaks ring and decay; they don't form a limit cycle.
   {doc}`../math/diffusion`) and $f$ (minutes, plus the ~100 min ringing).
 
 **The constraints:**
-- Intervals are whole multiples of the base step, with `global_time_precision` 6.
+- Every process's interval is a whole multiple of the shortest one (the base step), so the processes stay in step;
+  `global_time_precision` 6 rounds the composite's clock to 6 decimal places, so that sums of intervals do not drift.
 - A composite is accepted only if it matches the all-finest run on the reported observables, shows no coupling
   oscillation, and runs faster ({doc}`../math/timescales`).

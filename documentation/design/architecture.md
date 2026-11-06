@@ -73,8 +73,10 @@ test, and a mutated copy proven to fail. See {doc}`../verification/index`.
 ### 5. Run as compose-api runs it
 
 The checks run through compose-api's own runner and scorer, in an environment pinned to compose-api's production
-mash-up. A document that passes here runs on the service without a new registry entry, as an inferred mash-up of
-viva-maboss, viva-tellurium, viva-pde-particle and viva-basic-processes.
+mash-up: every simulator package is at the commit compose-api's registry pins. So a document that passes here runs on
+the service without a new registry entry, as a mash-up compose-api infers from the document's processes (viva-maboss,
+viva-tellurium, viva-pde-particle and viva-basic-processes). The one exception ahead: the spatial → kinetic coupling needs
+`RegionMean`, still in review (viva-pde-particle#70), so viva-pde-particle's pin must move once it is merged.
 
 ## Why this workspace exists
 

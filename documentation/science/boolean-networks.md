@@ -57,8 +57,11 @@ cells at t = 40 Calzone units, 50,000 cells each, every other rate 1 (`documenta
 
 The wiring is identical in both rows. What differs is which route tends to win the race to its attractor: with slow
 transcription, caspase-8 is usually active before NF-κB's protective proteins exist. The fractions are therefore a
-property of the rates as much as of the wiring. That is why the Calzone 2010 paper's figures, obtained without rates
-(about 30% survival, 60% apoptosis and 10% necrosis for its reduced model; {doc}`models`), are not a target for the
+property of the rates as much as of the wiring. The Calzone 2010 paper gets its figures by such a rule: from each state, every possible
+next transition gets equal probability, and a fate's probability is the fraction of paths that reach it. The authors
+call this a strong assumption and say the values cannot be compared directly with experiment. They computed it on a
+**reduced model**, one with some variables hidden but the same stable states. That is why the paper's figures (about 30%
+survival, 60% apoptosis and 10% necrosis; {doc}`models`) are not a target for the
 rated network, and why this project measures or calibrates the rates it uses ({doc}`../design/time`,
 {doc}`../design/calibration`).
 

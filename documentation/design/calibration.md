@@ -94,8 +94,10 @@ two columns don't sum to "dead".
 ## Decision: κ
 
 **κ = ln 2 / 337 s, Lipniacki's own NF-κB speed** (Alex, 2026-11-06).
-- **Where it comes from:** 337 s is the half-rise of nuclear NF-κB after TNF in Lipniacki's model, so κ is measured,
-  not fitted.
+- **Where it comes from:** 337 s is the half-rise of nuclear NF-κB after TNF in Lipniacki's model: the time to reach
+  half its first peak (`transcription_anchor.json`). With $f$ held, the node's probability of being on rises as
+  $f(1 - e^{-\kappa t})$ ({doc}`../math/switch`), which reaches half its level at $t = \ln 2/\kappa$. Setting
+  $\kappa = \ln 2/337$ s⁻¹ makes the node rise as fast as nuclear NF-κB does, so κ is measured, not fitted.
 - **Why not Calzone's flicker (κ = `k_time`):** it ties NF-κB's speed to the assumed speed of the death machinery,
   which has no biological basis.
 - **Why not the slower bracket (ln 2 / 2107 s, the NF-κB → protein delay):** it applies the transcription delay a

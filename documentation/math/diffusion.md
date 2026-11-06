@@ -46,8 +46,8 @@ checks that the field stays uniform (centre, corners and an edge agree) and foll
 
 ## Mass
 
-With zero-flux walls and $\lambda = 0$, the total $\int c\,d\mathbf x$ is conserved. `RegionTotal` (added upstream to
-viva-pde-particle for this project) reports it over a region, weighting each grid point by its control volume, as the
+With zero-flux walls and $\lambda = 0$, the total $\int c\,d\mathbf x$ is conserved. `RegionTotal` (being added upstream to
+viva-pde-particle for this project, in review as viva-pde-particle#70) reports it over a region, weighting each grid point by its control volume, as the
 scheme conserves it. Its tests check conservation to rel 1e-12.
 
 ## Resolution

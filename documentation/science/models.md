@@ -34,7 +34,8 @@ of cell-fate decision in response to death receptor engagement.* PLoS Comput Bio
   **Apoptosis** and **NonACD** (non-apoptotic cell death, i.e. necrosis). Every node, rule and rate:
   {doc}`calzone-network`.
 - **Semantics:** the paper uses asynchronous reachability with no rates ({doc}`boolean-networks`). In it, the wild-type cell under TNF reaches
-  about **30% survival, 60% apoptosis and 10% necrosis** (Fig. 4, reduced model).
+  about **30% survival, 60% apoptosis and 10% necrosis** (Fig. 4, on a reduced model with some variables hidden but the
+  same stable states; each possible transition from a state given equal probability; {doc}`boolean-networks`).
 - **The rates used here** come from MaBoSS's continuous-time version of the same network (the files shipped in the
   MaBoSS repository): every rate 1, except transcription at `TransRate = 1/24`. Those rates are a modelling choice of
   that example, not of the paper. {doc}`../design/time` explains why that matters.

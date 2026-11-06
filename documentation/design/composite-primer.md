@@ -23,7 +23,8 @@ document's wiring decides which stores those are. The same process can be wired 
 - A **process** advances in time. It has an `interval` in seconds. Every interval it reads its inputs and returns an
   **update** covering that span. `TelluriumProcess` (the NF-κB model) and `MaBoSSProcess` (the fate network) are
   processes.
-- A **step** has no interval. It runs whenever one of the stores it reads changes, and turns inputs into outputs at
+- A **step** has no interval. It runs whenever one of the stores it reads is written to (even if the value does not
+  change; a write to a whole map does not trigger a step that reads one of its keys, {doc}`coupling`), and turns inputs into outputs at
   once. The **adapters** that translate one layer's quantity into another's are steps. For example, a
   `MathExpressionStep` computes NF-κB's nuclear fraction $f$ from the kinetic layer's species and writes the fate
   network's switching rates ({doc}`coupling`).
@@ -43,7 +44,8 @@ apply ({doc}`coupling`).
 ## Time and results
 
 - The composite runs to an end time. Each process advances on its own interval. The composite's coupling interval, 30 s
-  in the studies, is the interval its processes share, so they exchange values every 30 s.
+  in the studies, is the interval its processes share, so they exchange values every 30 s. It satisfies the rule in
+  {doc}`../math/timescales`: $f$ changes fastest during its 337 s half-rise, and $0.1 \times 337 \approx 34$ s.
 - An **emitter** is a step that records chosen stores each time the composite advances. Its records, one row per time point, are
   the run's results file. Row 0 is the state at t = 0, before any process has run.
 
@@ -67,7 +69,7 @@ compose-api's `compliance.evaluate` scores the results file against the expectat
 Every check in this project has two more properties:
 - **An independent oracle.** The expected values come from a different engine, an upstream reference run, or an
   analytic formula ({doc}`../math/index`), never from the code under test.
-- **A proven-failing negative.** The check was run once with a deliberate defect and shown to fail
+- **A proven-failing negative, where recorded.** The check was run once with a deliberate defect and shown to fail
   ({doc}`../verification/index`).
 
 **Running checks locally.** `compose/check.sh <group> [<case>]` runs a case exactly as compose-api does:

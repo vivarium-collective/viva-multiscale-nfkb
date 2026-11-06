@@ -33,12 +33,12 @@ Boolean network
   ({doc}`../science/boolean-networks`).
 
 Calzone unit
-: The fate network's own time unit. Most of its steps have rate 1 per unit; how many seconds a unit lasts is the death
-  clock, `k_time` ({doc}`../science/calzone-network`, {doc}`../design/time`).
+: The fate network's own time unit. Most of its steps have rate 1 per unit; a unit lasts $1/k_\text{time}$ seconds,
+  where `k_time` is the death clock ({doc}`../science/calzone-network`, {doc}`../design/time`).
 
 Check
 : A compose-api compliance case: a document, an interval and expectations scored by `compliance.evaluate`. It always
-  has an independent oracle and a proven-failing negative ({doc}`../design/composite-primer`).
+  has an independent oracle, and a proven-failing negative where one is recorded ({doc}`../design/composite-primer`).
 
 compose-api
 : The BioSimulations service that runs process-bigraph documents on HPC. Its runner and scorer are what the checks use.
@@ -124,7 +124,7 @@ Paired seeds
   ({doc}`../math/statistics`).
 
 Process, step, store, port
-: A process computes over time intervals; a step computes when its inputs change; a store holds a value; a port is how
+: A process computes over time intervals; a step computes when a store it reads is written to; a store holds a value; a port is how
   a process or step reads or writes a store ({doc}`../design/composite-primer`).
 
 Quasi-steady

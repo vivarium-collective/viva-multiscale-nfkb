@@ -19,8 +19,8 @@ $1/\lambda$ (an exponential waiting time). In the rate expressions below:
 - `@logic ? 1 : 0` means "1 if the rule is true, otherwise 0". So `rate_up = @logic ? 1 : 0` with
   `rate_down = @logic ? 0 : 1` is a node that follows its rule at rate 1 in each direction. That is Calzone's default.
 - Rates are per **Calzone unit**, an abstract time unit: the network has no seconds of its own. Most steps have rate 1,
-  so one step takes one unit on average. How long a unit is in real time is the death clock, `k_time`
-  ({doc}`../design/time`).
+  so one step takes one unit on average. How long a unit is in real time is set by the death clock, `k_time`, the number of
+  Calzone units per second: one unit lasts $1/k_\text{time}$ seconds ({doc}`../design/time`).
 - `$TransRate` marks the slow steps that need new protein to be made: NF-κB's target genes, and cIAP. In Calzone's
   MaBoSS example it is 1/24, so they take 24 units on average.
 - `$Low_CASP8`, `$Low_RIP1`, `$Low_cIAP` and `$High_NFkB` are Calzone's mutant switches: set to 1, they hold a node off

@@ -8,13 +8,13 @@ changes, U1 and U2:
 | U1 | viva-tellurium `parameters_in` | **released** v0.2.3 (#37, 846f87c, on PyPI) |
 | U2 | viva-pde-particle `RegionMean` / `RegionTotal` | open as #70, awaiting review |
 | 3 | Standalone baselines: kinetic, Boolean and spatial each against an oracle | **done**, except the d1 dose–response (in progress) |
-| 4 | Pairwise couplings: kinetic → Boolean **done**; spatial → kinetic next (needs U1 in the pinned environment) | partial |
-| 5 | The full composite: all-finest run first, then at d7 intervals; accepted only on d7 step 5's criteria | not started |
+| 4 | Pairwise couplings: kinetic → Boolean **done**; spatial → kinetic next (U1 is in the pinned environment; it also needs U2's `RegionMean`) | partial |
+| 5 | The full composite: a run with the finest intervals first, then at intervals chosen by the rule in {doc}`../math/timescales`; accepted only on that page's test | not started |
 | 6 | A live run on compose-api as an inferred mash-up | after Alex's go |
 | Study 0 | Calibration of the coupling ({doc}`calibration`): κ decided; under held, saturating TNF nearly every cell dies; protein persistence saves cells only well beyond the measured turnover | **done** |
 | Decision 28 | Absorbing death in the network ({doc}`boolean`) | **done** |
 | d1 | TNF's dose–response at the receptor (McMillan 2021; decision 27, the next lever) | next, after the documentation pass |
-| compose-api | Pin bumps (viva-tellurium 0.2.3, then viva-pde-particle) with a `TelluriumProcess` compliance case | one compose-api release at a time |
+| compose-api | Pin bumps: viva-tellurium 0.2.3 **done** (compose-api 0.7.79, #502); viva-pde-particle after U2 merges | one compose-api release at a time |
 
 ## Later
 

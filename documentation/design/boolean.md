@@ -117,7 +117,9 @@ directly, TNF on, all 31 nodes, abs 0.01:
 - the caspase-3 term removed: NF-κB 0.243 instead of 0.215;
 - caspase-8's rates left off the clock: apoptosis 0.972 instead of 0.953;
 - BAX's rates left off the clock (early window): apoptosis 0.449 instead of 0.323;
-- Round 2's cut: survival 0.25 instead of 0.014, necrosis 4e-5 instead of 0.029.
+- the Round 2 network (RIP1ub, IKK, cIAP and mcIAP removed) run in this check, with NF-κB driven at $u = 1$, $d = 0$:
+  survival 0.25 instead of 0.014, necrosis 4e-5 instead of 0.029. (The table above is a different manipulation: the
+  full network with only those feedback loops cut, NF-κB following its own rule.)
 
 ### Death is absorbing in the composite
 

@@ -11,8 +11,9 @@ A check counts as evidence only if it could fail. Every check here:
    - another engine's output;
    - the upstream project's own reference output;
    - an exact equivalence against the unmodified upstream model.
-3. **Has a proven-failing negative.** A mutated copy (a wrong expected value, a wrong rate, a wrong network) was run
-   and failed on exactly the expectation it should. The negatives are listed below.
+3. **Should have a proven-failing negative.** A mutated copy (a wrong expected value, a wrong rate, a wrong network) is
+   run and fails on exactly the expectation it should. The negatives are listed below; six checks do not have one
+   recorded yet ("—").
 
 ## What the checks cover, and what they do not
 
