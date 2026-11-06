@@ -128,13 +128,15 @@ falsifiability: >
   plausible clock, and the headline studies have nothing to find; that would send the design back to the coupling,
   not forward.
 
-# Evaluate (2026-11-06). Every number below is from data/fate-table.json (analysis.py, end state at 24 h),
-# data/{grid,decay}-summary.json (run_grid.py) and checks/boolean/coupled-equals-full/case.yaml.
+# Evaluate (2026-11-06; corrected the same day after an adversarial review). Every number is from data/fate-table.json
+# (end state at 24 h), data/paired.json (cell by cell against the grid, same seeds, exact McNemar p),
+# data/{grid,decay}-summary.json and checks/boolean/coupled-equals-full/case.yaml.
 claim: >
   Under TNF held on at saturation, the coupled composite kills nearly every cell at every NF-kB switching speed and
-  death clock tried (durable survival 0-6% at 24 h), as Calzone's own network does at the comparable transcription
-  speed (1.4%). Anchoring protective-protein decay to Lipniacki's turnover changes nothing. Slowing the death clock
-  shifts death from apoptosis to necrosis instead of rescuing cells.
+  death clock tried (durable survival 0-6% at 24 h). Calzone's own network also kills nearly every cell at the
+  comparable transcription speed (survival 1.4%), but the coupling shifts that death toward necrosis and removes the
+  1.4%. Slowing the death clock shifts death from apoptosis to necrosis instead of rescuing cells. Study 0b's decay
+  test was confounded (f3); the persistence bound (Study 0c) replaces it.
 confidence: Investigating
 
 findings:
@@ -146,86 +148,102 @@ findings:
     10-18% show no fate node, because 24 h is only 12 Calzone units there, short of the 40 at which Calzone's own run
     is read.
   evidence: data/fate-table.json (grid-*)
-- id: f2-matches-calzone
+- id: f2-near-calzone-not-equal
   tier: observation
   summary: >
-    This is Calzone's own answer, not a coupling artefact. The unmodified network on the MaBoSS engine, TNF on, with
-    its cellfate.cfg TransRate of 1/24, gives Survival 0.014, Apoptosis 0.953 and NonACD 0.029 at t = 40. At 2 min/unit
-    the composite's effective TransRate is r_tx/k_time = 0.039 (about 1/25), and it gives survival 0, apoptosis
-    0.915-0.95 and necrosis 0.05-0.085.
+    Near-total death is also Calzone's own answer, but the split is not the same. The unmodified network on the MaBoSS
+    engine (TNF on, cellfate.cfg TransRate 1/24) gives Survival 0.014, Apoptosis 0.953 and NonACD 0.029 at t = 40. At
+    2 min/unit (effective TransRate r_tx/k_time = 0.039, about 1/25; 24 h is far past t = 40 there) the composite gives
+    survival 0 in 600 cells (8 expected at 0.014), apoptosis 0.915-0.95 and necrosis 0.05-0.085. The difference is
+    the coupling. Calzone's NFkB switches on at rate 1 per unit while its gate is open and stays on. The coupled node
+    switches on at f*kappa and off at (1-f)*kappa even with the gate open (about 9 min to switch on at f = 0.9 and
+    kappa = ln2/337 s, against 2 min for Calzone's at this clock).
   evidence: checks/boolean/coupled-equals-full/case.yaml; data/fate-table.json (grid-*-2min)
-- id: f3-decay-no-effect
+- id: f3-decay-confounded
   tier: observation
   summary: >
-    Study 0b. Switching the six transcription-scale products off at Lipniacki's protein turnover (3e-4/s) changes no
-    end-state fraction beyond sampling noise. That turnover is 28x slower than Calzone's at 2 min/unit and 2.2x faster
-    at 120 min/unit. Durable survival is 0 at 2-30 min/unit and 1-2.5% at 120 min/unit (grid: 1.5-6%). The edit is
-    present in the decay documents (r_deg = 3e-4 and six `$r_deg / $k_time` rates, checked in raw/document.pbg).
-  evidence: data/fate-table.json (decay-* against grid-*)
+    Study 0b is confounded, so it does not test protective-protein persistence. decay-lipniacki also slowed the
+    switch-off of mROS (on when NF-kB is OFF; it licenses ROS, a necrosis driver) and of Survival (the readout node).
+    Cell by cell against the grid, both artefacts show:
+    - at 2 and 10 min/unit, all six pairs shift toward necrosis: 9 of 9 changed cells at 2 min/unit for both
+      calzone-flicker and lipniacki-nfkb (p = 0.004 each); 15 against 3 at calzone-flicker 10 min/unit (p = 0.008);
+    - at 120 min/unit, where Lipniacki's turnover is 2.2x FASTER than Calzone's switch-off, durable survival at
+      lipniacki-nfkb fell from 12 to 2 cells (p = 0.006).
+    The p values are uncorrected. None passes a Bonferroni threshold over the 48 tests (12 pairs x 4 readouts) on its
+    own, but the direction is the same in every fast-clock pair, and the mechanism (mROS) is in the edit.
+  evidence: data/paired.json (decay-*); population.py EDITS["decay-lipniacki"]
 - id: f4-clock-sets-mode
   tier: observation
   summary: >
     The death clock sets the death mode. At kappa = lipniacki-nfkb, end-state apoptosis falls from 0.935 (2 min/unit)
     through 0.79 and 0.69 to 0.455 (120 min/unit), while necrosis rises from 0.065 through 0.21 and 0.31 to 0.355.
     The first fate arrives after about 5-9 Calzone units at every clock (medians 18, 74-76, 205-213 and 658-766 min).
+    The median counts only cells with a fate by 24 h, so at 120 min/unit it is biased low.
   evidence: data/fate-table.json; data/{grid,decay}-summary.json (first_fate_time_s_median)
 - id: f5-kappa-small
   tier: observation
   summary: >
     kappa does not change durable survival at 2-30 min/unit (0 for every kappa). It moves the apoptosis/necrosis split
     by up to 0.135 (apoptosis at 30 min/unit). At 120 min/unit, lipniacki-nfkb gives the most cells that show
-    Survival first (0.425; calzone-flicker 0.19), but most of them die later (0.25 of the 0.425).
+    Survival first (0.425; calzone-flicker 0.19), but most of them die later (0.25 of the 0.425). Decision (Alex,
+    2026-11-06): the composite uses kappa = lipniacki-nfkb (ln2/337 s), the speed measured in Lipniacki's own model,
+    which keeps NF-kB's speed independent of the assumed death clock.
   evidence: data/fate-table.json (end_*, first_survival, first_survival_then_dead)
-- id: f6-protection-transient
-  tier: mechanism
+- id: f6-two-regimes
+  tier: interpretation
   mechanism_origin: emergent
   summary: >
-    NF-kB's protection is transient. Lipniacki's nuclear fraction f peaks at 0.933 at 24 min, falls to 0.020 at 80 min,
-    and settles at 0.28 after about 6 h. The Boolean NFkB node, on with probability f, is therefore off about 72% of the
-    time once the oscillation has damped. Calzone's target genes need the node on, so their logic fails whenever it
-    is off, while the death arms run without pause under TNF. Of the cells that show Survival first, 57-100% die later.
-  evidence: parquet-runs/decay-lipniacki-nfkb-120min/timeseries.parquet (nfkb_fraction); data/fate-table.json
+    Two regimes, depending on the clock; both are hypotheses that Study 0c tests.
+    - Fast clocks (2-10 min/unit). Cells die (medians 18-76 min) before the protective products can be made: they
+      switch on at r_tx, a 35-min half-rise, while NF-kB is still in its first wave (f peaks at 0.933 at 24 min). The
+      limit would be how fast they are made, not how fast they decay.
+    - Slow clocks (120 min/unit). NF-kB falls to f = 0.020 at 80 min and settles at f = 0.28 after about 6 h. The
+      coupled node is then on about 28% of the time, so the protective products' logic keeps failing, while the death
+      arms run without pause under TNF. Of the cells that show Survival first, 57-100% (across all runs) die later.
+  evidence: parquet-runs/grid-lipniacki-nfkb-120min/timeseries.parquet (nfkb_fraction); data/fate-table.json
 - id: f7-knockouts
   tier: observation
   summary: >
-    Removing caspase-8's cleavage of RIP1 turns every death into necrosis (apoptosis 0, necrosis 1.0). Removing both
-    gates (that cleavage and SMAC's sequestration of cIAP) leaves 2.5-5% durable survival and 20-22% with no fate node
-    at 24 h. The prediction that the gate knockout would rescue survival is refuted.
-  evidence: data/fate-table.json (ko-*)
+    Removing caspase-8's cleavage of RIP1 turns every death into necrosis (cell by cell, 158 and 138 apoptotic cells
+    all became necrotic). Removing both gates (that cleavage and SMAC's sequestration of cIAP) keeps 45 and 54 of 200
+    cells alive at 24 h (10 and 30 min/unit; p < 0.001), but durable survival rises only to 5 and 10 cells (2.5-5%).
+    The gates delay and divert death; they are not the main barrier to survival.
+  evidence: data/paired.json (ko-*)
 
 alternative_hypotheses:
-- hypothesis: The coupling, not the biology, suppresses survival.
-  status: excluded
+- hypothesis: The coupling, not Calzone's network, causes the near-total death.
+  status: partly excluded
   how_excluded: >
-    The uncoupled Calzone network gives the same split at the comparable transcription speed (f2), and the coupling's
-    equivalence checks (coupled-equals-full, -early, -seconds, -early-seconds, -nfkb-knockout) pass against the engine.
-- hypothesis: Protective proteins decay too fast between NF-kB's waves to protect.
-  status: excluded at Lipniacki's measured turnover
+    The uncoupled network also kills about 98% (f2), and the coupling's equivalence checks (checks/boolean/
+    coupled-equals-full, -equals-full-early, -equals-full-seconds, -equals-full-early-seconds, coupled-nfkb-knockout)
+    hold with u_NFkB = 1, d_NFkB = 0. But the coupling does shift the split toward necrosis and remove Calzone's 1.4%
+    survival (f2).
+- hypothesis: Protective products decay too fast to bridge NF-kB's troughs.
+  status: open
   how_excluded: >
-    Study 0b (f3). Not excluded for slower turnover: the bound (protective proteins that never decay once made) has
-    not been run.
+    Study 0b was confounded (f3). The persistence bound (Study 0c: cFLIP, BCL2, mXIAP and mcIAP never switch off) tests
+    it directly.
 
 discovery_implications:
   resolved:
-  - Survival under held, saturating TNF is near zero in this composite and in Calzone's own network.
-  - Lipniacki's protein turnover does not rescue it.
-  - The first fate arrives after about 5-9 Calzone units at every clock, and the clock decides apoptosis against
-    necrosis.
+  - Survival under held, saturating TNF is near zero in this composite; Calzone's own network gives 1.4%.
+  - The death clock decides apoptosis against necrosis, and the first fate arrives after about 5-9 Calzone units.
+  - kappa = lipniacki-nfkb (Alex, 2026-11-06).
   remaining:
-  - Whether any protein persistence could rescue survival (the never-decay bound).
+  - Whether protein persistence could rescue survival at all (Study 0c, running).
   - Whether TNF's dose and timing (exposure, pulse length) change fate, which a held saturating stimulus cannot show.
   - The death clock still has no measured anchor.
   followup_study_proposals:
   - title: Persistence bound (Study 0c)
     motivation: >
-      Decides whether protein persistence is a lever at all. If never-decaying protective proteins still do not give
+      Decides whether protein persistence is a lever at all. If never-decaying protective products still give no
       durable survival, the protection race cannot be won under held TNF, and the headline studies should be about
-      exposure.
+      exposure. If they do, a corrected decay test (protective products only) places Lipniacki's turnover on that
+      scale.
   - title: Graded transcription
     motivation: >
-      Lipniacki's transcription is proportional to nuclear NF-kB. Calzone's genes see only an on/off node, which is off
-      about 72% of the time at f = 0.28 (f6). Driving the protective genes' switch-on rate by f directly would be a
-      coupling change, for Alex to decide.
+      Lipniacki's transcription is proportional to nuclear NF-kB. Calzone's genes see only an on/off node. Driving the
+      protective products' switch-on rate by f directly would be a coupling change, for Alex to decide after 0c.
   - title: Exposure (dose and pulse length)
     motivation: >
       With held, saturating TNF, fate is almost fixed, so dose and timing can only act through whether and when each
