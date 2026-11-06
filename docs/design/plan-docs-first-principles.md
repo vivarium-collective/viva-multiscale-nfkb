@@ -120,13 +120,16 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
       - time.md: death "over many hours" quoted from Lee 2016 (IFNγ-sensitised HeLa; the quote and the IFNγ
         sentence were checked in the full text, PMC5177917);
       - scales.md: TNF's D is the measured ~100 µm²/s (Wu et al. 2011, FCS, PubMed abstract read), so 40 µm takes
-        ~4 s; Wu 2011 is a PENDING proposed input for Alex. The checks keep D = 50 as a test value.
+        ~4 s; Wu 2011 was accepted by Alex (2026-11-06). The checks keep D = 50 as a test value.
       - diffusion.md: "Two dimensions or three": the tool supports 3D, so 2D is a choice; peak time and height and
         the integrated dose in 2D and 3D (sympy; the 2D decay form checked numerically). The headline test needs
         decay or a finite window for integrated dose in either dimension.
       - roadmap: the open questions now ask which D the spatial studies use and why 2D, with the consequences.
       Correction found on the way: Lee 2016's Kym-1 cells were IFNγ-pretreated too (an older note here said
       otherwise; no docs page made that claim).
+- [x] Step 8: fresh-reader rounds 1–5 (99, 26, 29, 19, 16 items; docs-fresh-reader-round*.md), each followed by an
+      adversarial review, all fixed. Alex called the docs done after round 5 (2026-11-06); the next round runs after
+      the next model change.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)

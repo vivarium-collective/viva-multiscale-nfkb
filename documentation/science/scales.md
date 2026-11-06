@@ -21,7 +21,7 @@ come from simulating it (`anchor_transcription.py`); the others come from {doc}`
 
 | Process | Timescale |
 |---|---|
-| TNF diffusion across 40 µm (a cell-scale example: the diffusion check's read-out distance; the headline studies' distances are not chosen yet; $D \approx 100\ \mu\text{m}^2/\text{s}$, measured for fluorescently labelled TNFα in solution by fluorescence correlation spectroscopy; Wu et al. 2011, a source proposed to the project lead and not yet accepted) | about 4 s ($L^2/4D$, the time for a mean squared displacement of $L^2$ in two dimensions) |
+| TNF diffusion across 40 µm (a cell-scale example: the diffusion check's read-out distance; the headline studies' distances are not chosen yet; $D \approx 100\ \mu\text{m}^2/\text{s}$, measured for fluorescently labelled TNFα in solution by fluorescence correlation spectroscopy; Wu et al. 2011) | about 4 s ($L^2/4D$, the time for a mean squared displacement of $L^2$ in two dimensions) |
 | TNF–receptor binding ($k_\text{off} = 0.01\ \text{s}^{-1}$) | ~100 s |
 | Fastest kinetic mode (Jacobian of Lipniacki) | ~6 s |
 | NF-κB nuclear half-rise after TNF | 5.6 min |
