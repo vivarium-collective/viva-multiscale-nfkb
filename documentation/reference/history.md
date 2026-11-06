@@ -1,6 +1,7 @@
 # History: why this workspace exists
 
-This workspace is **section B** of compose-api's multi-framework onboarding (`agenda-onboarding.md`, 2026-11-03).
+This workspace is **section B** of compose-api's multi-framework onboarding (planned in an internal agenda in the
+compose-api repository, 2026-11-03).
 
 The agenda has three gated parts:
 1. **A:** onboard the viva simulator workspaces, grouped by modelling framework.
@@ -17,7 +18,8 @@ The agenda has three gated parts:
 | Rule-based | viva-nfsim |
 | Spatial | viva-smoldyn, viva-fenics |
 
-viva-biomodels was held at `listed`.
+viva-biomodels was held at `listed`. viva-pde-particle and viva-basic-processes were already registry entries, at
+level `tested`, before Section A.
 
 **The releases.**
 - 0.7.77 (#500) released #499.
@@ -29,4 +31,5 @@ The same day, all seven compliance cases passed on production, each in its own a
 
 **What B adds.** A proved each framework on its own. B builds one model that spans scales and engines (Boolean, ODE and
 spatial PDE). It needs no new registry entry: compose-api runs it as an inferred mash-up of viva-maboss,
-viva-tellurium, viva-pde-particle and viva-basic-processes.
+viva-tellurium, viva-pde-particle and viva-basic-processes. Only viva-pde-particle's pin must move, once `RegionMean`
+(viva-pde-particle#70) is merged.

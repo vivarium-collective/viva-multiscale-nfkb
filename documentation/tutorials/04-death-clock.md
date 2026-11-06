@@ -26,7 +26,9 @@ summed.
 
 ## Reading it
 
-The death clock changes both who wins and how the cell dies:
+Here the death clock changes both who wins and how the cell dies. It can change who wins because gene expression stays
+on Lipniacki's clock while `k_time` moves only the death machinery; a uniform sweep of every rate would not
+({doc}`../design/time`):
 - **Fast death machinery** (half a minute to 10 minutes per unit): apoptosis dominates, before any protective gene is
   made.
 - **Slower death machinery:** a growing share shows necrosis (39% at 30 min per unit), and survival appears.

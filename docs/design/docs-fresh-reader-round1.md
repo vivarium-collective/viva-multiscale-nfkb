@@ -46,7 +46,7 @@ The legend says how far each one has got:
 - [x] (batch A: two published models and a TNF field) :6–7: "three published models, each running in its own engine". models.md's three are Lipniacki, Calzone and
   McMillan; McMillan is not a runtime layer, and the spatial layer is not a published model.
 - [-] :81: Study 0 and "headline studies" are bare names. (Both are linked to their pages; a link counts as defined.)
-- [ ] :83: plan-section-b.md ("section B") is not explained or linked to history.
+- [x] (batch F) :83: plan-section-b.md ("section B") is not explained or linked to history.
 
 **getting-started.md**
 - [x] (batch A) :14: "workspace" and "image build" are undefined.
@@ -84,7 +84,7 @@ The legend says how far each one has got:
 
 **science/scales.md**
 - [-] :19: the "d7" path. (A file path in the repository, not shorthand used as explanation.)
-- [ ] :23: D is assumed, with no source.
+- [x] (batch E: open on the roadmap) :23: D is assumed, with no source.
 
 **math/maboss.md**
 - [x] (batch B) :76: `interval` is defined only later, with no link.
@@ -185,37 +185,37 @@ The legend says how far each one has got:
 - [x] (batch E) :9: "phase" is undefined for a damped signal.
 
 **design/decisions.md**
-- [ ] :20: row 11's first cut is "TNF/TNFR/RIP1", while boolean.md:51 says it also included IKK.
-- [ ] :22–23: "following row 11", but 11 is superseded (11b).
-- [ ] :25: "No single factor fits both Lipniacki anchors" contradicts time.md (Lipniacki against Calzone).
-- [ ] :34: "10–27%" against 7.5% and 22.5–27%.
-- [ ] :40: "(f9, f10)".
+- [x] (batch F) :20: row 11's first cut is "TNF/TNFR/RIP1", while boolean.md:51 says it also included IKK.
+- [x] (batch F) :22–23: "following row 11", but 11 is superseded (11b).
+- [x] (batch F) :25: "No single factor fits both Lipniacki anchors" contradicts time.md (Lipniacki against Calzone).
+- [x] (batch D) :34: "10–27%" against 7.5% and 22.5–27%.
+- [x] (batch F) :40: "(f9, f10)".
 
 **design/roadmap.md**
-- [ ] :3–4, 8–9: U1 and U2.
-- [ ] :9, 17: pin bumps and the open PR, against "no new registry entry" (top-10 item 3).
-- [ ] :12: "d7 intervals" and "d7 step 5" (top-10 item 9).
+- [x] (glossed on the roadmap and in the glossary (batch F)) :3–4, 8–9: U1 and U2.
+- [x] (145c27d) :9, 17: pin bumps and the open PR, against "no new registry entry" (top-10 item 3).
+- [x] (145c27d) :12: "d7 intervals" and "d7 step 5" (top-10 item 9).
 
 **tutorials/01-checks.md**
-- [ ] :15–21: the folder contents (see composite-primer).
+- [x] (batch C (the primer now matches)) :15–21: the folder contents (see composite-primer).
 
 **tutorials/04-death-clock.md**
-- [ ] :29: "changes both who wins and how the cell dies", against time.md:53 and calibration.md:75.
+- [x] (batch F) :29: "changes both who wins and how the cell dies", against time.md:53 and calibration.md:75.
 
 **verification/index.md**
-- [ ] :5, 14 against :44–53: negatives (top-10 item 2).
-- [ ] :45–46: "corpus" is defined only in reference/datasets.md.
-- [ ] :63: "every case is written by a script beside it", but the harness cases are copied.
+- [x] (145c27d) :5, 14 against :44–53: negatives (top-10 item 2).
+- [x] (batch F) :45–46: "corpus" is defined only in reference/datasets.md.
+- [x] (batch F) :63: "every case is written by a script beside it", but the harness cases are copied.
 
 **reference/glossary.md**
-- [ ] :36 against :89: the direction of `k_time` (top-10 item 6).
-- [ ] :51: 30 s is cited to timescales, which does not derive it.
-- [ ] :127: when a step runs (top-10 item 10).
-- [ ] :151: "viva" and "workspace" are undefined.
-- [ ] The glossary lacks the internal ids still used: Study 0, 0b/0c/0d, U1/U2, d7, F5/F6, Q3, f9/f10, workbench,
+- [x] (145c27d) :36 against :89: the direction of `k_time` (top-10 item 6).
+- [x] (batch F) :51: 30 s is cited to timescales, which does not derive it.
+- [x] (145c27d) :127: when a step runs (top-10 item 10).
+- [x] (batch F) :151: "viva" and "workspace" are undefined.
+- [x] (batch F (entries for the ids still used; the rest were removed from the pages)) The glossary lacks the internal ids still used: Study 0, 0b/0c/0d, U1/U2, d7, F5/F6, Q3, f9/f10, workbench,
   workspace, harness, corpus, inferred mash-up.
 
 **reference/history.md**
-- [ ] :3: agenda-onboarding.md is an internal document.
-- [ ] :12–20: viva-pde-particle and viva-basic-processes are not among Section A's seven, so how they are registered is
+- [x] (batch F) :3: agenda-onboarding.md is an internal document.
+- [x] (batch F (both `tested` in compose-api's manifest, read there)) :12–20: viva-pde-particle and viva-basic-processes are not among Section A's seven, so how they are registered is
   unexplained.

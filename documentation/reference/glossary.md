@@ -43,13 +43,17 @@ Check
 compose-api
 : The BioSimulations service that runs process-bigraph documents on HPC. Its runner and scorer are what the checks use.
 
+Corpus
+: viva-biomodels' collection of reference runs of BioModels models in several engines; the kinetic checks take
+  COPASI's run of the NF-κB model from it ({doc}`datasets`).
+
 Continuous-time Markov chain
 : A random process that jumps between states after exponential waiting times, with rates that depend only on the
   current state. MaBoSS simulates the fate network as one ({doc}`../math/maboss`).
 
 Coupling interval
-: How often two layers exchange values: 30 s in the studies. Each layer holds the last value it received in between
-  ({doc}`../math/timescales`).
+: How often two layers exchange values: 30 s in the studies, which satisfies the rule in {doc}`../math/timescales` ($0.1 \times 337\ \text{s} \approx 34$ s).
+  Each layer holds the last value it received in between.
 
 d1
 : The dose–response step: TNF concentration at the cell to receptor occupancy, from McMillan 2021's binding model
@@ -81,6 +85,10 @@ Gate
 Generator
 : The matrix $Q$ of a Markov chain's switching rates; probabilities obey $dP/dt = PQ$ ({doc}`../math/maboss`).
 
+Harness
+: Two of compose-api's own checks, copied unchanged into `checks/harness`, which show that this repository scores checks
+  exactly as the service does ({doc}`../verification/index`).
+
 Jacobian
 : The matrix of how each rate of change depends on each concentration. Its eigenvalues give the model's timescales
   ({doc}`../math/timescales`).
@@ -97,8 +105,9 @@ MaBoSS
 : The engine that runs the fate network as a continuous-time Markov chain with Gillespie's algorithm
   ({doc}`../math/maboss`).
 
-Mash-up
-: An environment compose-api builds automatically from the simulator packages a document's processes come from.
+Mash-up (inferred mash-up)
+: An environment compose-api builds automatically from the simulator packages a document's processes come from;
+  "inferred" because the service works out which packages from the document itself.
 
 McNemar test
 : An exact test for whether a change shifts a yes/no outcome, using only the cells whose outcome changed
@@ -147,9 +156,18 @@ SBML, BioModels
 : SBML is the standard file format for biochemical models; BioModels is the curated repository the NF-κB model comes
   from ({doc}`../science/models`).
 
+Study 0, and variants 0b, 0c, 0d
+: The calibration study run before the headline studies, and its three follow-up variants on protein persistence
+  ({doc}`../design/calibration`).
+
 Study, investigation
-: A viva workspace study runs a research question through design, build, simulate, evaluate and decide, with its
+: A study in a viva workspace (a research repository set up with the vivarium-workbench tools, like this one) runs a
+  research question through design, build, simulate, evaluate and decide, with its
   decisions and evidence recorded. An investigation groups studies under one question.
+
+U1, U2
+: The two upstream changes this project needed: U1, viva-tellurium's `parameters_in` port (released); U2,
+  viva-pde-particle's `RegionMean` and `RegionTotal` (in review) ({doc}`../design/roadmap`).
 
 `TransRate`
 : Calzone's rate for steps that need new protein to be made (1/24 per unit in MaBoSS's example). The composite replaces
@@ -158,6 +176,10 @@ Study, investigation
 Variant
 : A run of Study 0 with one named change to the fate network, compared cell by cell with the baseline grid
   ({doc}`../design/calibration`).
+
+Workbench, workspace
+: vivarium-workbench is the dashboard that records studies and their runs; a workspace is a research repository set up
+  for it, like this one.
 
 Window average
 : What MaBoSS reports: a probability averaged over a time window, not at an instant ({doc}`../math/maboss`).

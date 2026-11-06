@@ -86,7 +86,8 @@ reference/index
 Each layer has been built and checked on its own, and so has the kinetic → Boolean coupling. Study 0 has calibrated
 that coupling ({doc}`design/calibration`). Next are TNF's dose–response at the receptor, the spatial → kinetic coupling,
 then the integrated composite and the three
-headline studies; see {doc}`design/roadmap`. The plan of record is
+headline studies; see {doc}`design/roadmap`. The plan of record (this workspace's design
+plan; the workspace is "section B" of compose-api's onboarding, {doc}`reference/history`) is
 [`docs/design/plan-section-b.md`](https://github.com/vivarium-collective/viva-multiscale-nfkb/blob/main/docs/design/plan-section-b.md).
 This documentation explains and justifies that plan, and does not replace it.
 ```

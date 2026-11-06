@@ -43,7 +43,7 @@ exactly that value.
 |---|---|---|---|
 | `harness/maboss-oracle` | the harness reproduces compose-api's verdict | analytic switch | expected 0.70: fails on that value |
 | `harness/tellurium-phase-cycle` | the same, for Tellurium | COPASI's report | — |
-| `kinetic/sim1-original` | Lipniacki in `TelluriumProcess` = COPASI's `sim1` | another engine (corpus) | — |
+| `kinetic/sim1-original` | Lipniacki in `TelluriumProcess` = COPASI's `sim1` | another engine (viva-biomodels' corpus of reference runs, {doc}`../reference/datasets`) | — |
 | `kinetic/preequilibrated-steady` | the saved rest state is a steady state and matches COPASI before the stimulus | corpus | — |
 | `spatial/gaussian-diffusion` | FV diffusion of a Gaussian bolus | closed form | — |
 | `spatial/uniform-bath-decay` | a uniform bath stays uniform and decays | closed form | — |
@@ -61,5 +61,6 @@ exactly that value.
 
 ## Generated, not hand-written
 
-Every case is written by a script beside it (`checks/<group>/make_*.py`), which computes its expected values from the
+Every case except the two harness cases (copied unchanged from compose-api) is written by a script beside it
+(`checks/<group>/make_*.py`), which computes its expected values from the
 oracle: the reference file, the corpus or the closed form. Re-running the script regenerates the case exactly.
