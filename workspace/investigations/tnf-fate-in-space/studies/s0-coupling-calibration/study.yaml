@@ -11,7 +11,7 @@ investigation: tnf-fate-in-space
 title: Coupling calibration (NF-kB switching speed and the death clock)
 created: '2026-11-04'
 status: planned
-phase: Simulate
+phase: Evaluate
 
 objective: >
   Simulate Lipniacki's NF-kB kinetics coupled to Calzone's cell-fate network under TNF, across the Boolean NF-kB node's
@@ -127,6 +127,109 @@ falsifiability: >
   If survival stays near zero for every kappa and k_time in the grid, NF-kB cannot protect in this composite at any
   plausible clock, and the headline studies have nothing to find; that would send the design back to the coupling,
   not forward.
+
+# Evaluate (2026-11-06). Every number below is from data/fate-table.json (analysis.py, end state at 24 h),
+# data/{grid,decay}-summary.json (run_grid.py) and checks/boolean/coupled-equals-full/case.yaml.
+claim: >
+  Under TNF held on at saturation, the coupled composite kills nearly every cell at every NF-kB switching speed and
+  death clock tried (durable survival 0-6% at 24 h), as Calzone's own network does at the comparable transcription
+  speed (1.4%). Anchoring protective-protein decay to Lipniacki's turnover changes nothing. Slowing the death clock
+  shifts death from apoptosis to necrosis instead of rescuing cells.
+confidence: Investigating
+
+findings:
+- id: f1-near-total-death
+  tier: observation
+  summary: >
+    Durable survival (Survival on, no death node, at 24 h) is 0 at 2, 10 and 30 min per Calzone unit for every kappa,
+    and 1.5-6% at 120 min (grid). Every cell is dead by 24 h at 2-30 min/unit. At 120 min/unit 77-89% are dead and
+    10-18% show no fate node, because 24 h is only 12 Calzone units there, short of the 40 at which Calzone's own run
+    is read.
+  evidence: data/fate-table.json (grid-*)
+- id: f2-matches-calzone
+  tier: observation
+  summary: >
+    This is Calzone's own answer, not a coupling artefact. The unmodified network on the MaBoSS engine, TNF on, with
+    its cellfate.cfg TransRate of 1/24, gives Survival 0.014, Apoptosis 0.953 and NonACD 0.029 at t = 40. At 2 min/unit
+    the composite's effective TransRate is r_tx/k_time = 0.039 (about 1/25), and it gives survival 0, apoptosis
+    0.915-0.95 and necrosis 0.05-0.085.
+  evidence: checks/boolean/coupled-equals-full/case.yaml; data/fate-table.json (grid-*-2min)
+- id: f3-decay-no-effect
+  tier: observation
+  summary: >
+    Study 0b. Switching the six transcription-scale products off at Lipniacki's protein turnover (3e-4/s) changes no
+    end-state fraction beyond sampling noise. That turnover is 28x slower than Calzone's at 2 min/unit and 2.2x faster
+    at 120 min/unit. Durable survival is 0 at 2-30 min/unit and 1-2.5% at 120 min/unit (grid: 1.5-6%). The edit is
+    present in the decay documents (r_deg = 3e-4 and six `$r_deg / $k_time` rates, checked in raw/document.pbg).
+  evidence: data/fate-table.json (decay-* against grid-*)
+- id: f4-clock-sets-mode
+  tier: observation
+  summary: >
+    The death clock sets the death mode. At kappa = lipniacki-nfkb, end-state apoptosis falls from 0.935 (2 min/unit)
+    through 0.79 and 0.69 to 0.455 (120 min/unit), while necrosis rises from 0.065 through 0.21 and 0.31 to 0.355.
+    The first fate arrives after about 5-9 Calzone units at every clock (medians 18, 74-76, 205-213 and 658-766 min).
+  evidence: data/fate-table.json; data/{grid,decay}-summary.json (first_fate_time_s_median)
+- id: f5-kappa-small
+  tier: observation
+  summary: >
+    kappa does not change durable survival at 2-30 min/unit (0 for every kappa). It moves the apoptosis/necrosis split
+    by up to 0.135 (apoptosis at 30 min/unit). At 120 min/unit, lipniacki-nfkb gives the most cells that show
+    Survival first (0.425; calzone-flicker 0.19), but most of them die later (0.25 of the 0.425).
+  evidence: data/fate-table.json (end_*, first_survival, first_survival_then_dead)
+- id: f6-protection-transient
+  tier: mechanism
+  mechanism_origin: emergent
+  summary: >
+    NF-kB's protection is transient. Lipniacki's nuclear fraction f peaks at 0.933 at 24 min, falls to 0.020 at 80 min,
+    and settles at 0.28 after about 6 h. The Boolean NFkB node, on with probability f, is therefore off about 72% of the
+    time once the oscillation has damped. Calzone's target genes need the node on, so their logic fails whenever it
+    is off, while the death arms run without pause under TNF. Of the cells that show Survival first, 57-100% die later.
+  evidence: parquet-runs/decay-lipniacki-nfkb-120min/timeseries.parquet (nfkb_fraction); data/fate-table.json
+- id: f7-knockouts
+  tier: observation
+  summary: >
+    Removing caspase-8's cleavage of RIP1 turns every death into necrosis (apoptosis 0, necrosis 1.0). Removing both
+    gates (that cleavage and SMAC's sequestration of cIAP) leaves 2.5-5% durable survival and 20-22% with no fate node
+    at 24 h. The prediction that the gate knockout would rescue survival is refuted.
+  evidence: data/fate-table.json (ko-*)
+
+alternative_hypotheses:
+- hypothesis: The coupling, not the biology, suppresses survival.
+  status: excluded
+  how_excluded: >
+    The uncoupled Calzone network gives the same split at the comparable transcription speed (f2), and the coupling's
+    equivalence checks (coupled-equals-full, -early, -seconds, -early-seconds, -nfkb-knockout) pass against the engine.
+- hypothesis: Protective proteins decay too fast between NF-kB's waves to protect.
+  status: excluded at Lipniacki's measured turnover
+  how_excluded: >
+    Study 0b (f3). Not excluded for slower turnover: the bound (protective proteins that never decay once made) has
+    not been run.
+
+discovery_implications:
+  resolved:
+  - Survival under held, saturating TNF is near zero in this composite and in Calzone's own network.
+  - Lipniacki's protein turnover does not rescue it.
+  - The first fate arrives after about 5-9 Calzone units at every clock, and the clock decides apoptosis against
+    necrosis.
+  remaining:
+  - Whether any protein persistence could rescue survival (the never-decay bound).
+  - Whether TNF's dose and timing (exposure, pulse length) change fate, which a held saturating stimulus cannot show.
+  - The death clock still has no measured anchor.
+  followup_study_proposals:
+  - title: Persistence bound (Study 0c)
+    motivation: >
+      Decides whether protein persistence is a lever at all. If never-decaying protective proteins still do not give
+      durable survival, the protection race cannot be won under held TNF, and the headline studies should be about
+      exposure.
+  - title: Graded transcription
+    motivation: >
+      Lipniacki's transcription is proportional to nuclear NF-kB. Calzone's genes see only an on/off node, which is off
+      about 72% of the time at f = 0.28 (f6). Driving the protective genes' switch-on rate by f directly would be a
+      coupling change, for Alex to decide.
+  - title: Exposure (dose and pulse length)
+    motivation: >
+      With held, saturating TNF, fate is almost fixed, so dose and timing can only act through whether and when each
+      cell's TNF input switches on, and for how long (u_TNF/d_TNF; McMillan 2021 dose-response, d1).
 
 runs:
 - name: smoke-lipniacki-nfkb-10min
@@ -362,6 +465,162 @@ runs:
       version: 3-freshness
       graded_at: '2026-11-05T01:15:07.238986+00:00'
       inputs_hash: 093c8c1bcb4247bd
+      store: resolved
+- name: decay-lipniacki-gene-120min
+  status: complete
+  timestamp: 1793968039.749373
+  emitter:
+    kind: parquet
+    store: parquet-runs/decay-lipniacki-gene-120min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-lipniacki\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0001388888888888889, \"kappa\": 0.0003289735076221857, \"kappa_name\": \"lipniacki-gene\", \"minutes_per_calzone_unit\": 120}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T12:27:19.876848+00:00'
+      inputs_hash: f1f7478f5c2c29bf
+      store: resolved
+- name: decay-lipniacki-gene-30min
+  status: complete
+  timestamp: 1793967687.332321
+  emitter:
+    kind: parquet
+    store: parquet-runs/decay-lipniacki-gene-30min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-lipniacki\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0005555555555555556, \"kappa\": 0.0003289735076221857, \"kappa_name\": \"lipniacki-gene\", \"minutes_per_calzone_unit\": 30}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T12:27:19.876940+00:00'
+      inputs_hash: 2bfb40ce2d1c1588
+      store: resolved
+- name: decay-lipniacki-gene-10min
+  status: complete
+  timestamp: 1793967333.2697978
+  emitter:
+    kind: parquet
+    store: parquet-runs/decay-lipniacki-gene-10min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-lipniacki\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0003289735076221857, \"kappa_name\": \"lipniacki-gene\", \"minutes_per_calzone_unit\": 10}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T12:27:19.877025+00:00'
+      inputs_hash: 20ccccd5c61265a4
+      store: resolved
+- name: decay-lipniacki-gene-2min
+  status: complete
+  timestamp: 1793966981.063624
+  emitter:
+    kind: parquet
+    store: parquet-runs/decay-lipniacki-gene-2min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-lipniacki\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.008333333333333333, \"kappa\": 0.0003289735076221857, \"kappa_name\": \"lipniacki-gene\", \"minutes_per_calzone_unit\": 2}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T12:27:19.877108+00:00'
+      inputs_hash: fcef3ce2d0c1d646
+      store: resolved
+- name: decay-lipniacki-nfkb-120min
+  status: complete
+  timestamp: 1793966628.4618292
+  emitter:
+    kind: parquet
+    store: parquet-runs/decay-lipniacki-nfkb-120min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-lipniacki\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0001388888888888889, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 120}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T12:27:19.877192+00:00'
+      inputs_hash: a7184ed9d5a8b6c7
+      store: resolved
+- name: decay-lipniacki-nfkb-30min
+  status: complete
+  timestamp: 1793966275.6570182
+  emitter:
+    kind: parquet
+    store: parquet-runs/decay-lipniacki-nfkb-30min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-lipniacki\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0005555555555555556, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 30}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T12:27:19.877298+00:00'
+      inputs_hash: a2ac4aebb88225a4
+      store: resolved
+- name: decay-lipniacki-nfkb-10min
+  status: complete
+  timestamp: 1793965923.102835
+  emitter:
+    kind: parquet
+    store: parquet-runs/decay-lipniacki-nfkb-10min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-lipniacki\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 10}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T12:27:19.877383+00:00'
+      inputs_hash: 0555a8e18ebf047f
+      store: resolved
+- name: decay-lipniacki-nfkb-2min
+  status: complete
+  timestamp: 1793965571.036008
+  emitter:
+    kind: parquet
+    store: parquet-runs/decay-lipniacki-nfkb-2min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-lipniacki\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.008333333333333333, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 2}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T12:27:19.877464+00:00'
+      inputs_hash: 599d220981c7ccfa
+      store: resolved
+- name: decay-calzone-flicker-120min
+  status: complete
+  timestamp: 1793965220.132852
+  emitter:
+    kind: parquet
+    store: parquet-runs/decay-calzone-flicker-120min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-lipniacki\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0001388888888888889, \"kappa\": 0.0001388888888888889, \"kappa_name\": \"calzone-flicker\", \"minutes_per_calzone_unit\": 120}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T12:27:19.877544+00:00'
+      inputs_hash: bcc49f63d8454dd4
+      store: resolved
+- name: decay-calzone-flicker-30min
+  status: complete
+  timestamp: 1793964872.620448
+  emitter:
+    kind: parquet
+    store: parquet-runs/decay-calzone-flicker-30min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-lipniacki\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0005555555555555556, \"kappa\": 0.0005555555555555556, \"kappa_name\": \"calzone-flicker\", \"minutes_per_calzone_unit\": 30}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T12:27:19.877624+00:00'
+      inputs_hash: 27f5c67493563292
+      store: resolved
+- name: decay-calzone-flicker-10min
+  status: complete
+  timestamp: 1793964525.580746
+  emitter:
+    kind: parquet
+    store: parquet-runs/decay-calzone-flicker-10min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-lipniacki\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0016666666666666668, \"kappa_name\": \"calzone-flicker\", \"minutes_per_calzone_unit\": 10}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T12:27:19.877956+00:00'
+      inputs_hash: e298c84af533113c
+      store: resolved
+- name: decay-calzone-flicker-2min
+  status: complete
+  timestamp: 1793964184.896081
+  emitter:
+    kind: parquet
+    store: parquet-runs/decay-calzone-flicker-2min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-lipniacki\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.008333333333333333, \"kappa\": 0.008333333333333333, \"kappa_name\": \"calzone-flicker\", \"minutes_per_calzone_unit\": 2}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T12:27:19.878050+00:00'
+      inputs_hash: 9398bc63b931b2eb
       store: resolved
 pipeline_gate:
   gate_evaluator:
