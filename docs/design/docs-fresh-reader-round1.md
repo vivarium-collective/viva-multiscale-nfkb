@@ -111,30 +111,30 @@ The legend says how far each one has got:
 - [x] (145c27d) :49–50: RegionTotal is called "added upstream", but it is an open PR.
 
 **design/composite-primer.md**
-- [ ] :5: bigraph-schema is undefined.
-- [ ] :26: when a step runs (top-10 item 10).
-- [ ] :45–46: 30 s (top-10 item 9).
-- [ ] :57–58: the registry levels are not listed.
-- [ ] :60–63: a check folder's contents disagree with tutorial 01 (case.yaml, document.pbg, and a generator outside the
+- [x] (batch C) :5: bigraph-schema is undefined.
+- [x] (145c27d) :26: when a step runs (top-10 item 10).
+- [x] (145c27d) :45–46: 30 s (top-10 item 9).
+- [x] (batch C; read from compose-api's CurationLevel) :57–58: the registry levels are not listed.
+- [x] (batch C) :60–63: a check folder's contents disagree with tutorial 01 (case.yaml, document.pbg, and a generator outside the
   folder).
-- [ ] :67–71: negatives (top-10 item 2).
+- [x] (145c27d) :67–71: negatives (top-10 item 2).
 
 **design/architecture.md**
-- [ ] :12, 29: the name "d1" is unexplained.
-- [ ] :61–66: principle 3 says "as a release", but RegionMean is unreleased.
-- [ ] :76–77: "inferred mash-up" and viva-basic-processes are undefined; "no new registry entry" (top-10 item 3).
-- [ ] :81–83: sections A and B are only partly explained.
+- [x] (batch C: labelled as the plan's) :12, 29: the name "d1" is unexplained.
+- [x] (batch C) :61–66: principle 3 says "as a release", but RegionMean is unreleased.
+- [x] (145c27d) :76–77: "inferred mash-up" and viva-basic-processes are undefined; "no new registry entry" (top-10 item 3).
+- [x] (115dcdd) :81–83: sections A and B are only partly explained.
 
 **design/kinetic.md**
-- [ ] :11: the COPASI rejection needs the source to be read; "time does not accumulate" is unexplained.
-- [ ] :28: SED-ML is undefined.
+- [x] (batch C) :11: the COPASI rejection needs the source to be read; "time does not accumulate" is unexplained.
+- [x] (batch C) :28: SED-ML is undefined.
 
 **design/spatial.md**
-- [ ] :7: plan F5 and F6, the Smoldyn hybrid, transfer adapters, viva-smoldyn and viva-fenics are undefined.
-- [ ] :8: "(Alex, Q3)".
-- [ ] :9: "splitting error" is undefined.
-- [ ] :11: "(U2)".
-- [ ] :39–41: operator split, transport deltas, "re-seeded from the kinetic store" and VCell are undefined.
+- [x] (batch C) :7: plan F5 and F6, the Smoldyn hybrid, transfer adapters, viva-smoldyn and viva-fenics are undefined.
+- [x] (batch C) :8: "(Alex, Q3)".
+- [x] (batch C) :9: "splitting error" is undefined.
+- [x] (batch C) :11: "(U2)".
+- [x] (batch C; VCell claim corrected to "builds on the VCell stack", from the pinned source and task plan) :39–41: operator split, transport deltas, "re-seeded from the kinetic store" and VCell are undefined.
   "viva-pde-particle wraps VCell's solver" appears nowhere else.
 
 **design/boolean.md**

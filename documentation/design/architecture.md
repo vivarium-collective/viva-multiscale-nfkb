@@ -26,7 +26,7 @@ Reading the diagram (terms such as process, store, port and adapter: {doc}`compo
 - **`fields.TNF`**: the TNF concentration on the spatial grid, in µM ({doc}`spatial`).
 - **`RegionMean`**: an adapter that averages the field over the grid cells at the cell's surface, giving one
   concentration, `tnf_at_cell`.
-- **d1**: the dose–response, which turns that concentration into **occ**, the fraction of TNF receptors occupied
+- **d1** (its label in the plan of record): the dose–response, which turns that concentration into **occ**, the fraction of TNF receptors occupied
   ({doc}`rule-based`).
 - **`parameters_in.TNF_R`**: the NF-κB model's TNF input ({doc}`../science/lipniacki-model`), set to occ.
 - **`u_TNF`, `d_TNF`**: the fate network's TNF node rates, so the node is on a fraction occ of the time.
@@ -58,16 +58,16 @@ run if its input is not the expected file, and it logs each change with its reas
 
 ### 3. Fix gaps upstream, not here
 
-When an engine could not do what the design needed, the fix went into that engine's own repository, with tests, as a
-release. The workspace does not carry a local copy or a wrapper around it.
+When an engine could not do what the design needed, the fix goes into that engine's own repository, with tests, and is
+released before the workspace uses it. The workspace does not carry a local copy or a wrapper around it.
 
 - **viva-tellurium 0.2.3** adds `parameters_in`, so another layer can set a parameter such as `TNF_R` during a run.
 - **viva-pde-particle** adds `RegionMean` and `RegionTotal`, which reduce a field to one concentration at the cell
-  (open as viva-pde-particle#70, awaiting review).
+  (open as viva-pde-particle#70, awaiting review, so nothing here uses them yet).
 
 ### 4. Every claim has a check that can fail
 
-Each layer and each coupling has a check: a compose-api compliance case with an oracle independent of the code under
+Each layer and each coupling built so far has a check: a compose-api compliance case with an oracle independent of the code under
 test, and a mutated copy proven to fail. See {doc}`../verification/index`.
 
 ### 5. Run as compose-api runs it

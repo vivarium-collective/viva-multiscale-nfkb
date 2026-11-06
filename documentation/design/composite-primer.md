@@ -2,7 +2,8 @@
 
 The composite is a [process-bigraph](https://github.com/vivarium-collective/process-bigraph) document, and every
 claim about it is checked by running documents through compose-api. This page defines the vocabulary the design pages
-use. The semantics described are those of the pinned engine (process-bigraph 1.9.1, bigraph-schema 1.8.1).
+use. The semantics described are those of the pinned engine (process-bigraph 1.9.1, with its type system
+bigraph-schema 1.8.1).
 
 ## A composite is a document
 
@@ -57,12 +58,16 @@ apply ({doc}`coupling`).
 - **The environment** is a **mash-up**: one environment that compose-api builds by installing the packages that
   provide the document's processes, for example viva-tellurium and viva-maboss.
 - **The registry** decides which packages it may install: a manifest of entries, each pinned to a commit and given a
-  curation level. A process can run only if its entry is at level `tested` or higher.
+  curation level. The levels, lowest first, are `listed`, `installable`, `tested`, `validated` and `curated`; a process
+  can run on the service only if its entry is at `tested` or higher.
 
-A **check** (a compliance case) is a folder holding three things:
-- a document;
-- an interval;
-- `case.yaml`, which lists **expectations**: a value in the results, the expected value, and a tolerance.
+A **check** (a compliance case) is a folder holding two files ({doc}`../tutorials/01-checks` walks through one):
+- `document.pbg`, the composite to run;
+- `case.yaml`, which names the document and the interval to run it for, and lists **expectations**: a value in the
+  results, the expected value, and a tolerance.
+
+In this repository a generator script beside each group of checks writes both files from its oracle; the two harness
+cases are the exception, copied unchanged from compose-api.
 
 compose-api's `compliance.evaluate` scores the results file against the expectations.
 

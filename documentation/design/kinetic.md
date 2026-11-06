@@ -8,7 +8,8 @@ process, port and check are defined in {doc}`composite-primer`.
 | Decision | Reason | Evidence |
 |---|---|---|
 | **Lipniacki 2004 (BIOMD0000000786)** as the core (Alex) | Two sized compartments ($K_v = 5$); one external stimulus input (`TNF := TNF_R`); curated; COPASI and Tellurium agree on it | viva-biomodels' screen of BioModels: the two engines' trajectories differ by a normalised root-mean-square error (NRMSE) of 3.6e-7 |
-| **Tellurium (libRoadRunner), not COPASI**, as its engine | `CopasiUTCProcess` passes counts to `setInitialConcentration`, and its `time` does not accumulate. libRoadRunner also exposes the Jacobian used for the timescale analysis ({doc}`../math/timescales`). | viva-copasi@937ff13 `processes.py:115,831` |
+| **Tellurium (libRoadRunner), not COPASI**, as its engine | `CopasiUTCProcess` passes molecule counts where COPASI expects concentrations (`setInitialConcentration`), and its
+reported `time` restarts at each update instead of accumulating. libRoadRunner also exposes the Jacobian used for the timescale analysis ({doc}`../math/timescales`). | viva-copasi@937ff13 `processes.py:115,831` |
 | **`bulk_species: false`** | The default `true` makes `species` a 16-element array that can't be addressed by name, and the adapters read species by name | viva-tellurium `processes.py:116` |
 | **Remove the `TNF_stimulation` event; keep `TNF := TNF_R`** | In the composite the spatial layer owns the stimulus. The original model switches itself on after 101 h. | `workspace/datasets/lipniacki2004/prep.py` (refuses unless the model has exactly that one event) |
 | **Pre-equilibrate separately, then seed** | Simulating 101 h of rest inside every composite run wastes time. The steady state is computed once (`TNF_R = 0`), checked, and given to `TelluriumProcess` as its starting concentrations (its `species_overrides` setting). | `checks/kinetic/preequilibrated-steady` |
@@ -25,7 +26,8 @@ Nothing else changes:
 ## Checks
 
 - **`checks/kinetic/sim1-original`:** the unmodified model in `TelluriumProcess` matches COPASI's run of `sim1`, the
-  simulation BioModels ships with the model (its SED-ML file: 0 to 385,200 s, TNF switched on at 101 h).
+  simulation BioModels ships with the model (its SED-ML file, the standard format for describing a simulation
+  experiment: 0 to 385,200 s, TNF switched on at 101 h).
   That's every floating species, at the last pre-stimulus point and every post-stimulus point (113 expectations), from
   another engine's output.
 - **`checks/kinetic/preequilibrated-steady`:** seeded with the saved steady state and left unstimulated, the driven
