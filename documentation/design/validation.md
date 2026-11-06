@@ -5,7 +5,7 @@ experiments, cells with working NF-κB mostly survive TNF alone, and they die wh
 blocked. That standard comes from two sources the project lead accepted as inputs to the investigation
 (Micheau & Tschopp 2003; Lee et al. 2016; {doc}`../reference/bibliography`).
 
-Study 1 (decision 29) asks whether the composite meets that standard using only the published models' own parameters,
+Study 1 ({doc}`decision 29 <decisions>`) asks whether the composite meets that standard using only the published models' own parameters,
 and if not, where the limit is. It adds no mechanism. The study lives in
 `workspace/investigations/tnf-fate-in-space/studies/s1-survival-validation/`: `phase_a.py`, `phase_b.py` and `data/`.
 
@@ -26,39 +26,47 @@ and if not, where the limit is. It adds no mechanism. The study lives in
 
 Speeding up the protective genes, read at t = 40 units (20,000 cells):
 
-| TransRate (per unit) | 1/24 | 1/4 | 1 | 4 | 16 | 64 |
-|---|---|---|---|---|---|---|
-| Alive, NF-κB intact | 0.017 | 0.078 | 0.156 | 0.217 | 0.242 | 0.252 |
-| Alive, NF-κB knocked out | 0 | 0 | 0 | 0 | 0 | 0 |
+```{include} _validation_phase_a.md
+```
 
 Survival saturates near 25%: even infinitely fast genes cannot save most cells. The reason is upstream. NF-κB's
 activation route takes four steps (TNFR → RIP1 → RIP1ub → IKK → NFkB) and caspase-8's takes two (TNFR + FADD → DISC →
 CASP8). Active caspase-8 cleaves RIP1, which closes NF-κB's route ({doc}`../science/calzone-network`), so most cells
 never switch NF-κB on.
 
-## Phase B: the composite against Calzone alone
+## Phase B: the composite, NF-κB intact against knocked out
 
 The composite runs held TNF from rest for 24 h, with 200 cells on Study 0's seeds. Net protection is in percentage
 points; p values are exact McNemar, uncorrected for six comparisons:
 
-| Clock (min per unit) | Alive, intact | Alive, knocked out | Net protection | Calzone alone, matched | No fate at all (intact / KO) |
-|---|---|---|---|---|---|
-| 30 | 0 | 0 | 0 | 12.5 | 0 / 0 |
-| 120 | 0.160 | 0.055 | 10.5 (p = 6×10⁻⁶) | 21.5 | 6 / 11 |
-| 180 | 0.465 | 0.340 | 12.5 (p = 3×10⁻⁴) | 17.1 | 43 / 68 |
-| 200 | 0.550 | 0.455 | 9.5 (p = 0.003) | 14.2 | 54 / 91 |
-| 240 | 0.740 | 0.650 | 9.0 (p = 0.003) | 8.8 | 82 / 130 |
-| 480 | 0.980 | 0.985 | −0.5 | 0.3 | 163 / 197 |
+```{include} _validation_phase_b.md
+```
+
+## Against Calzone alone at the same settings
+
+Phase A also ran Calzone's network alone at each clock's matched TransRate and read time (20,000 cells, so its own
+standard error is below 0.004 and is not shown). The composite's values carry ± one standard error over its 200
+cells: $\sqrt{p(1-p)/n}$ for an alive fraction, and the paired form for net protection ({doc}`../math/statistics`).
+By this formula a fraction of 0 has no spread; at 30 min per unit, 0 alive of 200 against Calzone's 0.125 is
+decisive on its own ($0.875^{200} \approx 3\times10^{-12}$).
+
+```{include} _validation_matched.md
+```
+
+The tables are generated from the study's data by `documentation/design/code/validation_tables.py` (`--check` fails
+when they are stale).
 
 ## What it shows
 
-- **The death is Calzone's own.** The knocked-out composite matches Calzone alone at every clock, and the intact
-  composite never protects more than Calzone alone does.
-- **The coupling lowers protection further only at fast and middle clocks:** 0 against 12.5 points at 30 min per unit,
-  and 10.5 against 21.5 at 120. At 240 and 480 the two are equal.
+- **The death is Calzone's own.** With NF-κB knocked out, the composite and Calzone alone agree within one standard
+  error at every clock but 480 min per unit, where they differ by 2.0. The intact composite never protects
+  significantly more than Calzone alone.
+- **The coupling lowers protection only at fast and middle clocks:** 0 against 12.5 points at 30 min per unit (no cell
+  alive, against Calzone's 0.125), and 10.5 against 21.5 at 120 (4.8 standard errors). At 180 and 200 the composite is lower by about 1.5
+  standard errors, which is not significant; at 240 and 480 the two agree within noise.
 - **No clock meets the standard with real survival.** At 200 min per unit, most intact cells are alive (0.550) and
   most knocked-out cells are dead. But 54 of the 110 alive intact cells have reached no fate at all, and only 18 held
-  Survival through the last 2 h. That is delay, not protection. 24 h is only 3 to 12 Calzone units at these clocks.
+  Survival through the last 2 h. That is delay, not protection. 24 h is only 3 to 12 Calzone units at the clocks from 120 to 480 min per unit.
 
 The limit is the race in Calzone's network between caspase-8 and NF-κB's activation route, which in the composite runs
 on the death clock. Lipniacki's model, however, already times that same activation: nuclear NF-κB's half-rise is 337

@@ -30,11 +30,11 @@ machinery be for TNF to kill, at each dose and each distance?
 
 ## What Study 0 changes
 
-Study 0 ({doc}`calibration`) found that TNF held on at saturation kills nearly every cell at every death clock. So the
-signal these studies look for has to come from exposure: how much TNF reaches a cell, when, and for how long. That
-is what the dose, distance and wave-timing studies vary. NF-κB's protective products save cells
-only if they persist far beyond their measured turnover (Studies 0c and 0d), so protection is not expected to add a
-signal of its own here.
+Study 0 ({doc}`calibration`) found that TNF held on at saturation kills nearly every cell at every death clock it
+tested (2 to 120 min per unit). Study 1 ({doc}`validation`) found that NF-κB protects at most about 10 to 13% of cells
+at any clock from 30 to 480 min per unit, a limit set by the race in Calzone's own network. So the signal these studies look for comes mainly
+from exposure: how much TNF reaches a cell, when, and for how long. That is what the dose, distance and wave-timing
+studies vary.
 
 ## Why a bolus
 

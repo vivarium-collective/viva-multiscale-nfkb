@@ -216,8 +216,9 @@ Recording the four products' states in a run would test the estimate.
 
 ## What it means for the headline studies
 
-A held, saturating dose cannot show NF-κB protection in this composite. The measured protein turnover doesn't change
-that, so the remaining levers are:
+At Study 0's clocks (2 to 120 min per unit), a held, saturating dose shows little NF-κB protection in this composite,
+and the measured protein turnover doesn't change that. Study 1 later measured it across clocks: at most about 10 to
+13 points, limited by the race in Calzone's own network ({doc}`validation`). The remaining levers Study 0 identified:
 
 - **How NF-κB induces the products.** Lipniacki's transcription is proportional to nuclear NF-κB; Calzone's genes see
   only an on/off node. Driving the products' induction by $f$ directly (*graded transcription*) keeps the same
