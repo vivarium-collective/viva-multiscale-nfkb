@@ -87,6 +87,9 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
       - biology.md: why the waves (delayed feedback, linked); DISC, FADD and the apoptosome explained; apoptosis
         against necrosis (caspases, membrane, inflammation) and their output nodes; a link to the node page.
       - architecture.md: a diagram legend (each symbol linked) and section B explained inline.
+      - scales.md: "d7 use 1" replaced by its pages; D = 50 µm²/s marked as an assumed value (the diffusion check's), with
+        the time L²/4D ≈ 8 s shown; a measured TNF D goes to step 1.7. The slowest mode is attributed to IKK turnover.
+      - decisions.md: Q1–Q4, U2, plan F6, "probe" and "under 11" replaced; the Made-by values defined.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)

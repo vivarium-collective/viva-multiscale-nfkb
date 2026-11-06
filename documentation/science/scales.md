@@ -15,17 +15,18 @@ layer that reads it. {doc}`../design/architecture` gives this rule ("one owner")
 
 ## Scales of time
 
-Measured, not assumed (d7 use 1, `analysis/d7/kinetic_timescales.py`, and the probes in {doc}`../design/time`):
+Measured unless marked: the NF-κB model's rows come from its Jacobian ({doc}`../math/timescales`,
+`analysis/d7/kinetic_timescales.py`), and the others from {doc}`../design/time` and {doc}`../design/rule-based`:
 
 | Process | Timescale |
 |---|---|
-| TNF diffusion across 40 µm ($D = 50\ \mu\text{m}^2/\text{s}$) | seconds |
+| TNF diffusion across 40 µm (assumed $D = 50\ \mu\text{m}^2/\text{s}$, the value the diffusion check uses; a measured value for TNF is still to be cited) | about 8 s ($L^2/4D$, the time for a mean squared displacement of $L^2$ in two dimensions) |
 | TNF–receptor binding ($k_\text{off} = 0.01\ \text{s}^{-1}$) | ~100 s |
 | Fastest kinetic mode (Jacobian of Lipniacki) | ~6 s |
 | NF-κB nuclear half-rise after TNF | 5.6 min |
 | NF-κB damped oscillation (least-damped pair, from 2 h after TNF) | period 98–102 min, e-folding 55–90 min |
 | NF-κB → target protein (A20) | 35.1 min |
-| Slowest kinetic mode | ~8000 s (2.2 h) |
+| Slowest kinetic mode | 8000 s (2.2 h): IKK turnover, exactly $1/K_\text{deg}$ |
 | Cell death | hours; its clock is the swept axis `k_time` |
 
 These span about four orders of magnitude. That spread is why each layer runs on its own interval, and why the
