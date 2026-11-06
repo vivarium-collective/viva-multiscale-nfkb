@@ -50,7 +50,7 @@ def write(name: str, k_time: float, network: str, r_tx: float, interval: float) 
                     "network": network,
                     "parameters": {"High_NFkB": 1.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0, "u_NFkB": 0.0,
                                    "d_NFkB": 0.0, "u_TNF": 0.0, "d_TNF": 0.0, "k_time": k_time, "r_tx": r_tx,
-                                   "absorb_death": 0.0},
+                                   "absorb_death": 0.0, "anchor_activation": 0.0, "r_act": 0.0},
                     "initial_state": {n: 1.0 for n in sorted(on)},
                     "sample_count": SAMPLES,
                     "windows_per_interval": WINDOWS,

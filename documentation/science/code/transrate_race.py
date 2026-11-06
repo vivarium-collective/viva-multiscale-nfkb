@@ -21,7 +21,8 @@ ROOT = Path(__file__).resolve().parents[3]
 NETWORK = (ROOT / "workspace" / "datasets" / "calzone2010_cellfate" / "processed" / "cellfate_coupled.bnd").read_text()
 OUT = ROOT / "documentation" / "design" / "_transrate_table.md"
 AS_CALZONE = {"High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0, "u_TNF": 0.0, "d_TNF": 0.0,
-              "u_NFkB": 1.0, "d_NFkB": 0.0, "k_time": 1.0, "absorb_death": 0.0}
+              "u_NFkB": 1.0, "d_NFkB": 0.0, "k_time": 1.0, "absorb_death": 0.0,
+              "anchor_activation": 0.0, "r_act": 0.0}
 RATES = (Fraction(1, 24), Fraction(1, 8), Fraction(1, 4), Fraction(1, 2), Fraction(1))
 UNITS, CELLS, WINDOWS, SEED = 40.0, 50_000, 40, 3
 

@@ -1,0 +1,13 @@
+{
+  "model": "lipniacki2004_driven.xml",
+  "model_sha256": "e3d357b9ac0a1e508ea68d690aea107f3fd7408ffb13d618d307901cd8d17718",
+  "stimulus": "TNF_R stepped 0 -> 1 from the pre-equilibrated steady state",
+  "ikk_active_half_rise_s": 112.0,
+  "ikk_active_first_peak_s": 428.0,
+  "nfkb_nuc_half_rise_s": 337.0,
+  "nfkb_nuc_first_peak_s": 1420.0,
+  "route_steps": 3,
+  "erlang_median_factor": 2.67406031372356,
+  "r_act_per_s_for_ikk_half_rise": 0.023875538515388928,
+  "definition": "r_act = q / T: three steps at rate r_act reach IKK on with median T; T = IKK_active half-rise"
+}

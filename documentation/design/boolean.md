@@ -94,6 +94,7 @@ All 31 Calzone nodes and every logic rule are kept. Only rates change:
 | TNF | rates `$u_TNF` / `$d_TNF` | driven by occ, the same receptor-engagement fraction that sets Lipniacki's `TNF_R` |
 | Apoptosis, NonACD | switch-off `@logic ? 0 : ($absorb_death ? 0 : 1)` | death is irreversible: with `absorb_death` nonzero (the composite) a death node stays on; 0 is Calzone's network (below) |
 | every node | each rate × `$k_time` | the death-machinery clock the studies sweep ({doc}`time`) |
+| RIP1, RIP1ub, IKK | switch-on `1` → `($anchor_activation ? ($r_act / $k_time) : 1)`; switch-off and `$Low_RIP1` kept | NF-κB's activation route can switch on at Lipniacki's rate (`anchor_activation` nonzero); 0 is Calzone's network (below; decision 30) |
 | cIAP, cFLIP, BCL2, mROS, mcIAP, mXIAP, Survival | `$TransRate` → `$r_tx / $k_time` | Calzone's transcription-scale steps (NF-κB-induced cFLIP, BCL2, mXIAP, mcIAP; cIAP from mcIAP; mROS, induced when NF-κB is *off*; the Survival phenotype) switch on at Lipniacki's rate ({doc}`time`) |
 
 `workspace/datasets/calzone2010_cellfate/prep.py` writes `processed/cellfate_coupled.bnd` (31 nodes) and
@@ -177,6 +178,45 @@ places). Both nodes read 0.5 within 0.01 (50,000 trajectories).
 **Proven to fail.** With $a = 0$ the node also switches off at rate $\alpha$ once its cause is gone. Solving the same
 four-state chain gives $P(\text{on at } t) = t\,e^{-t}$ at $\alpha = r = 1$, whose average over [7, 8] is
 $8e^{-7} - 9e^{-8} = 0.0043$. The same document with $a = 0$ reads 0.0048 (Apoptosis) and 0.0042 (NonACD), and fails.
+
+### NF-κB's activation route on Lipniacki's clock (decision 30)
+
+**Why.** Study 1 found that the composite cannot let NF-κB protect most cells, because of the activation race
+({doc}`../science/calzone-network`): caspase-8 is two steps from the bound receptor, NF-κB four, and both routes switch
+at `$k_time`, so the death clock stretches them together and never changes the odds ({doc}`validation`). Lipniacki's
+model times the same activation in seconds. So, as $r_\text{tx}$ does for the protective genes, the route can take
+Lipniacki's measured time.
+
+**The change.** The switch-on rate of RIP1, RIP1ub and IKK becomes `($anchor_activation ? ($r_act / $k_time) : 1)`.
+After the `$k_time` scaling, each switches on at $r_\text{act}$ per second when `anchor_activation` is nonzero, and at
+Calzone's rate when it is 0. Three choices, each read from the network's rules:
+- **TNFR is not moved.** It starts both routes (DISC_TNF needs it), so moving it would speed caspase-8's start too.
+  It belongs with the receptor dose–response (d1).
+- **Only switch-on moves.** Each node's switch-off is its loss; RIP1's is caspase-8 cleaving it. That is death
+  machinery, so it stays on `$k_time`, as the protective genes' switch-off does. Calzone's mutant switch `$Low_RIP1`
+  keeps its meaning.
+- **The rate is Lipniacki's own.** Stepping `TNF_R` to 1 from the pre-equilibrated state, `IKK_active` reaches half
+  its first peak at 112 s (`workspace/datasets/calzone2010_cellfate/anchor_activation.py`, written to
+  `processed/activation_anchor.json`). Three steps in series at rate $r$ reach IKK at an Erlang(3, $r$) time, whose
+  median is $q/r$ with $1 - e^{-q}(1 + q + q^2/2) = 1/2$, $q = 2.674$. So $r_\text{act} = q / 112\ \text{s} =
+  0.0239\ \text{s}^{-1}$.
+
+**What it leaves open.** The NFkB node already flips at κ = ln 2 / 337 s, nuclear NF-κB's half-rise from the moment
+TNF arrives, which spans the whole route. With the route anchored, TNF → NF-κB takes about the route's 112 s plus
+the node's own delay: roughly 1.3 times Lipniacki's 337 s. That is minutes against the hours caspase-8's route takes
+even at the fastest death clock studied (two steps of at least 30 min), so it should barely affect the race; it is
+recorded rather than corrected, because κ was decided on Study 0's data (decision 25).
+
+**Checked.**
+- `activation-anchor-fast` and `-slow` take RIP1, RIP1ub and IKK verbatim, with TNFR and cIAP held on and caspase-8
+  held off. IKK is then on at an Erlang(3, $r_\text{act}$) time at any `k_time`. Over the last window ending at 112 s
+  the analytic average is 0.457723, at `k_time` = 1/60 and 1/6000 alike. Both pass. With `anchor_activation` = 0 the
+  route runs on `k_time` and reads 0.2562 and 0.0, and fails.
+- With the switch at 0, every earlier check still passes (11 of 11), and rerunning Study 1's 120-min-per-unit point
+  reproduces all 200 cells' fate codes exactly, at every one of 2,880 time points.
+
+**Status.** Built, and off by default (`anchor_activation` = 0 in the composite). Whether the composite adopts it
+waits on a Study 1 variant that reruns Phase B with the switch on, against a success criterion fixed before the run.
 
 ## Clock
 

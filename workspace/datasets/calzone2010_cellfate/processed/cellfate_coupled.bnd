@@ -39,7 +39,7 @@ node CASP8 {
 
 node RIP1 {
   logic = (DISC_FAS OR TNFR) AND (NOT CASP8);
-  rate_up = $k_time * (($Low_RIP1 ? 0 : (@logic ? 1 : 0)));
+  rate_up = $k_time * (($Low_RIP1 ? 0 : (@logic ? ($anchor_activation ? ($r_act / $k_time) : 1) : 0)));
   rate_down = $k_time * (($Low_RIP1 ? 1e+100 : (@logic ? 0 : 1)));
 }
 
@@ -51,7 +51,7 @@ node cIAP {
 
 node RIP1ub {
   logic = cIAP AND RIP1;
-  rate_up = $k_time * (@logic ? 1 : 0);
+  rate_up = $k_time * (@logic ? ($anchor_activation ? ($r_act / $k_time) : 1) : 0);
   rate_down = $k_time * (@logic ? 0 : 1);
 }
 
@@ -63,7 +63,7 @@ node RIP1K {
 
 node IKK {
   logic = RIP1ub;
-  rate_up = $k_time * (@logic ? 1 : 0);
+  rate_up = $k_time * (@logic ? ($anchor_activation ? ($r_act / $k_time) : 1) : 0);
   rate_down = $k_time * (@logic ? 0 : 1);
 }
 

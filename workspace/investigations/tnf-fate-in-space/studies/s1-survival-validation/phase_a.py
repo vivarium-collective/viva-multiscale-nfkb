@@ -25,7 +25,8 @@ ROOT = HERE.parents[4]
 NETWORK = ROOT / "workspace" / "datasets" / "calzone2010_cellfate" / "processed" / "cellfate_coupled.bnd"
 R_TX = json.loads((NETWORK.parent / "transcription_anchor.json").read_text())["r_tx_per_s"]
 BASE = {"High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0, "u_TNF": 0.0, "d_TNF": 0.0,
-        "k_time": 1.0, "absorb_death": 1.0}
+        "k_time": 1.0, "absorb_death": 1.0,
+        "anchor_activation": 0.0, "r_act": 0.0}
 NFKB = {"intact": {"u_NFkB": 1.0, "d_NFkB": 0.0}, "knocked_out": {"u_NFkB": 0.0, "d_NFkB": 1.0}}
 ON_AT_START = ("FADD", "ATP", "cIAP", "TNF")
 CEILING_TRANSRATES = (Fraction(1, 24), Fraction(1, 4), Fraction(1), Fraction(4), Fraction(16), Fraction(64))

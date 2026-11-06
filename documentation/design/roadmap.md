@@ -14,6 +14,7 @@ changes, U1 and U2:
 | Study 0 | Calibration of the coupling ({doc}`calibration`): κ decided; under held, saturating TNF nearly every cell dies; protein persistence saves cells only well beyond the measured turnover | **done** |
 | Decision 28 | Absorbing death in the network ({doc}`boolean`) | **done** |
 | Study 1, validation | Can NF-κB protect cells in the composite? ({doc}`validation`, decision 29) | **done**: no clock meets the standard with held survival; the limit is the activation race in Calzone's network |
+| Decision 30 | NF-κB's activation route on Lipniacki's clock ("Option A"; {doc}`boolean`) | **built**, off by default; a Study 1 variant with a criterion fixed before the run decides adoption |
 | d1 | TNF's dose–response at the receptor (decision 27) | first form **built**: one-site occupancy, $K_d$ 19 pM (decision 32); McMillan 2021's fit is the refinement |
 | compose-api | Pin bumps: viva-tellurium 0.2.3 **done** (compose-api 0.7.79, #502); viva-pde-particle 25e8a05 **done** in 0.7.90 (#540); viva-maboss 0.1.2 **done** in 0.7.91 (#541) | one compose-api release at a time |
 
@@ -24,8 +25,8 @@ These are unresolved, and each is stated where it is used:
   points (percent of cells), and no death clock meets the standard with held survival ({doc}`validation`). The
   limit is the activation race in Calzone's network, between caspase-8 and NF-κB's activation route (TNFR, RIP1, RIP1ub, IKK), which runs on
   the death clock even though Lipniacki already times that activation (337 s). Anchoring it to Lipniacki, as
-  $r_\text{tx}$ does for the genes, is the model-native option, to be tested as a Study 1 variant first. A decision for
-  Alex before d1.
+  $r_\text{tx}$ does for the genes, is now built as a switch (decision 30, {doc}`boolean`); a Study 1 variant decides
+  whether the composite adopts it, before d1.
 - **Is receptor binding fast enough to use its equilibrium (d1)?** It relaxes within about 100 s, against NF-κB's 337 s
   half-rise: a factor of about 3 ({doc}`rule-based`). The first form assumes it (decision 32); McMillan 2021's fit
   is where to check it.
