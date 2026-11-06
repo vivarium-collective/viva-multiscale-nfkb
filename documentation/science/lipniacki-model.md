@@ -56,7 +56,7 @@ decay. Each swing is smaller than the last. Under TNF held at saturation (TNF = 
 | 2–5 h | between about 0.2 and 0.38 |
 | from about 6 h | 0.28 (settled) |
 
-(Study 0's runs, `nfkb_fraction`; {doc}`../design/calibration`.)
+(Measured in Study 0's runs, which record $f$ under the name `nfkb_fraction`; {doc}`../design/calibration`.)
 
 ## Volumes, total NF-κB and the fraction $f$
 

@@ -29,9 +29,9 @@ tables quoted here.
 | Stimulus | TNF at saturation from t = 0 and held: the NF-κB model's `TNF_R` = 1 from its rest state, and the fate network's TNF node on from the start with rates `u_TNF` = `d_TNF` = 0, so it stays on | The simplest stimulus. It is the case Calzone's own network was built for. |
 | Grid | κ × clock: κ ∈ {κ = `k_time`, NF-κB flipping at Calzone's unit rate; $\ln 2/337$ s, Lipniacki's NF-κB half-rise; $\ln 2/2107$ s, Lipniacki's NF-κB → protein delay}, and 2, 10, 30 or 120 min per Calzone unit (`k_time` = 1/(60 × minutes) per second). 12 points, 200 cells each, cell seeds 1–200 | Spans κ from NF-κB's own rise in Lipniacki's model (337 s) to its NF-κB → protein delay (2107 s), plus the Calzone-unit rate, and the clock across a factor of 60 |
 | Coupling | Every 30 s. Each cell's fate network is one `MaBoSSProcess` with one trajectory per interval, so it records one sampled on/off state per node every 30 s ({doc}`../math/maboss`) | Each cell is a single history, as a real cell is |
-| Duration | 24 h of model time at every clock (Alex: "24 hours everywhere") | At 8 h, 77–85% of cells were still undecided at the slowest clock. |
+| Duration | 24 h of model time at every clock (Alex: "24 hours everywhere") | At 8 h, 77–85% of cells were still undecided (no fate node yet on) at the slowest clock. |
 | Recording | Each cell's fate code every 30 s: Survival + 2·Apoptosis + 4·NonACD | Calzone's fate nodes are not mutually exclusive: a cell can show caspase-3 and ATP loss together. A first 8 h grid summed them as if they were exclusive, double-counted, and was discarded. |
-| Readout | **Alive**: no death node on at any tick in 24 h. **Durable survival**: alive with Survival on at 24 h. End state and first fate (the first fate node a cell switches on, Survival included; glossary) alongside | Death is irreversible, but Calzone's death nodes are not absorbing: Apoptosis follows CASP3 and NonACD follows ATP loss, and both switch off when their logic fails. Read by end state, up to 27% of a run's cells (with Calzone's gates removed) looked alive after they had died. |
+| Readout | **Alive**: no death node on at any tick in 24 h. **Durable survival**: alive with Survival on at 24 h. End state and first fate (the first fate node a cell switches on, Survival included; {doc}`../reference/glossary`) alongside | Death is irreversible, but Calzone's death nodes are not absorbing: Apoptosis follows CASP3 and NonACD follows ATP loss, and both switch off when their logic fails. Read by end state, up to 27% of a run's cells (with Calzone's gates removed) looked alive after they had died. |
 | Seeds | Every variant reuses the grid's 200 seeds | Differences between runs then come from the change, not from new random draws. Variants are compared with the grid **cell by cell** (exact McNemar test), which an adversarial review showed is needed. Comparing two fractions as if independent hid a consistent shift. |
 | Environment | The workspace's pinned `compose/` environment, through compose-api's own runner; vivarium-workbench, the study dashboard, only records the runs (Alex: "Pinned env; workbench records") | The results are what compose-api would produce in production. |
 
@@ -84,9 +84,9 @@ two columns don't sum to "dead".
      time once $f$ settles. The death arms never pause under TNF.
 
    Studies 0c and 0d test both readings.
-6. **Calzone's gate on NF-κB diverts death but doesn't prevent it.** Two of the three ways the death machinery closes
-   the gate (glossary) can be removed: caspase-8's cleavage of RIP1 and SMAC's
-   sequestration of cIAP.
+6. **Calzone's gate on NF-κB diverts death but doesn't prevent it.** The death machinery closes NF-κB's gate in three
+   ways (*Gate*, {doc}`../reference/glossary`): caspase-8 cleaves RIP1, SMAC removes cIAP, and caspase-3 blocks NF-κB
+   directly. The first two can be removed: caspase-8's cleavage of RIP1 and SMAC's sequestration of cIAP.
    - Removing only the RIP1 cleavage turns every death into necrosis.
    - Removing both still kills every cell at some point in 24 h (200 of 200, at 10 and at 30 min per unit). The 22.5–27% that the end state showed as
      alive had died and then lost the death signal. Counting those cells as alive was the error that made *alive* the
@@ -129,8 +129,8 @@ turnover it does contain, stands in for all four. That is an assumption.
 - **Survival.** This is the readout node, not a protein.
 
 Cell by cell against the grid:
-- no pair changes the alive/dead outcome beyond noise;
-- at 2 and 10 min per unit every pair shifts the death mode toward necrosis (9 of 9 changed cells at 2 min per unit,
+- at no clock does the paired comparison change the alive/dead outcome beyond noise;
+- at 2 and 10 min per unit the paired comparison shifts the death mode toward necrosis (9 of 9 changed cells at 2 min per unit,
   p = 0.004), which is the mROS artefact;
 - at 120 min per unit, durable survival falls from 9 cells to 0 (p = 0.004). There Lipniacki's turnover is 2.2× faster
   than the grid's switch-off. This was first read as the Survival node decaying faster, but 7 of the 9 cells die.

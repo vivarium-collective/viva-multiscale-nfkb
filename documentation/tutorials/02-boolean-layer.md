@@ -40,5 +40,5 @@ first:
 - **How fast the NF-κB node follows Lipniacki.** Here, with $u = f$, $d = 1-f$, it flips about once per Calzone unit.
   The composite instead uses $\kappa = \ln 2/337$ s, Lipniacki's own NF-κB speed, whatever the clock
   ({doc}`../math/switch`).
-- **How fast the death machinery runs.** That is `k_time`, which stays a swept axis (tutorial 4).
+- **How fast the death machinery runs.** That is `k_time`, which stays a swept axis ({doc}`04-death-clock`).
 ```

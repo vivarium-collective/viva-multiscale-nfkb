@@ -158,7 +158,7 @@ interval can be missed with $a = 0$, while with $a = 1$ it stays on and is recor
 principle, make a recorded first death earlier; it cannot make a dead cell alive. Whether that matters is an empirical
 question. Study 0 was run with $a = 0$. Rerunning its baseline with $a = 1$ on the same 200 seeds, at 30 and 120 min
 per Calzone unit, gave no cell whose first death moved (0 of 400), the same alive cells, and no revived cell. A review
-found the same at 0.5 and 2 min per unit (6 h). The decay, persistence and knockout variants were not rerun.
+found the same at 0.5 and 2 min per unit (6 h). The decay, persistence and gate-removal variants were not rerun.
 
 **The check, `absorbing-death`.** Take the two death nodes verbatim and give each a cause that is present at $t = 0$
 and goes away once, for good, at rate $r$ (caspase-3 starts on and switches off; ATP starts off and switches on).
