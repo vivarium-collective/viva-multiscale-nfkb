@@ -84,6 +84,9 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
         stepwise-binding equilibrium P(n) ∝ C(3,n)·∏[R]/K_i derived from the rules. The stale claim that the BNGL
         is committed is fixed (it is untracked in the -boolean worktree). Q4 is gone. Lipniacki 2007 and
         Goldstein–Perelson citations wait for step 7, with web verification.
+      - biology.md: why the waves (delayed feedback, linked); DISC, FADD and the apoptosome explained; apoptosis
+        against necrosis (caspases, membrane, inflammation) and their output nodes; a link to the node page.
+      - architecture.md: a diagram legend (each symbol linked) and section B explained inline.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)

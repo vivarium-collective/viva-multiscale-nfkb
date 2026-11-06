@@ -14,15 +14,24 @@ TNF binding to TNFR1 does not decide the cell's fate. It starts **three programm
 1. **Survival through NF-κB.** The receptor recruits the kinase RIP1. Once RIP1 is ubiquitinated (by cIAP), it activates
    the IKK complex. IKK phosphorylates IκBα, the inhibitor that holds NF-κB in the cytoplasm, and marks it for
    degradation. Freed NF-κB moves into the nucleus and switches on genes. Some of those genes are **protective**
-   (cFLIP, BCL2, XIAP, cIAP). Others are **negative feedback**: IκBα itself, and A20. The feedback makes NF-κB enter
-   the nucleus in waves rather than once.
-2. **Apoptosis.** The receptor can instead form a death-inducing complex, DISC (through FADD), which activates
-   **caspase-8**. Caspase-8 starts a cascade: BAX, mitochondrial outer membrane permeabilisation (MOMP), release of
-   cytochrome c and SMAC, the apoptosome, and **caspase-3**. Caspase-3 dismantles the cell in an orderly way, and it
+   (cFLIP, BCL2, XIAP, cIAP). Others are **negative feedback**: IκBα itself, and A20. Because the inhibitors must first
+   be made, the feedback acts late, so NF-κB overshoots, is pushed back, and enters the nucleus in shrinking waves
+   rather than once ({doc}`lipniacki-model`).
+2. **Apoptosis.** The receptor can instead form a **death-inducing signalling complex (DISC)**: the adaptor protein
+   **FADD** links the receptor to inactive caspase-8 molecules and holds them close together, so that they activate one
+   another. Active **caspase-8** starts a cascade: BAX, mitochondrial outer membrane permeabilisation (MOMP), and the
+   release of cytochrome c and SMAC from the mitochondria. Cytochrome c assembles the **apoptosome** (with Apaf-1 and
+   caspase-9), which needs ATP and activates **caspase-3**. Caspase-3 dismantles the cell in an orderly way, and it
    also shuts NF-κB down.
 3. **Necrosis.** When caspase-8 is not active, RIP1 can act as a kinase instead. Reactive oxygen species (ROS) then
-   build up, the mitochondrial permeability transition (MPT) opens, ATP collapses, and the cell dies by necrosis,
-   which is disorderly and inflammatory.
+   build up, the mitochondrial permeability transition (MPT) opens, ATP collapses, and the cell dies by necrosis.
+
+**Apoptosis and necrosis differ in how the cell dies.** Apoptosis is run by caspases: the cell is taken apart from
+inside while its outer membrane stays intact, and the fragments are cleared by neighbouring cells with little
+inflammation. Necrosis needs no caspases: the cell loses its energy supply, swells, and its membrane ruptures, so its
+contents spill out and provoke inflammation. In the fate network the two are separate output nodes, Apoptosis
+(caspase-3 active) and NonACD (non-apoptotic cell death: ATP gone). Every node of that network, with the molecule or
+process it stands for: {doc}`calzone-network`.
 
 **What decides the winner is timing and amount.** NF-κB's protective genes have to be made (transcribed and
 translated) before the death machinery finishes. That takes tens of minutes. Whether they arrive in time depends on

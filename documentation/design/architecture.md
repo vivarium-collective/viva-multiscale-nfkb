@@ -22,6 +22,17 @@
         └── nuclear fraction f (adapter) ───────┘
 ```
 
+Reading the diagram (terms such as process, store, port and adapter: {doc}`composite-primer`):
+- **`fields.TNF`**: the TNF concentration on the spatial grid, in µM ({doc}`spatial`).
+- **`RegionMean`**: an adapter that averages the field over the grid cells at the cell's surface, giving one
+  concentration, `tnf_at_cell`.
+- **d1**: the dose–response, which turns that concentration into **occ**, the fraction of TNF receptors occupied
+  ({doc}`rule-based`).
+- **`parameters_in.TNF_R`**: the NF-κB model's TNF input ({doc}`../science/lipniacki-model`), set to occ.
+- **`u_TNF`, `d_TNF`**: the fate network's TNF node rates, so the node is on a fraction occ of the time.
+- **$f$**: NF-κB's nuclear fraction. **`u_NFkB`, `d_NFkB`** are the fate network's NF-κB node rates, with κ its
+  flipping speed and `k_time` the death clock ({doc}`coupling`, {doc}`time`).
+
 ## Design principles
 
 ### 1. One owner per quantity
@@ -67,6 +78,6 @@ viva-maboss, viva-tellurium, viva-pde-particle and viva-basic-processes.
 
 ## Why this workspace exists
 
-This workspace is section B of compose-api's multi-framework onboarding. Section A registered seven simulator packages
-across five modelling frameworks, and all seven passed live on compose-api 0.7.78. This workspace is the first model
-that combines several of them. See {doc}`../reference/history`.
+The compose-api project is onboarding simulators from several modelling frameworks, in sections. Section A
+registered seven simulator packages across five modelling frameworks, and all seven passed live on compose-api 0.7.78.
+Section B, this workspace, is the first model that combines several of them. See {doc}`../reference/history`.
