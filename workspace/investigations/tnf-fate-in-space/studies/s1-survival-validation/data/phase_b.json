@@ -1,0 +1,88 @@
+{
+ "cells": 200,
+ "hours": 24.0,
+ "seed": 1,
+ "absorb_death": 1.0,
+ "points": [
+  {
+   "name": "intact-30min",
+   "nfkb": "intact",
+   "minutes_per_unit": 30,
+   "k_time": 0.0005555555555555556,
+   "kappa": 0.0020568165595250603,
+   "cells": 200,
+   "alive": 0.0,
+   "median_first_death_min": 233.5
+  },
+  {
+   "name": "knocked_out-30min",
+   "nfkb": "knocked_out",
+   "minutes_per_unit": 30,
+   "k_time": 0.0005555555555555556,
+   "kappa": 0.0,
+   "cells": 200,
+   "alive": 0.0,
+   "median_first_death_min": 220.0
+  },
+  {
+   "name": "intact-120min",
+   "nfkb": "intact",
+   "minutes_per_unit": 120,
+   "k_time": 0.0001388888888888889,
+   "kappa": 0.0020568165595250603,
+   "cells": 200,
+   "alive": 0.16,
+   "median_first_death_min": 879.75
+  },
+  {
+   "name": "knocked_out-120min",
+   "nfkb": "knocked_out",
+   "minutes_per_unit": 120,
+   "k_time": 0.0001388888888888889,
+   "kappa": 0.0,
+   "cells": 200,
+   "alive": 0.055,
+   "median_first_death_min": 801.5
+  },
+  {
+   "name": "intact-240min",
+   "nfkb": "intact",
+   "minutes_per_unit": 240,
+   "k_time": 6.944444444444444e-05,
+   "kappa": 0.0020568165595250603,
+   "cells": 200,
+   "alive": 0.74,
+   "median_first_death_min": 1085.75
+  },
+  {
+   "name": "knocked_out-240min",
+   "nfkb": "knocked_out",
+   "minutes_per_unit": 240,
+   "k_time": 6.944444444444444e-05,
+   "kappa": 0.0,
+   "cells": 200,
+   "alive": 0.65,
+   "median_first_death_min": 1173.5
+  },
+  {
+   "name": "intact-480min",
+   "nfkb": "intact",
+   "minutes_per_unit": 480,
+   "k_time": 3.472222222222222e-05,
+   "kappa": 0.0020568165595250603,
+   "cells": 200,
+   "alive": 0.98,
+   "median_first_death_min": 1102.0
+  },
+  {
+   "name": "knocked_out-480min",
+   "nfkb": "knocked_out",
+   "minutes_per_unit": 480,
+   "k_time": 3.472222222222222e-05,
+   "kappa": 0.0,
+   "cells": 200,
+   "alive": 0.985,
+   "median_first_death_min": 1213.0
+  }
+ ]
+}

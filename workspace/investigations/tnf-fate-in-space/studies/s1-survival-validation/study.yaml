@@ -74,6 +74,12 @@ limitations: >
   literature, and is pending acceptance. Phase A probes rates only; it does not test structural changes to the network,
   which this study does not make.
 
+claim: >
+  Under held, saturating TNF the composite cannot meet the cited standard, at any death clock, that cells with working
+  NF-kB mostly survive while cells without it die. NF-kB protects at most about 10% of cells in the composite, against
+  up to 32 percentage points in Calzone's network alone.
+confidence: Investigating
+
 findings:
 - id: f1-calzone-survival-ceiling
   tier: observation
@@ -95,6 +101,30 @@ findings:
     varying the upstream rates, which this study does not do.
   evidence: f1; datasets/calzone2010_cellfate/raw/cellfate.bnd
 
+- id: f3-composite-protection
+  tier: observation
+  summary: >
+    Phase B. The composite (NF-kB model plus fate network, held saturating TNF from rest, 24 h, 200 cells on Study 0's
+    seeds, absorbing death), with NF-kB intact (kappa = ln 2/337 s) and knocked out (kappa = 0), at 30, 120, 240 and
+    480 min per Calzone unit. Alive at 24 h, intact against knocked out: 0 and 0; 0.160 and 0.055; 0.740 and 0.650;
+    0.980 and 0.985. Cell by cell, NF-kB rescues 0, 22, 26 and 1 cells and loses 0, 1, 8 and 2: a net protection of
+    0, 10.5% (p = 6e-6), 9% (p = 0.003) and -0.5%. Durable survival with NF-kB intact is 0, 4.5, 20 and 13.5%. At 240
+    and 480 min per unit most "alive" cells have reached no fate at all in 24 h (82 and 163 of 200 intact; 130 and 197
+    of 200 knocked out), so there alive measures delay, not survival.
+  evidence: data/phase_b.json; parquet-runs/{intact,knocked_out}-*/timeseries.parquet; phase_b.py
+- id: f4-no-clock-meets-the-yardstick
+  tier: interpretation
+  mechanism_origin: emergent
+  summary: >
+    No death clock lets most NF-kB-competent cells survive held TNF while most NF-kB-deficient cells die. At fast
+    clocks every cell dies with or without NF-kB; at slow clocks most cells, with or without NF-kB, have not decided in
+    24 h; in between, NF-kB protects at most about 10% of cells. Calzone's network alone shows an NF-kB effect of up to
+    32 percentage points (f1). So the coupling weakens NF-kB's protection rather than causing the death. Study 0's
+    measurements point at two parts of the coupling: the NF-kB node is on only about 28% of the time once f settles,
+    and the protective genes switch on at Lipniacki's r_tx (35 min half-rise). Which of these limits protection is not
+    tested here. This is an honest open question, not tuned away (house rule 2).
+  evidence: f1; f3; Study 0 (s0-coupling-calibration f6, f10)
+
 followup_study_proposals: []
 runs:
 - name: phase-a-transrate-ceiling
@@ -103,3 +133,9 @@ runs:
     kind: json
     store: data/phase_a.json
   params: "{\"units\": 40, \"cells\": 50000, \"windows\": 40, \"seed\": 3, \"nfkb\": [\"intact\", \"knocked_out\"], \"transrate\": [\"1/24\", \"1/4\", \"1\", \"4\", \"16\", \"64\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\"}"
+- name: phase-b-composite-clocks
+  status: complete
+  emitter:
+    kind: parquet
+    store: parquet-runs/
+  params: "{\"cells\": 200, \"hours\": 24, \"seed\": 1, \"absorb_death\": 1, \"kappa\": {\"intact\": \"ln2/337\", \"knocked_out\": 0}, \"minutes_per_unit\": [30, 120, 240, 480], \"builder\": \"../s0-coupling-calibration/population.py\", \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\"}"
