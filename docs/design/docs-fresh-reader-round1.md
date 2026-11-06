@@ -138,21 +138,21 @@ The legend says how far each one has got:
   "viva-pde-particle wraps VCell's solver" appears nowhere else.
 
 **design/boolean.md**
-- [ ] :30: "the agenda".
-- [ ] :41: the tolerance abs 0.008 is not derived, and the reference run's N is not given.
-- [ ] :56: "with TNF on at t = 40" reads as TNF switched on at 40.
-- [ ] :72 against :120: Round 2's numbers (top-10 item 8).
-- [ ] :90: the NFkB row says u = f, d = 1 − f; the composite uses fκ/k_time.
-- [ ] :111 against :117: 0.244 against 0.243.
-- [ ] :134–135: 7.5% conflicts with decisions.md:34's "10–27%".
+- [x] (batch D) :30: "the agenda".
+- [x] (batch D; 100,000 trajectories each, read from the check) :41: the tolerance abs 0.008 is not derived, and the reference run's N is not given.
+- [x] (batch D) :56: "with TNF on at t = 40" reads as TNF switched on at 40.
+- [x] (145c27d) :72 against :120: Round 2's numbers (top-10 item 8).
+- [x] (batch D) :90: the NFkB row says u = f, d = 1 − f; the composite uses fκ/k_time.
+- [x] (batch D: two separate runs, stated) :111 against :117: 0.244 against 0.243.
+- [x] (batch D: decisions row 23b corrected) :134–135: 7.5% conflicts with decisions.md:34's "10–27%".
 
 **design/time.md**
-- [ ] :16 against :20: where 8.6 comes from (the script prints it, but the page quotes only 8.9 for the script).
-- [ ] :25: "hours usually reported" (citation pending; step 1.7).
-- [ ] :53–54: "at 1/24 the cell dies whatever the dose", with no dose-varied run shown.
-- [ ] :76: the uniform-clock 0.014 is not derived, and its k_time is not stated.
-- [ ] :81: the "d7" path.
-- [ ] :95: "base step" and global_time_precision are used before they are explained.
+- [x] (batch D) :16 against :20: where 8.6 comes from (the script prints it, but the page quotes only 8.9 for the script).
+- [ ] (OPEN: step 1.7 literature) :25: "hours usually reported" (citation pending; step 1.7).
+- [x] (batch D: replaced by the clock theorem and the measured 1.4%) :53–54: "at 1/24 the cell dies whatever the dose", with no dose-varied run shown.
+- [x] (batch D: k_time = 1/6000, recomputed 0.0142) :76: the uniform-clock 0.014 is not derived, and its k_time is not stated.
+- [-] :81: the "d7" path. (A file path.)
+- [x] (145c27d) :95: "base step" and global_time_precision are used before they are explained.
 
 **design/rule-based.md**
 - [ ] :1, 8: the name "d1".

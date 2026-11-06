@@ -27,7 +27,7 @@ Two properties of the wrapper shape the design:
 
 ## Why MaBoSS and not BoolNet
 
-The agenda first asked about BoolNet. BoolNet is an R package with no process-bigraph wrapper, while MaBoSS is
+The project's initial plan asked about BoolNet. BoolNet is an R package with no process-bigraph wrapper, while MaBoSS is
 Python-native through `cmaboss`, and its stochastic, rate-based semantics fit a composite with a real-time clock.
 viva-maboss was built for this purpose; its README gives the full comparison.
 
@@ -38,7 +38,8 @@ Calzone 2010's network as MaBoSS ships it: `cellfate.bnd`, `cellfate.cfg` and Ma
 `workspace/datasets/calzone2010_cellfate/raw/` with their sha256.
 
 **First check:** `checks/boolean/calzone-reference` runs the full 31-node network through `MaBoSSProcess` in the
-reference configuration. Every node matches MaBoSS's own reference output (abs 0.008). The one node that moves, mROS,
+reference configuration. Every node matches MaBoSS's own reference output within 0.008 (both runs use 100,000 trajectories, so each estimate's
+standard error is at most 0.0016 and their difference's at most $\sqrt 2 \times 0.0016 = 0.0023$; 0.008 is 3.5 of those). The one node that moves, mROS,
 also matches its analytic value: run 0.339387, reference 0.339405, analytic 0.339384.
 
 ## The ownership boundary: what each model owns
@@ -53,7 +54,7 @@ TNF→TNFR also drives **both death arms**:
 - apoptosis: TNFR → DISC_TNF → CASP8 → BAX → MOMP → … → CASP3;
 - necrosis: TNFR → RIP1 → RIP1K → ROS → MPT → NonACD.
 
-Measured through `MaBoSSProcess` with TNF on at t = 40, that cut left P(Apoptosis) = P(NonACD) = 0, whatever NF-κB did.
+Measured through `MaBoSSProcess` with TNF on, read at t = 40, that cut left P(Apoptosis) = P(NonACD) = 0, whatever NF-κB did.
 
 ### Round 2: cutting only the "duplicated" arm dropped death's feedback on NF-κB
 
@@ -87,7 +88,7 @@ All 31 Calzone nodes and every logic rule are kept. Only rates change:
 
 | Node | Change | Why |
 |---|---|---|
-| NFkB | logic kept (`IKK AND NOT CASP3`); rates `@logic ? $u_NFkB : 0`, `@logic ? $d_NFkB : 1` | while the route is open, NF-κB follows Lipniacki ($u = f$, $d = 1-f$); when it closes, NF-κB switches off as in Calzone; `$High_NFkB` is kept |
+| NFkB | logic kept (`IKK AND NOT CASP3`); rates `@logic ? $u_NFkB : 0`, `@logic ? $d_NFkB : 1` | while the route is open, NF-κB follows Lipniacki ($u = f\kappa/k_\text{time}$, $d = (1-f)\kappa/k_\text{time}$, which is $u = f$, $d = 1-f$ in the checks that set $\kappa = k_\text{time}$; {doc}`coupling`); when it closes, NF-κB switches off as in Calzone; `$High_NFkB` is kept |
 | TNF | rates `$u_TNF` / `$d_TNF` | driven by the same receptor-occupancy signal as Lipniacki's `TNF_R` |
 | Apoptosis, NonACD | switch-off `@logic ? 0 : ($absorb_death ? 0 : 1)` | death is irreversible: with `absorb_death` nonzero (the composite) a death node stays on; 0 is Calzone's network (below) |
 | every node | each rate × `$k_time` | the death-machinery clock the studies sweep ({doc}`time`) |
@@ -108,7 +109,7 @@ directly, TNF on, all 31 nodes, abs 0.01:
 | Check | What it adds |
 |---|---|
 | `coupled-equals-full` | t = 40, where the death arms have acted |
-| `coupled-equals-full-early` | the window [7, 8], while caspase-3 switches on. The gate's `NOT CASP3` term is visible only here: P(NF-κB) is 0.215 with it and 0.244 without. Later, caspase-8 has closed the route anyway. |
+| `coupled-equals-full-early` | the window [7, 8], while caspase-3 switches on. The gate's `NOT CASP3` term is visible only here: P(NF-κB) is 0.215 with it and about 0.24 without (two separate runs gave 0.244 and 0.243). Later, caspase-8 has closed the route anyway. |
 | `coupled-equals-full-seconds` | `k_time = 1/60` over 2400 s with $r_\text{tx} = k_\text{time}/24$: a pure change of clock at t = 40. An unclocked race-deciding rate (CASP8) fails it. |
 | `coupled-equals-full-early-seconds` | the same over [420, 480] s, while the cascade moves: unclocked BAX or MOMP fail it |
 | `coupled-nfkb-knockout` | no nuclear NF-κB ($u_\text{NFkB} = 0$, $d_\text{NFkB} = 1$) against Calzone's network with NF-κB's switch-on rate set to 0 (loss of function): the death arms are intact |
