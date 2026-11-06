@@ -1,1 +1,1 @@
-{"name": "multiscale-nfkb", "description": "", "imports": {}, "investigations": []}
+{"name": "multiscale-nfkb", "description": "", "imports": {}, "investigations": [{"name": "tnf-fate-in-space", "title": "TNF fate in space", "status": "planning", "description": "What decides whether a cell survives or dies when TNF reaches it by diffusion, and does space act only through the dose that arrives, or also through when it arrives?\n"}]}
