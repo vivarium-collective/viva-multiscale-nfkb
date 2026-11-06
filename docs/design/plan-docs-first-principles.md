@@ -76,6 +76,9 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
       - switch.md: links the derivation of its ODE, and shows k_time·fκ/k_time = fκ;
       - boolean.md: a prerequisites intro (network, primer, MaBoSS; "the race" defined), and how NF-κB loss of
         function is set.
+      - kinetic.md: internal ids (Q1, Q2, U1, plan F3, d7) replaced in prose; NRMSE, sim1 and species_overrides
+        defined. The unverified "couples the rest state to coupling intervals" claim was dropped.
+      - models.md: boundary species, IKKn/IKKa and NRMSE defined; TNF_R is 0 to 1 (not 0/1); links to the new pages.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)

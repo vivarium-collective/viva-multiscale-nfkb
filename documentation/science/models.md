@@ -8,14 +8,17 @@ J Theor Biol 228:195–215. BioModels **BIOMD0000000786** (curated).
 - **What it is:** 16 species and 32 reactions in two compartments, cytoplasm and nucleus, with
   $K_v = V_\text{cyt}/V_\text{nuc} = 5$. It models IKK activation by TNF; IκBα:NF-κB binding and degradation; nuclear
   import and export; and NF-κB-induced transcription of IκBα, A20 and a generic control gene. Time is in seconds and
-  concentrations in µM.
-- **Its input:** `TNF` is a boundary species, set by the rule `TNF := TNF_R`. `TNF_R` is a 0/1 receptor-activity
-  parameter, and it enters the IKK reactions as a modifier ($k_1\,\text{TNF}\,\text{IKKn}$ and
-  $k_2\,\text{TNF}\,\text{A20}\,\text{IKKa}$).
+  concentrations in µM. The model, species by species and reaction by reaction: {doc}`lipniacki-model`.
+- **Its input:** `TNF` is a boundary species (one that no reaction changes; only a rule sets it), set by the rule
+  `TNF := TNF_R`. `TNF_R` is a receptor-activity parameter between 0 and 1: the original model switches it from 0 to 1,
+  and in the composite it carries the receptor occupancy. It enters the IKK reactions as a modifier, in the rates
+  $k_1\,\text{TNF}\,\text{IKKn}$ (neutral IKK activated) and $k_2\,\text{TNF}\,\text{A20}\,\text{IKKa}$ (active IKK
+  inactivated by A20).
 - **Why this model** (Alex, 2026-11-04):
   - It has two sized compartments, so nuclear NF-κB is a real concentration.
   - Its stimulus is one external input, exactly the port a spatial layer drives.
-  - COPASI and Tellurium agree on its own simulation to NRMSE 3.6e-7 (viva-biomodels' corpus screen).
+  - COPASI and Tellurium agree on its own simulation: their trajectories differ by a normalised root-mean-square
+    error (NRMSE) of 3.6e-7 (viva-biomodels' screen of BioModels models).
 - **Rejected alternatives** ({doc}`../design/kinetic`):
   - BIOMD0000000027: one compartment, no stimulus input.
   - BIOMD0000000407 (Schliemann 2011): three compartments, but 106 local parameters.
@@ -28,8 +31,9 @@ of cell-fate decision in response to death receptor engagement.* PLoS Comput Bio
 
 - **What it is:** a Boolean network of 31 nodes. Each node is on or off: TNF, TNFR, FADD, DISC, CASP8, RIP1, cIAP,
   IKK, NF-κB and its targets, the mitochondrial nodes, CASP3, ATP and ROS. Its three outputs are **Survival**,
-  **Apoptosis** and **NonACD** (non-apoptotic cell death, i.e. necrosis).
-- **Semantics:** the paper uses asynchronous reachability with no rates. In it, the wild-type cell under TNF reaches
+  **Apoptosis** and **NonACD** (non-apoptotic cell death, i.e. necrosis). Every node, rule and rate:
+  {doc}`calzone-network`.
+- **Semantics:** the paper uses asynchronous reachability with no rates ({doc}`boolean-networks`). In it, the wild-type cell under TNF reaches
   about **30% survival, 60% apoptosis and 10% necrosis** (Fig. 4, reduced model).
 - **The rates used here** come from MaBoSS's continuous-time version of the same network (the files shipped in the
   MaBoSS repository): every rate 1, except transcription at `TransRate = 1/24`. Those rates are a modelling choice of
