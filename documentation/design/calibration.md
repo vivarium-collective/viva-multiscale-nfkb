@@ -22,7 +22,7 @@ tables quoted here.
 | Stimulus | TNF switched on at t = 0 and held at saturation | The simplest stimulus. It is the case Calzone's own network was built for. |
 | Duration | 24 h of model time at every clock (Alex: "24 hours everywhere") | At 8 h, 77–85% of cells were still undecided at the slowest clock. |
 | Recording | Each cell's fate code every 30 s: Survival + 2·Apoptosis + 4·NonACD | Calzone's fate nodes are not mutually exclusive: a cell can show caspase-3 and ATP loss together. A first 8 h grid summed them as if they were exclusive, double-counted, and was discarded. |
-| Readout | **Alive**: no death node on at any tick in 24 h. **Durable survival**: alive with Survival on at 24 h. End state and first fate alongside | Death is irreversible, but Calzone's death nodes are not absorbing: Apoptosis follows CASP3 and NonACD follows ATP loss, and both switch off when their logic fails. Read by end state, 10–27% of cells looked alive after they had died. |
+| Readout | **Alive**: no death node on at any tick in 24 h. **Durable survival**: alive with Survival on at 24 h. End state and first fate alongside | Death is irreversible, but Calzone's death nodes are not absorbing: Apoptosis follows CASP3 and NonACD follows ATP loss, and both switch off when their logic fails. Read by end state, up to 27% of a run's cells (with Calzone's gates removed) looked alive after they had died. |
 | Seeds | Every variant reuses the grid's 200 seeds | Differences between runs then come from the change, not from new random draws. Variants are compared with the grid **cell by cell** (exact McNemar test), which an adversarial review showed is needed. Comparing two fractions as if independent hid a consistent shift. |
 | Environment | The workspace's pinned `compose/` environment, through compose-api's own runner; the workbench only records the runs (Alex: "Pinned env; workbench records") | The results are what compose-api would produce in production. |
 
@@ -198,9 +198,10 @@ that, so the remaining levers are:
 - **Exposure.** How much TNF reaches each cell, when, and for how long. In the tissue, that is exactly what space
   decides ({doc}`studies`). The receptor dose–response (d1, McMillan 2021) is the layer it needs.
 
-Two modelling choices are open for Alex:
+Alex's two decisions after Study 0 (2026-11-06; {doc}`decisions`, rows 27 and 28):
 
-- graded transcription, exposure (d1), or both. These data favour exposure as the lever, since nothing in Study 0
-  predicts a rescue from graded transcription;
-- whether to make death absorbing in the network itself, so that a dead cell stops signalling in the spatial studies.
-  Today the readout makes death irreversible, but the network does not.
+- **Exposure (d1) is the next lever**, not graded transcription, since nothing in Study 0 predicts a rescue from
+  graded transcription.
+- **Death becomes absorbing in the network itself**, so that a death flag stays set, and the spatial studies can stop
+  a dead cell signalling. Until now only the readout made death irreversible. No node reads Apoptosis or NonACD, and
+  rerunning the baseline with absorbing death on the same seeds moved no cell's first death ({doc}`boolean`).

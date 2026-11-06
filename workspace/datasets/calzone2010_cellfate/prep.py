@@ -31,8 +31,14 @@ The other changes:
   own NF-kB -> target-protein timing (anchor_transcription.py; Alex: "anchor to Lipniacki, sweep death"). Their
   switch-OFF rates are unchanged in form (cFLIP, BCL2, mXIAP, mcIAP, mROS and Survival when their logic fails, cIAP
   when SMAC is on) and stay on the k_time clock; the calibration study decides whether they should move.
-- With u_NFkB = 1, d_NFkB = 0, TNF held (u_TNF = d_TNF = 0), k_time = 1 and r_tx = 1/24, the network is Calzone's
-  MaBoSS example exactly (checks/boolean/coupled-equals-full).
+- **Death can be made absorbing (Alex, 2026-11-06, decision 28).** Calzone's death nodes follow their causes:
+  Apoptosis is on while CASP3 is, NonACD while ATP is lost, and each switches off again when its cause reverses. Death is
+  irreversible, so in the composite a dead cell must stay dead. Their switch-off rate becomes `($absorb_death ? 0 : 1)`:
+  `$absorb_death = 0` is Calzone's network, and any nonzero value (1 by convention) makes Apoptosis and NonACD
+  absorbing. Written as a switch, not as `1 - $absorb_death`, it can never give a negative rate. No node's logic reads
+  either death node.
+- With u_NFkB = 1, d_NFkB = 0, TNF held (u_TNF = d_TNF = 0), k_time = 1, r_tx = 1/24 and absorb_death = 0, the network
+  is Calzone's MaBoSS example exactly (checks/boolean/coupled-equals-full).
 
 Everything else is kept byte for byte. The script refuses to write unless the input is the pinned file and each
 rewritten node's text is exactly what it expects.
@@ -83,11 +89,39 @@ REPLACED = {
         "}",
         "an input: the receptor-occupancy signal that drives Lipniacki's TNF_R drives $u_TNF/$d_TNF",
     ),
+    "NonACD": (
+        "node NonACD {\n"
+        "  logic = NOT ATP;\n"
+        "  rate_up = @logic ? 1 : 0;\n"
+        "  rate_down = @logic ? 0 : 1;\n"
+        "}",
+        "node NonACD {\n"
+        "  logic = NOT ATP;\n"
+        "  rate_up = @logic ? 1 : 0;\n"
+        "  rate_down = @logic ? 0 : ($absorb_death ? 0 : 1);\n"
+        "}",
+        "logic kept; once on it switches off only when $absorb_death = 0 (Calzone's network). The composite sets "
+        "it to 1 (any nonzero value): death is irreversible, so a dead cell stays dead (decision 28)",
+    ),
+    "Apoptosis": (
+        "node Apoptosis {\n"
+        "  logic = CASP3;\n"
+        "  rate_up = @logic ? 1 : 0;\n"
+        "  rate_down = @logic ? 0 : 1;\n"
+        "}",
+        "node Apoptosis {\n"
+        "  logic = CASP3;\n"
+        "  rate_up = @logic ? 1 : 0;\n"
+        "  rate_down = @logic ? 0 : ($absorb_death ? 0 : 1);\n"
+        "}",
+        "logic kept; once on it switches off only when $absorb_death = 0 (Calzone's network). The composite sets "
+        "it to 1 (any nonzero value): death is irreversible, so a dead cell stays dead (decision 28)",
+    ),
 }
 PARAMETERS_REMOVED = {
     "TransRate": "replaced by $r_tx / $k_time: target-gene induction on Lipniacki's clock (anchor_transcription.py)",
 }
-PARAMETERS_ADDED = ("u_NFkB", "d_NFkB", "u_TNF", "d_TNF", "k_time", "r_tx")
+PARAMETERS_ADDED = ("u_NFkB", "d_NFkB", "u_TNF", "d_TNF", "k_time", "r_tx", "absorb_death")
 _RATE = re.compile(r"(rate_up|rate_down)\s*=\s*([^;]+);")
 _BLOCK = re.compile(r"^node\s+(\w+)\s*\{.*?^\}", re.MULTILINE | re.DOTALL)
 

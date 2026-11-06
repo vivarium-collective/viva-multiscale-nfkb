@@ -24,7 +24,8 @@ def fates(k_time: float) -> dict[str, float]:
         config={
             "network": NETWORK,
             "parameters": {"High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0, "u_TNF": 0.0, "d_TNF": 0.0,
-                           "u_NFkB": F, "d_NFkB": 1.0 - F, "k_time": k_time, "r_tx": R_TX},
+                           "u_NFkB": F, "d_NFkB": 1.0 - F, "k_time": k_time, "r_tx": R_TX,
+                           "absorb_death": 1.0},  # the composite: a cell that dies stays dead
             "initial_state": {"FADD": 1, "ATP": 1, "cIAP": 1, "TNF": 1},
             "sample_count": 20000,
             "windows_per_interval": 20,

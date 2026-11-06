@@ -95,7 +95,7 @@ def classify(codes: dict[str, list[int]], times: list[float]) -> tuple[dict, dic
 
 
 def run_point(name: str, kappa_name: str, minutes: float, cells: int, hours: float, runs_db: Path,
-              edits: tuple[str, ...] = ()) -> dict:
+              edits: tuple[str, ...] = (), absorb_death: float = 0.0) -> dict:
     from discovery_engine import run_registry
     import pyarrow as pa
     import pyarrow.parquet as pq
@@ -104,6 +104,7 @@ def run_point(name: str, kappa_name: str, minutes: float, cells: int, hours: flo
     kappa = k_time if KAPPA[kappa_name] is None else KAPPA[kappa_name]
     params = {"kappa_name": kappa_name, "kappa": kappa, "minutes_per_calzone_unit": minutes, "k_time": k_time,
               "cells": cells, "hours": hours, "interval": 30.0, "base_seed": BASE_SEED, "edits": list(edits),
+              "absorb_death": absorb_death,
               "environment": "compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)"}
     out = HERE / "parquet-runs" / name
     run_registry.register_run(runs_db, name, spec_id=SPEC_ID, status="running", params=params,
@@ -111,14 +112,17 @@ def run_point(name: str, kappa_name: str, minutes: float, cells: int, hours: flo
     result = subprocess.run(
         ["uv", "run", "--project", str(ROOT / "compose"), "--frozen", "python", "-I", str(HERE / "population.py"),
          "--kappa", repr(kappa), "--k-time", repr(k_time), "--cells", str(cells), "--hours", str(hours),
-         "--seed", str(BASE_SEED), "--out", str(out / "raw"), *[f"--edit={e}" for e in edits]],
+         "--seed", str(BASE_SEED), "--out", str(out / "raw"), *[f"--edit={e}" for e in edits],
+         f"--absorb-death={absorb_death}"],
         cwd=ROOT, capture_output=True, text=True)
     if result.returncode != 0:
         run_registry.register_run(runs_db, name, status="failed", completed_at=time.time())
         raise RuntimeError(f"{name}: population.py failed\n{result.stderr[-2000:]}")
     pber = Path(json.loads(result.stdout.strip().splitlines()[-1])["pber"])
     # raw/ (document, omex, runner log, pber) is regenerable from params and is not committed (.gitignore); its
-    # document's sha256 is recorded instead, so a rerun can be checked against it
+    # document's sha256 is recorded instead, so a rerun can be checked against it. Runs recorded before decision 28
+    # (absorbing death, 2026-11-06) hashed the network without the absorb_death switch; their rebuilt documents differ
+    # by the death nodes' two rate lines and the absorb_death = 0 key, with every rate numerically unchanged (f11).
     import hashlib
     document_sha256 = hashlib.sha256((out / "raw" / "document.pbg").read_bytes()).hexdigest()
     rows = json.loads(pber.read_text())["emitter"][1:]  # row 0 is t = 0, before any process has written
@@ -183,6 +187,9 @@ def main() -> None:
                    help="Study 0d: cFLIP, BCL2, mXIAP and mcIAP switch off at Lipniacki's turnover (decay-protective)")
     a.add_argument("--persist", action="store_true",
                    help="Study 0c: the bound where cFLIP, BCL2, mXIAP and mcIAP never switch off (persist-protective)")
+    a.add_argument("--absorb", action="store_true",
+                   help="absorbing death (decision 28) at 30 and 120 min/unit: must match the grid cell by cell up to "
+                        "each cell's first death")
     a.add_argument("--followups", action="store_true",
                    help="the gate knockouts at 10 and 30 min/unit (24 h, the grid's seeds)")
     args = a.parse_args()
@@ -206,7 +213,11 @@ def main() -> None:
         _sync_workbench()
         return
     edits: tuple[str, ...] = ()
-    if args.smoke:
+    absorb_death = 0.0
+    if args.absorb:
+        grid = [("lipniacki-nfkb", m) for m in (30, 120)]
+        cells, hours, prefix, absorb_death = 200, HOURS, "absorb", 1.0
+    elif args.smoke:
         grid = [(k, 10) for k in ("calzone-flicker", "lipniacki-nfkb")]
         cells, hours, prefix = 10, 1.0, "smoke"
     elif args.decay:
@@ -228,7 +239,7 @@ def main() -> None:
     for kappa_name, minutes in grid:
         name = f"{prefix}-{kappa_name}-{minutes}min"
         started = time.time()
-        summary = run_point(name, kappa_name, minutes, cells, hours, runs_db, edits)
+        summary = run_point(name, kappa_name, minutes, cells, hours, runs_db, edits, absorb_death)
         summaries.append(summary)
         print(f"{name}: {_line(summary)}  ({time.time() - started:.0f} s)", flush=True)
     (HERE / "data").mkdir(exist_ok=True)

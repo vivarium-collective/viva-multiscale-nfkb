@@ -4,7 +4,8 @@ not through the Process) wherever its inputs say what Calzone itself would.
 
 The coupled network (workspace/datasets/calzone2010_cellfate/prep.py) keeps all 31 nodes and every logic rule. It changes
 only the rates: NFkB follows `$u_NFkB`/`$d_NFkB` while its own logic (IKK AND NOT CASP3) holds, TNF is driven by
-`$u_TNF`/`$d_TNF`, every rate is multiplied by `$k_time`, and `$TransRate` becomes `$r_tx / $k_time`. So:
+`$u_TNF`/`$d_TNF`, every rate is multiplied by `$k_time`, `$TransRate` becomes `$r_tx / $k_time`, and the death nodes
+switch off at `($absorb_death ? 0 : 1)` (decision 28). Every case here sets absorb_death = 0, Calzone's own death nodes. So:
 
 - `equals-full`: with u_NFkB = 1, d_NFkB = 0 (NF-kB switches like Calzone's own node), k_time = 1, r_tx = 1/24 and TNF
   held on, the coupled network IS Calzone's network. Every one of the 31 nodes must match, under TNF, where the death arms
@@ -147,7 +148,7 @@ def main() -> None:
         _fail("the full network's NFkB node is not the expected upstream text")
     if _nodes(full) != _nodes(coupled):
         _fail("the coupled network does not have exactly the full network's nodes")
-    as_calzone = {"u_NFkB": 1.0, "d_NFkB": 0.0}
+    as_calzone = {"u_NFkB": 1.0, "d_NFkB": 0.0, "absorb_death": 0.0}
     wild_type = _full_marginals(full)
     early = _full_marginals(full, units=8.0, windows=8)
 
@@ -175,7 +176,8 @@ def main() -> None:
            "the term, P(NFkB) in this window is 0.244 rather than 0.215 (probed on the engine, 200000 trajectories).",
            windows=8)
     knockout = full.replace(FULL_NFKB, FULL_NFKB.replace("(@logic ? 1 : 0)", "0"))
-    _write("coupled-nfkb-knockout", coupled, {"u_NFkB": 0.0, "d_NFkB": 1.0, "k_time": 1.0, "r_tx": TRANSRATE}, UNITS,
+    _write("coupled-nfkb-knockout", coupled,
+           {"u_NFkB": 0.0, "d_NFkB": 1.0, "k_time": 1.0, "r_tx": TRANSRATE, "absorb_death": 0.0}, UNITS,
            _full_marginals(knockout),
            "The coupled network with no nuclear NF-kB (u_NFkB = 0) against the full Calzone network with NF-kB loss of "
            "function (NFkB rate_up 0), TNF on, t = 40. All 31 nodes agree: TNF still reaches apoptosis and necrosis.")

@@ -12,21 +12,26 @@ Output (20,000 trajectories):
 
 ```text
 r_tx = 0.000329 /s (gene expression, fixed); 8 h of composite time
-1 Calzone unit =   0.5 min:  Survival 0.000  Apoptosis 0.988  NonACD 0.012
-1 Calzone unit =   2.0 min:  Survival 0.000  Apoptosis 0.958  NonACD 0.042
-1 Calzone unit =  10.0 min:  Survival 0.000  Apoptosis 0.830  NonACD 0.170
-1 Calzone unit =  30.0 min:  Survival 0.023  Apoptosis 0.601  NonACD 0.300
-1 Calzone unit = 120.0 min:  Survival 0.122  Apoptosis 0.018  NonACD 0.074
+1 Calzone unit =   0.5 min:  Survival 0.000  Apoptosis 0.991  NonACD 0.018
+1 Calzone unit =   2.0 min:  Survival 0.000  Apoptosis 0.968  NonACD 0.066
+1 Calzone unit =  10.0 min:  Survival 0.000  Apoptosis 0.874  NonACD 0.243
+1 Calzone unit =  30.0 min:  Survival 0.024  Apoptosis 0.683  NonACD 0.394
+1 Calzone unit = 120.0 min:  Survival 0.122  Apoptosis 0.019  NonACD 0.075
 ```
+
+The sweep runs the composite's network with absorbing death (`absorb_death = 1`, {doc}`../design/boolean`): once
+Apoptosis or NonACD switches on, it stays on. So each death column is the probability that the cell has shown that
+fate by 8 h. A cell can show both, because caspase-3 and ATP loss can occur together, so the columns are never
+summed.
 
 ## Reading it
 
 The death clock changes both who wins and how the cell dies:
 - **Fast death machinery** (half a minute to 10 minutes per unit): apoptosis dominates, before any protective gene is
   made.
-- **Slower death machinery:** a growing share dies by necrosis (30% at 30 min per unit), and survival appears.
-- **At two hours per unit:** most cells (about 79%) have reached no fate after 8 hours, and survival leads among
-  those that have.
+- **Slower death machinery:** a growing share shows necrosis (39% at 30 min per unit), and survival appears.
+- **At two hours per unit:** within 8 hours only 2% of cells have shown apoptosis and 7.5% necrosis, while 12% show
+  survival. Eight hours is only four Calzone units at this clock, so most cells have not yet reached a fate.
 
 So the time axis is not a nuisance. It decides whether TNF's dose and arrival time can matter at all, which is why the
 studies sweep it.

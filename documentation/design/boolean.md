@@ -83,6 +83,7 @@ All 31 Calzone nodes and every logic rule are kept. Only rates change:
 |---|---|---|
 | NFkB | logic kept (`IKK AND NOT CASP3`); rates `@logic ? $u_NFkB : 0`, `@logic ? $d_NFkB : 1` | while the route is open, NF-κB follows Lipniacki ($u = f$, $d = 1-f$); when it closes, NF-κB switches off as in Calzone; `$High_NFkB` is kept |
 | TNF | rates `$u_TNF` / `$d_TNF` | driven by the same receptor-occupancy signal as Lipniacki's `TNF_R` |
+| Apoptosis, NonACD | switch-off `@logic ? 0 : ($absorb_death ? 0 : 1)` | death is irreversible: with `absorb_death` nonzero (the composite) a death node stays on; 0 is Calzone's network (below) |
 | every node | each rate × `$k_time` | the death-machinery clock the studies sweep ({doc}`time`) |
 | cIAP, cFLIP, BCL2, mROS, mcIAP, mXIAP, Survival | `$TransRate` → `$r_tx / $k_time` | Calzone's transcription-scale steps (NF-κB-induced cFLIP, BCL2, mXIAP, mcIAP; cIAP from mcIAP; mROS, induced when NF-κB is *off*; the Survival phenotype) switch on at Lipniacki's rate ({doc}`time`) |
 
@@ -94,8 +95,8 @@ All 31 Calzone nodes and every logic rule are kept. Only rates change:
 
 ### Proof that the coupling is Calzone wherever it should be
 
-At $u = 1$, $d = 0$ (NF-κB switching like Calzone's own node), $k_	ext{time} = 1$ and $r_	ext{tx} = 1/24$, the
-coupled network **is** Calzone's network. Four checks compare it with the unmodified network run on the MaBoSS engine
+At $u = 1$, $d = 0$ (NF-κB switching like Calzone's own node), $k_\text{time} = 1$ and $r_\text{tx} = 1/24$, the
+coupled network **is** Calzone's network (with `absorb_death = 0`, below). Five checks compare it with the unmodified network run on the MaBoSS engine
 directly, TNF on, all 31 nodes, abs 0.01:
 
 | Check | What it adds |
@@ -111,6 +112,61 @@ directly, TNF on, all 31 nodes, abs 0.01:
 - caspase-8's rates left off the clock: apoptosis 0.972 instead of 0.953;
 - BAX's rates left off the clock (early window): apoptosis 0.449 instead of 0.323;
 - Round 2's cut: survival 0.25 instead of 0.014, necrosis 4e-5 instead of 0.029.
+
+### Death is absorbing in the composite
+
+**The problem.** In MaBoSS every node is a switch with two rates: a switch-on rate while it is off, and a switch-off
+rate while it is on ({doc}`../math/maboss`). Calzone writes each death node as a mirror of its cause:
+
+| Node | Logic (when it is "true") | Switch-on rate | Switch-off rate |
+|---|---|---|---|
+| Apoptosis | `CASP3`: caspase-3 is active | 1 while CASP3 is on | 1 while CASP3 is off |
+| NonACD (necrosis) | `NOT ATP`: the cell has run out of ATP | 1 while ATP is gone | 1 while ATP is back |
+
+So if caspase-3 switches off again, for example because XIAP returns and blocks it, the Apoptosis node switches off
+too. That makes sense for a node read as "caspase-3 is active", but not for a node read as "the cell has died": death
+is irreversible. In Study 0, up to 27% of the cells in a run had shown a death node and lost it again by 24 h (7.5% in the
+baseline at 120 min per Calzone unit; 22.5–27% with Calzone's gates removed; {doc}`calibration`).
+
+**The change (Alex, 2026-11-06; {doc}`decisions`, row 28).** Both death nodes' switch-off rate is switched by a
+parameter $a$, `absorb_death`:
+
+```text
+rate_down = $k_time * (@logic ? 0 : ($absorb_death ? 0 : 1));
+```
+
+- $a = 0$ gives Calzone's network unchanged. Every check above sets it, so they still compare against Calzone exactly.
+- Any nonzero $a$ (the composite uses 1) gives a death node that never switches off, so a dead cell stays dead. The
+  rest of the network keeps running after death; what the change gives the spatial layer is a death flag that stays
+  set, which it can use to stop a dead cell signalling.
+- It is written as a switch rather than as a factor $1 - a$, so no value can make a rate negative.
+
+**What it should not change.** No node's logic reads Apoptosis or NonACD: they are outputs only. In MaBoSS's
+continuous-time trajectory, every other node therefore behaves the same with $a = 0$ or $a = 1$ up to the moment a death
+node first switches on. The composite, however, records each cell once per 30 s coupling interval, as a joint state sampled
+from that interval's last window (*Engine*, above; {doc}`../math/maboss`). A death node that switched on and off again within one
+interval can be missed with $a = 0$, while with $a = 1$ it stays on and is recorded. So absorbing death can, in
+principle, make a recorded first death earlier; it cannot make a dead cell alive. Whether that matters is an empirical
+question. Study 0 was run with $a = 0$. Rerunning its baseline with $a = 1$ on the same 200 seeds, at 30 and 120 min
+per Calzone unit, gave no cell whose first death moved (0 of 400), the same alive cells, and no revived cell. A review
+found the same at 0.5 and 2 min per unit (6 h). The decay, persistence and knockout variants were not rerun.
+
+**The check, `absorbing-death`.** Take the two death nodes verbatim and give each a cause that is present at $t = 0$
+and goes away once, for good, at rate $r$ (caspase-3 starts on and switches off; ATP starts off and switches on).
+While the cause is present, the death node switches on at rate $k$. With $a = 1$ a death node is on at time $t$
+exactly when it switched on before its cause went away. At time $s$ the cause is still present with probability
+$e^{-rs}$, and the node switches on in $[s, s + ds]$ with probability $k\,e^{-ks}\,ds$, so
+
+$$
+P(\text{on at } t) = \int_0^t k\,e^{-ks}\,e^{-rs}\,ds = \frac{k}{k + r}\left(1 - e^{-(k + r)t}\right).
+$$
+
+At $k = r = 1$ and $t = 8$ this is 0.5 (MaBoSS reports the average over the window [7, 8], which is also 0.5 to six
+places). Both nodes read 0.5 within 0.01 (50,000 trajectories).
+
+**Proven to fail.** With $a = 0$ the node also switches off at rate $k$ once its cause is gone. Solving the same
+four-state chain gives $P(\text{on at } t) = t\,e^{-t}$ at $k = r = 1$, whose average over [7, 8] is
+$8e^{-7} - 9e^{-8} = 0.0043$. The same document with $a = 0$ reads 0.0048 (Apoptosis) and 0.0042 (NonACD), and fails.
 
 ## Clock
 

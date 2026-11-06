@@ -6,7 +6,8 @@ cell is classified by its END state at 24 h, where:
 - **surviving** means Survival is on and nothing else;
 - **none** means no fate node is on.
 
-Death is irreversible, but Calzone's death nodes are not absorbing: Apoptosis follows CASP3 and NonACD follows ATP loss,
+Death is irreversible, but Calzone's death nodes are not absorbing (the composite makes them so with absorb_death = 1,
+decision 28; every Study 0 run except absorb-* used Calzone's): Apoptosis follows CASP3 and NonACD follows ATP loss,
 and both switch off again if their logic fails (for example when XIAP returns and switches caspase-3 off). So the
 end state can show a cell that has died as alive. **ever_dead** counts a cell as dead from the first tick any death node
 is on, and **alive** is its complement. These are the primary readouts, and the end-state columns are kept beside them.
@@ -15,7 +16,7 @@ The first-fate fractions are reported alongside, with how many first-Survival ce
 (first_survival_then_dead) and at any later tick (first_survival_then_ever_dead, the alive readout's count).
 dead_before_settle is the fraction of cells whose first death comes before NF-kB settles (6 h, SETTLE_S).
 
-Every variant (decay-*, persist-*, ko-*) runs on the grid's 200 cell seeds, so each is also compared CELL BY CELL with
+Every variant (decay-*, decayp-*, persist-*, ko-*, absorb-*) runs on the grid's 200 cell seeds, so each is also compared CELL BY CELL with
 the grid run at the same kappa and clock. For each end-state readout (surviving, apoptosis, necrosis, dead) it counts
 the cells that gained and lost it, and gives an exact McNemar p (two-sided binomial on those discordant cells).
 Comparing the two fractions as if independent ignores this pairing and can hide a consistent shift.
@@ -96,6 +97,10 @@ def paired(variant: Path, grid: Path) -> dict:
         lost = sum(1 for a, b in zip(g, v, strict=True) if test(a) and not test(b))
         out[name] = {"grid": sum(map(test, g)), "variant": sum(map(test, v)), "gained": gained, "lost": lost,
                      "p_mcnemar_exact": _mcnemar_exact(gained, lost)}
+    # Cells whose first death comes at a different tick (or only in one run). Zero for absorbing death against the
+    # grid is the regression check of decision 28: no node reads a death node, so nothing changes before it.
+    first = lambda s: next((i for i, x in enumerate(s) if x & 6), None)
+    out["first_death_tick_differs"] = sum(first(a) != first(b) for a, b in zip(g, v, strict=True))
     # Where the grid's durable survivors (alive, Survival on at the end) went, by cell index, so two variants can be
     # compared cell for cell and not only by count.
     durable = [i for i, s in enumerate(g) if READOUTS["alive_survival_on"](s)]
@@ -108,7 +113,7 @@ def paired(variant: Path, grid: Path) -> dict:
 
 
 def _grid_partner(name: str) -> str | None:
-    for prefix in ("decay-", "decayp-", "persist-"):
+    for prefix in ("decay-", "decayp-", "persist-", "absorb-"):
         if name.startswith(prefix):
             return "grid-" + name[len(prefix):]
     if name.startswith("ko-"):  # ko-<edit>-<kappa>-<m>min: the kappa and clock are the last two fields

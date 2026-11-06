@@ -1,0 +1,26 @@
+description: 'Absorbing death (decision 28). The coupled network''s Apoptosis and NonACD nodes (verbatim), absorb_death =
+  1, k_time = 1; each one''s cause (CASP3 on, ATP off at t = 0) goes away once at rate 1. A death node that switched on while
+  its cause was present stays on, so P(on) = k/(k+r) (1 - exp(-(k+r) t)); analytic oracle over the last window [7, 8]: 0.4999998.
+  With absorb_death = 0, P(on) = t exp(-t) (0.0043 over the window; measured 0.0048 and 0.0042) and the case fails. Generated
+  by checks/boolean/make_absorbing_death.py.'
+document: document.pbg
+interval: 8.0
+scale_level: molecule
+expect:
+- kind: rows
+  emitter: emitter
+  min: 2
+- kind: scalar
+  emitter: emitter
+  field: steps
+  expected: 1
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  expected: 0.5
+  abs: 0.01
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NonACD
+  expected: 0.5
+  abs: 0.01

@@ -1,4 +1,88 @@
 {
+ "absorb-lipniacki-nfkb-120min": {
+  "against": "grid-lipniacki-nfkb-120min",
+  "ever_dead": {
+   "grid": 168,
+   "variant": 168,
+   "gained": 0,
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  },
+  "end_apoptosis": {
+   "grid": 91,
+   "variant": 99,
+   "gained": 12,
+   "lost": 4,
+   "p_mcnemar_exact": 0.076812744140625
+  },
+  "end_necrosis": {
+   "grid": 71,
+   "variant": 87,
+   "gained": 16,
+   "lost": 0,
+   "p_mcnemar_exact": 3.0517578125e-05
+  },
+  "alive_survival_on": {
+   "grid": 9,
+   "variant": 9,
+   "gained": 0,
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  },
+  "first_death_tick_differs": 0,
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": [
+    2,
+    72,
+    94,
+    106,
+    137,
+    152,
+    181,
+    188,
+    196
+   ]
+  }
+ },
+ "absorb-lipniacki-nfkb-30min": {
+  "against": "grid-lipniacki-nfkb-30min",
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
+   "gained": 0,
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  },
+  "end_apoptosis": {
+   "grid": 138,
+   "variant": 151,
+   "gained": 13,
+   "lost": 0,
+   "p_mcnemar_exact": 0.000244140625
+  },
+  "end_necrosis": {
+   "grid": 62,
+   "variant": 76,
+   "gained": 14,
+   "lost": 0,
+   "p_mcnemar_exact": 0.0001220703125
+  },
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
+   "gained": 0,
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  },
+  "first_death_tick_differs": 0,
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
+  }
+ },
  "decay-calzone-flicker-10min": {
   "against": "grid-calzone-flicker-10min",
   "ever_dead": {
@@ -29,6 +113,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 40,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -65,6 +150,7 @@
    "lost": 1,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 32,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [
@@ -103,6 +189,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 27,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -139,6 +226,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 31,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -175,6 +263,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 25,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -211,6 +300,7 @@
    "lost": 2,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 59,
   "grid_durable_cells": {
    "dead": [
     141,
@@ -250,6 +340,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 3,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -286,6 +377,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 25,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -322,6 +414,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 46,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -358,6 +451,7 @@
    "lost": 9,
    "p_mcnemar_exact": 0.00390625
   },
+  "first_death_tick_differs": 90,
   "grid_durable_cells": {
    "dead": [
     2,
@@ -405,6 +499,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 10,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -441,6 +536,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 54,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -477,6 +573,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 34,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -513,6 +610,7 @@
    "lost": 9,
    "p_mcnemar_exact": 0.00390625
   },
+  "first_death_tick_differs": 77,
   "grid_durable_cells": {
    "dead": [
     2,
@@ -560,6 +658,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 7,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -596,6 +695,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 33,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -632,6 +732,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 160,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -668,6 +769,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 163,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -704,6 +806,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 160,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -740,6 +843,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 174,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -776,6 +880,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 32,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -812,6 +917,7 @@
    "lost": 6,
    "p_mcnemar_exact": 0.022655844688415527
   },
+  "first_death_tick_differs": 67,
   "grid_durable_cells": {
    "dead": [
     106
@@ -860,6 +966,7 @@
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
+  "first_death_tick_differs": 7,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],
@@ -896,6 +1003,7 @@
    "lost": 0,
    "p_mcnemar_exact": 0.25
   },
+  "first_death_tick_differs": 47,
   "grid_durable_cells": {
    "dead": [],
    "alive_survival_off": [],

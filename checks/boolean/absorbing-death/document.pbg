@@ -1,0 +1,80 @@
+{
+  "global_time_precision": 6,
+  "state": {
+    "node_state": {
+      "ATP": 0.0,
+      "Apoptosis": 0.0,
+      "CASP3": 1.0,
+      "NonACD": 0.0
+    },
+    "node_probabilities": {
+      "ATP": 0.0,
+      "Apoptosis": 0.0,
+      "CASP3": 1.0,
+      "NonACD": 0.0
+    },
+    "parameters": {},
+    "steps": 0,
+    "cellfate": {
+      "_type": "process",
+      "address": "local:viva_maboss.processes.MaBoSSProcess",
+      "config": {
+        "network": "node CASP3 {\n  rate_up = 0;\n  rate_down = 1.0;\n}\n\nnode ATP {\n  rate_up = 1.0;\n  rate_down = 0;\n}\n\nnode Apoptosis {\n  logic = CASP3;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : ($absorb_death ? 0 : 1));\n}\n\nnode NonACD {\n  logic = NOT ATP;\n  rate_up = $k_time * (@logic ? 1 : 0);\n  rate_down = $k_time * (@logic ? 0 : ($absorb_death ? 0 : 1));\n}\n",
+        "parameters": {
+          "k_time": 1.0,
+          "absorb_death": 1.0
+        },
+        "initial_state": {
+          "CASP3": 1.0
+        },
+        "sample_count": 50000,
+        "windows_per_interval": 8,
+        "seed": 17
+      },
+      "interval": 8.0,
+      "inputs": {
+        "node_state": [
+          "node_state"
+        ],
+        "node_probabilities": [
+          "node_probabilities"
+        ],
+        "parameters": [
+          "parameters"
+        ],
+        "steps": [
+          "steps"
+        ]
+      },
+      "outputs": {
+        "node_state": [
+          "node_state"
+        ],
+        "node_probabilities": [
+          "node_probabilities"
+        ],
+        "steps": [
+          "steps"
+        ]
+      }
+    },
+    "emitter": {
+      "_type": "step",
+      "address": "local:RAMEmitter",
+      "config": {
+        "emit": {
+          "node_probabilities": "map[float]",
+          "steps": "integer"
+        }
+      },
+      "inputs": {
+        "node_probabilities": [
+          "node_probabilities"
+        ],
+        "steps": [
+          "steps"
+        ]
+      }
+    }
+  }
+}

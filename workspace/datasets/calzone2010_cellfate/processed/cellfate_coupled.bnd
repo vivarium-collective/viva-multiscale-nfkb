@@ -166,13 +166,13 @@ node apoptosome {
 node NonACD {
   logic = NOT ATP;
   rate_up = $k_time * (@logic ? 1 : 0);
-  rate_down = $k_time * (@logic ? 0 : 1);
+  rate_down = $k_time * (@logic ? 0 : ($absorb_death ? 0 : 1));
 }
 
 node Apoptosis {
   logic = CASP3;
   rate_up = $k_time * (@logic ? 1 : 0);
-  rate_down = $k_time * (@logic ? 0 : 1);
+  rate_down = $k_time * (@logic ? 0 : ($absorb_death ? 0 : 1));
 }
 
 node Survival {

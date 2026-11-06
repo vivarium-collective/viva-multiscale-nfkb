@@ -1,4 +1,38 @@
 {
+ "absorb-lipniacki-nfkb-120min": {
+  "cells": 200,
+  "first_survival": 0.425,
+  "first_survival_then_dead": 0.295,
+  "end_dead": 0.84,
+  "end_apoptosis": 0.495,
+  "end_nonacd": 0.435,
+  "end_apoptosis_and_nonacd": 0.09,
+  "end_surviving": 0.045,
+  "end_none": 0.115,
+  "ever_dead": 0.84,
+  "alive": 0.16,
+  "alive_survival_on_at_end": 0.045,
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.295,
+  "dead_before_settle": 0.02
+ },
+ "absorb-lipniacki-nfkb-30min": {
+  "cells": 200,
+  "first_survival": 0.175,
+  "first_survival_then_dead": 0.175,
+  "end_dead": 1.0,
+  "end_apoptosis": 0.755,
+  "end_nonacd": 0.38,
+  "end_apoptosis_and_nonacd": 0.135,
+  "end_surviving": 0.0,
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.175,
+  "dead_before_settle": 0.88
+ },
  "decay-calzone-flicker-10min": {
   "cells": 200,
   "first_survival": 0.115,

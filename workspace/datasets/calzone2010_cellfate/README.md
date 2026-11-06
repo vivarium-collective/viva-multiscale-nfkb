@@ -16,7 +16,7 @@ cell-fate decision in response to death receptor engagement", PLoS Comput Biol 6
 
 ## The composite's Boolean layer: `prep.py` → `processed/`
 
-`prep.py` writes `processed/cellfate_coupled.bnd` (all 31 nodes, sha256 `036fc9d18a83aa96d6fe95fb88306cc5493b3e83df4238579e8361fc2f9fe65a`, deterministic) and
+`prep.py` writes `processed/cellfate_coupled.bnd` (all 31 nodes, sha256 `f90525f153859a4cd7e64e18bb1514015d14ff4673c7385c7425c00a229902fa`, deterministic) and
 `processed/coupling.json` (every rewrite and why).
 
 ### Ownership: remove nothing, Calzone gates
@@ -43,13 +43,18 @@ The models now divide the work as follows:
   At u = 1, d = 0 it is Calzone's node exactly. `$High_NFkB` is kept.
 - **TNF** becomes an input with rates `$u_TNF` / `$d_TNF`, driven by the same receptor-occupancy signal as Lipniacki's
   TNF_R.
+- **Death can be absorbing** (Alex, 2026-11-06, decision 28). Apoptosis and NonACD keep their logic, but their
+  switch-off rate becomes `($absorb_death ? 0 : 1)`. `$absorb_death = 0` is Calzone's network, where a death node
+  switches off again when its cause (caspase-3, ATP loss) reverses; any nonzero value (the composite uses 1) makes
+  death irreversible. Checked by `checks/boolean/absorbing-death` (analytic oracle; 0 fails it).
 
 ### Time
 
 - **Every rate is multiplied by `$k_time`** (Calzone time units per composite second). Alex chose (2026-11-04) to
   **sweep `k_time` as a study axis** for the death machinery's clock. k_time must be > 0. With r_tx = k_time / 24,
   every rate scales together and k_time is a pure change of clock. `prep.py` guarantees that every rate is wrapped:
-  it refuses to write unless each of the 62 rates is exactly `$k_time * (original rate)`. The `-seconds` checks show
+  it refuses to write unless each of the 62 rates is exactly `$k_time * (its rate)`, where "its rate" is the upstream
+  rate or, for NFkB, TNF, Apoptosis and NonACD, the rewritten one. The `-seconds` checks show
   that the rates which decide the race are on the clock.
 - **Transcription-scale steps keep Lipniacki's clock** (Alex: "anchor to Lipniacki, sweep death"). `$TransRate`
   becomes `$r_tx / $k_time` in the 7 nodes that use it, so each switches ON at `r_tx` per second whatever `k_time` is:

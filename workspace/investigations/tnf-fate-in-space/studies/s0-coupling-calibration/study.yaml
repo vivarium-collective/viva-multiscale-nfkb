@@ -281,6 +281,23 @@ findings:
     parquet-runs/grid-lipniacki-nfkb-120min/timeseries.parquet (nfkb_fraction);
     datasets/calzone2010_cellfate/processed/{transcription_anchor,turnover_anchor}.json (r_tx, r_deg);
     processed/cellfate_coupled.bnd (cFLIP, BCL2, mXIAP, mcIAP: logic = NFkB, rate_up r_tx; NFkB: IKK AND NOT CASP3)
+- id: f11-absorbing-death-regression
+  tier: observation
+  summary: >
+    Absorbing death (decision 28: Apoptosis and NonACD never switch off once on, absorb_death = 1) left the baseline's
+    alive/dead outcome unchanged where it was rerun: on the grid's 200 seeds at kappa = lipniacki-nfkb, 30 and 120 min
+    per unit, no cell's first death moved (0 of 400), the alive set is the same cell for cell (0 and 16%), the
+    first-fate fractions are the same, and no cell revives (120 min per unit: revived 7.5% -> 0, so the end state now
+    equals ever-dead, 0.84). This is observed, not guaranteed: no node's logic reads a death node, but the composite
+    records one sampled joint state per 30 s interval, so a death that switched on and off within one interval can be
+    missed at absorb_death = 0 and recorded at 1 (an earlier recorded death, never a later one). The decay, persist and
+    knockout variants were not rerun; every Study 0 run other than absorb-* used absorb_death = 0.
+    Their recorded document_sha256 values predate decision 28: population.py now writes the death nodes' switch-off as
+    ($absorb_death ? 0 : 1) and sets absorb_death = 0 in each cell's parameters, so a rebuilt document differs from the
+    recorded hash by those two rate lines and that key, while every rate is numerically the same.
+  evidence: >
+    data/paired.json (absorb-*: first_death_tick_differs = 0, ever_dead +0 -0); data/fate-table.json (absorb-*:
+    alive, revived, end_dead, ever_dead); data/absorb-summary.json; checks/boolean/absorbing-death
 
 alternative_hypotheses:
 - hypothesis: The coupling, not Calzone's network, causes the near-total death.
@@ -309,9 +326,8 @@ discovery_implications:
   remaining:
   - Whether TNF's dose and timing (exposure, pulse length) change fate, which a held saturating stimulus cannot show.
   - The death clock still has no measured anchor.
-  - Whether the composite should make death absorbing in the network itself, so that a dead cell stops signalling in the spatial studies (a modelling decision for Alex).
-  - Which part of NF-kB's transient decides fate at 10-30 min per unit, and whether f10's occupancy estimate holds at
-    120 min per unit; both need the four protective products' states recorded.
+  - Whether the composite should make death absorbing in the network itself, so that a dead cell stops signalling in the spatial studies (a modelling decision for Alex). Decided 2026-11-06, absorbing (decision 28, f11).
+  - Which part of NF-kB's transient decides fate at 10-30 min per unit, and whether f10's occupancy estimate holds at 120 min per unit; both need the four protective products' states recorded.
   followup_study_proposals:
   - title: Graded transcription
     motivation: >
@@ -819,6 +835,32 @@ runs:
       version: 3-freshness
       graded_at: '2026-11-06T13:34:44.722788+00:00'
       inputs_hash: da9d52358023463b
+      store: resolved
+- name: absorb-lipniacki-nfkb-120min
+  status: complete
+  timestamp: 1793976524.406218
+  emitter:
+    kind: parquet
+    store: parquet-runs/absorb-lipniacki-nfkb-120min/timeseries.parquet
+  params: "{\"absorb_death\": 1.0, \"base_seed\": 1, \"cells\": 200, \"edits\": [], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0001388888888888889, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 120}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T14:48:44.596129+00:00'
+      inputs_hash: 3190ead67b678f34
+      store: resolved
+- name: absorb-lipniacki-nfkb-30min
+  status: complete
+  timestamp: 1793976253.036219
+  emitter:
+    kind: parquet
+    store: parquet-runs/absorb-lipniacki-nfkb-30min/timeseries.parquet
+  params: "{\"absorb_death\": 1.0, \"base_seed\": 1, \"cells\": 200, \"edits\": [], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0005555555555555556, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 30}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T14:48:44.596195+00:00'
+      inputs_hash: e4963b2fdfbd1630
       store: resolved
 pipeline_gate:
   gate_evaluator:

@@ -5,8 +5,9 @@ Adapter
   `MathExpressionStep`.
 
 Alive
-: A cell with no death node (Apoptosis, NonACD) on at any tick of the run. Death is irreversible, but Calzone's
-  death nodes can switch off again, so a cell's end state alone can show a dead cell as alive.
+: A cell with no death node (Apoptosis, NonACD) on at any tick of the run. Death is irreversible, but Calzone's own
+  death nodes can switch off again, so a cell's end state alone could show a dead cell as alive. The composite now makes
+  them absorbing (`absorb_death = 1`), so there a dead cell's end state also shows it dead.
 
 Check
 : A compose-api compliance case: a document, an interval and expectations scored by `compliance.evaluate`. It always

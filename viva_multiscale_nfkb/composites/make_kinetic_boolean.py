@@ -72,6 +72,10 @@ def main() -> None:
                        "description": "death-machinery clock (Calzone units per s), > 0"},
             "r_tx": {"type": "float", "default": r_tx,
                      "description": "transcription-scale steps' ON rate (1/s), from Lipniacki"},
+            "absorb_death": {"type": "float", "default": 1.0,
+                             "description": "1: Apoptosis and NonACD stay on once on (death is irreversible; decision 28); "
+                                            "0: Calzone's reversible death nodes. A switch: any nonzero value "
+                                            "is absorbing"},
             "seed": {"type": "int", "default": 1, "description": "MaBoSS seed for this cell"},
             "interval": {"type": "float", "default": 30.0, "description": "coupling step (s) for both layers"},
             "sample_count": {"type": "int", "default": 1, "description": "MaBoSS trajectories per interval"},
@@ -123,7 +127,8 @@ def main() -> None:
                     "network": network,
                     "parameters": {"High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0,
                                    "u_NFkB": 0.0, "d_NFkB": 0.0, "u_TNF": 0.0, "d_TNF": 0.0,
-                                   "k_time": "${k_time}", "r_tx": "${r_tx}"},
+                                   "k_time": "${k_time}", "r_tx": "${r_tx}",
+                                   "absorb_death": "${absorb_death}"},
                     "initial_state": {n: 1.0 for n in ON_AT_START},
                     "sample_count": "${sample_count}",
                     "windows_per_interval": 10,

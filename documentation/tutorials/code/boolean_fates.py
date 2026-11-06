@@ -13,6 +13,7 @@ BASE = {
     "High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0,  # Calzone's mutant switches, all off (wild type)
     "u_TNF": 0.0, "d_TNF": 0.0,                           # TNF held where it starts (on, below)
     "k_time": 1.0, "r_tx": 1 / 24,                         # Calzone's own units and MaBoSS's example TransRate
+    "absorb_death": 0.0,                                   # Calzone's death nodes, which can switch off again
 }
 
 
