@@ -6,6 +6,22 @@ Section B of `agenda-onboarding.md` (lines 113–191) asks for the design of one
 from the simulators onboarded in A. Its layers are Boolean → ODE kinetic core → optional rule-based → spatial particle +
 PDE. d7 (eDMD/VAC) is already scoped there. This plan does not redo d7; its timing step is d7's "use 1".
 
+**Status (2026-11-06): Study 0 done; a validation study is next (Alex).**
+- **Study 0** (`workspace/investigations/tnf-fate-in-space/studies/s0-coupling-calibration`; documented in
+  `documentation/design/calibration.md`) decided:
+  - κ = ln 2/337 s (decision 25), now the composite's default, read from `transcription_anchor.json`;
+  - the alive readout (23b);
+  - absorbing death (28), in the network through `prep.py` and defaulting to 1 in the composite;
+  - exposure (d1) as the next lever (27).
+  The persistence variants 0b–0d were tests and are not adopted into the model.
+- **Validation before d1 (Alex, 2026-11-06; decision 29).** Under held, saturating TNF the composite kills nearly every
+  cell. Cited experiments show cells with working NF-κB usually survive TNF alone:
+  - Micheau & Tschopp 2003, *Cell* 114:181: FLIP(L) in complex II, "the cell survives";
+  - Lee et al. 2016, *Sci Rep* 6:39519: HeLa needed IFNγ sensitisation at 100 ng/ml continuous TNF.
+  Exposure cannot explain that, so the next study asks why the coupled model kills, before d1 and the headline studies.
+- **Documentation** was rewritten from first principles (`docs/design/plan-docs-first-principles.md`) and is checked by
+  fresh-reader passes (`docs-fresh-reader-round*.md`).
+
 **Status (2026-11-04): in progress (GO received).** This document sits beside [`eDMD.md`](eDMD.md) (d7's source).
 v2's membrane-flux plan is [`task-plan-membrane-flux.md`](task-plan-membrane-flux.md) (scoped and reviewed; decisions
 D1–D6 await Alex).

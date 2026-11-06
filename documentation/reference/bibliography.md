@@ -20,6 +20,9 @@
 - Hoops S, Sahle S, Gauges R, Lee C, Pahle J, Simus N, Singhal M, Xu L, Mendes P, Kummer U (2006). COPASI—a COmplex
   PAthway SImulator. *Bioinformatics* 22(24):3067–3074. doi:10.1093/bioinformatics/btl485. (The second engine in the
   kinetic checks.)
+- Lee REC, Qasaimeh MA, Xia X, Juncker D, Gaudet S (2016). NF-κB signalling and cell fate decisions in response to a
+  short pulse of tumour necrosis factor. *Sci Rep* 6:39519. doi:10.1038/srep39519. (HeLa cells needed IFNγ
+  sensitisation to die from TNF.)
 - Lipniacki T, Paszek P, Brasier AR, Luxon B, Kimmel M (2004). Mathematical model of NF-κB regulatory module. *J Theor
   Biol* 228:195–215. (BIOMD0000000786.)
 - Lipniacki T, Puszynski K, Paszek P, Brasier AR, Kimmel M (2007). Single TNFα trimers mediating NF-κB activation:
@@ -29,6 +32,9 @@
   signalling by small molecules stabilising a distorted TNF. *Nat Commun* 12:582.
 - McNemar Q (1947). Note on the sampling error of the difference between correlated proportions or percentages.
   *Psychometrika* 12(2):153–157. doi:10.1007/BF02295996. (The paired test in Study 0.)
+- Micheau O, Tschopp J (2003). Induction of TNF receptor I-mediated apoptosis via two sequential signaling complexes.
+  *Cell* 114(2):181–190. doi:10.1016/s0092-8674(03)00521-x. (With NF-κB active, the death complex carries FLIP(L) and
+  the cell survives.)
 - Noé F, Nüske F (2013). A variational approach to modeling slow processes in stochastic dynamical systems.
   *Multiscale Model Simul* 11:635–655. (The method planned for finding the full composite's slow modes from simulated
   trajectories, where no equations are available.)

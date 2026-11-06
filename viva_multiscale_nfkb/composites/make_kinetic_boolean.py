@@ -21,6 +21,7 @@ layers), sample_count (MaBoSS trajectories per interval; 1 makes the process one
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 import libsbml
@@ -55,7 +56,10 @@ def main() -> None:
     network = NETWORK.read_text()
     nodes = sorted(line.split()[1] for line in network.splitlines() if line.startswith("node "))
     initial = {n: float(n in ON_AT_START) for n in nodes}
-    r_tx = json.loads(ANCHOR.read_text())["r_tx_per_s"]
+    anchor = json.loads(ANCHOR.read_text())
+    r_tx = anchor["r_tx_per_s"]
+    # decision 25 (Alex, 2026-11-06; Study 0): the NF-kB node flips at Lipniacki's own nuclear half-rise, ln 2 / 337 s
+    kappa = math.log(2) / anchor["nfkb_nuc_half_rise_s"]
     rule, kv = nfkb_rule_and_kv()
     spec = {
         "name": "kinetic-boolean",
@@ -67,7 +71,8 @@ def main() -> None:
         "tags": ["kinetics", "sbml", "ode", "systems-biology"],
         "requires": {"processes": ["TelluriumProcess", "MathExpressionStep", "MaBoSSProcess", "RAMEmitter"]},
         "parameters": {
-            "kappa": {"type": "float", "default": 1.0 / 60.0, "description": "NF-kB node switching rate (1/s)"},
+            "kappa": {"type": "float", "default": kappa,
+                      "description": "NF-kB node switching rate (1/s): ln 2 / NF-kB's nuclear half-rise (decision 25)"},
             "k_time": {"type": "float", "default": 1.0 / 600.0,
                        "description": "death-machinery clock (Calzone units per s), > 0"},
             "r_tx": {"type": "float", "default": r_tx,

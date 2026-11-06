@@ -13,7 +13,8 @@ changes, U1 and U2:
 | 6 | A live run on compose-api as an inferred mash-up | after Alex's go |
 | Study 0 | Calibration of the coupling ({doc}`calibration`): κ decided; under held, saturating TNF nearly every cell dies; protein persistence saves cells only well beyond the measured turnover | **done** |
 | Decision 28 | Absorbing death in the network ({doc}`boolean`) | **done** |
-| d1 | TNF's dose–response at the receptor (McMillan 2021; decision 27, the next lever) | next, after the documentation pass |
+| Validation study | Why the coupled model kills nearly every cell under held TNF when cells with working NF-κB survive it (decision 29) | **next** |
+| d1 | TNF's dose–response at the receptor (McMillan 2021; decision 27) | after the validation study |
 | compose-api | Pin bumps: viva-tellurium 0.2.3 **done** (compose-api 0.7.79, #502); viva-pde-particle after U2 merges | one compose-api release at a time |
 
 ## Open questions
