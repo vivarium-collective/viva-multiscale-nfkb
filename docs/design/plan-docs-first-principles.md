@@ -21,6 +21,11 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
       competing switches), Gillespie's algorithm, the generator and forward equation with a one-node example, T and
       W, MaBoSSProcess's one-cell readout (sample_count 1, the sampled state, seeds), and the tolerance's false-fail
       rate. Gillespie 1977 added to the bibliography.
+- [x] Step 1.3, science/lipniacki-model.md: the rest state (IKK = Kprod/Kdeg = 0.2 µM; 98.7% of NF-κB bound to
+      IκBα; f = 0.0077), the TNF chain, both negative feedbacks and the damped waves (the measured f(t)), the volume
+      factor Kv, the NFKB_total derivation, f, and the three rates taken from the model. Species and reaction
+      tables are generated from the SBML (documentation/science/code/lipniacki_model.py, `--check`), and conservation
+      is proved symbolically (dropping 1/Kv fails the proof).
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)

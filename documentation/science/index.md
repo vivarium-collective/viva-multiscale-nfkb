@@ -5,6 +5,7 @@
 
 biology
 models
+lipniacki-model
 calzone-network
 scales
 ```
