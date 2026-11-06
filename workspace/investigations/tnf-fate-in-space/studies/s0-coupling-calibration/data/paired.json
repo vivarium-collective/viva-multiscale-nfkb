@@ -1,30 +1,30 @@
 {
  "decay-calzone-flicker-10min": {
   "against": "grid-calzone-flicker-10min",
-  "surviving": {
-   "grid": 0,
-   "variant": 0,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 156,
    "variant": 144,
    "gained": 3,
    "lost": 15,
    "p_mcnemar_exact": 0.007537841796875
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 44,
    "variant": 56,
    "gained": 15,
    "lost": 3,
    "p_mcnemar_exact": 0.007537841796875
   },
-  "dead": {
-   "grid": 200,
-   "variant": 200,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
@@ -32,61 +32,61 @@
  },
  "decay-calzone-flicker-120min": {
   "against": "grid-calzone-flicker-120min",
-  "surviving": {
-   "grid": 4,
-   "variant": 5,
-   "gained": 4,
-   "lost": 3,
-   "p_mcnemar_exact": 1.0
+  "ever_dead": {
+   "grid": 187,
+   "variant": 183,
+   "gained": 2,
+   "lost": 6,
+   "p_mcnemar_exact": 0.2890625
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 102,
    "variant": 99,
    "gained": 7,
    "lost": 10,
    "p_mcnemar_exact": 0.629058837890625
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 81,
    "variant": 80,
    "gained": 9,
    "lost": 10,
    "p_mcnemar_exact": 1.0
   },
-  "dead": {
-   "grid": 177,
-   "variant": 174,
-   "gained": 8,
-   "lost": 11,
-   "p_mcnemar_exact": 0.6476058959960938
+  "alive_survival_on": {
+   "grid": 1,
+   "variant": 2,
+   "gained": 2,
+   "lost": 1,
+   "p_mcnemar_exact": 1.0
   }
  },
  "decay-calzone-flicker-2min": {
   "against": "grid-calzone-flicker-2min",
-  "surviving": {
-   "grid": 0,
-   "variant": 0,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 190,
    "variant": 181,
    "gained": 0,
    "lost": 9,
    "p_mcnemar_exact": 0.00390625
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 10,
    "variant": 19,
    "gained": 9,
    "lost": 0,
    "p_mcnemar_exact": 0.00390625
   },
-  "dead": {
-   "grid": 200,
-   "variant": 200,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
@@ -94,30 +94,30 @@
  },
  "decay-calzone-flicker-30min": {
   "against": "grid-calzone-flicker-30min",
-  "surviving": {
-   "grid": 0,
-   "variant": 0,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 124,
    "variant": 121,
    "gained": 7,
    "lost": 10,
    "p_mcnemar_exact": 0.629058837890625
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 76,
    "variant": 79,
    "gained": 10,
    "lost": 7,
    "p_mcnemar_exact": 0.629058837890625
   },
-  "dead": {
-   "grid": 200,
-   "variant": 200,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
@@ -125,30 +125,30 @@
  },
  "decay-lipniacki-gene-10min": {
   "against": "grid-lipniacki-gene-10min",
-  "surviving": {
-   "grid": 0,
-   "variant": 0,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 150,
    "variant": 148,
    "gained": 1,
    "lost": 3,
    "p_mcnemar_exact": 0.625
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 50,
    "variant": 52,
    "gained": 3,
    "lost": 1,
    "p_mcnemar_exact": 0.625
   },
-  "dead": {
-   "grid": 200,
-   "variant": 200,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
@@ -156,61 +156,61 @@
  },
  "decay-lipniacki-gene-120min": {
   "against": "grid-lipniacki-gene-120min",
-  "surviving": {
-   "grid": 3,
-   "variant": 5,
-   "gained": 5,
-   "lost": 3,
-   "p_mcnemar_exact": 0.7265625
+  "ever_dead": {
+   "grid": 181,
+   "variant": 184,
+   "gained": 10,
+   "lost": 7,
+   "p_mcnemar_exact": 0.629058837890625
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 99,
    "variant": 107,
    "gained": 18,
    "lost": 10,
    "p_mcnemar_exact": 0.1849333420395851
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 77,
    "variant": 71,
    "gained": 13,
    "lost": 19,
    "p_mcnemar_exact": 0.37708558747544885
   },
-  "dead": {
-   "grid": 168,
-   "variant": 174,
-   "gained": 17,
-   "lost": 11,
-   "p_mcnemar_exact": 0.34492845088243484
+  "alive_survival_on": {
+   "grid": 2,
+   "variant": 3,
+   "gained": 3,
+   "lost": 2,
+   "p_mcnemar_exact": 1.0
   }
  },
  "decay-lipniacki-gene-2min": {
   "against": "grid-lipniacki-gene-2min",
-  "surviving": {
-   "grid": 0,
-   "variant": 0,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 183,
    "variant": 180,
    "gained": 0,
    "lost": 3,
    "p_mcnemar_exact": 0.25
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 17,
    "variant": 20,
    "gained": 3,
    "lost": 0,
    "p_mcnemar_exact": 0.25
   },
-  "dead": {
-   "grid": 200,
-   "variant": 200,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
@@ -218,30 +218,30 @@
  },
  "decay-lipniacki-gene-30min": {
   "against": "grid-lipniacki-gene-30min",
-  "surviving": {
-   "grid": 0,
-   "variant": 0,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 111,
    "variant": 120,
    "gained": 13,
    "lost": 4,
    "p_mcnemar_exact": 0.049041748046875
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 89,
    "variant": 80,
    "gained": 4,
    "lost": 13,
    "p_mcnemar_exact": 0.049041748046875
   },
-  "dead": {
-   "grid": 200,
-   "variant": 200,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
@@ -249,30 +249,30 @@
  },
  "decay-lipniacki-nfkb-10min": {
   "against": "grid-lipniacki-nfkb-10min",
-  "surviving": {
-   "grid": 0,
-   "variant": 0,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 158,
    "variant": 154,
    "gained": 5,
    "lost": 9,
    "p_mcnemar_exact": 0.4239501953125
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 42,
    "variant": 46,
    "gained": 9,
    "lost": 5,
    "p_mcnemar_exact": 0.4239501953125
   },
-  "dead": {
-   "grid": 200,
-   "variant": 200,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
@@ -280,61 +280,61 @@
  },
  "decay-lipniacki-nfkb-120min": {
   "against": "grid-lipniacki-nfkb-120min",
-  "surviving": {
-   "grid": 12,
-   "variant": 2,
-   "gained": 1,
-   "lost": 11,
-   "p_mcnemar_exact": 0.00634765625
+  "ever_dead": {
+   "grid": 168,
+   "variant": 173,
+   "gained": 20,
+   "lost": 15,
+   "p_mcnemar_exact": 0.49955983320251107
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 91,
    "variant": 100,
    "gained": 26,
    "lost": 17,
    "p_mcnemar_exact": 0.2220528201560228
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 71,
    "variant": 66,
    "gained": 21,
    "lost": 26,
    "p_mcnemar_exact": 0.5600646295802107
   },
-  "dead": {
-   "grid": 153,
-   "variant": 159,
-   "gained": 29,
-   "lost": 23,
-   "p_mcnemar_exact": 0.48845566937989204
+  "alive_survival_on": {
+   "grid": 9,
+   "variant": 0,
+   "gained": 0,
+   "lost": 9,
+   "p_mcnemar_exact": 0.00390625
   }
  },
  "decay-lipniacki-nfkb-2min": {
   "against": "grid-lipniacki-nfkb-2min",
-  "surviving": {
-   "grid": 0,
-   "variant": 0,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 187,
    "variant": 178,
    "gained": 0,
    "lost": 9,
    "p_mcnemar_exact": 0.00390625
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 13,
    "variant": 22,
    "gained": 9,
    "lost": 0,
    "p_mcnemar_exact": 0.00390625
   },
-  "dead": {
-   "grid": 200,
-   "variant": 200,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
@@ -342,30 +342,30 @@
  },
  "decay-lipniacki-nfkb-30min": {
   "against": "grid-lipniacki-nfkb-30min",
-  "surviving": {
-   "grid": 0,
-   "variant": 0,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 138,
    "variant": 128,
    "gained": 9,
    "lost": 19,
    "p_mcnemar_exact": 0.08715855330228806
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 62,
    "variant": 72,
    "gained": 19,
    "lost": 9,
    "p_mcnemar_exact": 0.08715855330228806
   },
-  "dead": {
-   "grid": 200,
-   "variant": 200,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
@@ -373,30 +373,30 @@
  },
  "ko-casp8-rip1-lipniacki-nfkb-10min": {
   "against": "grid-lipniacki-nfkb-10min",
-  "surviving": {
-   "grid": 0,
-   "variant": 0,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 158,
    "variant": 0,
    "gained": 0,
    "lost": 158,
    "p_mcnemar_exact": 5.473822126268817e-48
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 42,
    "variant": 200,
    "gained": 158,
    "lost": 0,
    "p_mcnemar_exact": 5.473822126268817e-48
   },
-  "dead": {
-   "grid": 200,
-   "variant": 200,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
@@ -404,30 +404,30 @@
  },
  "ko-casp8-rip1-lipniacki-nfkb-30min": {
   "against": "grid-lipniacki-nfkb-30min",
-  "surviving": {
-   "grid": 0,
-   "variant": 0,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 138,
    "variant": 0,
    "gained": 0,
    "lost": 138,
    "p_mcnemar_exact": 5.739718509874451e-42
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 62,
    "variant": 200,
    "gained": 138,
    "lost": 0,
    "p_mcnemar_exact": 5.739718509874451e-42
   },
-  "dead": {
-   "grid": 200,
-   "variant": 200,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
@@ -435,64 +435,188 @@
  },
  "ko-gate-lipniacki-nfkb-10min": {
   "against": "grid-lipniacki-nfkb-10min",
-  "surviving": {
-   "grid": 0,
-   "variant": 5,
-   "gained": 5,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
+   "gained": 0,
    "lost": 0,
-   "p_mcnemar_exact": 0.0625
+   "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 158,
    "variant": 74,
    "gained": 15,
    "lost": 99,
    "p_mcnemar_exact": 2.3557999012403864e-16
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 42,
    "variant": 99,
    "gained": 81,
    "lost": 24,
    "p_mcnemar_exact": 2.0779877274240746e-08
   },
-  "dead": {
-   "grid": 200,
-   "variant": 155,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
-   "lost": 45,
-   "p_mcnemar_exact": 5.684341886080802e-14
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
   }
  },
  "ko-gate-lipniacki-nfkb-30min": {
   "against": "grid-lipniacki-nfkb-30min",
-  "surviving": {
-   "grid": 0,
-   "variant": 10,
-   "gained": 10,
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
+   "gained": 0,
    "lost": 0,
-   "p_mcnemar_exact": 0.001953125
+   "p_mcnemar_exact": 1.0
   },
-  "apoptosis": {
+  "end_apoptosis": {
    "grid": 138,
    "variant": 45,
    "gained": 21,
    "lost": 114,
    "p_mcnemar_exact": 1.1599085487375384e-16
   },
-  "necrosis": {
+  "end_necrosis": {
    "grid": 62,
    "variant": 116,
    "gained": 84,
    "lost": 30,
    "p_mcnemar_exact": 4.253744081497795e-07
   },
-  "dead": {
-   "grid": 200,
-   "variant": 146,
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
    "gained": 0,
-   "lost": 54,
-   "p_mcnemar_exact": 1.1102230246251565e-16
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  }
+ },
+ "persist-lipniacki-nfkb-10min": {
+  "against": "grid-lipniacki-nfkb-10min",
+  "ever_dead": {
+   "grid": 200,
+   "variant": 183,
+   "gained": 0,
+   "lost": 17,
+   "p_mcnemar_exact": 1.52587890625e-05
+  },
+  "end_apoptosis": {
+   "grid": 158,
+   "variant": 133,
+   "gained": 2,
+   "lost": 27,
+   "p_mcnemar_exact": 1.6242265701293945e-06
+  },
+  "end_necrosis": {
+   "grid": 42,
+   "variant": 40,
+   "gained": 5,
+   "lost": 7,
+   "p_mcnemar_exact": 0.7744140625
+  },
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 1,
+   "gained": 1,
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  }
+ },
+ "persist-lipniacki-nfkb-120min": {
+  "against": "grid-lipniacki-nfkb-120min",
+  "ever_dead": {
+   "grid": 168,
+   "variant": 133,
+   "gained": 4,
+   "lost": 39,
+   "p_mcnemar_exact": 3.1081526685738936e-08
+  },
+  "end_apoptosis": {
+   "grid": 91,
+   "variant": 77,
+   "gained": 5,
+   "lost": 19,
+   "p_mcnemar_exact": 0.006610751152038574
+  },
+  "end_necrosis": {
+   "grid": 71,
+   "variant": 37,
+   "gained": 4,
+   "lost": 38,
+   "p_mcnemar_exact": 5.65314621780999e-08
+  },
+  "alive_survival_on": {
+   "grid": 9,
+   "variant": 21,
+   "gained": 18,
+   "lost": 6,
+   "p_mcnemar_exact": 0.022655844688415527
+  }
+ },
+ "persist-lipniacki-nfkb-2min": {
+  "against": "grid-lipniacki-nfkb-2min",
+  "ever_dead": {
+   "grid": 200,
+   "variant": 194,
+   "gained": 0,
+   "lost": 6,
+   "p_mcnemar_exact": 0.03125
+  },
+  "end_apoptosis": {
+   "grid": 187,
+   "variant": 176,
+   "gained": 0,
+   "lost": 11,
+   "p_mcnemar_exact": 0.0009765625
+  },
+  "end_necrosis": {
+   "grid": 13,
+   "variant": 17,
+   "gained": 4,
+   "lost": 0,
+   "p_mcnemar_exact": 0.125
+  },
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
+   "gained": 0,
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  }
+ },
+ "persist-lipniacki-nfkb-30min": {
+  "against": "grid-lipniacki-nfkb-30min",
+  "ever_dead": {
+   "grid": 200,
+   "variant": 174,
+   "gained": 0,
+   "lost": 26,
+   "p_mcnemar_exact": 2.9802322387695312e-08
+  },
+  "end_apoptosis": {
+   "grid": 138,
+   "variant": 99,
+   "gained": 1,
+   "lost": 40,
+   "p_mcnemar_exact": 3.8198777474462986e-11
+  },
+  "end_necrosis": {
+   "grid": 62,
+   "variant": 56,
+   "gained": 5,
+   "lost": 11,
+   "p_mcnemar_exact": 0.210113525390625
+  },
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 3,
+   "gained": 3,
+   "lost": 0,
+   "p_mcnemar_exact": 0.25
   }
  }
 }

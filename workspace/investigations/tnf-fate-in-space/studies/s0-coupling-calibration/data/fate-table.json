@@ -8,7 +8,11 @@
   "end_nonacd": 0.28,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "decay-calzone-flicker-120min": {
   "cells": 200,
@@ -19,7 +23,11 @@
   "end_nonacd": 0.4,
   "end_apoptosis_and_nonacd": 0.025,
   "end_surviving": 0.025,
-  "end_none": 0.105
+  "end_none": 0.105,
+  "ever_dead": 0.915,
+  "alive": 0.085,
+  "alive_survival_on_at_end": 0.01,
+  "revived": 0.045
  },
  "decay-calzone-flicker-2min": {
   "cells": 200,
@@ -30,7 +38,11 @@
   "end_nonacd": 0.095,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "decay-calzone-flicker-30min": {
   "cells": 200,
@@ -41,7 +53,11 @@
   "end_nonacd": 0.395,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "decay-lipniacki-gene-10min": {
   "cells": 200,
@@ -52,7 +68,11 @@
   "end_nonacd": 0.26,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "decay-lipniacki-gene-120min": {
   "cells": 200,
@@ -63,7 +83,11 @@
   "end_nonacd": 0.355,
   "end_apoptosis_and_nonacd": 0.02,
   "end_surviving": 0.025,
-  "end_none": 0.105
+  "end_none": 0.105,
+  "ever_dead": 0.92,
+  "alive": 0.08,
+  "alive_survival_on_at_end": 0.015,
+  "revived": 0.05
  },
  "decay-lipniacki-gene-2min": {
   "cells": 200,
@@ -74,7 +98,11 @@
   "end_nonacd": 0.1,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "decay-lipniacki-gene-30min": {
   "cells": 200,
@@ -85,7 +113,11 @@
   "end_nonacd": 0.4,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "decay-lipniacki-nfkb-10min": {
   "cells": 200,
@@ -96,7 +128,11 @@
   "end_nonacd": 0.23,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "decay-lipniacki-nfkb-120min": {
   "cells": 200,
@@ -107,7 +143,11 @@
   "end_nonacd": 0.33,
   "end_apoptosis_and_nonacd": 0.035,
   "end_surviving": 0.01,
-  "end_none": 0.195
+  "end_none": 0.195,
+  "ever_dead": 0.865,
+  "alive": 0.135,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.07
  },
  "decay-lipniacki-nfkb-2min": {
   "cells": 200,
@@ -118,7 +158,11 @@
   "end_nonacd": 0.11,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "decay-lipniacki-nfkb-30min": {
   "cells": 200,
@@ -129,7 +173,11 @@
   "end_nonacd": 0.36,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "grid-calzone-flicker-10min": {
   "cells": 200,
@@ -140,7 +188,11 @@
   "end_nonacd": 0.22,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "grid-calzone-flicker-120min": {
   "cells": 200,
@@ -151,7 +203,11 @@
   "end_nonacd": 0.405,
   "end_apoptosis_and_nonacd": 0.03,
   "end_surviving": 0.02,
-  "end_none": 0.095
+  "end_none": 0.095,
+  "ever_dead": 0.935,
+  "alive": 0.065,
+  "alive_survival_on_at_end": 0.005,
+  "revived": 0.05
  },
  "grid-calzone-flicker-2min": {
   "cells": 200,
@@ -162,7 +218,11 @@
   "end_nonacd": 0.05,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "grid-calzone-flicker-30min": {
   "cells": 200,
@@ -173,7 +233,11 @@
   "end_nonacd": 0.38,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "grid-lipniacki-gene-10min": {
   "cells": 200,
@@ -184,7 +248,11 @@
   "end_nonacd": 0.25,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "grid-lipniacki-gene-120min": {
   "cells": 200,
@@ -195,7 +263,11 @@
   "end_nonacd": 0.385,
   "end_apoptosis_and_nonacd": 0.04,
   "end_surviving": 0.015,
-  "end_none": 0.145
+  "end_none": 0.145,
+  "ever_dead": 0.905,
+  "alive": 0.095,
+  "alive_survival_on_at_end": 0.01,
+  "revived": 0.065
  },
  "grid-lipniacki-gene-2min": {
   "cells": 200,
@@ -206,7 +278,11 @@
   "end_nonacd": 0.085,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "grid-lipniacki-gene-30min": {
   "cells": 200,
@@ -217,7 +293,11 @@
   "end_nonacd": 0.445,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "grid-lipniacki-nfkb-10min": {
   "cells": 200,
@@ -228,7 +308,11 @@
   "end_nonacd": 0.21,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "grid-lipniacki-nfkb-120min": {
   "cells": 200,
@@ -239,7 +323,11 @@
   "end_nonacd": 0.355,
   "end_apoptosis_and_nonacd": 0.045,
   "end_surviving": 0.06,
-  "end_none": 0.175
+  "end_none": 0.175,
+  "ever_dead": 0.84,
+  "alive": 0.16,
+  "alive_survival_on_at_end": 0.045,
+  "revived": 0.075
  },
  "grid-lipniacki-nfkb-2min": {
   "cells": 200,
@@ -250,7 +338,11 @@
   "end_nonacd": 0.065,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "grid-lipniacki-nfkb-30min": {
   "cells": 200,
@@ -261,7 +353,11 @@
   "end_nonacd": 0.31,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "ko-casp8-rip1-lipniacki-nfkb-10min": {
   "cells": 200,
@@ -272,7 +368,11 @@
   "end_nonacd": 1.0,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "ko-casp8-rip1-lipniacki-nfkb-30min": {
   "cells": 200,
@@ -283,7 +383,11 @@
   "end_nonacd": 1.0,
   "end_apoptosis_and_nonacd": 0.0,
   "end_surviving": 0.0,
-  "end_none": 0.0
+  "end_none": 0.0,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.0
  },
  "ko-gate-lipniacki-nfkb-10min": {
   "cells": 200,
@@ -294,7 +398,11 @@
   "end_nonacd": 0.495,
   "end_apoptosis_and_nonacd": 0.09,
   "end_surviving": 0.025,
-  "end_none": 0.2
+  "end_none": 0.2,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.225
  },
  "ko-gate-lipniacki-nfkb-30min": {
   "cells": 200,
@@ -305,6 +413,70 @@
   "end_nonacd": 0.58,
   "end_apoptosis_and_nonacd": 0.075,
   "end_surviving": 0.05,
-  "end_none": 0.22
+  "end_none": 0.22,
+  "ever_dead": 1.0,
+  "alive": 0.0,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.27
+ },
+ "persist-lipniacki-nfkb-10min": {
+  "cells": 200,
+  "first_survival": 0.145,
+  "first_survival_then_dead": 0.08,
+  "end_dead": 0.865,
+  "end_apoptosis": 0.665,
+  "end_nonacd": 0.2,
+  "end_apoptosis_and_nonacd": 0.0,
+  "end_surviving": 0.005,
+  "end_none": 0.13,
+  "ever_dead": 0.915,
+  "alive": 0.085,
+  "alive_survival_on_at_end": 0.005,
+  "revived": 0.05
+ },
+ "persist-lipniacki-nfkb-120min": {
+  "cells": 200,
+  "first_survival": 0.435,
+  "first_survival_then_dead": 0.08,
+  "end_dead": 0.555,
+  "end_apoptosis": 0.385,
+  "end_nonacd": 0.185,
+  "end_apoptosis_and_nonacd": 0.015,
+  "end_surviving": 0.13,
+  "end_none": 0.315,
+  "ever_dead": 0.665,
+  "alive": 0.335,
+  "alive_survival_on_at_end": 0.105,
+  "revived": 0.11
+ },
+ "persist-lipniacki-nfkb-2min": {
+  "cells": 200,
+  "first_survival": 0.03,
+  "first_survival_then_dead": 0.015,
+  "end_dead": 0.965,
+  "end_apoptosis": 0.88,
+  "end_nonacd": 0.085,
+  "end_apoptosis_and_nonacd": 0.0,
+  "end_surviving": 0.0,
+  "end_none": 0.035,
+  "ever_dead": 0.97,
+  "alive": 0.03,
+  "alive_survival_on_at_end": 0.0,
+  "revived": 0.005
+ },
+ "persist-lipniacki-nfkb-30min": {
+  "cells": 200,
+  "first_survival": 0.215,
+  "first_survival_then_dead": 0.06,
+  "end_dead": 0.775,
+  "end_apoptosis": 0.495,
+  "end_nonacd": 0.28,
+  "end_apoptosis_and_nonacd": 0.0,
+  "end_surviving": 0.02,
+  "end_none": 0.205,
+  "ever_dead": 0.87,
+  "alive": 0.13,
+  "alive_survival_on_at_end": 0.015,
+  "revived": 0.095
  }
 }

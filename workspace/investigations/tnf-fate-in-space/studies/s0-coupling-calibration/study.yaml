@@ -640,6 +640,58 @@ runs:
       graded_at: '2026-11-06T12:27:19.878050+00:00'
       inputs_hash: 9398bc63b931b2eb
       store: resolved
+- name: persist-lipniacki-nfkb-120min
+  status: complete
+  timestamp: 1793970902.065057
+  emitter:
+    kind: parquet
+    store: parquet-runs/persist-lipniacki-nfkb-120min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"persist-protective\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0001388888888888889, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 120}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T13:15:02.224426+00:00'
+      inputs_hash: 40b45d3e65dfe29a
+      store: resolved
+- name: persist-lipniacki-nfkb-30min
+  status: complete
+  timestamp: 1793970636.419362
+  emitter:
+    kind: parquet
+    store: parquet-runs/persist-lipniacki-nfkb-30min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"persist-protective\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0005555555555555556, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 30}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T13:15:02.224495+00:00'
+      inputs_hash: 3c4d0bf22db1fb21
+      store: resolved
+- name: persist-lipniacki-nfkb-10min
+  status: complete
+  timestamp: 1793970369.9155142
+  emitter:
+    kind: parquet
+    store: parquet-runs/persist-lipniacki-nfkb-10min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"persist-protective\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 10}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T13:15:02.224560+00:00'
+      inputs_hash: 28c396635c998381
+      store: resolved
+- name: persist-lipniacki-nfkb-2min
+  status: complete
+  timestamp: 1793970103.678675
+  emitter:
+    kind: parquet
+    store: parquet-runs/persist-lipniacki-nfkb-2min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"persist-protective\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.008333333333333333, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 2}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T13:15:02.224622+00:00'
+      inputs_hash: 11edf9ebb8c2f9f6
+      store: resolved
 pipeline_gate:
   gate_evaluator:
     result: not_started
