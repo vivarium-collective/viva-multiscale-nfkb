@@ -28,7 +28,7 @@ NF-kB input f = 1.00:  Survival 0.014  Apoptosis 0.950  NonACD 0.032
   - **Calzone's gate:** caspase-8 cleaves RIP1 and SMAC sequesters cIAP, which closes NF-κB's route, so a dying cell
     loses NF-κB whatever Lipniacki supplies.
   - **The race:** a protective gene, switching on at $\text{TransRate} = 1/24$ per unit while NF-κB is on, is on in
-    half of the cells after $\ln 2 \times 24 \approx 16.6$ units, while half of the cells' death arrives in about 8.5
+    half of the cells after $\ln 2 \times 24 \approx 16.6$ units, while half of the eventual apoptosis arrives by about 8.6
     ({doc}`../design/time`).
 
 ```{admonition} The clocks, not the wiring (decided in Study 0)

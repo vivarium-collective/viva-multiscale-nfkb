@@ -93,6 +93,13 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
       - diffusion.md: the decay rate is λ (no longer k); M defined; the Gaussian derived (heat kernel; variances add);
         the image-term bound worked for the check (σ = 33 µm at 10 s, walls 3.0σ away, image ≈ 2e-5 of the direct
         term); finite-volume and backward Euler explained. Still open: why the grid is 2D, not 3D.
+      - time.md:
+        - the death half-time is now measured by documentation/design/code/death_halftime.py: NF-κB knocked out,
+          half of the eventual apoptosis by 8.6 units (0.455 of 0.910), P = 0.5 at 8.9; it was an uncommitted
+          probe's 8.5, now updated in time.md and tutorial 02;
+        - the 16.6, 2.1 min, 18 min and 28× arithmetic is shown;
+        - the d7 labels are replaced by links;
+        - "in B" is gone.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)

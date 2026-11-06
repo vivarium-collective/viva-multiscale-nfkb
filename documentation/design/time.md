@@ -4,7 +4,7 @@ The composite runs in **seconds**, Lipniacki's unit.
 - The spatial layer is also in seconds.
 - Calzone's Boolean network has **no time unit**: its rates are relative to 1.
 
-Putting it on the composite's clock was the hardest design decision in B, because it decides who wins the race
+Putting it on the composite's clock was the hardest design decision in this project, because it decides who wins the race
 between life and death.
 
 ## What each model says, measured
@@ -12,18 +12,20 @@ between life and death.
 | | Lipniacki (seconds; fitted dynamics) | Calzone (its own units) |
 |---|---|---|
 | NF-κB reaches the nucleus | half-rise 5.6 min, first peak 24 min | rate 1 (fast) |
-| NF-κB's target protein appears | A20 half-rise 41 min; **35.1 min after NF-κB** | `TransRate = 1/24`: half-time 16.6 units |
-| Death after TNF, NF-κB blocked | not modelled | apoptosis half-time 8.5 units |
+| NF-κB's target protein appears | A20 half-rise 41 min; **35.1 min after NF-κB** | `TransRate = 1/24`: half-time $\ln 2 \times 24 = 16.6$ units |
+| Death after TNF, NF-κB blocked | not modelled | half of the eventual apoptosis (0.455 of 0.910) by 8.6 units |
 
-These were measured with exploratory probes on libRoadRunner and on the MaBoSS engine. The transcription delay is
-committed as `anchor_transcription.py`.
+The transcription delay is measured by `workspace/datasets/calzone2010_cellfate/anchor_transcription.py`, and the death
+time by `documentation/design/code/death_halftime.py` (Calzone's network with NF-κB knocked out, TNF on, 50,000 cells;
+P(Apoptosis) reaches 0.5 at 8.9 units).
 
 **One factor cannot fit both columns.**
-- **If Calzone's gene expression matches Lipniacki's:** 1 unit ≈ 2.1 min, and death comes about 18 min after TNF.
+- **If Calzone's gene expression matches Lipniacki's:** 1 unit = 35.1 / 16.6 ≈ 2.1 min, and death comes about
+  8.6 × 2.1 ≈ 18 min after TNF.
   That looks far too fast against the hours usually reported for TNF-induced death (a citation is pending; it is not
   needed by the design, because this axis is swept).
-- **If 1 unit = 1 hour:** death at about 8.5 h is plausible, but NF-κB's protective genes take about 17 h. That is
-  30 times slower than Lipniacki's own, so NF-κB could never protect the cell in time.
+- **If 1 unit = 1 hour:** death at about 8.6 h is plausible, but NF-κB's protective genes take about 16.6 h. That is
+  16.6 h / 35.1 min ≈ 28 times slower than Lipniacki's own, so NF-κB could never protect the cell in time.
 
 ## Decision 1: sweep, don't fix (Alex, 2026-11-04)
 
@@ -73,9 +75,9 @@ result:** how fast must the death machinery be for TNF to kill, at each dose and
   Survival each match the analytic switch at Lipniacki's delay (0.491). That holds at two `k_time` values 100× apart.
 - **Proven failing:** the uniform-clock form ($r_\text{tx} = k_\text{time}/24$), which gives 0.014.
 
-## Coupling intervals (d7 use 1)
+## Coupling intervals
 
-The Jacobian of Lipniacki's model, at the pre-equilibrated state and every 60 s for 6 h after TNF
+Derived in {doc}`../math/timescales`. The Jacobian of Lipniacki's model, at the pre-equilibrated state and every 60 s for 6 h after TNF
 (`analysis/d7/kinetic_timescales.py`), gives:
 - **Decay timescales from about 6 s to 8000 s:** three orders of magnitude.
 - **One zero mode:** the conserved NF-κB total.
@@ -86,10 +88,10 @@ NF-κB's peaks ring and decay; they don't form a limit cycle.
 
 **The rule:** each coupling interval is about 0.1 × the fastest timescale *of what crosses that edge*.
 - Lipniacki's own stiffness (≈6 s) stays inside its integrator (CVODE).
-- What crosses the edges is TNF at the cell (spatial, measured by d7 step 2) and $f$ (minutes, plus the ~100 min
-  ringing).
+- What crosses the edges is TNF at the cell (it changes over seconds to minutes as TNF diffuses,
+  {doc}`../math/diffusion`) and $f$ (minutes, plus the ~100 min ringing).
 
 **The constraints:**
 - Intervals are whole multiples of the base step, with `global_time_precision` 6.
 - A composite is accepted only if it matches the all-finest run on the reported observables, shows no coupling
-  oscillation, and runs faster (d7 step 5).
+  oscillation, and runs faster ({doc}`../math/timescales`).
