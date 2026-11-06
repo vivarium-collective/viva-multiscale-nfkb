@@ -33,7 +33,7 @@ These are unresolved, and each is stated where it is used:
   this choice yet.
 - **How is the cell represented on the spatial grid?** Its size, its position, and which grid cells count as its
   surface ({doc}`coupling`, `RegionMean`) are not yet specified.
-- **Why a 2D grid?** The tool supports 3D, so this is a choice. It sets how the dose falls with distance ($1/r^2$
+- **Why a 2D grid?** The tool supports 3D, so this is a choice. It sets how the peak dose falls with distance ($1/r^2$
   against $1/r^3$), and in either dimension the integrated dose needs decay or a finite window
   ({doc}`../math/diffusion`).
 - **What counts as "collapses onto the dose curve"** in the headline studies' test: the statistic and threshold are to

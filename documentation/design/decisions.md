@@ -28,7 +28,7 @@ it was accepted. The plan of record is
 | 15 | Calzone's clock is swept (`$k_time`), not fixed | Alex | No single factor fits both Lipniacki's gene-expression timing and Calzone's death timing | `pair-nfkb-seconds` | {doc}`time` |
 | 16 | Gene expression anchored to Lipniacki ($r_\text{tx}$); `k_time` sweeps only death | Alex ("anchor to Lipniacki, sweep death") | TransRate decides the fate race; Lipniacki's transcription is fitted, death speed is not | `transcription-anchor-*` | {doc}`time` |
 | 17 | No runtime rule-based layer in v1; offline dose–response instead | Alex | Wrapper drops bound complexes; binding is quasi-steady | viva-nfsim `processes.py:84-96` | {doc}`rule-based` |
-| 18 | Three headline studies from one composite | Alex ("all 1, 2, and 3") | They nest: control, headline, mechanism | — | {doc}`studies` |
+| 18 | Three headline studies from one composite | Alex ("all 1, 2, and 3": the distance, dose and wave-timing studies) | They nest: control, headline, mechanism | — | {doc}`studies` |
 | 19 | The design record lives in this workspace | Alex | Design next to the model it describes | `docs/design/` | — |
 | 20 | Calibrate κ and the death clock in a study (Study 0) before the headline studies | Alex ("investigation + studies") | Neither model gives either speed; the headline studies depend on both | `s0-coupling-calibration/study.yaml` | {doc}`calibration` |
 | 21 | Studies run in the pinned `compose/` environment; the workbench only records them | Alex ("Pinned env; workbench records") | Results are what compose-api produces; the workbench needs a newer process-bigraph | `run_grid.py` | {doc}`calibration` |

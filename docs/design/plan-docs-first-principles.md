@@ -296,7 +296,7 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
   - add the stepwise binding equations;
   - cite Lipniacki 2007 and Goldstein–Perelson;
   - move before coupling, since d1 is used from architecture.md onward.
-- **studies.md:13-16:** give the statistic and threshold behind "collapses onto study 2's curve".
+- **studies.md:13-16:** give the statistic and threshold behind "collapses onto the dose study's curve".
 - **decisions.md:** replace Q1–Q4, U2, F6, "probe", f-ids, variant codes, `ever_dead`/`revived` and "workbench" with
   plain descriptions.
 - **diffusion.md:**

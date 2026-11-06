@@ -47,4 +47,5 @@
 - Wu CY, Huang CK, Chung CY, Huang IP, Hwu Y, Yang CS, Lai YK, Lo LW, Chiang SY (2011). Probing the binding kinetics
   of proinflammatory cytokine-antibody interactions using dual color fluorescence cross correlation spectroscopy.
   *Analyst* 136(10):2111–2118. doi:10.1039/c0an00995d. (TNFα's diffusion coefficient, 100.06 ± 4.9 µm²/s, with a
-  hydrodynamic diameter of 4.89 nm that agrees with light scattering on native TNFα.)
+  hydrodynamic diameter of 4.89 nm that agrees with light scattering on native TNFα. Proposed to the project lead as an
+  input; not yet accepted.)

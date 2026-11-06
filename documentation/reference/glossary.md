@@ -53,7 +53,7 @@ Continuous-time Markov chain
 
 Coupling interval
 : How often two layers exchange values: 30 s for the kinetic → fate edge in Study 0, which satisfies the rule in {doc}`../math/timescales`
-  ($0.1 \times 337\ \text{s} \approx 34$ s); the spatial edge will need about 1 s.
+  ($0.1 \times 337\ \text{s} \approx 34$ s); the spatial edge will need about 0.4 s ($0.1 \times$ the 4 s TNF takes to cross 40 µm).
   Each layer holds the last value it received in between.
 
 d1

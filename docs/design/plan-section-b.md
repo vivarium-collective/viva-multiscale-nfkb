@@ -254,28 +254,30 @@ One composite and one parameter sweep give all three. Each is a workspace study 
 - **Study 0, `s0-coupling-calibration`, is running.** κ, the Boolean NF-κB node's switching speed, and the k_time death
   clock are decided in its decide phase, not here.
 
-| # | Study | Spatial setup | Swept | Readouts |
+| Name | Study | Spatial setup | Swept | Readouts |
 |---|---|---|---|---|
-| 2 | **Fate vs uniform TNF dose.** The control: kinetic + Boolean with a spatially flat input | Uniform bath: the TNF field starts uniform at dose D, with no gradient and optional linear decay | D | MaBoSS Survival/Apoptosis/NonACD probabilities; NF-κB first nuclear peak (height, time) and oscillation period |
-| 1 | **Fate vs distance from a point TNF source.** The headline: what space adds, through arrival delay and the dose that reaches the cell | Point source at distance r from the cell's surface region | r, and source strength | Same as 2, plus TNF at the cell over time (the `RegionMean` store) |
-| 3 | **NF-κB wave timing under a moving TNF front.** The mechanism | Study 1's runs (no new runs) | r | Timing of the TNF front's arrival vs NF-κB nuclear peaks and oscillation phase, from the kinetic store |
+| Dose | **Fate vs uniform TNF dose.** The control: kinetic + Boolean with a spatially flat input | Uniform bath: the TNF field starts uniform at dose D, with no gradient and optional linear decay | D | MaBoSS Survival/Apoptosis/NonACD probabilities; NF-κB first nuclear peak (height, time) and oscillation period |
+| Distance | **Fate vs distance from a point TNF source.** The headline: what space adds, through arrival delay and the dose that reaches the cell | Point source at distance r from the cell's surface region | r, and source strength | Same as 2, plus TNF at the cell over time (the `RegionMean` store) |
+| Wave timing | **NF-κB wave timing under a moving TNF front.** The mechanism | the distance study's runs (no new runs) | r | Timing of the TNF front's arrival vs NF-κB nuclear peaks and oscillation phase, from the kinetic store |
 
-- **The scientific test.** Map each study-1 run onto study 2's dose axis by the TNF dose that reached the cell, at its
-  peak and integrated over time. If fate collapses onto study 2's curve, space acts only through dose. If it doesn't,
-  arrival timing matters. Study 3 shows the mechanism behind either answer.
+- **The scientific test.** Map each distance-study run onto the dose study's dose axis by the TNF dose that reached the
+  cell, at its peak and integrated over time. If fate collapses onto the dose study's curve, space acts only through
+  dose. If it doesn't, arrival timing matters. The wave-timing study shows the mechanism behind either answer. (The
+  headline studies were numbered 2, 1 and 3 until 2026-11-06; they are named so that "Study 1" means only the
+  investigation's validation study.)
 - **What the spatial engine supports.**
   - A uniform bath and a **point bolus are both initial conditions** of the `fields` store, which
-    `FVReactionDiffusion` supports today. A bolus diffusing in a reflecting box is study 1's moving front, and it has
+    `FVReactionDiffusion` supports today. A bolus diffusing in a reflecting box is the distance study's moving front, and it has
     an analytic solution: a Gaussian with image terms, which is also Phase 3's spatial oracle.
   - A **sustained point source cannot be expressed today.** `FVReactionDiffusion`'s reaction terms take one scalar
     `k` over the whole domain. A sustained source would need a spatially varying source term upstream, outside v1. v1
     uses the bolus, and that limitation is recorded here.
-- **Resolution (measured 2026-11-04, `checks/spatial/gaussian-diffusion`):** the FV scheme's error in a front's tail converges with dx and dt. At r = 40 um, t = 1 s it is +1.15% at dx 2 um / dt 0.01 s and +0.29% at dx 1 um / dt 0.0025 s. Choose study 1's grid with the TNF value at the cell in mind, and confirm the choice with one refinement run.
+- **Resolution (measured 2026-11-04, `checks/spatial/gaussian-diffusion`):** the FV scheme's error in a front's tail converges with dx and dt. At r = 40 um, t = 1 s it is +1.15% at dx 2 um / dt 0.01 s and +0.29% at dx 1 um / dt 0.0025 s. Choose the distance study's grid with the TNF value at the cell in mind, and confirm the choice with one refinement run.
 - **The death-clock axis `k_time` crosses all three studies** (Alex, 2026-11-04). It maps the race itself: how fast
-  the death machinery must be for TNF to kill, at each dose (study 2) and distance (study 1). Gene expression stays
+  the death machinery must be for TNF to kill, at each dose and distance. Gene expression stays
   anchored at r_tx = 3.29e-4 /s.
 - **Cost:** one composite document, parameterized by D (bath) or by r and bolus size (source), plus k_time, and run per
-  sweep point. No runs are added for study 3.
+  sweep point. No runs are added for the wave-timing study.
 
 ### Time scheme (d2, d3)
 - **d7 use 1, step 1: the kinetic layer, measured** (`analysis/d7/kinetic_timescales.py` → `.json`, 2026-11-04).

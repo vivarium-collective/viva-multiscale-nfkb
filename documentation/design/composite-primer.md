@@ -48,8 +48,8 @@ apply ({doc}`coupling`).
   in the studies, is the interval its processes share, so they exchange values every 30 s. It satisfies the rule in
   {doc}`../math/timescales` for the kinetic → fate edge: $f$ changes fastest during its 337 s half-rise, and
   $0.1 \times 337 \approx 34$ s. Study 0 had no spatial layer. The edge that will carry TNF at the cell changes over
-  seconds (about 8 s across 40 µm, {doc}`../science/scales`), so by the same rule it needs an interval of about 1 s,
-  to be set when the spatial coupling is built.
+  seconds (about 4 s across 40 µm at TNF's measured diffusion coefficient, {doc}`../science/scales`), so by the same
+  rule it needs an interval of about 0.4 s, to be set when the spatial coupling is built.
 - An **emitter** is a step that records chosen stores each time the composite advances. Its records, one row per time point, are
   the run's results file. Row 0 is the state at t = 0, before any process has run.
 
