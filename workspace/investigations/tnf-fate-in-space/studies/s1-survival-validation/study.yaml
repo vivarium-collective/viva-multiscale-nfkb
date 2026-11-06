@@ -1,0 +1,105 @@
+# s1-survival-validation/study.yaml — schema v4
+#
+# Study 1 of tnf-fate-in-space (decision 29, Alex, 2026-11-06): a validation study before d1. Study 0 found that under
+# held, saturating TNF the coupled composite kills nearly every cell. This study asks where in the model that comes
+# from, and whether any setting of the models' own parameters lets NF-kB-competent cells mostly survive while
+# NF-kB-deficient cells still die. It adds no mechanism: every variant changes a parameter the published models already
+# have (house rule 2).
+
+schema_version: 4
+name: s1-survival-validation
+investigation: tnf-fate-in-space
+title: Survival under TNF (validation against NF-kB-dependent survival)
+created: '2026-11-06'
+status: planned
+phase: Evaluate
+parent_studies:
+- {study: s0-coupling-calibration, condition: ran, relation: leads-to}
+
+question: >
+  Under held, saturating TNF, can the composite let most cells with working NF-kB survive, while cells without NF-kB
+  still die, using only the published models' own parameters? If not, is the limit in Calzone's wiring or in how the
+  composite sets its clocks?
+
+hypothesis: >
+  Calzone's network is a race between a fast death route and slow NF-kB-induced protection (science/calzone-network).
+  With the protective genes induced fast enough relative to the death route, survival should rise. Whether it can
+  become a majority under held TNF is unknown: the network's own example rates give 1.4%, transcription rate 1 gives
+  20% (documentation/science/code/transrate_race.py), and the Calzone 2010 paper reports about 30% from a rate-free
+  analysis.
+
+objective: >
+  Phase A: measure the survival ceiling of Calzone's network itself under held TNF, by sweeping the protective genes'
+  induction speed (TransRate, as r_tx at k_time = 1) far past MaBoSS's example, with NF-kB intact and with NF-kB
+  knocked out. Phase B, only if Phase A finds a regime where most NF-kB-competent cells survive: locate that regime in
+  the coupled composite (the death clock k_time, and the NF-kB node's switching) on Study 0's 200 seeds, again with
+  NF-kB intact and knocked out.
+
+assumptions:
+- text: >
+    Phase A runs Calzone's network as the coupled network with u_NFkB = 1, d_NFkB = 0, k_time = 1 and absorb_death = 0,
+    which is Calzone's network exactly (checks/boolean/coupled-equals-full). TransRate is the r_tx parameter there.
+- text: >
+    The validation yardstick is qualitative and comes from literature NOT provided by the expert. It is recorded on the
+    investigation as proposed_inputs with status pending and is not cited as sanctioned evidence until Alex accepts it.
+
+conditions:
+  baseline: "Calzone's network, TNF held on, NF-kB intact; MaBoSS's example TransRate 1/24 (the Study 0 starting point)."
+  variants:
+  - "TransRate sweep (Phase A): 1/24, 1/4, 1, 4, 16, 64 per Calzone unit."
+  - "NF-kB knocked out (u_NFkB = 0, d_NFkB = 1) at each TransRate: the negative control."
+  model_settings: "t = 40 Calzone units (MaBoSS's example horizon); 50,000 trajectories per point."
+
+controls:
+  negative: "NF-kB knocked out: cells must die (most cells reach Apoptosis or NonACD by t = 40)."
+  positive: "MaBoSS's example rates (TransRate 1/24): reproduces the coupled-equals-full oracle (survival 0.014)."
+
+readouts:
+- "P(Survival), P(Apoptosis), P(NonACD) at t = 40, per TransRate, NF-kB intact and knocked out."
+
+alternative_hypotheses:
+- hypothesis: "The limit is Calzone's wiring: even arbitrarily fast induction cannot make most cells survive under held TNF."
+  how_tested: "Phase A's ceiling as TransRate grows."
+- hypothesis: "The limit is the composite's clocks (the death clock relative to induction, or the NF-kB node's flicker)."
+  how_tested: "Phase B, only reached if Phase A finds a majority-survival regime."
+
+falsifiability: >
+  Phase A: if survival at the largest TransRate stays well below one half with NF-kB intact, Calzone's network, with all
+  its steps on one clock, caps survival. That alone does not cap the composite, where NF-kB's route runs on Lipniacki's
+  seconds and only the death route runs on k_time; Phase B tests the composite. If neither reaches a majority with
+  NF-kB intact, it is reported as an honest open question, not tuned away.
+
+limitations: >
+  The yardstick is qualitative (most cells survive TNF alone; NF-kB loss sensitises), from two cell lines in the
+  literature, and is pending acceptance. Phase A probes rates only; it does not test structural changes to the network,
+  which this study does not make.
+
+findings:
+- id: f1-calzone-survival-ceiling
+  tier: observation
+  summary: >
+    Phase A. Calzone's network under held TNF, read at t = 40 Calzone units, 50,000 cells per point. With NF-kB intact,
+    survival rises with the protective genes' induction speed and then saturates: 0.014, 0.087, 0.201, 0.286, 0.313 and
+    0.320 at TransRate 1/24, 1/4, 1, 4, 16 and 64. With NF-kB knocked out it is 0 at every rate (apoptosis 0.91 to
+    0.51, necrosis 0.09 to 0.49), so the negative control holds. Even arbitrarily fast induction leaves about two
+    cells in three dying, close to the Calzone 2010 paper's own ~30% survival.
+  evidence: data/phase_a.json; phase_a.py
+- id: f2-why-the-ceiling
+  tier: interpretation
+  mechanism_origin: emergent
+  summary: >
+    With every step on one clock, NF-kB's activation route (TNFR -> RIP1 -> RIP1ub -> IKK -> NFkB: four rate-1 steps)
+    races caspase-8's (TNFR + FADD -> DISC -> CASP8: two), and active caspase-8 cleaves RIP1, closing NF-kB's route.
+    Fast induction cannot help a cell whose NF-kB never switches on, so the ceiling is set upstream of the genes. This
+    is read from the network's rules (science/calzone-network) and the saturation in f1. It has not been tested by
+    varying the upstream rates, which this study does not do.
+  evidence: f1; datasets/calzone2010_cellfate/raw/cellfate.bnd
+
+followup_study_proposals: []
+runs:
+- name: phase-a-transrate-ceiling
+  status: complete
+  emitter:
+    kind: json
+    store: data/phase_a.json
+  params: "{\"units\": 40, \"cells\": 50000, \"windows\": 40, \"seed\": 3, \"nfkb\": [\"intact\", \"knocked_out\"], \"transrate\": [\"1/24\", \"1/4\", \"1\", \"4\", \"16\", \"64\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\"}"

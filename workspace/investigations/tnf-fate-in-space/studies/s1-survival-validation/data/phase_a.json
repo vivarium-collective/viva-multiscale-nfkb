@@ -1,0 +1,92 @@
+{
+ "units": 40.0,
+ "cells": 50000,
+ "windows": 40,
+ "seed": 3,
+ "rows": [
+  {
+   "nfkb": "intact",
+   "transrate": "1/24",
+   "Survival": 0.014,
+   "Apoptosis": 0.9522,
+   "NonACD": 0.0302
+  },
+  {
+   "nfkb": "intact",
+   "transrate": "1/4",
+   "Survival": 0.0866,
+   "Apoptosis": 0.7621,
+   "NonACD": 0.1513
+  },
+  {
+   "nfkb": "intact",
+   "transrate": "1",
+   "Survival": 0.2007,
+   "Apoptosis": 0.5402,
+   "NonACD": 0.2591
+  },
+  {
+   "nfkb": "intact",
+   "transrate": "4",
+   "Survival": 0.286,
+   "Apoptosis": 0.468,
+   "NonACD": 0.246
+  },
+  {
+   "nfkb": "intact",
+   "transrate": "16",
+   "Survival": 0.3131,
+   "Apoptosis": 0.4527,
+   "NonACD": 0.2342
+  },
+  {
+   "nfkb": "intact",
+   "transrate": "64",
+   "Survival": 0.3196,
+   "Apoptosis": 0.4507,
+   "NonACD": 0.2297
+  },
+  {
+   "nfkb": "knocked_out",
+   "transrate": "1/24",
+   "Survival": 0.0,
+   "Apoptosis": 0.9113,
+   "NonACD": 0.0887
+  },
+  {
+   "nfkb": "knocked_out",
+   "transrate": "1/4",
+   "Survival": 0.0,
+   "Apoptosis": 0.6761,
+   "NonACD": 0.3239
+  },
+  {
+   "nfkb": "knocked_out",
+   "transrate": "1",
+   "Survival": 0.0,
+   "Apoptosis": 0.5284,
+   "NonACD": 0.4716
+  },
+  {
+   "nfkb": "knocked_out",
+   "transrate": "4",
+   "Survival": 0.0,
+   "Apoptosis": 0.5099,
+   "NonACD": 0.4901
+  },
+  {
+   "nfkb": "knocked_out",
+   "transrate": "16",
+   "Survival": 0.0,
+   "Apoptosis": 0.5103,
+   "NonACD": 0.4897
+  },
+  {
+   "nfkb": "knocked_out",
+   "transrate": "64",
+   "Survival": 0.0,
+   "Apoptosis": 0.5099,
+   "NonACD": 0.4901
+  }
+ ]
+}

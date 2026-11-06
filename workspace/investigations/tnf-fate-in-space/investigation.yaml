@@ -10,7 +10,21 @@ description: 'What decides whether a cell survives or dies when TNF reaches it b
   '
 studies:
 - s0-coupling-calibration
+- s1-survival-validation
 expert_docs: []
+proposed_inputs:
+- id: micheau-tschopp-2003
+  kind: reference
+  status: pending
+  citation: "Micheau O, Tschopp J (2003). Induction of TNF receptor I-mediated apoptosis via two sequential signaling complexes. Cell 114(2):181-190. doi:10.1016/s0092-8674(03)00521-x"
+  provenance: "Web search, 2026-11-06 (docs plan step 1.7); not provided by the expert."
+  rationale: "Abstract: with NF-kB active, complex II carries FLIP(L) and the cell survives. Used to frame decision 29 and Study 1's yardstick (NF-kB-competent cells mostly survive TNF alone)."
+- id: lee-2016
+  kind: reference
+  status: pending
+  citation: "Lee REC, Qasaimeh MA, Xia X, Juncker D, Gaudet S (2016). NF-kB signalling and cell fate decisions in response to a short pulse of tumour necrosis factor. Sci Rep 6:39519. doi:10.1038/srep39519"
+  provenance: "Web search, 2026-11-06 (docs plan step 1.7); not provided by the expert."
+  rationale: "Methods: HeLa cells were pre-treated with IFN-gamma because they 'are not sensitive otherwise' to TNF (100 ng/ml). Used as the second source for Study 1's yardstick."
 acceptance_criteria: []
 question: 'What decides whether a cell survives or dies when TNF reaches it by diffusion, and does space act only through the dose that arrives, or also through when it arrives?
 
