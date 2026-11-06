@@ -40,6 +40,12 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
 - [x] Step 1.5, math/statistics.md: binomial SE, the Wilson interval (as run_grid.py computes it), paired seeds, the
       exact McNemar test (as analysis.py computes it, with three Study 0 examples recomputed), and the quasi-steady
       occupancy estimate with its validity condition.
+- [x] Step 1.6, math/timescales.md:
+      - linearisation, the Jacobian, and what each kind of eigenvalue means;
+      - the model's modes from analysis/d7/kinetic_timescales.json: fastest 6–10 s; slowest exactly 1/Kdeg = 8000 s;
+        one zero mode, the conserved NF-κB; growth in 1 of 361 states;
+      - stiffness and CVODE;
+      - the 0.1× coupling rule, derived as a sample-and-hold error bound.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)
