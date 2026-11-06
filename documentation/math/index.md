@@ -9,5 +9,6 @@ code.
 maboss
 switch
 clock
+statistics
 diffusion
 ```

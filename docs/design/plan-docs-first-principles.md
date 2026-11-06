@@ -37,6 +37,9 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
       updates and types (a float update is a delta; overwrite replaces; both checked in bigraph-schema 1.8.1's source),
       time and the emitter, compose-api (runner, mash-up, registry levels), what a check is (oracle, negative), and
       compose/check.sh.
+- [x] Step 1.5, math/statistics.md: binomial SE, the Wilson interval (as run_grid.py computes it), paired seeds, the
+      exact McNemar test (as analysis.py computes it, with three Study 0 examples recomputed), and the quasi-steady
+      occupancy estimate with its validity condition.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)
