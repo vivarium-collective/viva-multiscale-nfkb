@@ -46,6 +46,9 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
         one zero mode, the conserved NF-κB; growth in 1 of 361 states;
       - stiffness and CVODE;
       - the 0.1× coupling rule, derived as a sample-and-hold error bound.
+- [x] Step 3, reading order (2026-11-06): the top level runs getting-started → science → math → design → tutorials →
+      verification → reference, with the design order below. The tutorials index has a prerequisites box. Step 1.7
+      (biology yardstick, needs literature) is deferred by Alex until after steps 3–6.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)
@@ -95,8 +98,9 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
 ## Step 3: reading order
 
 - Top level: science → math → design → tutorials.
-- Design: architecture → kinetic → spatial → boolean → time → coupling → rule-based → studies → calibration →
-  decisions → roadmap.
+- Design: composite-primer → architecture → kinetic → spatial → boolean → time → rule-based → coupling → calibration →
+  studies → decisions → roadmap. Time (k_time, r_tx) and rule-based (d1) come before coupling, which uses both;
+  calibration (Study 0) comes before the headline studies, whose page depends on its result.
 - Tutorials get a prerequisites box, or come last.
 - history.md's definition of the agenda sections moves up front, or is replaced in prose.
 

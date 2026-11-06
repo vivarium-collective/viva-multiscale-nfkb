@@ -7,6 +7,16 @@ are from running those scripts. Run them from the repository root, in the run en
 uv run --project compose python -I documentation/tutorials/code/<script>.py
 ```
 
+```{admonition} Before you start
+:class: tip
+The tutorials use the vocabulary of the earlier sections. If a term is new, these pages define it:
+- what the fate network is and how a Boolean network runs: {doc}`../science/boolean-networks`,
+  {doc}`../science/calzone-network`, {doc}`../math/maboss`;
+- the NF-κB model and its nuclear fraction $f$: {doc}`../science/lipniacki-model`;
+- composites, processes, wiring and checks: {doc}`../design/composite-primer`;
+- the death clock `k_time` and the transcription rate `r_tx`: {doc}`../design/time`.
+```
+
 ```{toctree}
 :maxdepth: 1
 

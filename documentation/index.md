@@ -64,10 +64,10 @@ How a check is scored, and the catalogue of checks, each with its oracle and a p
 :maxdepth: 2
 
 getting-started
-tutorials/index
 science/index
-design/index
 math/index
+design/index
+tutorials/index
 verification/index
 reference/index
 ```
