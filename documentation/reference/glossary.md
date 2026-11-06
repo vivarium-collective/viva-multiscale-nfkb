@@ -26,7 +26,7 @@ End state
 
 First fate
 : The first fate node a cell switches on. Reported next to the end state; a tie means two switched on within one
-  coupling step.
+  coupling interval (30 s in the studies).
 
 `k_time`
 : Calzone time units per composite second. It multiplies every Boolean rate and is swept as the death machinery's
@@ -44,7 +44,8 @@ Nuclear fraction $f$
 
 Occupancy
 : The fraction of time a Boolean node is on. For an NF-κB target product it is set by induction (`r_tx`, only while
-  NFkB is on) against switch-off (only while NFkB is off), weighted by NF-κB's duty cycle $f$ (Study 0d).
+  NFkB is on) against switch-off (only while NFkB is off), weighted by the fraction $f$ of time the NF-κB node is on
+  ({doc}`../math/statistics`).
 
 Oracle
 : The source of a check's expected values, independent of the code under test.

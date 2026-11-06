@@ -72,10 +72,11 @@ verification/index
 reference/index
 ```
 
-```{admonition} Status (2026-11-04)
+```{admonition} Status (2026-11-06)
 :class: important
-Each layer and each pairwise coupling has been built and checked on its own. The integrated composite and the three
-headline studies are next; see {doc}`design/roadmap`. The plan of record is
+Each layer and each pairwise coupling has been built and checked on its own. Study 0 has calibrated the coupling
+({doc}`design/calibration`). Next are TNF's dose–response at the receptor, then the integrated composite and the three
+headline studies; see {doc}`design/roadmap`. The plan of record is
 [`docs/design/plan-section-b.md`](https://github.com/vivarium-collective/viva-multiscale-nfkb/blob/main/docs/design/plan-section-b.md).
 This documentation explains and justifies that plan, and does not replace it.
 ```

@@ -18,7 +18,7 @@
 │ TelluriumProcess:       │   │ MaBoSSProcess: Calzone, gated   │
 │ Lipniacki 2004          │   │ (all 31 nodes)                  │
 └───────┬─────────────────┘   └───────────────▲─────────────────┘
-        │ five NF-κB species                    │ u_NFkB = f, d_NFkB = 1 − f
+        │ five NF-κB species                    │ u_NFkB = fκ/k_time, d_NFkB = (1 − f)κ/k_time
         └── nuclear fraction f (adapter) ───────┘
 ```
 

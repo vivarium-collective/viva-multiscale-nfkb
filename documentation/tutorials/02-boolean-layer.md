@@ -27,14 +27,16 @@ NF-kB input f = 1.00:  Survival 0.014  Apoptosis 0.950  NonACD 0.032
   against NF-κB:
   - **Calzone's gate:** caspase-8 cleaves RIP1 and SMAC sequesters cIAP, which closes NF-κB's route, so a dying cell
     loses NF-κB whatever Lipniacki supplies.
-  - **The race:** the protective genes need NF-κB on for about $1/\text{TransRate} = 24$ units, while death arrives in
-    about 8.5.
+  - **The race:** a protective gene, switching on at $\text{TransRate} = 1/24$ per unit while NF-κB is on, is on in
+    half of the cells after $\ln 2 \times 24 \approx 16.6$ units, while half of the cells' death arrives in about 8.5
+    ({doc}`../design/time`).
 
-```{admonition} Open: the clocks, not the wiring
-:class: important
-Two calibration questions decide how much survival the composite can show. The investigation's calibration study
-(Study 0) decides both; see {doc}`../design/time` and {doc}`../design/roadmap`.
-- **How fast should the NF-κB node follow Lipniacki?** With $u = f$, $d = 1-f$, it flips about once per Calzone
-  unit.
-- **How fast is the death machinery?** That is `k_time`, tutorial 4.
+```{admonition} The clocks, not the wiring (decided in Study 0)
+:class: note
+Two speeds decide how much survival the composite can show, and Study 0 ({doc}`../design/calibration`) settled the
+first:
+- **How fast the NF-κB node follows Lipniacki.** Here, with $u = f$, $d = 1-f$, it flips about once per Calzone unit.
+  The composite instead uses $\kappa = \ln 2/337$ s, Lipniacki's own NF-κB speed, whatever the clock
+  ({doc}`../math/switch`).
+- **How fast the death machinery runs.** That is `k_time`, which stays a swept axis (tutorial 4).
 ```

@@ -23,7 +23,10 @@ $$
 \text{rate}_\text{target} = k \cdot \frac{r_\text{tx}}{k} = r_\text{tx}\quad\text{(per second)},
 $$
 
-whatever $k$ is. The other rates, those of the death machinery and of NF-κB's own switching, scale with $k$. So:
+whatever $k$ is. The death machinery's rates scale with $k$. NF-κB's own switching does not: the composite writes
+$u = f\kappa/k$ and $d = (1-f)\kappa/k$, so the network's rates $k\,u = f\kappa$ and $k\,d = (1-f)\kappa$ are also
+independent of $k$ ({doc}`switch`; {doc}`../design/decisions`, row 25). Only in the checks that set $\kappa = k$ does
+NF-κB's switching scale with $k$. So:
 
 - **gene expression runs on Lipniacki's measured clock,** $r_\text{tx} = \ln 2 / 2107\ \text{s}$;
 - **`k_time` moves only the death machinery's speed** relative to it.

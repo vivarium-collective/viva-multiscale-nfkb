@@ -1,8 +1,11 @@
 # 3. The kinetic → Boolean coupling
 
 The coupling is a `MathExpressionStep` between Lipniacki's NF-κB species and MaBoSS's parameters
-({doc}`../design/coupling`). The document `checks/boolean/pair-nfkb-analytic/document.pbg` is the coupling exactly as
-the composite wires it, with the kinetic layer held at one stimulated state (414 s after TNF, NF-κB still rising).
+({doc}`../design/coupling`). The document `checks/boolean/pair-nfkb-analytic/document.pbg` is that coupling with the
+kinetic layer held at one stimulated state (414 s after TNF, NF-κB still rising), in its simplest case,
+$\kappa = k_\text{time}$. The composite writes $u = f\kappa/k_\text{time}$ and $d = (1-f)\kappa/k_\text{time}$
+({doc}`../math/switch`). With $\kappa = k_\text{time}$ those are $u = f$ and $d = 1 - f$, which is what the adapter
+below writes, so the check isolates the one new quantity, the nuclear fraction $f$.
 
 ## The adapter
 

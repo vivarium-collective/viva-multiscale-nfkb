@@ -1,6 +1,7 @@
 # Roadmap and status
 
-The plan's phases (each atomic and independently checked), as of 2026-11-04:
+The plan's phases (each atomic and independently checked), as of 2026-11-06. Phases 1 and 2 are the two upstream
+changes, U1 and U2:
 
 | Phase | What | Status |
 |---|---|---|
@@ -10,6 +11,9 @@ The plan's phases (each atomic and independently checked), as of 2026-11-04:
 | 4 | Pairwise couplings: kinetic → Boolean **done**; spatial → kinetic next (needs U1 in the pinned environment) | partial |
 | 5 | The full composite: all-finest run first, then at d7 intervals; accepted only on d7 step 5's criteria | not started |
 | 6 | A live run on compose-api as an inferred mash-up | after Alex's go |
+| Study 0 | Calibration of the coupling ({doc}`calibration`): κ decided; under held, saturating TNF nearly every cell dies; protein persistence saves cells only well beyond the measured turnover | **done** |
+| Decision 28 | Absorbing death in the network ({doc}`boolean`) | **done** |
+| d1 | TNF's dose–response at the receptor (McMillan 2021; decision 27, the next lever) | next, after the documentation pass |
 | compose-api | Pin bumps (viva-tellurium 0.2.3, then viva-pde-particle) with a `TelluriumProcess` compliance case | one compose-api release at a time |
 
 ## Later

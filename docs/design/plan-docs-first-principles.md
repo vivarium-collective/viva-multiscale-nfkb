@@ -49,6 +49,17 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
 - [x] Step 3, reading order (2026-11-06): the top level runs getting-started → science → math → design → tutorials →
       verification → reference, with the design order below. The tutorials index has a prerequisites box. Step 1.7
       (biology yardstick, needs literature) is deferred by Alex until after steps 3–6.
+- [x] Step 4, stale or contradictory statements (2026-11-06):
+      - clock.md no longer says NF-κB's switching scales with k;
+      - the architecture diagram shows fκ/k_time;
+      - tutorial 03 states its κ = k_time case;
+      - studies.md reads out alive and durable survival, and the dose is c₀ (not D);
+      - tutorial 02 compares half-times (16.6 against 8.5), and its Open box became "decided in Study 0";
+      - decision 25 states what Study 0 found;
+      - scales.md says 31 nodes;
+      - the glossary's First fate and Occupancy entries define their terms;
+      - the index status and the roadmap are dated 11-06, and the roadmap gains Study 0, decision 28 and d1.
+      Left for step 6: time.md's TransRate table and the unsourced "99–106 min" figure.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)

@@ -8,7 +8,7 @@
 |---|---|---|
 | Tissue / extracellular medium (µm) | <span class="layer spatial">spatial</span> | a TNF concentration field on a grid |
 | Cell compartments (cytoplasm, nucleus) | <span class="layer kinetic">kinetic</span> | 16 molecular concentrations (µM), continuous and deterministic |
-| Cell phenotype | <span class="layer boolean">Boolean</span> | 27 on/off nodes; a probability distribution over fates |
+| Cell phenotype | <span class="layer boolean">Boolean</span> | 31 on/off nodes; a probability distribution over fates |
 
 The layers don't share state. Each quantity is written by exactly one layer, and the adapters translate it for the
 layer that reads it. {doc}`../design/architecture` gives this rule ("one owner") and its reason.
