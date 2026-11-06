@@ -38,7 +38,7 @@ $\sigma = \sqrt{100 + 1000} = 33\ \mu\text{m}$ and the walls are 100 µm, or $3.
 the nearest image is 160 µm away, so it adds $e^{-(160^2 - 40^2)/(2 \cdot 1100)} \approx 2\times10^{-5}$ of the direct
 term, far below the check's 1% tolerance. So the free-space solution is the oracle.
 
-A bolus is also study 1's moving front ({doc}`../design/studies`). A cell at distance $r$ sees the concentration rise,
+A bolus is also the distance study's moving front ({doc}`../design/studies`). A cell at distance $r$ sees the concentration rise,
 peak and fall as the Gaussian widens past it.
 
 (two-dimensions-or-three)=

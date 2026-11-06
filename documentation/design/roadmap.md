@@ -37,7 +37,7 @@ These are unresolved, and each is stated where it is used:
   against $1/r^3$), and in either dimension the integrated dose needs decay or a finite window
   ({doc}`../math/diffusion`).
 - **What counts as "collapses onto the dose curve"** in the headline studies' test: the statistic and threshold are to
-  be fixed before study 1 runs ({doc}`studies`).
+  be fixed before the distance study runs ({doc}`studies`).
 - **What value of TNF's diffusion coefficient do the spatial studies use?** The measured free-solution value is
   about 100 µm²/s ({doc}`../science/scales`); the checks use 50 as a test value. Not decided.
 
