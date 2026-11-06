@@ -1,5 +1,9 @@
 # Getting started
 
+This page installs the environments and runs every check. What compose-api, a check, a mash-up and the registry are is
+explained in {doc}`design/composite-primer`; COPASI and libRoadRunner are two independent ODE solvers, which the kinetic
+checks compare.
+
 ## What you need
 
 - [uv](https://docs.astral.sh/uv/). Every Python command here runs through it.

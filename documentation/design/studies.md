@@ -15,6 +15,10 @@ integrated over time.
 - **If fate collapses onto study 2's curve,** space acts only through dose.
 - **If it doesn't,** arrival timing matters.
 
+What counts as "collapses" (the statistic that compares the mapped study-1 results with study 2's curve, and the
+threshold) is not chosen yet. It will be fixed and recorded here before study 1 runs, so that the answer cannot be
+tuned to the result.
+
 Study 3 shows the mechanism behind either answer.
 
 ## The death clock

@@ -19,6 +19,12 @@ receptor-activation signal. NF-κB then enters the nucleus in damped waves. The 
 protective genes against the death signals TNF itself starts. Each arrow in that chain is a coupling between two engines,
 and each coupling is checked against an independent oracle.
 
+**New here?** A *composite* is one document that wires several models together; each model runs as a *process* that
+reads and writes shared values. A *check* runs a small document and compares its results with an *oracle*, an expected
+value that does not come from the code under test, such as a formula or another engine's output. The pages build these
+up in order: the biology and the models ({doc}`science/index`), the mathematics the checks rely on
+({doc}`math/index`), and the design decisions ({doc}`design/index`), starting from {doc}`design/composite-primer`.
+
 ::::{grid} 2
 :gutter: 2
 
