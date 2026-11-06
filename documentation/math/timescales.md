@@ -34,12 +34,12 @@ is switched on to saturation (361 states; results in `analysis/d7/kinetic_timesc
 | Fastest decay | 6.2 s at rest; 6.0–10 s after TNF | |
 | Slowest decay | 8000 s (2.2 h) at every state | exactly $1/K_\text{deg}$ = 1/(1.25×10⁻⁴ s⁻¹): IKK's turnover, a linear step that does not depend on the state |
 | Zero mode | one, at every state | total NF-κB, which no reaction changes (proved on {doc}`../science/lipniacki-model`) |
-| Growing mode | only at 1 of the 361 states, in the first minute after TNF | |
+| Growing mode | only at 60 s after TNF, the first state sampled after it (growth e-folding 3.6 h) | |
 | Oscillating pairs | periods of 67–132 min in 355 of the 360 states after TNF | NF-κB's negative feedbacks ({doc}`../science/lipniacki-model`) |
 
 Two things follow:
 
-- **NF-κB's waves ring down; they are not a sustained cycle.** Apart from that first minute no mode grows, so the
+- **NF-κB's waves ring down; they are not a sustained cycle.** Apart from that one state no mode grows, so the
   oscillation the pairs describe decays. The measured waves settle by about 6 h ({doc}`../science/lipniacki-model`).
   The JSON stores each pair's period but not its damping.
 - **The model is stiff:** its timescales span more than three orders of magnitude, from 6 s to 8000 s. An explicit
