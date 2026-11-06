@@ -54,8 +54,9 @@ committed, and applied by a `MathExpressionStep`.
 
 ```{admonition} Assumption, recorded wherever the curve is used
 :class: warning
-The curve maps a receptor-engagement fraction onto Lipniacki's 0/1 `TNF_R`. The plan records Lipniacki 2007 as the
-precedent for that mapping; d1 will quote the relevant passage when it lands. The binding constants come from soluble
+The curve maps a receptor-engagement fraction onto Lipniacki's `TNF_R`, which the original model only ever sets to 0 or
+1. The plan records Lipniacki et al. 2007 (*BMC Bioinformatics* 8:376, in which receptor activation by single TNF trimers
+is a stochastic on/off switch) as the precedent for that mapping; d1 will quote the relevant passage when it lands. The binding constants come from soluble
 receptor in vitro, not from a cell membrane.
 ```
 
@@ -69,4 +70,4 @@ upstream viva-nfsim fixes first:
 - use a new RNG seed each interval.
 
 Its oracles would be chunked against continuous NFsim runs, and the Goldstein–Perelson equilibrium theory for
-trivalent ligands clustering cell-surface receptors (citation to be added with the bibliography pass).
+trivalent ligands clustering cell-surface receptors (Goldstein and Perelson 1984; {doc}`../reference/bibliography`).

@@ -107,6 +107,14 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
       - verification/index.md: states what the checks cover and what they do not (study results are recomputable
         from scripts and data; generated tables have --check).
       Step 6 is done except the items logged as open: 2D grid; a measured TNF D; citations (step 7).
+- [x] Step 7 (2026-11-06):
+      - the glossary has 41 entries, each linked;
+      - the bibliography adds 7 citations, each verified by web search with its DOI: Choi 2018 (Tellurium),
+        Goldstein–Perelson 1984, Hindmarsh 2005 (SUNDIALS/CVODE), Hoops 2006 (COPASI), Lipniacki 2007, McNemar 1947,
+        Somogyi 2015 (libRoadRunner);
+      - rule-based.md cites them, and the Noé entry's "d7" is explained.
+      Not added: a source for TNF's D (goes with step 1.7's literature work); process-bigraph (linked from the
+      landing page).
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)
