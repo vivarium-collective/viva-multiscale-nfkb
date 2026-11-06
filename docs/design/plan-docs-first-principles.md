@@ -151,6 +151,21 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
    - the fraction of cells TNF alone kills, with and without NF-κB or protein synthesis;
    - death timing (the citation time.md:23 marks pending).
 
+### Step 1.7 findings (2026-11-06; web-verified, not yet written into the docs)
+
+- **TNF alone usually does not kill a cell whose NF-κB works.**
+  - Micheau & Tschopp 2003, *Cell* 114(2):181–190, doi:10.1016/s0092-8674(03)00521-x. Abstract: "When NF-kappa B is
+    activated by complex I, complex II harbors the caspase-8 inhibitor FLIP(L) and the cell survives."
+  - Lee, Qasaimeh, Xia, Juncker & Gaudet 2016, *Sci Rep* 6:39519, doi:10.1038/srep39519. HeLa cells were pre-treated
+    with IFNγ for 24 h because they "are not sensitive otherwise". Kym-1 cells die within hours of TNF (pulses give
+    significantly more death in the first 2 h). The death percentages are only in figures.
+  - **This bears on the model, not only on the docs.** Study 0's composite kills nearly every cell under held,
+    saturating TNF. Real cells with working NF-κB usually survive TNF alone. That gap is a validation finding for
+    Alex: write it on the biology page, the calibration page and the roadmap's open questions.
+- **TNF's diffusion coefficient: no measurement found.** The only value found is a modelling input: soluble TNF
+  5.2×10⁻⁸ cm²/s ≈ 5 µm²/s, with a range of 10⁻⁸ to 10⁻⁷ cm²/s, in the GranSim supplementary table (Kirschner lab). That
+  is ~10× below the 50 µm²/s the docs assume. Search further (FCS/FRAP), or state it as an assumption with that range.
+
 ## Step 2: expand math/maboss.md
 
 - Define `@logic` (the node's rule evaluated in state s), the default rates, and `$name` parameters.
