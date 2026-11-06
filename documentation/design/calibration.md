@@ -1,17 +1,23 @@
 # Study 0: calibrating the coupling
 
 The composite joins two models that keep time differently. Lipniacki's NF-κB model runs in seconds. Calzone's
-cell-fate network runs in abstract units. Two speeds can't be read from either model alone, so Study 0 measures their
-effect before the headline studies ({doc}`studies`) run on the composite:
+cell-fate network runs in abstract units. Two speeds are not given by either model: which of Lipniacki's timescales the
+Boolean NF-κB node should follow, and how long a Calzone unit is. Study 0 measures their effect before the headline
+studies ({doc}`studies`) run on the composite:
 
 - **κ, how fast the Boolean NFkB node follows Lipniacki's NF-κB** ({doc}`coupling`, {doc}`../math/switch`).
 - **`k_time`, how fast the death machinery runs** ({doc}`time`): one Calzone unit per 2, 10, 30 or 120 minutes.
 
-It then asks whether NF-κB's protective proteins could save cells if they lasted longer (Studies 0b–0d).
+It then asks whether NF-κB's protective proteins could save cells if they lasted longer, in three follow-ups (the
+variants table below):
+- **0b** anchors their decay to Lipniacki's measured protein turnover, but its edit also touched two other nodes, so
+  it is confounded;
+- **0c** is an upper bound: they never decay;
+- **0d** is 0b corrected: the measured turnover on the four protective products only.
 
 The study lives in the workspace as
 `workspace/investigations/tnf-fate-in-space/studies/s0-coupling-calibration/`. Its `study.yaml` holds the design,
-every run and the findings (f1–f10). `run_grid.py` and `population.py` build and run it, and `analysis.py` makes the
+every run and its findings. `run_grid.py` and `population.py` build and run it, and `analysis.py` makes the
 tables quoted here.
 
 ## Design
@@ -19,12 +25,29 @@ tables quoted here.
 | Choice | What | Why |
 |---|---|---|
 | Population | 1 deterministic kinetic layer, 200 independent stochastic fate networks (one MaBoSS trajectory each, own seed) | Lipniacki is deterministic, so every cell sees the same NF-κB. The cells differ only in their fate network's random draws, so fractions are fractions of cells. |
-| Stimulus | TNF switched on at t = 0 and held at saturation | The simplest stimulus. It is the case Calzone's own network was built for. |
+| Composite | The NF-κB model ({doc}`../science/lipniacki-model`) and the fate network ({doc}`../science/calzone-network`), coupled through NF-κB's nuclear fraction $f$ ({doc}`coupling`). No spatial layer and no dose–response | Calibrates the coupling on its own, before space and dose are added |
+| Stimulus | TNF at saturation from t = 0 and held: the NF-κB model's `TNF_R` = 1 from its rest state, and the fate network's TNF node on from the start with rates `u_TNF` = `d_TNF` = 0, so it stays on | The simplest stimulus. It is the case Calzone's own network was built for. |
+| Grid | κ × clock: κ ∈ {Calzone's own flicker, κ = `k_time`; $\ln 2/337$ s, Lipniacki's NF-κB half-rise; $\ln 2/2107$ s, Lipniacki's NF-κB → protein delay}, and 2, 10, 30 or 120 min per Calzone unit (`k_time` = 1/(60 × minutes) per second). 12 points, 200 cells each, cell seeds 1–200 | Brackets κ between the fastest and slowest NF-κB timescale in Lipniacki's model, and the clock across two orders of magnitude |
+| Coupling | Every 30 s. Each cell's fate network is one `MaBoSSProcess` with one trajectory per interval, so it records one sampled on/off state per node every 30 s ({doc}`../math/maboss`) | Each cell is a single history, as a real cell is |
 | Duration | 24 h of model time at every clock (Alex: "24 hours everywhere") | At 8 h, 77–85% of cells were still undecided at the slowest clock. |
 | Recording | Each cell's fate code every 30 s: Survival + 2·Apoptosis + 4·NonACD | Calzone's fate nodes are not mutually exclusive: a cell can show caspase-3 and ATP loss together. A first 8 h grid summed them as if they were exclusive, double-counted, and was discarded. |
 | Readout | **Alive**: no death node on at any tick in 24 h. **Durable survival**: alive with Survival on at 24 h. End state and first fate alongside | Death is irreversible, but Calzone's death nodes are not absorbing: Apoptosis follows CASP3 and NonACD follows ATP loss, and both switch off when their logic fails. Read by end state, up to 27% of a run's cells (with Calzone's gates removed) looked alive after they had died. |
 | Seeds | Every variant reuses the grid's 200 seeds | Differences between runs then come from the change, not from new random draws. Variants are compared with the grid **cell by cell** (exact McNemar test), which an adversarial review showed is needed. Comparing two fractions as if independent hid a consistent shift. |
 | Environment | The workspace's pinned `compose/` environment, through compose-api's own runner; the workbench only records the runs (Alex: "Pinned env; workbench records") | The results are what compose-api would produce in production. |
+
+### Variants
+
+Each variant changes the fate network in one named way (`population.py`, `EDITS`), runs at κ = Lipniacki's NF-κB speed
+on the grid's seeds, and is compared with the grid cell by cell.
+
+| Variant | Nodes edited | Edit | Question |
+|---|---|---|---|
+| Gate removal: RIP1 | RIP1 | logic drops `NOT CASP8` | what if caspase-8 could not cleave RIP1 and close the survival route? |
+| Gate removal: both | RIP1, cIAP | also: SMAC no longer removes cIAP | what if neither gate existed? |
+| 0b (confounded) | cFLIP, BCL2, mXIAP, mcIAP, **mROS, Survival** | switch-off at $r_\text{deg}$ instead of one Calzone unit | do the protective proteins vanish too fast? (mROS and Survival should not have been included) |
+| 0c, the bound | cFLIP, BCL2, mXIAP, mcIAP | never switch off once made | can persistence save cells at all? |
+| 0d | cFLIP, BCL2, mXIAP, mcIAP | switch-off at $r_\text{deg}$ | what does the measured turnover give? |
+| Absorbing death | Apoptosis, NonACD | never switch off once on (`absorb_death` = 1) | does absorbing death change any result? ({doc}`boolean`) |
 
 ## What the grid found
 
@@ -37,13 +60,14 @@ two columns don't sum to "dead".
 | 10 | 0 | 0 | 0 | 0.790 | 0.210 | 76 min |
 | 30 | 0 | 0 | 0 | 0.690 | 0.310 | 205 min |
 | 120 | 0.160 | 0.045 | 0.075 | 0.455 | 0.355 | 658 min |
-| Calzone alone, t = 40 units, TransRate 1/24 | | 0.014 | | 0.953 | 0.029 | |
+| Calzone alone, t = 40 units, TransRate 1/24 (a different readout: the fraction of cells with each node on at t = 40, so only roughly comparable) | | 0.014 | | 0.953 | 0.029 | |
 
 1. **Held, saturating TNF kills nearly every cell.** No cell is alive at 2–30 min per unit for any κ. At 120 min per
    unit, 6.5–16% are alive, depending on κ. 24 h is only 12 Calzone units at that clock, short of the 40 at which
    Calzone's own run is read, so some of those cells may still die.
 2. **Calzone alone also kills nearly every cell, but the split differs.**
-   - At 2 min per unit, the composite's genes switch on at about Calzone's own TransRate (1/25 against 1/24).
+   - At 2 min per unit, the composite's genes switch on at about Calzone's own TransRate: $r_\text{tx}/k_\text{time} =
+     3.29\times10^{-4} \times 120 = 0.039$ per unit, about 1/25, against 1/24.
    - There it gives no survivors in 600 cells, where Calzone's 1.4% predicts about 8. It also gives more necrosis
      (5–8.5% against 2.9%).
    - The difference is the coupling. Calzone's NFkB switches on fast and stays on while its gate is open. The coupled
@@ -93,7 +117,9 @@ between NF-κB's waves.
 ### Study 0b: a confounded test, and what it taught
 
 **The test.** Alex chose to anchor the products' decay to Lipniacki's measured protein turnover: A20's degradation
-constant, $r_\text{deg} = 3\times10^{-4}\ \text{s}^{-1}$, a 38.5 min half-life.
+constant $c_5$ (the model's `A20_degradation` reaction), $r_\text{deg} = 3\times10^{-4}\ \text{s}^{-1}$, a 38.5 min
+half-life. Lipniacki's model contains no cFLIP, BCL2, XIAP or cIAP, so A20, the one NF-κB-induced protein whose
+turnover it does contain, stands in for all four. That is an assumption.
 
 **The result.** As run, the test was **confounded**. Besides the protective products, the edit also slowed:
 - **mROS.** mROS is on when NF-κB is *off* (`NOT NFkB`), and it licenses ROS, which drives necrosis.
@@ -172,7 +198,7 @@ $$
 
 | Variant | $r_\text{off}$ | Occupancy | Durable survival | Alive |
 |---|---|---|---|---|
-| Grid | $k_\text{time} = 1.39\times10^{-4}\ \text{s}^{-1}$ | 0.48 | 9 cells | 16% |
+| Grid | $k_\text{time} = 1/7200 = 1.39\times10^{-4}\ \text{s}^{-1}$ | 0.48 | 9 cells | 16% |
 | 0d | $r_\text{deg} = 3\times10^{-4}\ \text{s}^{-1}$ | 0.30 | 0 | 12% |
 | 0c | 0 | → 1 | 21 cells | 33.5% |
 

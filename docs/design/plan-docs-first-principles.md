@@ -60,6 +60,11 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
       - the glossary's First fate and Occupancy entries define their terms;
       - the index status and the roadmap are dated 11-06, and the roadmap gains Study 0, decision 28 and d1.
       Left for step 6: time.md's TransRate table and the unsourced "99–106 min" figure.
+- [x] Step 5, calibration.md for a newcomer (2026-11-06): 0b/0c/0d defined up front; the f-ids dropped. The design
+      table names the composite's layers, how TNF is held, the κ × clock grid (κ candidates, k_time formula, 200 seeded
+      cells) and the 30 s one-sampled-state coupling. A variants table lists each edit and its question. r_deg is named
+      as Lipniacki's c5, with A20 standing in for all four products stated as an assumption. The 1/25 and 1/7200
+      arithmetic is shown, and the "Calzone alone" row is flagged as a different readout.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)
