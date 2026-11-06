@@ -87,28 +87,28 @@ The legend says how far each one has got:
 - [ ] :23: D is assumed, with no source.
 
 **math/maboss.md**
-- [ ] :76: `interval` is defined only later, with no link.
-- [ ] :88: the "step" in `SeedSequence([seed, step])` is undefined.
-- [ ] :95: the studies' W (10) is never stated as theirs.
+- [x] (batch B) :76: `interval` is defined only later, with no link.
+- [x] (batch B; the steps counter, read in viva_maboss) :88: the "step" in `SeedSequence([seed, step])` is undefined.
+- [x] (batch B) :95: the studies' W (10) is never stated as theirs.
 
 **math/switch.md**
-- [ ] :60: f = 0.5627 has no source here.
-- [ ] :57–62: check names are not linked; "with the clock converted" gives no factor.
+- [x] (batch B) :60: f = 0.5627 has no source here.
+- [x] (batch B) :57–62: check names are not linked; "with the clock converted" gives no factor.
 
 **math/clock.md**
-- [ ] :5: the direction of `k_time` (top-10 item 6).
+- [x] (145c27d: clock.md was right; the glossary is now consistent) :5: the direction of `k_time` (top-10 item 6).
 
 **math/statistics.md**
-- [ ] :61–63: 0c and 0d are used before they are defined.
+- [x] (batch B) :61–63: 0c and 0d are used before they are defined.
 
 **math/timescales.md**
-- [ ] :29–30: the "d7" path.
-- [ ] :63: "edge" is used before the primer defines it, with no link.
+- [-] :29–30: the "d7" path. (A file path, not shorthand used as explanation.)
+- [x] (batch B) :63: "edge" is used before the primer defines it, with no link.
 
 **math/diffusion.md**
-- [ ] :11: why the grid is 2D is not argued (an admitted gap).
-- [ ] :44: "rel" is undefined.
-- [ ] :49–50: RegionTotal is called "added upstream", but it is an open PR.
+- [ ] (OPEN, a modelling question) :11: why the grid is 2D is not argued (an admitted gap).
+- [x] (batch B) :44: "rel" is undefined.
+- [x] (145c27d) :49–50: RegionTotal is called "added upstream", but it is an open PR.
 
 **design/composite-primer.md**
 - [ ] :5: bigraph-schema is undefined.

@@ -73,7 +73,8 @@ $$
 $$
 
 A node's probability of being on is the sum over the joint states in which it is on. `MaBoSSProcess` sets
-`time_tick = interval / windows_per_interval` and reports the **last window** of each interval, $[T - T/W, T]$, where
+`time_tick = interval / windows_per_interval`, where the interval is how much time the process covers per update
+({doc}`../design/composite-primer`), and reports the **last window** of each interval, $[T - T/W, T]$, where
 $T$ is the interval and $W$ is `windows_per_interval`.
 
 ## From an ensemble to one cell: `MaBoSSProcess`
@@ -85,14 +86,14 @@ one interval to the next:
 1. It runs `sample_count` trajectories over the interval, starting from the carried state.
 2. From the last window's joint-state distribution it **samples one joint state**, which becomes the next interval's
    start and is written to `node_state` (0 or 1 per node).
-3. Both the engine's random seed and the sampler's come from `numpy.random.SeedSequence([seed, step])`, so a run is
+3. Both the engine's random seed and the sampler's come from `numpy.random.SeedSequence([seed, step])`, where `step` counts the intervals run so far, so a run is
    reproducible from its seed.
 
 In the studies every cell is one `MaBoSSProcess` with `sample_count = 1`: one trajectory per interval, and the sampled
 state is one of the states that trajectory visited in the last window, chosen in proportion to the time it spent there.
 So a cell is a single history, and a population is many cells with different seeds. Two consequences:
 
-- The carried state lags the interval's end by about half a window, $T/(2W)$: 1.5 s for a 30 s interval with
+- The carried state lags the interval's end by about half a window, $T/(2W)$: 1.5 s for a 30 s interval with the studies'
   $W = 10$.
 - A node that switches on and off again within one interval, outside its last window, is never recorded
   (absorbing death and this effect: {doc}`../design/boolean`).

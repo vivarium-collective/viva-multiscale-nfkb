@@ -54,11 +54,12 @@ p = \min\Bigl(1,\; 2\,P\bigl(\text{Bin}(b + c, \tfrac12) \le \min(b, c)\bigr)\Bi
 = \min\Bigl(1,\; \frac{2}{2^{\,b+c}} \sum_{k=0}^{\min(b,c)} \binom{b+c}{k}\Bigr).
 $$
 
-Examples from Study 0 ({doc}`../design/calibration`):
+Examples from Study 0 ({doc}`../design/calibration`), whose variants 0c (protective proteins never switch off) and 0d
+(they switch off at Lipniacki's protein turnover rate) are compared with the unchanged baseline:
 
 | Comparison | Gained | Lost | $p$ |
 |---|---|---|---|
-| Protein turnover (0d) against baseline, 120 min per unit, dead | 17 | 9 | 0.17 |
+| Protein turnover (variant 0d) against baseline, 120 min per unit, dead | 17 | 9 | 0.17 |
 | Never-decaying products (0c), 120 min per unit, alive | 39 | 4 | $3\times10^{-8}$ |
 | 0d, 120 min per unit, alive with Survival on | 0 | 9 | 0.004 |
 

@@ -42,7 +42,8 @@ peak and fall as the Gaussian widens past it.
 ## A uniform bath with decay
 
 With no gradient, diffusion does nothing, and the field decays everywhere as $c(t) = c_0 e^{-\lambda t}$. `uniform-bath-decay`
-checks that the field stays uniform (centre, corners and an edge agree) and follows this, rel 1e-5.
+checks that the field stays uniform (centre, corners and an edge agree) and follows this, to a relative tolerance of
+$10^{-5}$ ("rel 1e-5" in the checks).
 
 ## Mass
 

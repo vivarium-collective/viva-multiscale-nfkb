@@ -1,6 +1,6 @@
 # The two-state switch, and its window average
 
-Most of the Boolean checks reduce to one node that is a two-state Markov switch whose rates don't depend on the rest of
+Most of the Boolean checks (listed with their oracles in {doc}`../verification/index`) reduce to one node that is a two-state Markov switch whose rates don't depend on the rest of
 the network. That has a closed form.
 
 ## General switch
@@ -57,8 +57,8 @@ $$
 | Check | Node | Rates | Window | Value |
 |---|---|---|---|---|
 | `calzone-reference` | mROS (NF-κB off throughout) | $u = 1/24$, $d = 0$ | [9.9, 10] | 0.339384 |
-| `pair-nfkb-analytic` | NFkB | $u = f = 0.5627$, $d = 1 - f$ | [1.9, 2] | 0.482590 |
-| `pair-nfkb-seconds` | NFkB | the same, with the clock converted | [1140, 1200] s | 0.482590 |
+| `pair-nfkb-analytic` | NFkB | $u = f = 0.5627$ (Lipniacki's state 414 s after TNF, {doc}`../design/coupling`), $d = 1 - f$ | [1.9, 2] | 0.482590 |
+| `pair-nfkb-seconds` | NFkB | the same, with the clock converted ($k_\text{time} = 1/600$, so 1200 s is 2 Calzone units, {doc}`clock`) | [1140, 1200] s | 0.482590 |
 | `transcription-anchor-*` | BCL2, cFLIP, mXIAP, Survival | $u = r_\text{tx}$, $d = 0$ | the last 1/20 of 2107 s | 0.491235 |
 
 **Why the switch is isolated in each check:**
