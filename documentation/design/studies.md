@@ -27,8 +27,9 @@ machinery be for TNF to kill, at each dose (study 2) and each distance (study 1)
 
 Study 0 ({doc}`calibration`) found that TNF held on at saturation kills nearly every cell at every death clock. So the
 signal these studies look for has to come from exposure: how much TNF reaches a cell, when, and for how long. That
-is what dose (study 2), distance (study 1) and front arrival (study 3) vary. The persistence bound (Study 0c) decides
-whether NF-κB protection can also contribute.
+is what dose (study 2), distance (study 1) and front arrival (study 3) vary. NF-κB's protective products save cells
+only if they persist far beyond their measured turnover (Studies 0c and 0d), so protection is not expected to add a
+signal of its own here.
 
 ## Why a bolus
 

@@ -28,6 +28,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "decay-calzone-flicker-120min": {
@@ -59,6 +64,13 @@
    "gained": 2,
    "lost": 1,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [
+    69
+   ],
+   "durable": []
   }
  },
  "decay-calzone-flicker-2min": {
@@ -90,6 +102,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "decay-calzone-flicker-30min": {
@@ -121,6 +138,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "decay-lipniacki-gene-10min": {
@@ -152,6 +174,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "decay-lipniacki-gene-120min": {
@@ -183,6 +210,14 @@
    "gained": 3,
    "lost": 2,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [
+    141,
+    172
+   ],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "decay-lipniacki-gene-2min": {
@@ -214,6 +249,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "decay-lipniacki-gene-30min": {
@@ -245,6 +285,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "decay-lipniacki-nfkb-10min": {
@@ -276,6 +321,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "decay-lipniacki-nfkb-120min": {
@@ -307,6 +357,22 @@
    "gained": 0,
    "lost": 9,
    "p_mcnemar_exact": 0.00390625
+  },
+  "grid_durable_cells": {
+   "dead": [
+    2,
+    72,
+    94,
+    106,
+    152,
+    188,
+    196
+   ],
+   "alive_survival_off": [
+    137,
+    181
+   ],
+   "durable": []
   }
  },
  "decay-lipniacki-nfkb-2min": {
@@ -338,6 +404,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "decay-lipniacki-nfkb-30min": {
@@ -369,6 +440,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "decayp-lipniacki-nfkb-10min": {
@@ -400,6 +476,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "decayp-lipniacki-nfkb-120min": {
@@ -431,6 +512,22 @@
    "gained": 0,
    "lost": 9,
    "p_mcnemar_exact": 0.00390625
+  },
+  "grid_durable_cells": {
+   "dead": [
+    2,
+    72,
+    94,
+    152,
+    181,
+    188,
+    196
+   ],
+   "alive_survival_off": [
+    106,
+    137
+   ],
+   "durable": []
   }
  },
  "decayp-lipniacki-nfkb-2min": {
@@ -462,6 +559,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "decayp-lipniacki-nfkb-30min": {
@@ -493,6 +595,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "ko-casp8-rip1-lipniacki-nfkb-10min": {
@@ -524,6 +631,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "ko-casp8-rip1-lipniacki-nfkb-30min": {
@@ -555,6 +667,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "ko-gate-lipniacki-nfkb-10min": {
@@ -586,6 +703,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "ko-gate-lipniacki-nfkb-30min": {
@@ -617,6 +739,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "persist-lipniacki-nfkb-10min": {
@@ -648,6 +775,11 @@
    "gained": 1,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "persist-lipniacki-nfkb-120min": {
@@ -679,6 +811,23 @@
    "gained": 18,
    "lost": 6,
    "p_mcnemar_exact": 0.022655844688415527
+  },
+  "grid_durable_cells": {
+   "dead": [
+    106
+   ],
+   "alive_survival_off": [
+    2,
+    72,
+    152,
+    181,
+    196
+   ],
+   "durable": [
+    94,
+    137,
+    188
+   ]
   }
  },
  "persist-lipniacki-nfkb-2min": {
@@ -710,6 +859,11 @@
    "gained": 0,
    "lost": 0,
    "p_mcnemar_exact": 1.0
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  },
  "persist-lipniacki-nfkb-30min": {
@@ -741,6 +895,11 @@
    "gained": 3,
    "lost": 0,
    "p_mcnemar_exact": 0.25
+  },
+  "grid_durable_cells": {
+   "dead": [],
+   "alive_survival_off": [],
+   "durable": []
   }
  }
 }

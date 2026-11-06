@@ -12,7 +12,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.115,
+  "dead_before_settle": 1.0
  },
  "decay-calzone-flicker-120min": {
   "cells": 200,
@@ -27,7 +29,9 @@
   "ever_dead": 0.915,
   "alive": 0.085,
   "alive_survival_on_at_end": 0.01,
-  "revived": 0.045
+  "revived": 0.045,
+  "first_survival_then_ever_dead": 0.12,
+  "dead_before_settle": 0.035
  },
  "decay-calzone-flicker-2min": {
   "cells": 200,
@@ -42,7 +46,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.06,
+  "dead_before_settle": 1.0
  },
  "decay-calzone-flicker-30min": {
   "cells": 200,
@@ -57,7 +63,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.135,
+  "dead_before_settle": 0.845
  },
  "decay-lipniacki-gene-10min": {
   "cells": 200,
@@ -72,7 +80,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.08,
+  "dead_before_settle": 0.99
  },
  "decay-lipniacki-gene-120min": {
   "cells": 200,
@@ -87,7 +97,9 @@
   "ever_dead": 0.92,
   "alive": 0.08,
   "alive_survival_on_at_end": 0.015,
-  "revived": 0.05
+  "revived": 0.05,
+  "first_survival_then_ever_dead": 0.26,
+  "dead_before_settle": 0.03
  },
  "decay-lipniacki-gene-2min": {
   "cells": 200,
@@ -102,7 +114,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.005,
+  "dead_before_settle": 1.0
  },
  "decay-lipniacki-gene-30min": {
   "cells": 200,
@@ -117,7 +131,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.12,
+  "dead_before_settle": 0.84
  },
  "decay-lipniacki-nfkb-10min": {
   "cells": 200,
@@ -132,7 +148,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.14,
+  "dead_before_settle": 1.0
  },
  "decay-lipniacki-nfkb-120min": {
   "cells": 200,
@@ -147,7 +165,9 @@
   "ever_dead": 0.865,
   "alive": 0.135,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.07
+  "revived": 0.07,
+  "first_survival_then_ever_dead": 0.335,
+  "dead_before_settle": 0.02
  },
  "decay-lipniacki-nfkb-2min": {
   "cells": 200,
@@ -162,7 +182,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.03,
+  "dead_before_settle": 1.0
  },
  "decay-lipniacki-nfkb-30min": {
   "cells": 200,
@@ -177,7 +199,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.175,
+  "dead_before_settle": 0.84
  },
  "decayp-lipniacki-nfkb-10min": {
   "cells": 200,
@@ -192,7 +216,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.12,
+  "dead_before_settle": 0.995
  },
  "decayp-lipniacki-nfkb-120min": {
   "cells": 200,
@@ -207,7 +233,9 @@
   "ever_dead": 0.88,
   "alive": 0.12,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.05
+  "revived": 0.05,
+  "first_survival_then_ever_dead": 0.34,
+  "dead_before_settle": 0.01
  },
  "decayp-lipniacki-nfkb-2min": {
   "cells": 200,
@@ -222,7 +250,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.03,
+  "dead_before_settle": 1.0
  },
  "decayp-lipniacki-nfkb-30min": {
   "cells": 200,
@@ -237,7 +267,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.19,
+  "dead_before_settle": 0.855
  },
  "grid-calzone-flicker-10min": {
   "cells": 200,
@@ -252,7 +284,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.11,
+  "dead_before_settle": 1.0
  },
  "grid-calzone-flicker-120min": {
   "cells": 200,
@@ -267,7 +301,9 @@
   "ever_dead": 0.935,
   "alive": 0.065,
   "alive_survival_on_at_end": 0.005,
-  "revived": 0.05
+  "revived": 0.05,
+  "first_survival_then_ever_dead": 0.155,
+  "dead_before_settle": 0.035
  },
  "grid-calzone-flicker-2min": {
   "cells": 200,
@@ -282,7 +318,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.055,
+  "dead_before_settle": 1.0
  },
  "grid-calzone-flicker-30min": {
   "cells": 200,
@@ -297,7 +335,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.14,
+  "dead_before_settle": 0.855
  },
  "grid-lipniacki-gene-10min": {
   "cells": 200,
@@ -312,7 +352,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.085,
+  "dead_before_settle": 1.0
  },
  "grid-lipniacki-gene-120min": {
   "cells": 200,
@@ -327,7 +369,9 @@
   "ever_dead": 0.905,
   "alive": 0.095,
   "alive_survival_on_at_end": 0.01,
-  "revived": 0.065
+  "revived": 0.065,
+  "first_survival_then_ever_dead": 0.25,
+  "dead_before_settle": 0.035
  },
  "grid-lipniacki-gene-2min": {
   "cells": 200,
@@ -342,7 +386,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.005,
+  "dead_before_settle": 1.0
  },
  "grid-lipniacki-gene-30min": {
   "cells": 200,
@@ -357,7 +403,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.12,
+  "dead_before_settle": 0.835
  },
  "grid-lipniacki-nfkb-10min": {
   "cells": 200,
@@ -372,7 +420,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.125,
+  "dead_before_settle": 1.0
  },
  "grid-lipniacki-nfkb-120min": {
   "cells": 200,
@@ -387,7 +437,9 @@
   "ever_dead": 0.84,
   "alive": 0.16,
   "alive_survival_on_at_end": 0.045,
-  "revived": 0.075
+  "revived": 0.075,
+  "first_survival_then_ever_dead": 0.295,
+  "dead_before_settle": 0.02
  },
  "grid-lipniacki-nfkb-2min": {
   "cells": 200,
@@ -402,7 +454,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.03,
+  "dead_before_settle": 1.0
  },
  "grid-lipniacki-nfkb-30min": {
   "cells": 200,
@@ -417,7 +471,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.175,
+  "dead_before_settle": 0.88
  },
  "ko-casp8-rip1-lipniacki-nfkb-10min": {
   "cells": 200,
@@ -432,7 +488,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.175,
+  "dead_before_settle": 1.0
  },
  "ko-casp8-rip1-lipniacki-nfkb-30min": {
   "cells": 200,
@@ -447,7 +505,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.0
+  "revived": 0.0,
+  "first_survival_then_ever_dead": 0.275,
+  "dead_before_settle": 0.91
  },
  "ko-gate-lipniacki-nfkb-10min": {
   "cells": 200,
@@ -462,7 +522,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.225
+  "revived": 0.225,
+  "first_survival_then_ever_dead": 0.18,
+  "dead_before_settle": 1.0
  },
  "ko-gate-lipniacki-nfkb-30min": {
   "cells": 200,
@@ -477,7 +539,9 @@
   "ever_dead": 1.0,
   "alive": 0.0,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.27
+  "revived": 0.27,
+  "first_survival_then_ever_dead": 0.31,
+  "dead_before_settle": 0.9
  },
  "persist-lipniacki-nfkb-10min": {
   "cells": 200,
@@ -492,7 +556,9 @@
   "ever_dead": 0.915,
   "alive": 0.085,
   "alive_survival_on_at_end": 0.005,
-  "revived": 0.05
+  "revived": 0.05,
+  "first_survival_then_ever_dead": 0.09,
+  "dead_before_settle": 0.915
  },
  "persist-lipniacki-nfkb-120min": {
   "cells": 200,
@@ -507,7 +573,9 @@
   "ever_dead": 0.665,
   "alive": 0.335,
   "alive_survival_on_at_end": 0.105,
-  "revived": 0.11
+  "revived": 0.11,
+  "first_survival_then_ever_dead": 0.145,
+  "dead_before_settle": 0.02
  },
  "persist-lipniacki-nfkb-2min": {
   "cells": 200,
@@ -522,7 +590,9 @@
   "ever_dead": 0.97,
   "alive": 0.03,
   "alive_survival_on_at_end": 0.0,
-  "revived": 0.005
+  "revived": 0.005,
+  "first_survival_then_ever_dead": 0.015,
+  "dead_before_settle": 0.97
  },
  "persist-lipniacki-nfkb-30min": {
   "cells": 200,
@@ -537,6 +607,8 @@
   "ever_dead": 0.87,
   "alive": 0.13,
   "alive_survival_on_at_end": 0.015,
-  "revived": 0.095
+  "revived": 0.095,
+  "first_survival_then_ever_dead": 0.11,
+  "dead_before_settle": 0.775
  }
 }

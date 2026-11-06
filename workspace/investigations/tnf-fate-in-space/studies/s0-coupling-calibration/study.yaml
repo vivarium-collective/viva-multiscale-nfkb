@@ -139,9 +139,12 @@ claim: >
   Under TNF held on at saturation, the coupled composite kills nearly every cell. None is alive at 24 h at 2-30 min per
   Calzone unit for any kappa, and 6.5-16% at 120 min per unit. Calzone's own network also kills nearly every cell
   (survival 1.4%), but the coupling shifts that death toward necrosis. Protective products that never decay (Study 0c,
-  an upper bound) leave 3%, 8.5% and 13% alive at 2, 10 and 30 min per unit, and 33.5% at 120 min per unit (grid 16%). Protein persistence is
-  therefore a real lever, but at fast clocks it is capped by how fast the products are made. Study 0b was confounded;
-  Study 0d reruns it correctly.
+  an upper bound) leave 3%, 8.5% and 13% alive at 2, 10 and 30 min per unit, and 33.5% at 120 min per unit (grid 16%).
+  Protein persistence is therefore a real lever, but the measured rate does not pull it: with Lipniacki's protein
+  turnover rate on those products (Study 0d, the corrected 0b), 0, 0, 0 and 12% are alive, no alive/dead change beyond
+  noise. At 2-30 min per unit nearly every cell dies before NF-kB settles, during its first wave and the damped
+  oscillation after it. At 120 min per unit the measured turnover is faster than the grid's switch-off and removes the
+  durable survivors.
 confidence: Investigating
 
 findings:
@@ -175,10 +178,13 @@ findings:
       unit for both calzone-flicker and lipniacki-nfkb (p = 0.004 each); 15 against 3 at calzone-flicker 10 min per unit
       (p = 0.008);
     - at 120 min per unit, where Lipniacki's turnover is 2.2x FASTER than Calzone's switch-off, durable survival at
-      lipniacki-nfkb falls from 9 cells to 0 (p = 0.004), because the Survival readout itself decays faster.
+      lipniacki-nfkb falls from 9 cells to 0 (p = 0.004). Corrected 2026-11-06 (after 0d): it was first read as the
+      Survival node decaying faster, but 7 of the 9 die and 2 stay alive with Survival off. 0d, which leaves Survival
+      alone, gives the same counts (6 of the 7 dead cells are the same cells), so the faster loss of the protective
+      products is enough to cost all 9. 0d does not show that Survival's own faster decay added nothing in 0b.
     The p values are uncorrected. None passes a Bonferroni threshold over 48 tests on its own, but the direction is the
     same in every fast-clock pair, and the mechanism (mROS) is in the edit. Study 0d is the corrected rerun.
-  evidence: data/paired.json (decay-*); population.py EDITS["decay-lipniacki"]
+  evidence: data/paired.json (decay-*; grid_durable_cells); population.py EDITS["decay-lipniacki"]
 - id: f4-clock-sets-mode
   tier: observation
   summary: >
@@ -227,6 +233,54 @@ findings:
     have the Survival node OFF at 24 h (durable survival only 0-10.5%), because Survival follows the flickering NFkB
     node. Alive, not the Survival node, is the readout of a protected cell in this composite.
   evidence: data/fate-table.json (persist-*); data/paired.json (persist-*)
+- id: f9-measured-turnover
+  tier: observation
+  summary: >
+    Study 0d (decay-protective, the corrected 0b; kappa = lipniacki-nfkb): cFLIP, BCL2, mXIAP and mcIAP switch off at
+    Lipniacki's protein turnover rate r_deg = 3e-4/s (A20's c5; half-life 38.5 min, so on average 56 min after their
+    logic fails) at every clock, instead of after one Calzone unit (2, 10, 30 or 120 min). Nothing else is edited. The
+    rate is Lipniacki's; applying it only while the logic fails is the network's form (Lipniacki's decay is
+    constitutive, which would remove the products faster still). Alive at 24 h is 0, 0, 0 and 12% at 2, 10, 30 and
+    120 min per unit, against 0, 0, 0 and 16% in the grid and 3, 8.5, 13 and 33.5% in the Study 0c bound. Cell by cell
+    against the grid:
+    - at 2-30 min per unit the products take 1.9-28x longer to switch off once NFkB is off, yet 200 of 200 cells die in
+      every pair; every cell that 0c saved there dies;
+    - at 120 min per unit, where the turnover is 2.2x FASTER than the grid's switch-off, 17 cells are newly dead and 9
+      newly alive (p = 0.17, no change beyond noise), end-state apoptosis rises from 91 to 103 cells (p = 0.050,
+      uncorrected), and durable survival falls from 9 cells to 0 (p = 0.004). Of those 9 grid cells, 7 die and 2 stay
+      alive with Survival off (0c keeps 8 of them alive, 3 with Survival on).
+    Of the cells that show Survival first, all have a death node on later at 2-30 min per unit, and 68 of 86 (79%) at
+    120 min per unit (grid 59 of 85, 69%; 0c 29 of 87, 33%). The measured turnover rate gives none of the bound's rescue.
+  evidence: >
+    data/fate-table.json (decayp-*: alive, alive_survival_on_at_end, first_survival, first_survival_then_ever_dead);
+    data/paired.json (decayp-*, decay-*, persist-*: ever_dead, end_apoptosis, alive_survival_on, grid_durable_cells);
+    population.py EDITS["decay-protective"]; datasets/calzone2010_cellfate/processed/turnover_anchor.json
+- id: f10-where-turnover-acts
+  tier: interpretation
+  mechanism_origin: emergent
+  summary: >
+    Where the turnover can act depends on the clock.
+    - 2-30 min per unit: 171-200 of the 200 cells in 0d have died before NF-kB settles (6 h), during its first wave
+      (f peaks at 0.933 at 24 min), the trough after it (f < 0.1 from 65 to 100 min) and the damped oscillation that
+      follows (f 0.2-0.38). At 2 min per unit cells die (median first fate 18 min) before the products are made at all
+      (a 35-min half-rise), so their decay cannot matter there. At 10-30 min per unit the bound saves 8.5-13% and the
+      measured rate saves none; with no product states recorded, these runs cannot say which part of the transient
+      decides that.
+    - 120 min per unit: 2-4 first deaths (of 133-176 dead cells) come before 6 h, so the settled duty cycle is the
+      regime that matters. Quasi-steady, a product's occupancy is f r_tx / (f r_tx + (1-f) r_off): r_tx = 3.3e-4/s
+      acts only while the coupled node is on (about 28% of the time; about 11 min on and 29 min off) and r_off only
+      while it is off. The grid's r_off = k_time = 1.39e-4/s gives 0.48; 0d's r_deg = 3e-4/s gives 0.30; 0c's r_off = 0
+      tends to 1. The order matches durable survival (grid 9 cells, 0d 0, 0c 21) and alive (16%, 12%, 33.5%).
+    Caveats. The estimate is quasi-steady: the node's phases (11 and 29 min) are not much shorter than the products'
+    time constants (51 and 56 min). The duty cycle is not external: NFkB's logic is IKK AND NOT CASP3, so the death arms
+    close the route the estimate assumes open. Occupancy is not why nearly every cell dies: the 0c bound, with products
+    that stay once made, still kills 87-97% at 2-30 min per unit. Recording the four products' states in a run would
+    test the estimate.
+  evidence: >
+    data/fate-table.json (dead_before_settle, first_survival_then_ever_dead, alive_survival_on_at_end);
+    parquet-runs/grid-lipniacki-nfkb-120min/timeseries.parquet (nfkb_fraction);
+    datasets/calzone2010_cellfate/processed/{transcription_anchor,turnover_anchor}.json (r_tx, r_deg);
+    processed/cellfate_coupled.bnd (cFLIP, BCL2, mXIAP, mcIAP: logic = NFkB, rate_up r_tx; NFkB: IKK AND NOT CASP3)
 
 alternative_hypotheses:
 - hypothesis: The coupling, not Calzone's network, causes the near-total death.
@@ -237,10 +291,12 @@ alternative_hypotheses:
     hold with u_NFkB = 1, d_NFkB = 0. But the coupling does shift the split toward necrosis and remove Calzone's 1.4%
     survival (f2).
 - hypothesis: Protective products decay too fast to protect.
-  status: supported as a lever (bound); the measured turnover is being tested
+  status: not supported at the measured turnover rate; persistence is a lever only well beyond it
   how_excluded: >
-    Study 0c (f8): never-decaying products save cells at every clock. Study 0d (decay-protective: Lipniacki's turnover on
-    the protective products only) measures how much of that the real turnover gives.
+    Study 0c (f8): never-decaying products save cells at every clock. Study 0d (f9): at Lipniacki's measured turnover
+    rate, which delays the switch-off 1.9-28x beyond the grid's at 2-30 min per unit, no cell is saved; at 120 min per
+    unit, where it is faster than the grid's, the alive/dead outcome does not change beyond noise. At the measured rate,
+    decay that is too fast is not on its own what kills the cells.
 
 discovery_implications:
   resolved:
@@ -249,17 +305,21 @@ discovery_implications:
   - kappa = lipniacki-nfkb (Alex, 2026-11-06).
   - Protein persistence is a lever, capped at fast clocks by production speed (f8).
   - The readout is alive (never dead), because Calzone's death nodes can switch off again.
+  - Lipniacki's measured protein turnover rate gives none of that lever (f9).
   remaining:
-  - How much the measured turnover gives (Study 0d, running).
   - Whether TNF's dose and timing (exposure, pulse length) change fate, which a held saturating stimulus cannot show.
   - The death clock still has no measured anchor.
   - Whether the composite should make death absorbing in the network itself, so that a dead cell stops signalling in the spatial studies (a modelling decision for Alex).
+  - Which part of NF-kB's transient decides fate at 10-30 min per unit, and whether f10's occupancy estimate holds at
+    120 min per unit; both need the four protective products' states recorded.
   followup_study_proposals:
   - title: Graded transcription
     motivation: >
       Lipniacki's transcription is proportional to nuclear NF-kB. Calzone's genes see only an on/off node, which is off
       about 72% of the time at f = 0.28 (f6). Driving the protective products' switch-on rate by f directly would be a
-      coupling change, for Alex to decide after 0d.
+      coupling change. By f10's quasi-steady estimate it keeps the time-averaged induction (f r_tx) and so the same
+      occupancy; it changes the products' timing, not their average. Its case is fidelity to Lipniacki, not a rescue
+      these data predict (for Alex).
   - title: Exposure (dose and pulse length)
     motivation: >
       With held, saturating TNF, fate is almost fixed, so dose and timing act mostly through whether and when each

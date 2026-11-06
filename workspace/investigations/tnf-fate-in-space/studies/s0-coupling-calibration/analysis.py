@@ -11,7 +11,9 @@ and both switch off again if their logic fails (for example when XIAP returns an
 end state can show a cell that has died as alive. **ever_dead** counts a cell as dead from the first tick any death node
 is on, and **alive** is its complement. These are the primary readouts, and the end-state columns are kept beside them.
 
-The first-fate fractions are reported alongside, with how many first-Survival cells later died.
+The first-fate fractions are reported alongside, with how many first-Survival cells later died: by the end state
+(first_survival_then_dead) and at any later tick (first_survival_then_ever_dead, the alive readout's count).
+dead_before_settle is the fraction of cells whose first death comes before NF-kB settles (6 h, SETTLE_S).
 
 Every variant (decay-*, persist-*, ko-*) runs on the grid's 200 cell seeds, so each is also compared CELL BY CELL with
 the grid run at the same kappa and clock. For each end-state readout (surviving, apoptosis, necrosis, dead) it counts
@@ -30,21 +32,25 @@ from pathlib import Path
 import pyarrow.parquet as pq
 
 HERE = Path(__file__).resolve().parent
+SETTLE_S = 6 * 3600.0  # NF-kB's nuclear fraction settles near f = 0.28 by about 6 h (f6)
 
 
 def table(path: Path) -> dict:
     t = pq.read_table(path)
     codes = [t.column(c).to_pylist() for c in t.column_names if c.startswith("code_")]
+    times = t.column("time_s").to_pylist()
     n = len(codes)
     row = {"cells": n, "first_survival": 0, "first_survival_then_dead": 0, "end_dead": 0, "end_apoptosis": 0,
            "end_nonacd": 0, "end_apoptosis_and_nonacd": 0, "end_surviving": 0, "end_none": 0, "ever_dead": 0,
-           "alive": 0, "alive_survival_on_at_end": 0, "revived": 0}
+           "alive": 0, "alive_survival_on_at_end": 0, "revived": 0, "first_survival_then_ever_dead": 0,
+           "dead_before_settle": 0}
     for series in codes:
         hit = next((i for i, x in enumerate(series) if x), None)
         last = series[-1]
         if hit is not None and series[hit] == 1:
             row["first_survival"] += 1
             row["first_survival_then_dead"] += bool(last & 6)
+            row["first_survival_then_ever_dead"] += any(x & 6 for x in series[hit:])
         row["end_dead"] += bool(last & 6)
         row["end_apoptosis"] += bool(last & 2)
         row["end_nonacd"] += bool(last & 4)
@@ -56,6 +62,8 @@ def table(path: Path) -> dict:
         row["alive"] += not ever
         row["alive_survival_on_at_end"] += (not ever) and last == 1
         row["revived"] += ever and not last & 6  # a death node was on, and none is at the end
+        death = next((i for i, x in enumerate(series) if x & 6), None)
+        row["dead_before_settle"] += death is not None and times[death] < SETTLE_S
     return {k: (v / n if k != "cells" else v) for k, v in row.items()}
 
 
@@ -88,6 +96,14 @@ def paired(variant: Path, grid: Path) -> dict:
         lost = sum(1 for a, b in zip(g, v, strict=True) if test(a) and not test(b))
         out[name] = {"grid": sum(map(test, g)), "variant": sum(map(test, v)), "gained": gained, "lost": lost,
                      "p_mcnemar_exact": _mcnemar_exact(gained, lost)}
+    # Where the grid's durable survivors (alive, Survival on at the end) went, by cell index, so two variants can be
+    # compared cell for cell and not only by count.
+    durable = [i for i, s in enumerate(g) if READOUTS["alive_survival_on"](s)]
+    out["grid_durable_cells"] = {
+        "dead": [i for i in durable if READOUTS["ever_dead"](v[i])],
+        "alive_survival_off": [i for i in durable if not READOUTS["ever_dead"](v[i]) and v[i][-1] != 1],
+        "durable": [i for i in durable if READOUTS["alive_survival_on"](v[i])],
+    }
     return out
 
 

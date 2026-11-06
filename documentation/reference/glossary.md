@@ -41,6 +41,10 @@ Mash-up
 Nuclear fraction $f$
 : $(\text{NFKB\_nuc}/K_v)/\text{NFKB\_total}$: Lipniacki's free nuclear NF-κB as a fraction of all NF-κB.
 
+Occupancy
+: The fraction of time a Boolean node is on. For an NF-κB target product it is set by induction (`r_tx`, only while
+  NFkB is on) against switch-off (only while NFkB is off), weighted by NF-κB's duty cycle $f$ (Study 0d).
+
 Oracle
 : The source of a check's expected values, independent of the code under test.
 
