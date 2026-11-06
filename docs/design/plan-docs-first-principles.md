@@ -90,6 +90,9 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
       - scales.md: "d7 use 1" replaced by its pages; D = 50 µm²/s marked as an assumed value (the diffusion check's), with
         the time L²/4D ≈ 8 s shown; a measured TNF D goes to step 1.7. The slowest mode is attributed to IKK turnover.
       - decisions.md: Q1–Q4, U2, plan F6, "probe" and "under 11" replaced; the Made-by values defined.
+      - diffusion.md: the decay rate is λ (no longer k); M defined; the Gaussian derived (heat kernel; variances add);
+        the image-term bound worked for the check (σ = 33 µm at 10 s, walls 3.0σ away, image ≈ 2e-5 of the direct
+        term); finite-volume and backward Euler explained. Still open: why the grid is 2D, not 3D.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)
