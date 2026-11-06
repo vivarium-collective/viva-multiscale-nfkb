@@ -67,7 +67,8 @@ study in this project varies ({doc}`../design/time`, {doc}`../design/calibration
 ## Every node
 
 Generated from the pinned network file (`raw/cellfate.bnd`, MaBoSS's copy of Calzone's model) and its initial states
-(`raw/cellfate.cfg`, which sets TNF off; the table shows it on, because every run here switches TNF on). *Read by* lists the nodes whose rule uses this node. *Composite* says how
+(`raw/cellfate.cfg`, which sets TNF off; the table shows it on, as in every study run;
+the `calzone-reference` check keeps it off, {doc}`../math/switch`). *Read by* lists the nodes whose rule uses this node. *Composite* says how
 the composite changes the node ({doc}`../design/boolean`); in addition, every rate is multiplied by `$k_time`.
 
 ```{include} _calzone_nodes.md

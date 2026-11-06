@@ -45,7 +45,7 @@ points; p values are exact McNemar, uncorrected for six comparisons:
 ## Against Calzone alone at the same settings
 
 Phase A also ran Calzone's network alone at each clock's matched TransRate and read time (20,000 cells, so its own
-standard error is below 0.004 and is not shown). The composite's values carry ± one standard error over its 200
+standard error is below 0.004 for an alive fraction and about 0.5 points for net protection, and is not shown). The composite's values carry ± one standard error over its 200
 cells: $\sqrt{p(1-p)/n}$ for an alive fraction, and the paired form for net protection ({doc}`../math/statistics`).
 By this formula a fraction of 0 has no spread; at 30 min per unit, 0 alive of 200 against Calzone's 0.125 is
 decisive on its own ($0.875^{200} \approx 3\times10^{-12}$).

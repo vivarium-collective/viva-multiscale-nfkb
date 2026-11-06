@@ -38,8 +38,8 @@ The marks mean:
 - [x] (46872ef) index.md:68: the Verification card says every check has a proven-failing negative; verification/index.md:15-16
   says six do not.
 - [x] (46872ef) index.md:89-90: Status says d1 is next and omits Study 1 and the open Option A decision.
-- [x] (batch C) science/scales.md:18-20: broken parenthetical; "d7" path in prose.
-- [x] (batch C) science/lipniacki-model.md:59: `nfkb_fraction` unexplained.
+- [x] (9692d10) science/scales.md:18-20: broken parenthetical; "d7" path in prose.
+- [x] (9692d10) science/lipniacki-model.md:59: `nfkb_fraction` unexplained.
 - [x] (d6528dd) science/calzone-network.md:69-70 and `_calzone_nodes.md`: initial states "from cellfate.cfg, with TNF switched
   on"; switch.md:59,65 says the cfg has TNF off. Say the file sets it off and the generator forces it on.
 - [x] (d6528dd) science/calzone-network.md:85: `prep.py` used before it is explained, unlinked; there are two.
@@ -47,19 +47,19 @@ The marks mean:
   rewritten network (prep.py) does.
 - [x] (d6528dd) math/clock.md:19: which `prep.py`; no link.
 - [-] (real file paths; renaming the directory would break committed references, and the pages say what each script computes) math/timescales.md:29-30 and design/time.md:84: "d7" in paths.
-- [x] (batch C) design/boolean.md:161: "knockout variants were not rerun"; Study 0 has no knockout variant.
-- [x] (batch C) design/time.md:25: IFNγ and why HeLa cells are sensitised are not explained.
+- [x] (9692d10) design/boolean.md:161: "knockout variants were not rerun"; Study 0 has no knockout variant.
+- [x] (9692d10) design/time.md:25: IFNγ and why HeLa cells are sensitised are not explained.
 - [x] (d6528dd) design/rule-based.md:21-23: broken sentence; the point argues against its own heading.
-- [x] (batch C) design/calibration.md:32 (and decisions.md:35): "undecided" not defined.
-- [x] (batch C) design/calibration.md:34, :88: "(glossary)" unlinked, forward; "the three ways the death machinery closes the
+- [x] (9692d10) design/calibration.md:32 (and decisions.md:35): "undecided" not defined.
+- [x] (9692d10) design/calibration.md:34, :88: "(glossary)" unlinked, forward; "the three ways the death machinery closes the
   gate" not listed.
-- [x] (batch C) design/calibration.md:133: "every pair" undefined.
+- [x] (9692d10) design/calibration.md:133: "every pair" undefined.
 - [x] (46872ef) design/validation.md:8: "decision 29" unlinked.
 - [x] (46872ef) design/validation.md:56-58: "never protects more than Calzone alone" and "equal at 240" against 9.0 vs 8.8; noise
   not stated.
 - [x] (46872ef) design/validation.md:61: "24 h is only 3 to 12 Calzone units at these clocks"; 48 at the 30 min clock.
 - [-] (the codes are keys into the cited data files, in the evidence column; each row's prose names the study) design/decisions.md:40-42: variant codes `decay-*`, `persist-protective`, `decay-protective` unexplained.
-- [x] (batch C) design/roadmap.md:46-47: "the timescale analysis's planned second use" is not on the timescales page.
-- [x] (batch C) tutorials/02:43: "(tutorial 4)" unlinked.
+- [x] (9692d10) design/roadmap.md:46-47: "the timescale analysis's planned second use" is not on the timescales page.
+- [x] (9692d10) tutorials/02:43: "(tutorial 4)" unlinked.
 
-Total: 29.
+Total: 31 entries (the reader counted 29 issues, counting an issue that spans pages once): 29 fixed, 2 not defects.

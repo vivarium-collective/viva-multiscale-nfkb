@@ -84,7 +84,7 @@ reference/index
 ```{admonition} Status (2026-11-06)
 :class: important
 Each layer has been built and checked on its own, and so has the kinetic → Boolean coupling. Study 0 has calibrated
-that coupling ({doc}`design/calibration`), and Study 1 found that NF-κB protects at most about 10 to 13% of cells in
+that coupling ({doc}`design/calibration`), and Study 1 found that NF-κB's net protection is at most about 10 to 13 points (percent of cells) in
 the composite, a limit set by Calzone's own race ({doc}`design/validation`). Whether to put NF-κB's activation route
 on Lipniacki's clock is open. Then come TNF's dose–response at the receptor, the spatial → kinetic coupling,
 then the integrated composite and the three

@@ -20,15 +20,15 @@ changes, U1 and U2:
 ## Open questions
 
 These are unresolved, and each is stated where it is used:
-- **Should NF-κB's activation route run on Lipniacki's clock?** Under held TNF, NF-κB saves at most about 10-13% of
-  cells in the composite, and no death clock meets the proposed standard with real survival ({doc}`validation`). The
+- **Should NF-κB's activation route run on Lipniacki's clock?** Under held TNF, NF-κB's net protection in the composite is at most about 10 to 13
+  points (percent of cells), and no death clock meets the standard with real survival ({doc}`validation`). The
   limit is Calzone's own race between caspase-8 and NF-κB's activation route (TNFR, RIP1, RIP1ub, IKK), which runs on
   the death clock even though Lipniacki already times that activation (337 s). Anchoring it to Lipniacki, as
   $r_\text{tx}$ does for the genes, is the model-native option, to be tested as a Study 1 variant first. A decision for
   Alex before d1.
 - **Is receptor binding fast enough to use its equilibrium (d1)?** It relaxes within about 100 s, against NF-κB's 337 s
   half-rise: a factor of about 3 ({doc}`rule-based`). To be checked when d1 is built.
-- **How fast should the fate network's TNF node flip?** Its rates are the occupancy scaled by `k_time`, so it follows
+- **How fast should the fate network's TNF node flip?** Its rates are occ (the receptor-engagement fraction) scaled by `k_time`, so it follows
   the death clock, while the NF-κB node's speed is deliberately independent of it ({doc}`coupling`). No page argues
   this choice yet.
 - **How is the cell represented on the spatial grid?** Its size, its position, and which grid cells count as its

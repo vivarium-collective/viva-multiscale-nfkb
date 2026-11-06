@@ -79,7 +79,7 @@ def table() -> str:
     nodes = _nodes((DATA / "raw" / "cellfate.bnd").read_text())
     if set(nodes) != set(MEANING):
         _fail(f"MEANING does not name exactly the network's nodes: {sorted(set(nodes) ^ set(MEANING))}")
-    on = _initial_on((DATA / "raw" / "cellfate.cfg").read_text()) | {"TNF"}  # the stimulus is on in every run here
+    on = _initial_on((DATA / "raw" / "cellfate.cfg").read_text()) | {"TNF"}  # the stimulus is on in every study run
     coupling = json.loads((DATA / "processed" / "coupling.json").read_text())
     changed = {**{n: "rates rewritten" for n in coupling["rewritten"]},
                **{n: "`$TransRate` → `$r_tx / $k_time`" for n in coupling["transrate_nodes"]}}

@@ -6,7 +6,7 @@ Section B of `agenda-onboarding.md` (lines 113–191) asks for the design of one
 from the simulators onboarded in A. Its layers are Boolean → ODE kinetic core → optional rule-based → spatial particle +
 PDE. d7 (eDMD/VAC) is already scoped there. This plan does not redo d7; its timing step is d7's "use 1".
 
-**Status (2026-11-06): Study 0 done; a validation study is next (Alex).**
+**Status (2026-11-06): Studies 0 and 1 done; whether to put NF-κB's activation route on Lipniacki's clock is open (Alex).**
 - **Study 0** (`workspace/investigations/tnf-fate-in-space/studies/s0-coupling-calibration`; documented in
   `documentation/design/calibration.md`) decided:
   - κ = ln 2/337 s (decision 25), now the composite's default, read from `transcription_anchor.json`;
@@ -19,6 +19,11 @@ PDE. d7 (eDMD/VAC) is already scoped there. This plan does not redo d7; its timi
   - Micheau & Tschopp 2003, *Cell* 114:181: FLIP(L) in complex II, "the cell survives";
   - Lee et al. 2016, *Sci Rep* 6:39519: HeLa needed IFNγ sensitisation at 100 ng/ml continuous TNF.
   Exposure cannot explain that, so the next study asks why the coupled model kills, before d1 and the headline studies.
+- **Study 1 done** (`s1-survival-validation`; `documentation/design/validation.md`). NF-κB's net protection is at most
+  about 10 to 13 points at any clock from 30 to 480 min per unit. The limit is Calzone's own race between caspase-8 and
+  NF-κB's activation route (TNFR, RIP1, RIP1ub, IKK), which in the composite runs on the death clock. Option A, putting
+  that route on Lipniacki's clock as r_tx does for the genes, tested first as a Study 1 variant, is Alex's decision
+  before d1.
 - **Documentation** was rewritten from first principles (`docs/design/plan-docs-first-principles.md`) and is checked by
   fresh-reader passes (`docs-fresh-reader-round*.md`).
 
@@ -315,7 +320,8 @@ One composite and one parameter sweep give all three. Each is a workspace study 
     (viva-nfsim@76ff7fc `processes.py:84-96,340-350`, re-read).
   - **Other wrapper limits.** It has no parameter port, and it restarts the same RNG seed every interval
     (`:109-113`).
-  - **Timescales.** Receptor binding (about 100 s) is quasi-steady on NF-κB's timescale of hours. Lipniacki's `TNF`
+  - **Timescales.** Receptor binding relaxes in about 100 s, against NF-κB's 337 s half-rise: a factor of
+    about 3, so treating it as quasi-steady is an approximation to be checked when d1 is built. Lipniacki's `TNF`
     is an on/off gate (a modifier in `k1*TNF*IKKn` and `k2*TNF*A20*IKKa`), so one scalar carries no extra information
     into the core.
 - **(b) IKK or IκB:NF-κB complexes** would duplicate what Lipniacki already owns, breaking the ownership rule.

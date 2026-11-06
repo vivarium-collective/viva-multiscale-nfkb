@@ -89,7 +89,7 @@ All 31 Calzone nodes and every logic rule are kept. Only rates change:
 | Node | Change | Why |
 |---|---|---|
 | NFkB | logic kept (`IKK AND NOT CASP3`); rates `@logic ? $u_NFkB : 0`, `@logic ? $d_NFkB : 1` | while the route is open, NF-κB follows Lipniacki ($u = f\kappa/k_\text{time}$, $d = (1-f)\kappa/k_\text{time}$, which is $u = f$, $d = 1-f$ in the checks that set $\kappa = k_\text{time}$; {doc}`coupling`); when it closes, NF-κB switches off as in Calzone; `$High_NFkB` is kept |
-| TNF | rates `$u_TNF` / `$d_TNF` | driven by the same receptor-occupancy signal as Lipniacki's `TNF_R` |
+| TNF | rates `$u_TNF` / `$d_TNF` | driven by occ, the same receptor-engagement fraction that sets Lipniacki's `TNF_R` |
 | Apoptosis, NonACD | switch-off `@logic ? 0 : ($absorb_death ? 0 : 1)` | death is irreversible: with `absorb_death` nonzero (the composite) a death node stays on; 0 is Calzone's network (below) |
 | every node | each rate × `$k_time` | the death-machinery clock the studies sweep ({doc}`time`) |
 | cIAP, cFLIP, BCL2, mROS, mcIAP, mXIAP, Survival | `$TransRate` → `$r_tx / $k_time` | Calzone's transcription-scale steps (NF-κB-induced cFLIP, BCL2, mXIAP, mcIAP; cIAP from mcIAP; mROS, induced when NF-κB is *off*; the Survival phenotype) switch on at Lipniacki's rate ({doc}`time`) |
