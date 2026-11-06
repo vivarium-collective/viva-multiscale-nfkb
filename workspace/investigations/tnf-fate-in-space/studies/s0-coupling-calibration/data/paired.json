@@ -371,6 +371,130 @@
    "p_mcnemar_exact": 1.0
   }
  },
+ "decayp-lipniacki-nfkb-10min": {
+  "against": "grid-lipniacki-nfkb-10min",
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
+   "gained": 0,
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  },
+  "end_apoptosis": {
+   "grid": 158,
+   "variant": 155,
+   "gained": 5,
+   "lost": 8,
+   "p_mcnemar_exact": 0.5810546875
+  },
+  "end_necrosis": {
+   "grid": 42,
+   "variant": 45,
+   "gained": 8,
+   "lost": 5,
+   "p_mcnemar_exact": 0.5810546875
+  },
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
+   "gained": 0,
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  }
+ },
+ "decayp-lipniacki-nfkb-120min": {
+  "against": "grid-lipniacki-nfkb-120min",
+  "ever_dead": {
+   "grid": 168,
+   "variant": 176,
+   "gained": 17,
+   "lost": 9,
+   "p_mcnemar_exact": 0.16863754391670227
+  },
+  "end_apoptosis": {
+   "grid": 91,
+   "variant": 103,
+   "gained": 22,
+   "lost": 10,
+   "p_mcnemar_exact": 0.050102459732443094
+  },
+  "end_necrosis": {
+   "grid": 71,
+   "variant": 71,
+   "gained": 19,
+   "lost": 19,
+   "p_mcnemar_exact": 1.0
+  },
+  "alive_survival_on": {
+   "grid": 9,
+   "variant": 0,
+   "gained": 0,
+   "lost": 9,
+   "p_mcnemar_exact": 0.00390625
+  }
+ },
+ "decayp-lipniacki-nfkb-2min": {
+  "against": "grid-lipniacki-nfkb-2min",
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
+   "gained": 0,
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  },
+  "end_apoptosis": {
+   "grid": 187,
+   "variant": 184,
+   "gained": 0,
+   "lost": 3,
+   "p_mcnemar_exact": 0.25
+  },
+  "end_necrosis": {
+   "grid": 13,
+   "variant": 16,
+   "gained": 3,
+   "lost": 0,
+   "p_mcnemar_exact": 0.25
+  },
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
+   "gained": 0,
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  }
+ },
+ "decayp-lipniacki-nfkb-30min": {
+  "against": "grid-lipniacki-nfkb-30min",
+  "ever_dead": {
+   "grid": 200,
+   "variant": 200,
+   "gained": 0,
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  },
+  "end_apoptosis": {
+   "grid": 138,
+   "variant": 133,
+   "gained": 7,
+   "lost": 12,
+   "p_mcnemar_exact": 0.359283447265625
+  },
+  "end_necrosis": {
+   "grid": 62,
+   "variant": 67,
+   "gained": 12,
+   "lost": 7,
+   "p_mcnemar_exact": 0.359283447265625
+  },
+  "alive_survival_on": {
+   "grid": 0,
+   "variant": 0,
+   "gained": 0,
+   "lost": 0,
+   "p_mcnemar_exact": 1.0
+  }
+ },
  "ko-casp8-rip1-lipniacki-nfkb-10min": {
   "against": "grid-lipniacki-nfkb-10min",
   "ever_dead": {

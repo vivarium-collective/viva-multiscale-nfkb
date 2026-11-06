@@ -253,8 +253,7 @@ discovery_implications:
   - How much the measured turnover gives (Study 0d, running).
   - Whether TNF's dose and timing (exposure, pulse length) change fate, which a held saturating stimulus cannot show.
   - The death clock still has no measured anchor.
-  - Whether the composite should make death absorbing in the network itself, so that a dead cell stops signalling in
-    the spatial studies (a modelling decision for Alex).
+  - Whether the composite should make death absorbing in the network itself, so that a dead cell stops signalling in the spatial studies (a modelling decision for Alex).
   followup_study_proposals:
   - title: Graded transcription
     motivation: >
@@ -708,6 +707,58 @@ runs:
       version: 3-freshness
       graded_at: '2026-11-06T13:15:02.224622+00:00'
       inputs_hash: 11edf9ebb8c2f9f6
+      store: resolved
+- name: decayp-lipniacki-nfkb-120min
+  status: complete
+  timestamp: 1793972084.55157
+  emitter:
+    kind: parquet
+    store: parquet-runs/decayp-lipniacki-nfkb-120min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-protective\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0001388888888888889, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 120}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T13:34:44.722593+00:00'
+      inputs_hash: 626afaf7f6ab5675
+      store: resolved
+- name: decayp-lipniacki-nfkb-30min
+  status: complete
+  timestamp: 1793971811.478039
+  emitter:
+    kind: parquet
+    store: parquet-runs/decayp-lipniacki-nfkb-30min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-protective\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0005555555555555556, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 30}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T13:34:44.722666+00:00'
+      inputs_hash: 597a10f9942b1750
+      store: resolved
+- name: decayp-lipniacki-nfkb-10min
+  status: complete
+  timestamp: 1793971543.355946
+  emitter:
+    kind: parquet
+    store: parquet-runs/decayp-lipniacki-nfkb-10min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-protective\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.0016666666666666668, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 10}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T13:34:44.722728+00:00'
+      inputs_hash: b79142b1cf042f7d
+      store: resolved
+- name: decayp-lipniacki-nfkb-2min
+  status: complete
+  timestamp: 1793971272.621522
+  emitter:
+    kind: parquet
+    store: parquet-runs/decayp-lipniacki-nfkb-2min/timeseries.parquet
+  params: "{\"base_seed\": 1, \"cells\": 200, \"edits\": [\"decay-protective\"], \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"hours\": 24.0, \"interval\": 30.0, \"k_time\": 0.008333333333333333, \"kappa\": 0.0020568165595250603, \"kappa_name\": \"lipniacki-nfkb\", \"minutes_per_calzone_unit\": 2}"
+  computed_outcomes:
+    _grader:
+      version: 3-freshness
+      graded_at: '2026-11-06T13:34:44.722788+00:00'
+      inputs_hash: da9d52358023463b
       store: resolved
 pipeline_gate:
   gate_evaluator:
