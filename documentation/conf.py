@@ -19,7 +19,7 @@ extensions = [
 myst_enable_extensions = ["dollarmath", "amsmath", "colon_fence", "deflist", "attrs_inline"]
 myst_heading_anchors = 3
 source_suffix = {".md": "markdown"}
-exclude_patterns = ["_build"]
+exclude_patterns = ["_build", "**/_*.md"]  # _*.md: generated tables, included by a page
 
 html_theme = "pydata_sphinx_theme"
 html_title = "viva-multiscale-nfkb"

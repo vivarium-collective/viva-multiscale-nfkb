@@ -14,7 +14,10 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
 
 - [x] Decision 28, absorbing death: documented in design/boolean.md with its check; glossary "Alive" updated; the
       math bug at boolean.md:97 (`\t` in `\text`) fixed; "Four checks" corrected to five.
-- [ ] Steps 1–8 below.
+- [x] Step 1.2, the Calzone network: science/calzone-network.md, with the node table generated from the pinned
+      network (documentation/science/code/calzone_network.py; `--check` fails when stale). The wiring diagram is
+      still open: conf.py has no diagram extension.
+- [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)
 
