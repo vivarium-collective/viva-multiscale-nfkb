@@ -32,20 +32,20 @@ The marks mean:
 
 ## Other items
 
-- [ ] boolean-networks:50: where t = 40 Calzone units comes from (presumably MaBoSS's example configuration).
-- [ ] models:20: Tellurium is undefined.
-- [ ] scales:18: the half-rise and A20 delay rows come from simulation (anchor_transcription.py), not from the Jacobian.
-- [ ] switch:59: the calzone-reference window [9.9, 10] and its reference configuration are not explained.
-- [ ] switch:60: 0.482590 needs f = 0.56268 unrounded; with 0.5627 the value is 0.482609. Give f to five digits.
-- [ ] composite-primer:64: "two files" against tutorial 01's "three things", where the generator lives outside the
+- [x] (round-2 batch 2) boolean-networks:50: where t = 40 Calzone units comes from (presumably MaBoSS's example configuration).
+- [x] (round-2 batch 2) models:20: Tellurium is undefined.
+- [x] (round-2 batch 2) scales:18: the half-rise and A20 delay rows come from simulation (anchor_transcription.py), not from the Jacobian.
+- [x] (round-2 batch 2) switch:59: the calzone-reference window [9.9, 10] and its reference configuration are not explained.
+- [x] (round-2 batch 2) switch:60: 0.482590 needs f = 0.56268 unrounded; with 0.5627 the value is 0.482609. Give f to five digits.
+- [x] (round-2 batch 2) composite-primer:64: "two files" against tutorial 01's "three things", where the generator lives outside the
   folder.
-- [ ] spatial:41–43: VCell and pyvcell are undefined.
-- [ ] boolean:31: cmaboss is undefined.
-- [ ] boolean:62, calibration:35 and decisions:21, 35, 38: "adversarial review" is never described.
-- [ ] boolean:138 says 22.5–27% and calibration:90 says 22–27%.
-- [ ] calibration:30: 2 to 120 min is a factor of 60, about 1.8 orders of magnitude, not two.
-- [ ] calibration:34, 57, 76, 183: "first fate" is used without a link, and it is ambiguous whether Survival counts.
-- [ ] decisions:3 says "every design decision", but the `bulk_species: false` decision has no row.
-- [ ] decisions:40 (row 27): "save no cell" overstates the result (9 newly alive against 17 newly dead; no net change).
-- [ ] tutorial 04:43: "the open question of tutorial 2" is now settled; the reference is stale.
-- [ ] bibliography:32–34: the Noé & Nüske plan is mentioned on no page.
+- [x] (round-2 batch 2) spatial:41–43: VCell and pyvcell are undefined.
+- [x] (round-2 batch 2) boolean:31: cmaboss is undefined.
+- [x] (round-2 batch 2) boolean:62, calibration:35 and decisions:21, 35, 38: "adversarial review" is never described.
+- [x] (round-2 batch 2) boolean:138 says 22.5–27% and calibration:90 says 22–27%.
+- [x] (round-2 batch 2) calibration:30: 2 to 120 min is a factor of 60, about 1.8 orders of magnitude, not two.
+- [x] (round-2 batch 2) calibration:34, 57, 76, 183: "first fate" is used without a link, and it is ambiguous whether Survival counts.
+- [x] (round-2 batch 2) decisions:3 says "every design decision", but the `bulk_species: false` decision has no row.
+- [x] (round-2 batch 2) decisions:40 (row 27): "save no cell" overstates the result (9 newly alive against 17 newly dead; no net change).
+- [x] (round-2 batch 2) tutorial 04:43: "the open question of tutorial 2" is now settled; the reference is stale.
+- [x] (round-2 batch 2) bibliography:32–34: the Noé & Nüske plan is mentioned on no page.

@@ -12,7 +12,7 @@ value and the expected value.
 
 ## Read one check
 
-Open `checks/boolean/pair-nfkb-analytic/`. It holds three things:
+Open `checks/boolean/pair-nfkb-analytic/`. It holds two files, and a generator script beside the group writes them:
 
 - **`case.yaml`:** what is run (`document`, `interval`), what it shows (`description`), and the expectations, each a
   field of the emitter's last row with a tolerance.

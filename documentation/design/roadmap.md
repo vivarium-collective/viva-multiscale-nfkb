@@ -35,6 +35,9 @@ These are unresolved, and each is stated where it is used:
 
 ## Later
 
+- **The full composite's slow modes from simulated trajectories,** where no equations are available (Noé & Nüske
+  2013; the timescale analysis's planned second use).
+
 - **v2 spatial:** the nuclear envelope as a membrane flux between regions sized 1 : $K_v$ ({doc}`spatial`).
 - **Particles:** `SmoldynHybrid` near the cell surface, judged against the PDE-only result.
 - **Many cells:** one TNF field feeding N cells, each with its own kinetic and Boolean stack. Schliemann 2011 studies

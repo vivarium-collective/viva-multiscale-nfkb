@@ -56,8 +56,8 @@ $$
 
 | Check | Node | Rates | Window | Value |
 |---|---|---|---|---|
-| `calzone-reference` | mROS (NF-κB off throughout) | $u = 1/24$, $d = 0$ | [9.9, 10] | 0.339384 |
-| `pair-nfkb-analytic` | NFkB | $u = f = 0.5627$ (Lipniacki's state 414 s after TNF, {doc}`../design/coupling`), $d = 1 - f$ | [1.9, 2] | 0.482590 |
+| `calzone-reference` | mROS (NF-κB off throughout) | $u = 1/24$, $d = 0$ | [9.9, 10] (MaBoSS's reference run ends at t = 10, in windows of 0.1: `cellfate.cfg`) | 0.339384 |
+| `pair-nfkb-analytic` | NFkB | $u = f = 0.56268$ (Lipniacki's state 414 s after TNF, {doc}`../design/coupling`), $d = 1 - f$ | [1.9, 2] | 0.482590 |
 | `pair-nfkb-seconds` | NFkB | the same, with the clock converted ($k_\text{time} = 1/600$, so 1200 s is 2 Calzone units, {doc}`clock`) | [1140, 1200] s | 0.482590 |
 | `transcription-anchor-*` | BCL2, cFLIP, mXIAP, Survival | $u = r_\text{tx}$, $d = 0$ | the last 1/20 of 2107 s | 0.491235 |
 

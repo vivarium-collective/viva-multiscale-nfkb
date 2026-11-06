@@ -15,7 +15,8 @@ layer that reads it. {doc}`../design/architecture` gives this rule ("one owner")
 
 ## Scales of time
 
-Measured unless marked: the NF-κB model's rows come from its Jacobian ({doc}`../math/timescales`,
+Measured unless marked: the NF-κB model's fastest and slowest modes and its oscillation come from its Jacobian
+({doc}`../math/timescales`; the half-rise and the NF-κB → A20 delay come from simulating it, `anchor_transcription.py`),
 `analysis/d7/kinetic_timescales.py`), and the others from {doc}`../design/time` and {doc}`../design/rule-based`:
 
 | Process | Timescale |

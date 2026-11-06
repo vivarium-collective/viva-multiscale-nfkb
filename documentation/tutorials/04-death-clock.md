@@ -40,7 +40,7 @@ studies sweep it.
 
 ```{admonition} Provisional
 :class: warning
-In this sweep the NF-κB node's switching speed also scales with `k_time`: the open question of tutorial 2. Slower
+In this sweep the NF-κB node's switching speed also scales with `k_time`: the question tutorial 2 discusses, which Study 0 has since settled. Slower
 death clocks also mean slower NF-κB flicker, which helps survival. The calibration study (Study 0) has since
 separated the two: the composite now uses κ = Lipniacki's own NF-κB speed, and under held TNF nearly every cell dies at
 every clock ({doc}`../design/calibration`).

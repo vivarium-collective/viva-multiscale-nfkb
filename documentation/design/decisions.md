@@ -2,13 +2,16 @@
 
 Every design decision in this workspace, in order. "Alex" marks a decision made by Alex Patrie, who leads the
 project, with their words where they were recorded. "design", "source" and "measured" mark decisions that follow from the
-design principles ({doc}`architecture`), from a model's source, or from a measurement; the evidence column cites it. The plan of record is
+design principles ({doc}`architecture`), from a model's source, or from a measurement; the evidence column cites it.
+"Adversarial review" means an independent reviewer, with no part in the change, checked it against its sources before
+it was accepted. The plan of record is
 [`docs/design/plan-section-b.md`](https://github.com/vivarium-collective/viva-multiscale-nfkb/blob/main/docs/design/plan-section-b.md).
 
 | # | Decision | Made by | Why | Evidence | Page |
 |---|---|---|---|---|---|
 | 1 | Kinetic core is Lipniacki 2004 (BIOMD0000000786) | Alex | Two sized compartments; one external stimulus; curated; engines agree | COPASI and Tellurium trajectories differ by NRMSE 3.6e-7 (viva-biomodels' screen) | {doc}`kinetic` |
 | 2 | Tellurium, not COPASI, runs it | source | COPASI wrapper mis-sets initial concentrations, and its time doesn't accumulate | viva-copasi `processes.py:115,831` | {doc}`kinetic` |
+| 2b | `TelluriumProcess` runs with `bulk_species: false` | source | The default `true` makes `species` one unnamed array, and the adapters read species by name | viva-tellurium `processes.py:116` | {doc}`kinetic` |
 | 3 | Remove the stimulus event; drive `TNF_R` | design | The spatial layer owns the stimulus | `lipniacki2004/prep.py` | {doc}`kinetic` |
 | 4 | Pre-equilibrate once, then seed | design | Don't simulate 101 h of rest in every run | `preequilibrated-steady` | {doc}`kinetic` |
 | 5 | viva-tellurium gets `parameters_in` (v0.2.3) | Alex | Nothing could drive a parameter during a run | viva-tellurium#37 | {doc}`kinetic` |
@@ -37,6 +40,6 @@ design principles ({doc}`architecture`), from a model's source, or from a measur
 | 26 | ~~Protective-protein decay at A20's turnover (Study 0b)~~ (confounded; superseded by 26b) | Alex ("Anchor protein decay") | The edit also slowed mROS (a necrosis driver) and the Survival readout | `data/paired.json` (decay-*) | {doc}`calibration` |
 | 26b | Persistence bound first (Study 0c): cFLIP, BCL2, mXIAP, mcIAP never switch off | Alex ("Run 0c bound first"); node set from review | Decides whether persistence is a lever at all before modelling its rate | `population.py` `persist-protective` | {doc}`calibration` |
 | 26c | Protein decay at A20's turnover on the four protective products only (Study 0d, the corrected 26) | Alex ("Anchor protein decay"), executed as intended | Measures how much of 26b's bound the real turnover gives | `population.py` `decay-protective` | {doc}`calibration` |
-| 27 | **The next lever is exposure (d1, McMillan 2021's TNF → receptor dose–response), not graded transcription** | Alex (2026-11-06) | Under held, saturating TNF the protective products save no cell at their measured turnover (Study 0d). Graded transcription keeps the time-averaged induction $f\,r_\text{tx}$, so it predicts no rescue; exposure is what the spatial studies vary | `s0-coupling-calibration/study.yaml` (its findings on protein turnover) | {doc}`calibration` |
+| 27 | **The next lever is exposure (d1, McMillan 2021's TNF → receptor dose–response), not graded transcription** | Alex (2026-11-06) | Under held, saturating TNF the protective products do not change the alive/dead outcome beyond noise at their measured turnover (Study 0d). Graded transcription keeps the time-averaged induction $f\,r_\text{tx}$, so it predicts no rescue; exposure is what the spatial studies vary | `s0-coupling-calibration/study.yaml` (its findings on protein turnover) | {doc}`calibration` |
 | 28 | **Death is absorbing in the composite's network**: Apoptosis and NonACD never switch off once on, through a parameter `absorb_death` (0 = Calzone's network exactly, 1 = the composite) | Alex (2026-11-06) | Death is irreversible, and the readout already counts it that way (23b), but Calzone's death nodes switch off when CASP3 or ATP loss reverses. In tissue a dead cell must not keep signalling. A parameter, written as a switch `($absorb_death ? 0 : 1)`, keeps the `coupled-equals-full` checks valid at 0 and can give no negative rate | `prep.py`; `checks/boolean/absorbing-death` (analytic; 0 fails it); `checks/boolean/coupled-*`; Study 0 rerun on its seeds (no first death moved) | {doc}`boolean` |
 | 29 | **A validation study before d1**: why the coupled model kills nearly every cell under held TNF when cells with working NF-κB survive it | Alex (2026-11-06) | Exposure cannot explain the gap: the cited experiments also held saturating TNF. The headline studies have a signal only if survival is possible | Micheau & Tschopp 2003; Lee et al. 2016 ({doc}`../reference/bibliography`) | {doc}`roadmap` |

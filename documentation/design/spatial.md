@@ -38,8 +38,8 @@ refinement run.
 Matching the spatial layer to the kinetic compartments needs a feature viva-pde-particle lacks: two regions with a
 membrane flux. v2 would carry Lipniacki's four transport fluxes ($i_1$, $i_{1a}$, $e_{1a}$, $e_{2a}$) between regions
 sized 1 : $K_v$. The two layers would advance in alternating steps (an operator split): at each coupling step the spatial layer
-would start from the kinetic model's current concentrations and return only the change that transport caused. VCell
-already models compartments with membrane fluxes, and viva-pde-particle builds on the VCell software stack (it reads
-VCell models through `pyvcell`, and its finite-volume scheme mirrors VCell's solver), so v2 extends that rather than
+would start from the kinetic model's current concentrations and return only the change that transport caused. VCell (the Virtual
+Cell, a modelling and simulation platform for cell biology) already models compartments with membrane fluxes, and viva-pde-particle builds on the VCell software stack (it reads
+VCell models through `pyvcell`, VCell's Python library, and its finite-volume scheme mirrors VCell's solver), so v2 extends that rather than
 inventing one. Scoped in
 [`docs/design/task-plan-membrane-flux.md`](https://github.com/vivarium-collective/viva-multiscale-nfkb/blob/main/docs/design/task-plan-membrane-flux.md).

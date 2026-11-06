@@ -28,7 +28,7 @@ Two properties of the wrapper shape the design:
 ## Why MaBoSS and not BoolNet
 
 The project's initial plan asked about BoolNet. BoolNet is an R package with no process-bigraph wrapper, while MaBoSS is
-Python-native through `cmaboss`, and its stochastic, rate-based semantics fit a composite with a real-time clock.
+Python-native through `cmaboss` (MaBoSS's Python binding), and its stochastic, rate-based semantics fit a composite with a real-time clock.
 viva-maboss was built for this purpose; its README gives the full comparison.
 
 ## Source

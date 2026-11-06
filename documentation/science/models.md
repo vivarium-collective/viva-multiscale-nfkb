@@ -17,7 +17,8 @@ J Theor Biol 228:195–215. BioModels **BIOMD0000000786** (curated).
 - **Why this model** (Alex, 2026-11-04):
   - It has two sized compartments, so nuclear NF-κB is a real concentration.
   - Its stimulus is one external input, exactly the port a spatial layer drives.
-  - COPASI and Tellurium agree on its own simulation: their trajectories differ by a normalised root-mean-square
+  - COPASI and Tellurium (a Python modelling environment whose simulation engine is libRoadRunner) agree on its own
+    simulation: their trajectories differ by a normalised root-mean-square
     error (NRMSE) of 3.6e-7 (viva-biomodels, a companion package that runs BioModels models in several engines and
     compares the results; {doc}`../reference/datasets`).
 - **Rejected alternatives** ({doc}`../design/kinetic`):
