@@ -26,6 +26,13 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
       factor Kv, the NFKB_total derivation, f, and the three rates taken from the model. Species and reaction
       tables are generated from the SBML (documentation/science/code/lipniacki_model.py, `--check`), and conservation
       is proved symbolically (dropping 1/Kv fails the proof).
+- [x] Step 1.1, science/boolean-networks.md:
+      - why on/off; nodes, states and rules; the synchronous, asynchronous and rated updating schemes;
+      - attractors and basins;
+      - reachability against probability, with the rate table measured at t = 40 by
+        documentation/science/code/transrate_race.py (TransRate 1/24 gives 0.014/0.952/0.030; 1 gives
+        0.201/0.540/0.259).
+      time.md's stale 1/24 row is logged under step 6.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)
@@ -148,6 +155,9 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
   - show 2.1 min, 18 min, 17 h and 30× as arithmetic;
   - state the time point and the CTMC-against-reachability reason for 30/60/10;
   - link "moves when, not who wins" to math/clock, with the fixed-horizon caveat;
+  - its TransRate table states no time point or cell count, and its 1/24 row (0.018/0.951/0.031) disagrees with
+    t = 40 (0.014/0.952/0.030, 50,000 cells, 2026-11-06; the check oracle gives 0.014/0.953/0.029). Generate the
+    table with a script, at a stated t and N;
   - replace d7 and define the timescale terms (math/timescales).
 - **models.md:**
   - define boundary species, assignment rules, IKKn/IKKa, k₁/k₂ and A20's role;
