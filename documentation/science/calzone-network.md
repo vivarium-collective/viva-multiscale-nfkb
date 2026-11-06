@@ -21,7 +21,8 @@ $1/\lambda$ (an exponential waiting time). In the rate expressions below:
 - Rates are per **Calzone unit**, an abstract time unit: the network has no seconds of its own. Most steps have rate 1,
   so one step takes one unit on average. How long a unit is in real time is set by the death clock, `k_time`, the number of
   Calzone units per second: one unit lasts $1/k_\text{time}$ seconds ({doc}`../design/time`).
-- `$TransRate` marks the slow steps that need new protein to be made: NF-κB's target genes, and cIAP. In Calzone's
+- `$TransRate` marks the slow, transcription-scale steps: NF-κB's target genes (cFLIP, BCL2, mXIAP, mcIAP), cIAP made
+  from mcIAP, mROS (which builds up when NF-κB's antioxidant genes are off), and the Survival phenotype. In Calzone's
   MaBoSS example it is 1/24, so they take 24 units on average.
 - `$Low_CASP8`, `$Low_RIP1`, `$Low_cIAP` and `$High_NFkB` are Calzone's mutant switches: set to 1, they hold a node off
   (switch-on rate 0, switch-off rate effectively infinite) or on. They are 0 in the composite and the studies; the
@@ -57,12 +58,20 @@ is slow at its end.
 
 ## Why held TNF mostly kills
 
-The survival route ends in steps that take 24 units on average (`$TransRate` = 1/24). The apoptosis route is seven
-steps of one unit each from the bound receptor to caspase-3 (DISC_TNF, CASP8, BAX, MOMP, Cyt_c, apoptosome, CASP3). So in most cells caspase-8 is active long before cFLIP has been made to block it, and
-caspase-8 then cleaves RIP1, which closes the survival route. With TNF held on and Calzone's own rates, the network gives
-apoptosis 0.953, necrosis 0.029 and survival 0.014 at t = 40 units (the unmodified network on the MaBoSS engine,
-200,000 cells: the oracle of the `coupled-equals-full` check, {doc}`../verification/index`). That race between a fast death route and slow protection is the question every
-study in this project varies ({doc}`../design/time`, {doc}`../design/calibration`).
+Two races decide a cell's fate, one after the other.
+
+- **The activation race.** Caspase-8 is two steps from the bound receptor (TNFR with FADD → DISC_TNF → CASP8). NF-κB
+  is four (TNFR → RIP1 → RIP1ub → IKK → NFkB). Active caspase-8 cleaves RIP1, which closes NF-κB's route. In most cells
+  caspase-8 wins, and NF-κB never switches on.
+- **The protection race.** Where NF-κB does switch on, its protective genes take 24 units on average
+  (`$TransRate` = 1/24), while the apoptosis route reaches caspase-3 in seven steps of one unit each (DISC_TNF, CASP8,
+  BAX, MOMP, Cyt_c, apoptosome, CASP3). So caspase-8 is usually active long before cFLIP has been made to block it.
+
+With TNF held on and Calzone's own rates, the network gives apoptosis 0.953, necrosis 0.029 and survival 0.014 at t =
+40 units (the unmodified network on the MaBoSS engine, 200,000 cells: the oracle of the `coupled-equals-full` check,
+{doc}`../verification/index`). Faster genes win more of the protection race, but the activation race caps what they
+can do: even infinitely fast genes leave only about a quarter of cells alive ({doc}`../design/validation`). Both
+races are what the studies in this project vary ({doc}`../design/time`, {doc}`../design/calibration`).
 
 ## Every node
 

@@ -54,7 +54,7 @@ exactly that value.
 | `boolean/coupled-nfkb-knockout` | death arms intact without NF-κB | full network with NF-κB loss of function | — |
 | `boolean/pair-nfkb-analytic` | kinetic → Boolean coupling through Lipniacki's own NF-κB rule | analytic switch | $K_v = 4$; an unseeded `parameters` store |
 | `boolean/pair-nfkb-seconds` | `$k_time` converts time and nothing else | the same analytic value | clock unconverted: 0.562 vs 0.483 |
-| `boolean/absorbing-death` | with `absorb_death = 1`, Apoptosis and NonACD stay on once on ({doc}`../design/boolean`) | analytic: $k/(k+r)\,(1 - e^{-(k+r)t}) = 0.5$ | `absorb_death = 0`: 0.0048 and 0.0042 vs 0.5 |
+| `boolean/absorbing-death` | with `absorb_death = 1`, Apoptosis and NonACD stay on once on ({doc}`../design/boolean`) | analytic: $\alpha/(\alpha+r)\,(1 - e^{-(\alpha+r)t}) = 0.5$ | `absorb_death = 0`: 0.0048 and 0.0042 vs 0.5 |
 | `boolean/transcription-anchor-fast`, `-slow` | target genes keep Lipniacki's clock at any `k_time` | analytic absorbing switch | uniform clock: 0.014 vs 0.491 |
 
 "—" means a negative for that check is not yet recorded in this documentation.

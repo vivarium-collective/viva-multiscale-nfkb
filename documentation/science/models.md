@@ -20,7 +20,8 @@ J Theor Biol 228:195–215. BioModels **BIOMD0000000786** (curated).
   - COPASI and Tellurium (a Python modelling environment whose simulation engine is libRoadRunner) agree on its own
     simulation: their trajectories differ by a normalised root-mean-square
     error (NRMSE) of 3.6e-7 (viva-biomodels, a companion package that runs BioModels models in several engines and
-    compares the results; {doc}`../reference/datasets`).
+    compares the results: `datasets/corpus_comparison/corpus_metrics.json`, BIOMD0000000786 `sim1`, mean NRMSE
+    3.58×10⁻⁷ over 15 shared outputs).
 - **Rejected alternatives** ({doc}`../design/kinetic`):
   - BIOMD0000000027: one compartment, no stimulus input.
   - BIOMD0000000407 (Schliemann 2011), a runner-up: three sized compartments, but a much larger parameter set (106

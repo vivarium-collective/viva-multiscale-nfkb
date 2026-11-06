@@ -53,6 +53,8 @@ checks use, well after the fates settle: with NF-κB knocked out, P(Apoptosis) i
 40, `documentation/design/code/death_halftime.py`), 50,000 simulated cells each (each
 one a separate random run of the network, {doc}`../math/maboss`), every other rate 1 (`documentation/science/code/transrate_race.py`):
 
+1/24 is the value in MaBoSS's example configuration of Calzone's model ({doc}`models`).
+
 | Transcription rate | Survival | Apoptosis | Necrosis |
 |---|---|---|---|
 | 1/24 (MaBoSS's example) | 0.014 | 0.952 | 0.030 |

@@ -30,7 +30,8 @@ independent of $k$ ({doc}`switch`; {doc}`../design/decisions`, row 25). Only in 
 NF-κB's switching scale with $k$. So:
 
 - **gene expression runs on Lipniacki's measured clock,** $r_\text{tx} = \ln 2 / 2107\ \text{s}$;
-- **`k_time` moves only the death machinery's speed** relative to it.
+- **`k_time` moves everything else** relative to it: the death machinery, and also NF-κB's activation route upstream
+  of the NFkB node (TNFR, RIP1, RIP1ub, IKK). Study 1 found that this limits protection ({doc}`../design/validation`).
 
 `transcription-anchor-fast` and `transcription-anchor-slow` check exactly this. At $k = 1/60$ and $k = 1/6000$, each
 target gene's probability over Lipniacki's delay is the same, 0.491235.

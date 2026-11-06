@@ -95,7 +95,7 @@ state is one of the states that trajectory visited in the last window, chosen in
 So a cell is a single history, and a population is many cells with different seeds. Two consequences:
 
 - The carried state lags the interval's end by about half a window, $T/(2W)$: 1.5 s for a 30 s interval with the studies'
-  $W = 10$.
+  $W = 10$ (set where the study composite is generated, `viva_multiscale_nfkb/composites/make_kinetic_boolean.py`).
 - A node that switches on and off again within one interval, outside its last window, is never recorded
   (absorbing death and this effect: {doc}`../design/boolean`).
 

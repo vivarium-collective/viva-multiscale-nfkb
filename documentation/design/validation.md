@@ -16,6 +16,10 @@ and if not, where the limit is. It adds no mechanism. The study lives in
 - **Alive.** No death node was ever on. Death is absorbing ({doc}`boolean`).
 - **Net protection.** Each intact cell is paired with its knocked-out twin, which has the same seed
   ({doc}`../math/statistics`). It is the number of cells alive only with NF-κB, minus those alive only without it.
+- **Meeting the standard.** Most NF-κB-competent cells survive and most knocked-out cells die. The design asked for a
+  majority surviving. After Phase B showed that at slow clocks many alive cells have reached no fate at all, survival
+  was read as *held*: alive, with Survival on through the last 2 h of the run, not merely not dead yet. That reading
+  was fixed after the data, and the results below give both.
 - **The comparator.** In the composite, the protective genes switch on at $r_\text{tx}$ per second and every other rate,
   including NF-κB's whole activation route (TNFR, RIP1, RIP1ub, IKK), runs on the death clock `k_time`. Only the final
   NF-κB node follows Lipniacki directly. So at a death clock of $m$ minutes per Calzone unit, the composite's fate
@@ -29,10 +33,14 @@ Speeding up the protective genes, read at t = 40 units (20,000 cells):
 ```{include} _validation_phase_a.md
 ```
 
-Survival saturates near 25%: even infinitely fast genes cannot save most cells. The reason is upstream. NF-κB's
+Alive saturates near 25%: even infinitely fast genes cannot save most cells. The reason is upstream. NF-κB's
 activation route takes four steps (TNFR → RIP1 → RIP1ub → IKK → NFkB) and caspase-8's takes two (TNFR + FADD → DISC →
 CASP8). Active caspase-8 cleaves RIP1, which closes NF-κB's route ({doc}`../science/calzone-network`), so most cells
 never switch NF-κB on.
+
+The Survival node is not the readout. It follows NF-κB, and it can be on in a cell whose death node is already on,
+because the rest of the network keeps running after death ({doc}`boolean`). So with fast genes more cells show Survival
+than are alive (0.201 against 0.156 at TransRate 1, `data/phase_a.json`); *alive* is what counts.
 
 ## Phase B: the composite, NF-κB intact against knocked out
 
@@ -64,11 +72,12 @@ when they are stale).
 - **The coupling lowers protection only at fast and middle clocks:** 0 against 12.5 points at 30 min per unit (no cell
   alive, against Calzone's 0.125), and 10.5 against 21.5 at 120 (4.8 standard errors). At 180 and 200 the composite is lower by about 1.5
   standard errors, which is not significant; at 240 and 480 the two agree within noise.
-- **No clock meets the standard with real survival.** At 200 min per unit, most intact cells are alive (0.550) and
+- **No clock meets the standard with held survival.** At 200 min per unit, most intact cells are alive (0.550) and
   most knocked-out cells are dead. But 54 of the 110 alive intact cells have reached no fate at all, and only 18 held
   Survival through the last 2 h. That is delay, not protection. 24 h is only 3 to 12 Calzone units at the clocks from 120 to 480 min per unit.
 
-The limit is the race in Calzone's network between caspase-8 and NF-κB's activation route, which in the composite runs
+The limit is the activation race in Calzone's network, between caspase-8 and NF-κB's activation route
+({doc}`../science/calzone-network`), which in the composite runs
 on the death clock. Lipniacki's model, however, already times that same activation: nuclear NF-κB's half-rise is 337
 s. A model-native change would put NF-κB's activation route on Lipniacki's clock, as $r_\text{tx}$ already does for the
 genes, so that at slow death clocks NF-κB activates before caspase-8. It is an open question for the project lead

@@ -261,7 +261,7 @@ One composite and one parameter sweep give all three. Each is a workspace study 
 
 | Name | Study | Spatial setup | Swept | Readouts |
 |---|---|---|---|---|
-| Dose | **Fate vs uniform TNF dose.** The control: kinetic + Boolean with a spatially flat input | Uniform bath: the TNF field starts uniform at dose D, with no gradient and optional linear decay | D | MaBoSS Survival/Apoptosis/NonACD probabilities; NF-κB first nuclear peak (height, time) and oscillation period |
+| Dose | **Fate vs uniform TNF dose.** The control: kinetic + Boolean with a spatially flat input | Uniform bath: the TNF field starts uniform at dose D, with no gradient and optional first-order decay (rate λ) | D | MaBoSS Survival/Apoptosis/NonACD probabilities; NF-κB first nuclear peak (height, time) and oscillation period |
 | Distance | **Fate vs distance from a point TNF source.** The headline: what space adds, through arrival delay and the dose that reaches the cell | Point source at distance r from the cell's surface region | r, and source strength | Same as 2, plus TNF at the cell over time (the `RegionMean` store) |
 | Wave timing | **NF-κB wave timing under a moving TNF front.** The mechanism | the distance study's runs (no new runs) | r | Timing of the TNF front's arrival vs NF-κB nuclear peaks and oscillation phase, from the kinetic store |
 

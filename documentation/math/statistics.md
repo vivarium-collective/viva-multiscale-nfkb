@@ -38,17 +38,6 @@ Pairing makes a comparison much more sensitive. Of 200 cells, most have the same
 is in the cells whose outcome differs, and a test that ignores the pairing dilutes it with the noise of the cells that
 did not change.
 
-**The size of a paired difference.** Score each cell $+1$ if it gained, $-1$ if it lost and $0$ otherwise. The
-difference between the two runs is the mean score, $(b - c)/n$. Its standard error is that of a mean of $n$ scores:
-the scores' variance is $\bigl[(b + c) - (b - c)^2/n\bigr]/n$ (the mean of the squares, $(b + c)/n$, minus the square
-of the mean), so
-
-$$
-\text{SE}\Bigl(\frac{b - c}{n}\Bigr) = \frac{\sqrt{(b + c) - (b - c)^2/n}}{n} .
-$$
-
-Study 1's net protection ({doc}`../design/validation`) is this difference, with "alive" as the outcome.
-
 ## The exact McNemar test
 
 For a yes/no outcome (for example "ever dead"), count the cells that changed:
@@ -76,6 +65,17 @@ Examples from Study 0 ({doc}`../design/calibration`), whose variants 0c (protect
 
 The $p$ values are not corrected for the number of comparisons made. The study reports them as they are and says
 where that matters.
+
+**The size of a paired difference.** With $n$ paired cells and $b$, $c$ as above, score each cell $+1$ if it gained, $-1$ if it lost and $0$ otherwise. The
+difference between the two runs is the mean score, $(b - c)/n$. Its standard error is that of a mean of $n$ scores:
+the scores' variance is $\bigl[(b + c) - (b - c)^2/n\bigr]/n$ (the mean of the squares, $(b + c)/n$, minus the square
+of the mean), so
+
+$$
+\text{SE}\Bigl(\frac{b - c}{n}\Bigr) = \frac{\sqrt{(b + c) - (b - c)^2/n}}{n} .
+$$
+
+Study 1's net protection ({doc}`../design/validation`) is this difference, with "alive" as the outcome.
 
 ## Quasi-steady occupancy
 

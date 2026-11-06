@@ -21,13 +21,14 @@ r_tx = 0.000329 /s (gene expression, fixed); 8 h of composite time
 
 The sweep runs the composite's network with absorbing death (`absorb_death = 1`, {doc}`../design/boolean`): once
 Apoptosis or NonACD switches on, it stays on. So each death column is the probability that the cell has shown that
-fate by 8 h. A cell can show both, because caspase-3 and ATP loss can occur together, so the columns are never
+fate by the end of the run: the average over its last window, 7.6 to 8 h ({doc}`../math/maboss`). A cell can show both, because caspase-3 and ATP loss can occur together, so the columns are never
 summed.
 
 ## Reading it
 
 Here the death clock changes both who wins and how the cell dies. It can change who wins because gene expression stays
-on Lipniacki's clock while `k_time` moves only the death machinery; a uniform sweep of every rate would not
+on Lipniacki's clock while `k_time` moves the rest of the network
+(the death machinery, and NF-κB's activation route); a uniform sweep of every rate would not
 ({doc}`../design/time`):
 - **Fast death machinery** (half a minute to 10 minutes per unit): apoptosis dominates, before any protective gene is
   made.

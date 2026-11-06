@@ -3,8 +3,9 @@
 This page records how Calzone's cell-fate network was brought into the composite and why. It assumes the network itself
 ({doc}`../science/calzone-network`: every node, rule and rate, and how to read `@logic ? 1 : 0`), what a Boolean network
 and asynchronous updating are ({doc}`../science/boolean-networks`), and how MaBoSS turns rates into probabilities
-({doc}`../math/maboss`). The **race** this page refers to is the one explained there: a fast death route against
-NF-κB's slow protective genes.
+({doc}`../math/maboss`). The **races** this page refers to are the two explained there: caspase-8 against
+NF-κB's activation route (the activation race), and the death route against NF-κB's slow protective genes (the
+protection race).
 
 ## Engine: MaBoSS through `MaBoSSProcess`
 
@@ -157,24 +158,23 @@ from that interval's last window (*Engine*, above; {doc}`../math/maboss`). A dea
 interval can be missed with $a = 0$, while with $a = 1$ it stays on and is recorded. So absorbing death can, in
 principle, make a recorded first death earlier; it cannot make a dead cell alive. Whether that matters is an empirical
 question. Study 0 was run with $a = 0$. Rerunning its baseline with $a = 1$ on the same 200 seeds, at 30 and 120 min
-per Calzone unit, gave no cell whose first death moved (0 of 400), the same alive cells, and no revived cell. A review
-found the same at 0.5 and 2 min per unit (6 h). The decay, persistence and gate-removal variants were not rerun.
+per Calzone unit, gave no cell whose first death moved (0 of 400), the same alive cells, and no revived cell. The decay, persistence and gate-removal variants were not rerun.
 
 **The check, `absorbing-death`.** Take the two death nodes verbatim and give each a cause that is present at $t = 0$
 and goes away once, for good, at rate $r$ (caspase-3 starts on and switches off; ATP starts off and switches on).
-While the cause is present, the death node switches on at rate $k$. With $a = 1$ a death node is on at time $t$
+While the cause is present, the death node switches on at rate $\alpha$. With $a = 1$ a death node is on at time $t$
 exactly when it switched on before its cause went away. At time $s$ the cause is still present with probability
-$e^{-rs}$, and the node switches on in $[s, s + ds]$ with probability $k\,e^{-ks}\,ds$, so
+$e^{-rs}$, and the node switches on in $[s, s + ds]$ with probability $\alpha\,e^{-\alpha s}\,ds$, so
 
 $$
-P(\text{on at } t) = \int_0^t k\,e^{-ks}\,e^{-rs}\,ds = \frac{k}{k + r}\left(1 - e^{-(k + r)t}\right).
+P(\text{on at } t) = \int_0^t \alpha\,e^{-\alpha s}\,e^{-rs}\,ds = \frac{\alpha}{\alpha + r}\left(1 - e^{-(\alpha + r)t}\right).
 $$
 
-At $k = r = 1$ and $t = 8$ this is 0.5 (MaBoSS reports the average over the window [7, 8], which is also 0.5 to six
+At $\alpha = r = 1$ and $t = 8$ this is 0.5 (MaBoSS reports the average over the window [7, 8], which is also 0.5 to six
 places). Both nodes read 0.5 within 0.01 (50,000 trajectories).
 
-**Proven to fail.** With $a = 0$ the node also switches off at rate $k$ once its cause is gone. Solving the same
-four-state chain gives $P(\text{on at } t) = t\,e^{-t}$ at $k = r = 1$, whose average over [7, 8] is
+**Proven to fail.** With $a = 0$ the node also switches off at rate $\alpha$ once its cause is gone. Solving the same
+four-state chain gives $P(\text{on at } t) = t\,e^{-t}$ at $\alpha = r = 1$, whose average over [7, 8] is
 $8e^{-7} - 9e^{-8} = 0.0043$. The same document with $a = 0$ reads 0.0048 (Apoptosis) and 0.0042 (NonACD), and fails.
 
 ## Clock

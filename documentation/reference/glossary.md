@@ -173,7 +173,8 @@ U1, U2
   viva-pde-particle's `RegionMean` and `RegionTotal` (in review) ({doc}`../design/roadmap`).
 
 `TransRate`
-: Calzone's rate for steps that need new protein to be made (1/24 per unit in MaBoSS's example). The composite replaces
+: Calzone's rate for its slow, transcription-scale steps: NF-κB's target genes, cIAP, mROS and Survival (1/24 per
+  unit in MaBoSS's example; {doc}`../science/calzone-network`). The composite replaces
   it so these steps run at `r_tx` per second ({doc}`../design/time`).
 
 Variant

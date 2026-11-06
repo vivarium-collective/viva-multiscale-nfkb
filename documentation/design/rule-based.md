@@ -17,7 +17,7 @@ between the TNF field and Lipniacki's `TNF_R`. It fails in v1 for three reasons,
    phosphorylated or not, written `site~state`). Types like `R(l,l)` (a receptor with two binding sites, both named `l`)
    and `T(1,2,3)` belong to neither
    group, so every bound complex vanishes at the end of each interval (viva-nfsim@76ff7fc `processes.py:84-96,340-350`).
-2. **No parameter port, and the same RNG seed every interval** (`:109-113`).
+2. **No parameter port, and the same random-number generator (RNG) seed every interval** (`:109-113`).
 3. **The timescales may make it unnecessary.** Quasi-steady means: when one process relaxes much faster than everything that reads it, it can be treated as always at
    its equilibrium. Binding relaxes toward equilibrium at rate $k_\text{off} + k_\text{on}[R] \ge k_\text{off}$
    ($k_\text{off} = 0.01\ \text{s}^{-1}$), so within about 100 s or less, depending on receptor density. That is only about a third of NF-κB's 337 s half-rise, so
@@ -27,7 +27,7 @@ between the TNF field and Lipniacki's `TNF_R`. It fails in v1 for three reasons,
 
 Using NFSim for IKK or IκB:NF-κB complexes instead would duplicate what Lipniacki already owns.
 
-## What v1 uses instead: an offline dose–response (d1, in progress)
+## What v1 uses instead: an offline dose–response (d1, not started)
 
 Because binding is fast, its **equilibrium** is all the composite needs. That's a function from the TNF concentration
 at the cell to receptor engagement, $\text{occ} = g([\text{TNF}])$. It is computed offline from McMillan 2021's
