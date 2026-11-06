@@ -29,8 +29,8 @@ refinement run.
 - **`checks/spatial/gaussian-diffusion`:** a 2D Gaussian TNF field (σ₀ 10 µm, $D = 50\ \mu\text{m}^2/\text{s}$) in a
   reflecting 200 × 200 µm box matches $\sigma^2 = \sigma_0^2 + 2Dt$ at the centre and at 20 and 40 µm. It's checked
   every second to 10 s, rel 1e-2.
-- **`checks/spatial/uniform-bath-decay`:** a uniform 0.5 µM bath with decay $k = 0.01\ \text{s}^{-1}$ stays uniform
-  and follows $0.5\,e^{-kt}$, rel 1e-5.
+- **`checks/spatial/uniform-bath-decay`:** a uniform 0.5 µM bath with decay rate $\lambda = 0.01\ \text{s}^{-1}$ stays uniform
+  and follows $0.5\,e^{-\lambda t}$, rel 1e-5.
 
 ## v2: the nuclear envelope
 
