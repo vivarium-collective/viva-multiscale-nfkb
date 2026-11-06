@@ -2,7 +2,7 @@
 
 Study 0 ({doc}`calibration`) found that under held, saturating TNF the composite kills nearly every cell. In
 experiments, cells with working NF-κB mostly survive TNF alone, and they die when NF-κB or protein synthesis is
-blocked. That standard comes from two sources recorded as proposed inputs, pending the project lead's acceptance
+blocked. That standard comes from two sources the project lead accepted as inputs to the investigation
 (Micheau & Tschopp 2003; Lee et al. 2016; {doc}`../reference/bibliography`).
 
 Study 1 (decision 29) asks whether the composite meets that standard using only the published models' own parameters,

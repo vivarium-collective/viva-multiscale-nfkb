@@ -33,6 +33,14 @@ proposed_inputs:
     citation: "Lee REC, Qasaimeh MA, Xia X, Juncker D, Gaudet S (2016). NF-kB signalling and cell fate decisions in response to a short pulse of tumour necrosis factor. Sci Rep 6:39519. doi:10.1038/srep39519"
     provenance: "Web search, 2026-11-06 (docs plan step 1.7); not provided by the expert."
     rationale: "Methods: HeLa cells were pre-treated with IFN-gamma because they 'are not sensitive otherwise' to TNF (100 ng/ml). Used as the second source for Study 1's yardstick."
+  - id: wu-2011
+    kind: reference
+    status: pending
+    proposed_by: agent
+    proposed_at: '2026-11-06'
+    citation: "Wu CY, Huang CK, Chung CY, Huang IP, Hwu Y, Yang CS, Lai YK, Lo LW, Chiang SY (2011). Probing the binding kinetics of proinflammatory cytokine-antibody interactions using dual color fluorescence cross correlation spectroscopy. Analyst 136(10):2111-2118. doi:10.1039/c0an00995d"
+    provenance: "Web search, 2026-11-06 (docs plan step 1.7); abstract read from the PubMed record (PMID 21448508). Not provided by the expert."
+    rationale: "Abstract: FCS gives D = 100.06 +/- 4.9 um^2/s for Alexa488-TNFa, hydrodynamic diameter 4.89 nm, agreeing with DLS on native TNFa. Used for TNF's diffusion timescale in science/scales.md, replacing the unsourced 50 um^2/s there."
 acceptance_criteria: []
 question: 'What decides whether a cell survives or dies when TNF reaches it by diffusion, and does space act only through the dose that arrives, or also through when it arrives?
 

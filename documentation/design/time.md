@@ -22,8 +22,8 @@ the script prints both: half of the eventual apoptosis by 8.6 units, and P(Apopt
 **One factor cannot fit both columns.**
 - **If Calzone's gene expression matches Lipniacki's:** 1 unit = 35.1 / 16.6 ≈ 2.1 min, and death comes about
   8.6 × 2.1 ≈ 18 min after TNF.
-  That looks far too fast against the hours usually reported for TNF-induced death (a citation is pending; it is not
-  needed by the design, because this axis is swept).
+  That looks far too fast: in IFNγ-sensitised HeLa cells, "TNF-induced apoptosis occurs over many hours" (Lee et al.
+  2016). The design does not depend on that figure, because this axis is swept.
 - **If 1 unit = 1 hour:** death at about 8.6 h is plausible, but NF-κB's protective genes take about 16.6 h. That is
   16.6 h / 35.1 min ≈ 28 times slower than Lipniacki's own, so NF-κB could never protect the cell in time.
 
