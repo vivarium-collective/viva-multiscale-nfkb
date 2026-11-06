@@ -33,6 +33,10 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
         documentation/science/code/transrate_race.py (TransRate 1/24 gives 0.014/0.952/0.030; 1 gives
         0.201/0.540/0.259).
       time.md's stale 1/24 row is logged under step 6.
+- [x] Step 1.4, design/composite-primer.md (first in the design section): stores, processes, steps, ports and wiring,
+      updates and types (a float update is a delta; overwrite replaces; both checked in bigraph-schema 1.8.1's source),
+      time and the emitter, compose-api (runner, mash-up, registry levels), what a check is (oracle, negative), and
+      compose/check.sh.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)

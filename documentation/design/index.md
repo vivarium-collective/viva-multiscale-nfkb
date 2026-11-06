@@ -6,6 +6,7 @@ line, or a check that fails if the decision is undone. {doc}`decisions` lists th
 ```{toctree}
 :maxdepth: 2
 
+composite-primer
 architecture
 kinetic
 spatial
