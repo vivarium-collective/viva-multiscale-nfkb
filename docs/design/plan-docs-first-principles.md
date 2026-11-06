@@ -17,6 +17,10 @@ numbers below refer to that state. Each step is one commit, built with `sphinx-b
 - [x] Step 1.2, the Calzone network: science/calzone-network.md, with the node table generated from the pinned
       network (documentation/science/code/calzone_network.py; `--check` fails when stale). The wiring diagram is
       still open: conf.py has no diagram extension.
+- [x] Step 2, math/maboss.md: @logic and $parameters, asynchronous updating, exponential waiting times (no memory;
+      competing switches), Gillespie's algorithm, the generator and forward equation with a one-node example, T and
+      W, MaBoSSProcess's one-cell readout (sample_count 1, the sampled state, seeds), and the tolerance's false-fail
+      rate. Gillespie 1977 added to the bibliography.
 - [ ] The rest of steps 1–8 below.
 
 ## Step 1: foundation pages (new)

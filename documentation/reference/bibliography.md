@@ -2,6 +2,8 @@
 
 - Calzone L, Tournier L, Fourquet S, Thieffry D, Zhivotovsky B, Barillot E, Zinovyev A (2010). Mathematical modelling of
   cell-fate decision in response to death receptor engagement. *PLoS Comput Biol* 6(3):e1000702.
+- Gillespie DT (1977). Exact stochastic simulation of coupled chemical reactions. *J Phys Chem* 81(25):2340–2361.
+  (The algorithm MaBoSS uses.)
 - Hoffmann A, Levchenko A, Scott ML, Baltimore D (2002). The IκB–NF-κB signaling module: temporal control and
   selective gene activation. *Science* 298:1241–1245. (BIOMD0000000140, a runner-up for the kinetic core.)
 - Lipniacki T, Paszek P, Brasier AR, Luxon B, Kimmel M (2004). Mathematical model of NF-κB regulatory module. *J Theor
