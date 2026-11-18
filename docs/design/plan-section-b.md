@@ -45,8 +45,8 @@ D1–D6 await Alex).
     raises.
   - 22 tests on real roadrunner. Re-run in this session: all pass, and on 0.2.2's `processes.py` 18 fail. A
     `constant="true"` parameter can be set at runtime on roadrunner 2.11.0.
-- **U2 is in review.** viva-pde-particle#70 (`feat/region-mean`: `6064b57`, `1e1f9d3`), with jcschaff asked to
-  review.
+- **U2 is merged** (2026-11-09, `25e8a05`; reviewed by jcschaff). viva-pde-particle#70 (`feat/region-mean`).
+  compose-api pins it from 0.7.90 (#540).
   - It adds **`RegionMean`** (outputs `mean_conc: map[overwrite[float]]`, µM) and **`RegionTotal`** (outputs
     `molecules`). Both are weighted by each node's control volume, as the FV engine conserves it.
   - `region` takes the same `{mask, volume_fraction}` as `FVReactionDiffusion`'s `domain`.
@@ -245,9 +245,9 @@ linking here.
 | From | Port | Adapter | To | Port |
 |---|---|---|---|---|
 | PDE `FVReactionDiffusion` | `fields.TNF` | **`RegionMean`** (new, U2: masked mean over the cell-surface voxels) | store `tnf_at_cell` | |
-| `tnf_at_cell` | | `MathExpressionStep` (a cited dose-response, fitted offline in BioNetGen, d1) | store `tnf_occupancy` | |
+| `tnf_at_cell` | | `MathExpressionStep` (a cited dose-response, d1. First form, decision 32: one-site occupancy, $K_d$ 19 pM, Grell 1998. The BioNetGen fit to McMillan 2021 is the refinement) | store `tnf_occupancy` | |
 | `tnf_occupancy` | | (direct) | Tellurium | **`parameters_in.TNF_R`** (new, U1; its own store, separate from the `parameters` output; the writer must declare `overwrite[...]`) |
-| `tnf_occupancy` | | `MathExpressionStep` (u = occ, d = 1 − occ) | MaBoSS | `parameters.u_TNF`, `parameters.d_TNF` |
+| `tnf_occupancy` | | the same `MathExpressionStep` (u = occ, d = 1 − occ; decision 35) | MaBoSS | `parameters.u_TNF`, `parameters.d_TNF` |
 | Tellurium | `species` (`bulk_species: false`): `NFKB_nuc`, `IkB_NFKB_nuc`, `NFKB`, `IkB_NFKB`, `IKKactive_IkB_NFKB` | `MathExpressionStep` (f = nuclear fraction; u = f, d = 1 − f) | MaBoSS | `parameters.u_NFkB`, `parameters.d_NFkB` |
 | MaBoSS | `node_probabilities.Apoptosis`/`NonACD` | `MathExpressionStep` (gate) | Tellurium | `parameters_in.c1…` (U1). This is a candidate edge; its biological basis must be cited before it ships, otherwise v1 is Boolean read-out only. |
 

@@ -47,6 +47,9 @@ exactly that value.
 | `kinetic/preequilibrated-steady` | the saved rest state is a steady state and matches COPASI before the stimulus | corpus | — |
 | `spatial/gaussian-diffusion` | FV diffusion of a Gaussian bolus | closed form | — |
 | `spatial/uniform-bath-decay` | a uniform bath stays uniform and decays | closed form | — |
+| `spatial/region-mean-bolus` | the full composite's own field and surface: TNF at the cell's surface ring as a bolus arrives and mixes (decisions 33, 34) | exact solution in a reflecting box (mirror images), averaged over the ring with numpy; mass conservation at 990 s | D halved; the ring moved out to 15–17 µm |
+| `coupled/bolus-occupancy` | in the full composite, the cell's occupancy follows the TNF at each coupling instant (decision 35) | $c/(c+K_d)$ of the exact solution at the last coupling instant | the dose–response Step not triggered by the kinetic layer |
+| `coupled/field-ablation` | the full composite's field → cell edge adds nothing when the field is flat; occupancy is $c/(c+K_d)$ (decisions 31, 32, 35) | the same document with that edge removed and `tnf_at_cell` seeded; the closed form | $K_d$ doubled; MaBoSS's TNF rates swapped; Tellurium's `TNF_R` unwired |
 | `boolean/calzone-reference` | `MaBoSSProcess` = MaBoSS's own reference run of Calzone, all 31 nodes | upstream reference + analytic mROS | mROS expected 0.30: fails; TransRate 1/12: fails on mROS |
 | `boolean/coupled-equals-full` | at $u = 1, d = 0$ the coupled network is Calzone's, all 31 nodes, TNF on, t = 40 | full network on the MaBoSS engine | the round-2 4-node cut: survival 0.25 vs 0.014 |
 | `boolean/coupled-equals-full-early` | the same over [7, 8], where the gate's `NOT CASP3` term is visible | full network on the MaBoSS engine | CASP3 term removed: NF-κB 0.243 vs 0.215 |

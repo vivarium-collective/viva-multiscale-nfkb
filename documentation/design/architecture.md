@@ -9,7 +9,7 @@
                    │ fields.TNF
             RegionMean (cell-surface voxels)           adapter
                    │ tnf_at_cell (µM)
-        dose–response (McMillan 2021, d1)              adapter
+        dose–response: occ = c/(c+Kd), d1              adapter
                    │ tnf_occupancy (0–1)
         ┌──────────┴────────────┐
         │                       │ u_TNF = occ, d_TNF = 1 − occ
@@ -26,9 +26,9 @@ Reading the diagram (terms such as process, store, port and adapter: {doc}`compo
 - **`fields.TNF`**: the TNF concentration on the spatial grid, in µM ({doc}`spatial`).
 - **`RegionMean`**: an adapter that averages the field over the grid cells at the cell's surface, giving one
   concentration, `tnf_at_cell`.
-- **d1** (its label in the plan of record): the dose–response, which turns that concentration into **occ**, a receptor-engagement fraction between 0 and 1
-  (which bound states count as engaged is chosen when d1 is built)
-  ({doc}`rule-based`).
+- **d1** (its label in the plan of record): the dose–response, which turns that concentration into **occ**, a receptor-engagement fraction between 0 and 1.
+  Its first form is one-site occupancy with $K_d$ = 19 pM (decision 32); the same Step also writes `u_TNF` and `d_TNF`
+  ({doc}`coupling`, {doc}`rule-based`).
 - **`parameters_in.TNF_R`**: the NF-κB model's TNF input ({doc}`../science/lipniacki-model`), set to occ.
 - **`u_TNF`, `d_TNF`**: the fate network's TNF node rates, so the node is on a fraction occ of the time.
 - **$f$**: NF-κB's nuclear fraction. **`u_NFkB`, `d_NFkB`** are the fate network's NF-κB node rates, with κ its
@@ -64,7 +64,7 @@ released before the workspace uses it. The workspace does not carry a local copy
 
 - **viva-tellurium 0.2.3** adds `parameters_in`, so another layer can set a parameter such as `TNF_R` during a run.
 - **viva-pde-particle** adds `RegionMean` and `RegionTotal`, which reduce a field to one concentration at the cell
-  (open as viva-pde-particle#70, awaiting review, so nothing here uses them yet).
+  (viva-pde-particle#70, merged as 25e8a05; the full composite uses `RegionMean`).
 
 ### 4. Every claim has a check that can fail
 
@@ -76,8 +76,8 @@ test, and, where one is recorded, a mutated copy proven to fail. See {doc}`../ve
 The checks run through compose-api's own runner and scorer, in an environment pinned to compose-api's production
 mash-up: every simulator package is at the commit compose-api's registry pins. So a document that passes here runs on
 the service without a new registry entry, as a mash-up compose-api infers from the document's processes (viva-maboss,
-viva-tellurium, viva-pde-particle and viva-basic-processes). The one exception ahead: the spatial → kinetic coupling needs
-`RegionMean`, still in review (viva-pde-particle#70), so viva-pde-particle's pin must move once it is merged.
+viva-tellurium, viva-pde-particle and viva-basic-processes). The full composite uses `RegionMean`, so its live run
+waits for compose-api 0.7.90, which pins viva-pde-particle at 25e8a05 (#540).
 
 ## Why this workspace exists
 
