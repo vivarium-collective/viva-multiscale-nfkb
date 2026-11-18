@@ -531,21 +531,21 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 150
-  expected: 0.986555428618031
+  expected: 0.9800000000000002
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 150
-  expected: 1.0
+  expected: 1.0000000000000002
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 150
-  expected: 0.03780616106906392
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -587,21 +587,21 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 165
-  expected: 0.986555428618031
+  expected: 0.9800000000000002
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 165
-  expected: 1.0
+  expected: 1.0000000000000002
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 165
-  expected: 0.03780616106906392
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -657,7 +657,7 @@ expect:
   emitter: emitter
   field: node_probabilities.IKK
   row: 180
-  expected: 0.19603883712653483
+  expected: 0.00867852308669228
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -713,7 +713,7 @@ expect:
   emitter: emitter
   field: node_probabilities.IKK
   row: 195
-  expected: 0.19603883712653483
+  expected: 0.00867852308669228
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -755,7 +755,7 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 210
-  expected: 0.9959184143668075
+  expected: 0.9948650344206961
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -769,7 +769,7 @@ expect:
   emitter: emitter
   field: node_probabilities.IKK
   row: 210
-  expected: 0.21000000000000002
+  expected: 0.04510817552501561
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -811,7 +811,7 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 225
-  expected: 0.9959184143668075
+  expected: 0.9948650344206961
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -825,1876 +825,1876 @@ expect:
   emitter: emitter
   field: node_probabilities.IKK
   row: 225
+  expected: 0.04510817552501561
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 225
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 225
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 225
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 240
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 240
+  expected: 0.31975683215323614
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 240
+  expected: 0.991539961775102
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 240
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 240
+  expected: 0.03
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 240
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 240
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 240
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 255
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 255
+  expected: 0.31975683215323614
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 255
+  expected: 0.991539961775102
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 255
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 255
+  expected: 0.03
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 255
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 255
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 255
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 270
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 270
+  expected: 0.3686474343449898
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 270
+  expected: 0.9900000000000001
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 270
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 270
+  expected: 0.010000000000000002
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 270
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 270
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 270
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 285
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 285
+  expected: 0.3686474343449898
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 285
+  expected: 0.9900000000000001
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 285
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 285
+  expected: 0.010000000000000002
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 285
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 285
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 285
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 300
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 300
+  expected: 0.41411056682389863
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 300
+  expected: 0.9822532931163281
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 300
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 300
+  expected: 0.0021545680233316725
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 300
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 300
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 300
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 315
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 315
+  expected: 0.41411056682389863
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 315
+  expected: 0.9822532931163281
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 315
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 315
+  expected: 0.0021545680233316725
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 315
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 315
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 315
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 330
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 330
+  expected: 0.4563032029624583
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 330
+  expected: 0.9700000000000001
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 330
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 330
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 330
+  expected: 0.02
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 330
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 330
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 345
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 345
+  expected: 0.4563032029624583
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 345
+  expected: 0.9700000000000001
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 345
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 345
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 345
+  expected: 0.02
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 345
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 345
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 360
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 360
+  expected: 0.49543408783327453
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 360
+  expected: 0.9900000000000001
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 360
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 360
+  expected: 0.9600000000000001
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 360
+  expected: 0.04
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 360
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 360
+  expected: 0.01
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 375
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 375
+  expected: 0.49543408783327453
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 375
+  expected: 0.9900000000000001
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 375
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 375
+  expected: 0.9600000000000001
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 375
+  expected: 0.04
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 375
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 375
+  expected: 0.01
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 390
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 390
+  expected: 0.5317155126344594
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 390
+  expected: 0.98
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 390
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 390
+  expected: 0.8026108009083552
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 390
+  expected: 0.03
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 390
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 390
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 405
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 405
+  expected: 0.5317155126344594
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 405
+  expected: 0.98
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 405
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 405
+  expected: 0.8026108009083552
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 405
+  expected: 0.03
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 405
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 405
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 420
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 420
+  expected: 0.5653493395034968
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 420
+  expected: 0.99
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 420
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 420
+  expected: 0.7981066333643285
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 420
+  expected: 0.03
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 420
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 420
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 435
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 435
+  expected: 0.5653493395034968
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 435
+  expected: 0.99
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 435
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 435
+  expected: 0.7981066333643285
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 435
+  expected: 0.03
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 435
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 435
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 450
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 450
+  expected: 0.5965240371281839
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 450
+  expected: 0.9882200997548941
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 450
+  expected: 0.9999999999999999
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 450
+  expected: 0.7999999999999998
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 450
+  expected: 0.030000000000000002
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 450
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 450
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 465
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 465
+  expected: 0.5965240371281839
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 465
+  expected: 0.9882200997548941
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 465
+  expected: 0.9999999999999999
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 465
+  expected: 0.7999999999999998
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 465
+  expected: 0.030000000000000002
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 465
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 465
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 480
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 480
+  expected: 0.6254147486473133
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 480
+  expected: 0.9746213869164255
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 480
+  expected: 0.999315839043359
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 480
+  expected: 0.7906759306385109
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 480
+  expected: 0.029949592966169655
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 480
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 480
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 495
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 495
+  expected: 0.6254147486473133
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 495
+  expected: 0.9746213869164255
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 495
+  expected: 0.999315839043359
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 495
+  expected: 0.7906759306385109
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 495
+  expected: 0.029949592966169655
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 495
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 495
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 510
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 510
+  expected: 0.6521839781297883
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 510
+  expected: 0.1964050184002002
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 510
+  expected: 0.8387204258238421
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 510
+  expected: 0.7747580539219703
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 510
+  expected: 0.04
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 510
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 510
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 525
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 525
+  expected: 0.6521839781297883
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 525
+  expected: 0.1964050184002002
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 525
+  expected: 0.8387204258238421
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 525
+  expected: 0.7747580539219703
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 525
+  expected: 0.04
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 525
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 525
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 540
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 540
+  expected: 0.6769824097760246
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 540
+  expected: 0.20078164793512915
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 540
+  expected: 0.8024589356828008
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 540
+  expected: 0.783405737591469
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 540
+  expected: 0.0347710057833624
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 540
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 540
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 555
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 555
+  expected: 0.6769824097760246
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 555
+  expected: 0.20078164793512915
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 555
+  expected: 0.8024589356828008
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 555
+  expected: 0.783405737591469
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 555
+  expected: 0.0347710057833624
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 555
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 555
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 570
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 570
+  expected: 0.6999497092877208
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 570
+  expected: 0.2396560228575303
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 570
+  expected: 0.0181553526992545
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 570
+  expected: 0.7700000000000001
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 570
+  expected: 0.03
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 570
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 570
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 585
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 585
+  expected: 0.6999497092877208
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 585
+  expected: 0.2396560228575303
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 585
+  expected: 0.0181553526992545
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 585
+  expected: 0.7700000000000001
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 585
+  expected: 0.03
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 585
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 585
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 600
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 600
+  expected: 0.7212152955868946
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 600
+  expected: 0.99
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 600
+  expected: 0.2102278662275202
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 600
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 600
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 600
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 600
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 615
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 615
+  expected: 0.7212152955868946
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 615
+  expected: 0.99
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 615
+  expected: 0.2102278662275202
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 615
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 615
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 615
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 615
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 630
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 630
+  expected: 0.7408990381483459
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 630
+  expected: 0.97
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 630
+  expected: 0.20009952411307425
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 630
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 630
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 630
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 630
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 645
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 645
+  expected: 0.7408990381483459
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 645
+  expected: 0.97
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 645
+  expected: 0.20009952411307425
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 645
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 645
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 645
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 645
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 660
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 660
+  expected: 0.7591119199017832
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 660
+  expected: 0.9900000000000001
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 660
+  expected: 0.19
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 660
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 660
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 660
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 660
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 675
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 675
+  expected: 0.7591119199017832
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 675
+  expected: 0.9900000000000001
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 675
+  expected: 0.19
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 675
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 675
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 675
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 675
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 690
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 690
+  expected: 0.7759566475210468
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 690
+  expected: 0.98
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 690
+  expected: 0.2162657268046202
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 690
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 690
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 690
+  expected: 0.01
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 690
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 705
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 705
+  expected: 0.7759566475210468
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 705
+  expected: 0.98
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 705
+  expected: 0.2162657268046202
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 705
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 705
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 705
+  expected: 0.01
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 705
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 720
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 720
+  expected: 0.7915282090590565
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 720
+  expected: 0.9999999999999999
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 720
   expected: 0.21000000000000002
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
-  field: node_probabilities.NFkB
-  row: 225
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 225
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 225
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 240
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 240
-  expected: 0.31975683215323614
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 240
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 240
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 240
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 240
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 240
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 240
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 255
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 255
-  expected: 0.31975683215323614
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 255
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 255
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 255
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 255
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 255
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 255
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 270
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 270
-  expected: 0.3686474343449898
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 270
-  expected: 0.97
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 270
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 270
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 270
-  expected: 0.01
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 270
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 270
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 285
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 285
-  expected: 0.3686474343449898
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 285
-  expected: 0.97
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 285
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 285
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 285
-  expected: 0.01
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 285
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 285
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 300
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 300
-  expected: 0.41411056682389863
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 300
-  expected: 0.98
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 300
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 300
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 300
-  expected: 0.05
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 300
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 300
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 315
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 315
-  expected: 0.41411056682389863
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 315
-  expected: 0.98
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 315
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 315
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 315
-  expected: 0.05
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 315
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 315
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 330
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 330
-  expected: 0.4563032029624583
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 330
-  expected: 0.97
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 330
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 330
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 330
-  expected: 0.97
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 330
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 330
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 345
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 345
-  expected: 0.4563032029624583
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 345
-  expected: 0.97
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 345
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 345
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 345
-  expected: 0.97
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 345
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 345
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 360
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 360
-  expected: 0.49543408783327453
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 360
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 360
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 360
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 360
-  expected: 0.95
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 360
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 360
-  expected: 0.01
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 375
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 375
-  expected: 0.49543408783327453
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 375
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 375
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 375
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 375
-  expected: 0.95
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 375
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 375
-  expected: 0.01
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 390
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 390
-  expected: 0.5317155126344594
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 390
-  expected: 0.98
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 390
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 390
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 390
-  expected: 0.97
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 390
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 390
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 405
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 405
-  expected: 0.5317155126344594
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 405
-  expected: 0.98
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 405
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 405
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 405
-  expected: 0.97
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 405
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 405
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 420
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 420
-  expected: 0.5653493395034968
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 420
-  expected: 0.9900000000000001
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 420
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 420
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 420
-  expected: 0.9700000000000001
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 420
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 420
-  expected: 0.01
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 435
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 435
-  expected: 0.5653493395034968
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 435
-  expected: 0.9900000000000001
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 435
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 435
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 435
-  expected: 0.9700000000000001
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 435
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 435
-  expected: 0.01
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 450
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 450
-  expected: 0.5965240371281839
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 450
-  expected: 0.9800000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 450
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 450
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 450
-  expected: 0.9700000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 450
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 450
-  expected: 0.015245945171614157
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 465
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 465
-  expected: 0.5965240371281839
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 465
-  expected: 0.9800000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 465
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 465
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 465
-  expected: 0.9700000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 465
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 465
-  expected: 0.015245945171614157
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 480
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 480
-  expected: 0.6254147486473133
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 480
-  expected: 0.9819057897279916
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 480
-  expected: 0.9959965154087491
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 480
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 480
-  expected: 0.9721243234332109
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 480
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 480
-  expected: 0.03
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 495
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 495
-  expected: 0.6254147486473133
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 495
-  expected: 0.9819057897279916
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 495
-  expected: 0.9959965154087491
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 495
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 495
-  expected: 0.9721243234332109
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 495
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 495
-  expected: 0.03
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 510
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 510
-  expected: 0.6521839781297883
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 510
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 510
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 510
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 510
-  expected: 0.97
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 510
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 510
-  expected: 0.02
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 525
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 525
-  expected: 0.6521839781297883
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 525
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 525
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 525
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 525
-  expected: 0.97
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 525
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 525
-  expected: 0.02
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 540
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 540
-  expected: 0.6769824097760246
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 540
-  expected: 0.979194660370146
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 540
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 540
-  expected: 0.98
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 540
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 540
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 540
-  expected: 0.01
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 555
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 555
-  expected: 0.6769824097760246
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 555
-  expected: 0.979194660370146
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 555
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 555
-  expected: 0.98
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 555
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 555
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 555
-  expected: 0.01
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 570
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 570
-  expected: 0.6999497092877208
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 570
-  expected: 0.9600000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 570
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 570
-  expected: 0.9771430199908153
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 570
-  expected: 0.9853370909865875
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 570
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 570
-  expected: 0.01
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 585
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 585
-  expected: 0.6999497092877208
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 585
-  expected: 0.9600000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 585
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 585
-  expected: 0.9771430199908153
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 585
-  expected: 0.9853370909865875
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 585
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 585
-  expected: 0.01
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 600
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 600
-  expected: 0.7212152955868946
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 600
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 600
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 600
-  expected: 0.9800000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 600
-  expected: 0.9800000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 600
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 600
-  expected: 0.01
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 615
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 615
-  expected: 0.7212152955868946
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 615
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 615
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 615
-  expected: 0.9800000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 615
-  expected: 0.9800000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 615
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 615
-  expected: 0.01
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 630
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 630
-  expected: 0.7408990381483459
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 630
-  expected: 0.98
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 630
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 630
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 630
-  expected: 0.9600000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 630
-  expected: 0.02
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 630
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 645
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 645
-  expected: 0.7408990381483459
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 645
-  expected: 0.98
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 645
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 645
-  expected: 0.99
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 645
-  expected: 0.9600000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 645
-  expected: 0.02
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 645
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 660
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 660
-  expected: 0.7591119199017832
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 660
-  expected: 0.9800000000000001
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 660
-  expected: 0.9900000000000001
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 660
-  expected: 0.9800000000000001
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 660
-  expected: 0.982402730501462
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 660
-  expected: 0.03
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 660
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 675
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 675
-  expected: 0.7591119199017832
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 675
-  expected: 0.9800000000000001
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 675
-  expected: 0.9900000000000001
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 675
-  expected: 0.9800000000000001
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 675
-  expected: 0.982402730501462
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 675
-  expected: 0.03
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 675
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 690
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 690
-  expected: 0.7759566475210468
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 690
-  expected: 1.0000000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 690
-  expected: 1.0000000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 690
-  expected: 0.9475232973840085
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 690
-  expected: 0.9500000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 690
-  expected: 0.04
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 690
-  expected: 0.02
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 705
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 705
-  expected: 0.7759566475210468
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 705
-  expected: 1.0000000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 705
-  expected: 1.0000000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 705
-  expected: 0.9475232973840085
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 705
-  expected: 0.9500000000000002
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 705
-  expected: 0.04
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 705
-  expected: 0.02
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
-  row: 720
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 720
-  expected: 0.7915282090590565
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 720
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 720
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
   field: node_probabilities.IKK
   row: 720
-  expected: 0.99
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.NFkB
   row: 720
-  expected: 0.7519807174807216
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 720
-  expected: 0.25664345405615513
+  expected: 0.23640931112085933
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.Survival
   row: 720
-  expected: 0.02
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -2715,42 +2715,42 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 735
-  expected: 1.0
+  expected: 0.9999999999999999
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 735
-  expected: 1.0
+  expected: 0.21000000000000002
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 735
-  expected: 0.99
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.NFkB
   row: 735
-  expected: 0.7519807174807216
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 735
-  expected: 0.25664345405615513
+  expected: 0.23640931112085933
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.Survival
   row: 735
-  expected: 0.02
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -2771,42 +2771,42 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 750
-  expected: 0.99
+  expected: 0.9900000000000001
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 750
-  expected: 1.0
+  expected: 0.20017084583907466
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 750
-  expected: 0.9829080466360665
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.NFkB
   row: 750
-  expected: 0.7767860911134923
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 750
-  expected: 0.21184706888312377
+  expected: 0.21918675331530585
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.Survival
   row: 750
-  expected: 0.01
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -2827,42 +2827,42 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 765
-  expected: 0.99
+  expected: 0.9900000000000001
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 765
-  expected: 1.0
+  expected: 0.20017084583907466
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 765
-  expected: 0.9829080466360665
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.NFkB
   row: 765
-  expected: 0.7767860911134923
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 765
-  expected: 0.21184706888312377
+  expected: 0.21918675331530585
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.Survival
   row: 765
-  expected: 0.01
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -2883,42 +2883,42 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 780
-  expected: 0.9627959422355676
+  expected: 0.9899999999999998
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 780
-  expected: 0.9900000000000002
+  expected: 0.19178487362184674
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 780
-  expected: 0.9700000000000002
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.NFkB
   row: 780
-  expected: 0.8183371054659893
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 780
-  expected: 0.21439079723181545
+  expected: 0.21999999999999997
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.Survival
   row: 780
-  expected: 0.01
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -2939,42 +2939,42 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 795
-  expected: 0.9627959422355676
+  expected: 0.9899999999999998
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 795
-  expected: 0.9900000000000002
+  expected: 0.19178487362184674
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 795
-  expected: 0.9700000000000002
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.NFkB
   row: 795
-  expected: 0.8183371054659893
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 795
-  expected: 0.21439079723181545
+  expected: 0.21999999999999997
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.Survival
   row: 795
-  expected: 0.01
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -2995,21 +2995,21 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 810
-  expected: 0.9600000000000001
+  expected: 0.96
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 810
-  expected: 0.9999999999999999
+  expected: 0.19535700961579666
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 810
-  expected: 0.9550236517384544
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3023,7 +3023,7 @@ expect:
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 810
-  expected: 0.9999999999999999
+  expected: 0.24628388235713927
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3051,21 +3051,21 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 825
-  expected: 0.9600000000000001
+  expected: 0.96
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 825
-  expected: 0.9999999999999999
+  expected: 0.19535700961579666
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 825
-  expected: 0.9550236517384544
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3079,7 +3079,7 @@ expect:
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 825
-  expected: 0.9999999999999999
+  expected: 0.24628388235713927
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3107,21 +3107,21 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 840
-  expected: 0.9755788528994037
+  expected: 0.98
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 840
-  expected: 1.0
+  expected: 0.20573494518029767
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 840
-  expected: 0.7739180072357692
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3135,7 +3135,7 @@ expect:
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 840
-  expected: 1.0
+  expected: 0.22661826737974047
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3163,21 +3163,21 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 855
-  expected: 0.9755788528994037
+  expected: 0.98
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 855
-  expected: 1.0
+  expected: 0.20573494518029767
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 855
-  expected: 0.7739180072357692
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3191,7 +3191,7 @@ expect:
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 855
-  expected: 1.0
+  expected: 0.22661826737974047
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3219,21 +3219,21 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 870
-  expected: 0.9799999999999999
+  expected: 0.99
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 870
-  expected: 0.9999999999999999
+  expected: 0.19492132460880723
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 870
-  expected: 0.8012336157140464
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3247,7 +3247,7 @@ expect:
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 870
-  expected: 0.9999999999999999
+  expected: 0.21464711333512115
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3275,21 +3275,21 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 885
-  expected: 0.9799999999999999
+  expected: 0.99
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 885
-  expected: 0.9999999999999999
+  expected: 0.19492132460880723
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 885
-  expected: 0.8012336157140464
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3303,7 +3303,7 @@ expect:
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 885
-  expected: 0.9999999999999999
+  expected: 0.21464711333512115
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3331,21 +3331,21 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 900
-  expected: 0.99
+  expected: 0.9850552514143036
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 900
-  expected: 1.0
+  expected: 0.21987330054717652
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 900
-  expected: 0.7852506000571886
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3387,77 +3387,77 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 915
+  expected: 0.9850552514143036
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNFR
+  row: 915
+  expected: 0.21987330054717652
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.IKK
+  row: 915
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.NFkB
+  row: 915
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Apoptosis
+  row: 915
+  expected: 1.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.Survival
+  row: 915
+  expected: 0.0
+  rel: 0.0
+  abs: 1.0e-09
+- kind: scalar
+  emitter: emitter
+  field: tnf_occupancy.TNF_R
+  row: 930
+  expected: 0.9090909090909091
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: nfkb_fraction
+  row: 930
+  expected: 0.8714667590167734
+  rel: 1.0e-09
+  abs: 0.0
+- kind: scalar
+  emitter: emitter
+  field: node_probabilities.TNF
+  row: 930
   expected: 0.99
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
-  row: 915
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.IKK
-  row: 915
-  expected: 0.7852506000571886
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.NFkB
-  row: 915
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Apoptosis
-  row: 915
-  expected: 1.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.Survival
-  row: 915
-  expected: 0.0
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: tnf_occupancy.TNF_R
   row: 930
-  expected: 0.9090909090909091
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: nfkb_fraction
-  row: 930
-  expected: 0.8714667590167734
-  rel: 1.0e-09
-  abs: 0.0
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNF
-  row: 930
-  expected: 0.9899999999999999
-  rel: 0.0
-  abs: 1.0e-09
-- kind: scalar
-  emitter: emitter
-  field: node_probabilities.TNFR
-  row: 930
-  expected: 0.9999999999999999
+  expected: 0.22108433949403633
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 930
-  expected: 0.7673468384172573
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3471,7 +3471,7 @@ expect:
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 930
-  expected: 0.9999999999999999
+  expected: 1.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3499,21 +3499,21 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 945
-  expected: 0.9899999999999999
+  expected: 0.99
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 945
-  expected: 0.9999999999999999
+  expected: 0.22108433949403633
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.IKK
   row: 945
-  expected: 0.7673468384172573
+  expected: 0.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3527,7 +3527,7 @@ expect:
   emitter: emitter
   field: node_probabilities.Apoptosis
   row: 945
-  expected: 0.9999999999999999
+  expected: 1.0
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3555,14 +3555,14 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 960
-  expected: 0.9824739199497186
+  expected: 0.9899999999999999
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 960
-  expected: 0.9999999999999999
+  expected: 0.20368126118304655
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3611,14 +3611,14 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 975
-  expected: 0.9824739199497186
+  expected: 0.9899999999999999
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 975
-  expected: 0.9999999999999999
+  expected: 0.20368126118304655
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
@@ -3667,14 +3667,14 @@ expect:
   emitter: emitter
   field: node_probabilities.TNF
   row: 990
-  expected: 0.97
+  expected: 0.972647136905056
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
   emitter: emitter
   field: node_probabilities.TNFR
   row: 990
-  expected: 1.0
+  expected: 0.19740250921503494
   rel: 0.0
   abs: 1.0e-09
 - kind: scalar
