@@ -131,7 +131,7 @@ compose/check.sh kinetic   # Lipniacki vs COPASI's sim1; the pre-equilibrated st
 
 | Investigation | Research question |
 |---|---|
-| [TNF fate in space _(planning)_](https://vivarium-collective.github.io/viva-multiscale-nfkb/investigations/tnf-fate-in-space.html) | What decides whether a cell survives or dies when TNF reaches it by diffusion, and does space act only through the dose that arrives, or also through when it arrives? |
+| [TNF fate in space _(planning)_](https://vivarium-collective.github.io/viva-multiscale-nfkb/workbench/reports/investigation-tnf-fate-in-space.html) | What decides whether a cell survives or dies when TNF reaches it by diffusion, and does space act only through the dose that arrives, or also through when it arrives? |
 <!-- END:investigations -->
 
 ## Run it locally
