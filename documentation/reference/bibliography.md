@@ -12,6 +12,10 @@
 - Goldstein B, Perelson AS (1984). Equilibrium theory for the clustering of bivalent cell surface receptors by
   trivalent ligands. Application to histamine release from basophils. *Biophys J* 45(6):1109–1123.
   doi:10.1016/S0006-3495(84)84259-9. (The equilibrium oracle for a future runtime receptor layer.)
+- Grell M, Wajant H, Zimmermann G, Scheurich P (1998). The type 1 receptor (CD120a) is the high-affinity receptor for
+  soluble tumor necrosis factor. *Proc Natl Acad Sci USA* 95(2):570–575. doi:10.1073/pnas.95.2.570. (Soluble TNF on
+  TNF-R1 at 37 °C, from the measured association and dissociation rates on HeLa cells: $K_d = 1.9 \times 10^{-11}$ M,
+  the composite's dose–response constant.)
 - Hindmarsh AC, Brown PN, Grant KE, Lee SL, Serban R, Shumaker DE, Woodward CS (2005). SUNDIALS: suite of nonlinear
   and differential/algebraic equation solvers. *ACM Trans Math Softw* 31(3):363–396. doi:10.1145/1089014.1089020.
   (CVODE, the integrator libRoadRunner uses.)
@@ -35,6 +39,10 @@
 - Micheau O, Tschopp J (2003). Induction of TNF receptor I-mediated apoptosis via two sequential signaling complexes.
   *Cell* 114(2):181–190. doi:10.1016/s0092-8674(03)00521-x. (With NF-κB active, the death complex carries FLIP(L) and
   the cell survives.)
+- Milo R, Jorgensen P, Moran U, Weber G, Springer M (2010). BioNumbers—the database of key numbers in molecular and
+  cell biology. *Nucleic Acids Res* 38:D750–D753. doi:10.1093/nar/gkp889. (BNID 108905: an NIH/3T3 mouse embryonic
+  fibroblast is 18 µm across, measured by an automated cell counter on suspended cells; the entry's source is a vendor
+  specification sheet. The composite's cell radius, 9 µm.)
 - Noé F, Nüske F (2013). A variational approach to modeling slow processes in stochastic dynamical systems.
   *Multiscale Model Simul* 11:635–655. (The method planned for finding the full composite's slow modes from simulated
   trajectories, where no equations are available.)

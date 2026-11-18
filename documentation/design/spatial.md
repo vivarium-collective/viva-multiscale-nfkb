@@ -8,8 +8,9 @@
 | **v1 is the extracellular TNF field** (Alex) | viva-pde-particle supports one domain with reflecting walls. It has no flux between regions, so it cannot yet model the nuclear envelope. A field around the cell is what it can do today. | viva-pde-particle@7043882 `fv_reaction_diffusion.py` |
 | **PDE only first; particles later** | `FVReactionDiffusion` is deterministic and backward-Euler implicit, so diffusion is unconditionally stable and it has closed-form oracles. `SmoldynHybrid` adds sampling noise and a splitting error (the error from advancing the field and the particles in alternating steps rather than together). The headline question needs only the mean field at the cell. Particles matter only if low copy numbers at the membrane change fate, and they will be judged against the PDE-only result. | `checks/spatial/*` |
 | **A bolus, not a sustained source** | `FVReactionDiffusion`'s reaction terms take one scalar rate over the whole domain, so a localised source can't be expressed. An initial bolus is an initial condition of the `fields` store, and it has an exact solution. | viva_pde_particle `kinetics.py`; `checks/spatial/gaussian-diffusion` |
-| **`RegionMean` and `RegionTotal`, new upstream** (in review) | There was no adapter from a field to one concentration at the cell. They are weighted by each grid point's control volume, as the FV engine conserves it. | viva-pde-particle#70; 9 tests, including a composite conserving mass to rel 1e-12 |
+| **`RegionMean` and `RegionTotal`, new upstream** (merged 2026-11-09 as 25e8a05; compose-api pins it from 0.7.90) | There was no adapter from a field to one concentration at the cell. They are weighted by each grid point's control volume, as the FV engine conserves it. | viva-pde-particle#70; 9 tests, including a composite conserving mass to rel 1e-12; compose-api's `region-mean-closed-form` case |
 | **Ownership** | The spatial layer owns TNF transport (diffusion, decay); the kinetic layer only reads TNF at the cell. | {doc}`architecture` |
+| **The MVP's field** (decision 33). 2-D, a reflecting box 200 µm wide, $D = 100\ \mu\text{m}^2/\text{s}$. The cell is a disk of radius 9 µm at the centre, and its surface is the ring of grid nodes just outside it ($9 \le r < 11$ µm). A Gaussian bolus (σ₀ 5 µm) starts 40 µm away, scaled so the well-mixed level is 10 $K_d$ | 2-D is the only verified setup. $D$ is the measured value (Wu et al. 2011). The radius is BioNumbers 108905 (NIH/3T3, 18 µm across). The cell samples the field and is not an obstacle, as v1 has one domain. At the cell, TNF peaks at 29 $K_d$ after 4 s and settles at 10 $K_d$. | `checks/spatial/region-mean-bolus` |
 
 ## Resolution
 
@@ -24,6 +25,17 @@ $t = 1\ \text{s}$:
 The studies choose their grid from this table, with the TNF value at the cell in mind, and confirm the choice with one
 refinement run.
 
+The MVP's field was chosen this way, on the TNF at the cell against the exact solution (decision 34). Its error is
+first order in dt and does not depend on dx: dx 2 µm and dx 1 µm agree to 5%. At dx 2 µm:
+
+| dt | 2 s (front) | 4 s (peak) | 10 s | 30 s (first coupling sample) | 60 s |
+|---|---|---|---|---|---|
+| 0.1 s | −3.2% | −0.88% | +0.32% | +0.20% | +2.1e-4 |
+| 0.05 s (chosen) | −1.7% | −0.45% | +0.17% | +0.10% | +1.1e-4 |
+| 0.025 s | −0.90% | −0.24% | +0.09% | +0.06% | +6.3e-5 |
+
+A 990 s run of the field takes 8 s.
+
 ## Checks
 
 - **`checks/spatial/gaussian-diffusion`:** a 2D Gaussian TNF field (σ₀ 10 µm, $D = 50\ \mu\text{m}^2/\text{s}$) in a
@@ -31,6 +43,12 @@ refinement run.
   every second to 10 s, rel 1e-2.
 - **`checks/spatial/uniform-bath-decay`:** a uniform 0.5 µM bath with decay rate $\lambda = 0.01\ \text{s}^{-1}$ stays uniform
   and follows $0.5\,e^{-\lambda t}$, rel 1e-5.
+- **`checks/spatial/region-mean-bolus`:** the full composite's own field and surface, read from
+  `tnf_field_cell.composite.json`, against the exact solution in a reflecting box. That solution is the free Gaussian
+  plus its mirror images in the walls, sampled at the ring's nodes with RegionMean's weights. It is checked at 2, 4,
+  10, 30 and 60 s, with tolerances three times the measured error. At 990 s the field is uniform, and the ring reads
+  the box's mean to rel 1e-9, because mass is conserved. Two mutated copies fail: D halved, and the ring moved out to
+  15–17 µm.
 
 ## v2: the nuclear envelope
 

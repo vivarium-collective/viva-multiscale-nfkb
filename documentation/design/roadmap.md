@@ -1,21 +1,21 @@
 # Roadmap and status
 
-The plan's phases (each atomic and independently checked), as of 2026-11-06. Phases 1 and 2 are the two upstream
+The plan's phases (each atomic and independently checked), as of 2026-11-18. Phases 1 and 2 are the two upstream
 changes, U1 and U2:
 
 | Phase | What | Status |
 |---|---|---|
 | U1 | viva-tellurium `parameters_in` | **released** v0.2.3 (#37, 846f87c, on PyPI) |
-| U2 | viva-pde-particle `RegionMean` / `RegionTotal` | open as #70, awaiting review |
-| 3 | Standalone baselines: kinetic, Boolean and spatial each against an oracle | **done**, except the d1 dose–response (not started) |
-| 4 | Pairwise couplings: kinetic → Boolean **done**; spatial → kinetic next (U1 is in the pinned environment; it also needs U2's `RegionMean`) | partial |
-| 5 | The full composite: a run with the finest intervals first, then at intervals chosen by the rule in {doc}`../math/timescales`; accepted only on that page's test | not started |
-| 6 | A live run on compose-api as an inferred mash-up | after Alex's go |
+| U2 | viva-pde-particle `RegionMean` / `RegionTotal` | **merged** (#70, 25e8a05, 2026-11-09); pinned here and in compose-api 0.7.90 (#540) |
+| 3 | Standalone baselines: kinetic, Boolean and spatial each against an oracle | **done**; the d1 dose–response in its first form, one-site occupancy (decision 32) |
+| 4 | Pairwise couplings: kinetic → Boolean **done**; spatial → cell **done**, inside the full composite (`coupled/field-ablation`, `spatial/region-mean-bolus`) | **done** |
+| 5 | The full composite: a run with the finest intervals first, then at intervals chosen by the rule in {doc}`../math/timescales`; accepted only on that page's test | **the MVP is built** (`tnf_field_cell.composite.json`, decisions 31–36) at the checked intervals; the interval rule's test is not yet run |
+| 6 | A live run on compose-api as an inferred mash-up, dispatched from the workbench | next, after compose-api 0.7.90 deploys |
 | Study 0 | Calibration of the coupling ({doc}`calibration`): κ decided; under held, saturating TNF nearly every cell dies; protein persistence saves cells only well beyond the measured turnover | **done** |
 | Decision 28 | Absorbing death in the network ({doc}`boolean`) | **done** |
 | Study 1, validation | Can NF-κB protect cells in the composite? ({doc}`validation`, decision 29) | **done**: no clock meets the standard with held survival; the limit is the activation race in Calzone's network |
-| d1 | TNF's dose–response at the receptor (McMillan 2021; decision 27) | not started; after the decision on NF-κB's activation route (below) |
-| compose-api | Pin bumps: viva-tellurium 0.2.3 **done** (compose-api 0.7.79, #502); viva-pde-particle after U2 merges | one compose-api release at a time |
+| d1 | TNF's dose–response at the receptor (decision 27) | first form **built**: one-site occupancy, $K_d$ 19 pM (decision 32); McMillan 2021's fit is the refinement |
+| compose-api | Pin bumps: viva-tellurium 0.2.3 **done** (compose-api 0.7.79, #502); viva-pde-particle 25e8a05 in 0.7.90 (#540) | one compose-api release at a time |
 
 ## Open questions
 
@@ -27,12 +27,14 @@ These are unresolved, and each is stated where it is used:
   $r_\text{tx}$ does for the genes, is the model-native option, to be tested as a Study 1 variant first. A decision for
   Alex before d1.
 - **Is receptor binding fast enough to use its equilibrium (d1)?** It relaxes within about 100 s, against NF-κB's 337 s
-  half-rise: a factor of about 3 ({doc}`rule-based`). To be checked when d1 is built.
+  half-rise: a factor of about 3 ({doc}`rule-based`). The first form assumes it (decision 32); McMillan 2021's fit
+  is where to check it.
 - **How fast should the fate network's TNF node flip?** Its rates are occ (the receptor-engagement fraction) scaled by `k_time`, so it follows
   the death clock, while the NF-κB node's speed is deliberately independent of it ({doc}`coupling`). No page argues
   this choice yet.
-- **How is the cell represented on the spatial grid?** Its size, its position, and which grid cells count as its
-  surface ({doc}`coupling`, `RegionMean`) are not yet specified.
+- **How is the cell represented on the spatial grid?** The MVP's answer (decision 33): a disk of radius 9 µm, its
+  surface the ring of grid nodes just outside it, sampling the field without excluding volume. The headline studies
+  may need it to exclude volume or to sit off-centre.
 - **Why a 2D grid?** The tool supports 3D, so this is a choice. It sets how the peak dose falls with distance ($1/r^2$
   against $1/r^3$), and in either dimension the integrated dose needs decay or a finite window
   ({doc}`../math/diffusion`).
