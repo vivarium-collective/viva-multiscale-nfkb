@@ -111,7 +111,10 @@ def main() -> None:
         expect += [{"kind": "scalar", "emitter": "emitter", "field": f"node_probabilities.{n}", "row": t,
                     "expected": row["node_probabilities"][n], "rel": 0.0, "abs": 1e-9} for n in NODES]
     last = rows[ROWS[-1]]
-    if not (last["nfkb_fraction"] > 10 * rows[0]["nfkb_fraction"] and last["node_probabilities"]["TNFR"] > 0.5):
+    # the run responded to TNF: NF-kB rose, and the receptor node was on for most of some interval (its TNF input
+    # flickers at (1 - occ) k_time, so the last interval need not be one)
+    if not (last["nfkb_fraction"] > 10 * rows[0]["nfkb_fraction"]
+            and max(r["node_probabilities"]["TNFR"] for r in rows) > 0.5):
         raise SystemExit("the ablated run did not respond to TNF; the check would test nothing")
     name = f"{NAME}-negative" if args.negative else NAME
     case_dir = HERE / name
