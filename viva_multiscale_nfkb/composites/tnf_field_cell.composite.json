@@ -21259,6 +21259,7 @@
   "dose_response": {
    "_type": "step",
    "address": "local:viva_basic_processes.math_expression.MathExpressionStep",
+   "priority": 1.0,
    "config": {
     "expressions": [
      {

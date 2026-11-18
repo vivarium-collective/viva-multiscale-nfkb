@@ -12,11 +12,15 @@ kinetic_boolean.composite.json (regenerate that first). This adds the spatial la
   TNFR1 at 37 C). It writes:
   - `tnf_occupancy.TNF_R`, which Lipniacki's `parameters_in` reads directly;
   - u_TNF = occ and d_TNF = 1 - occ, MaBoSS's TNF rates, which its network scales by k_time.
-  It writes them in one Step, as nuclear_fraction writes f and the NF-kB rates. A second Step reading occ ran in the
-  same cascade for only some hash seeds under process-bigraph 1.9.1 (measured 2026-11-18).
+  It writes them in one Step, as nuclear_fraction writes f and the NF-kB rates.
   The step also reads `kinetic_time`, so it runs whenever the kinetic layer updates: process-bigraph 1.9.1 does not
   re-run a Step that reads `tnf_at_cell.TNF` when RegionMean writes the whole map (measured 2026-11-18, the same rule as
   `nuclear_fraction`). It samples TNF at the coupling interval, which is when both readers take it.
+  It has `priority` 1, so it runs before the emitter at each coupling instant. process-bigraph 1.9.1's scheduler does
+  not release it as RegionMean's dependent: RegionMean produces `tnf_at_cell`, and `determine_steps` releases only
+  prefixes of a producer's output. So it runs through the scheduler's fallback, the highest-priority blocked Step
+  (scheduling.py:605). Among equal priorities that pick follows set order, which is Python's hash seed. A split Step
+  for u_TNF and d_TNF went the same way, and MaBoSS then saw TNF one interval late for some seeds.
 - **Boolean start:** TNF is off; the bolus has not arrived.
 - **Kinetic model:** the driven SBML is inline (`model`, `model_format: sbml`), so the document runs as one file.
 
@@ -118,12 +122,12 @@ def build(field_state: dict | None) -> dict:
     state["dose_response"] = {
         "_type": "step",
         "address": "local:viva_basic_processes.math_expression.MathExpressionStep",
+        "priority": 1.0,  # first among blocked Steps, whatever the hash seed (see the module docstring)
         "config": {
             "expressions": [
                 {"out": "occ", "expr": "c / (c + Kd)"},
-                # the fate network's TNF node rates, from occ in this same Step (as nuclear_fraction writes the
-                # NF-kB node's): a second Step reading occ ran in the same cascade for only some hash seeds under
-                # process-bigraph 1.9.1, so its effect on MaBoSS lagged by one coupling interval at random
+                # the fate network's TNF node rates, from occ in this same Step, as nuclear_fraction writes the
+                # NF-kB node's
                 {"out": "u_TNF", "expr": "occ"},
                 {"out": "d_TNF", "expr": "1 - occ"},
                 # read so that this Step runs on every kinetic update (see the module docstring)

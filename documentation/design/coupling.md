@@ -23,12 +23,14 @@ Symbols in the table:
   process-bigraph 1.9.1 does not re-run a Step that reads one key of `tnf_at_cell` when RegionMean writes the whole
   map, so the Step also reads `kinetic_time`, as the nuclear-fraction Step does. Both readers take occ only at their
   own updates, so TNF that arrives within an interval reaches them at its end.
-- **One Step, not two.** The dose–response Step writes occ, $u$ and $d$ together, as the nuclear-fraction Step writes
-  $f$, $u$ and $d$. With a second Step reading occ, process-bigraph 1.9.1 ran it in the same cascade for only some
-  values of Python's hash seed, so MaBoSS saw the new rates one coupling interval late at random (measured over six
-  seeds; the runner randomizes the seed per run). With one Step, ten seeds give identical dynamics. Only the
-  emitter's reading of `tnf_occupancy` at an exact coupling instant still depends on the seed, because the emitter is
-  a Step too, so the checks compare mid-interval rows.
+- **One Step, with priority.** The dose–response Step writes occ, $u$ and $d$ together, as the nuclear-fraction Step
+  writes $f$, $u$ and $d$, and it has `priority` 1. process-bigraph 1.9.1's scheduler does not release it as
+  RegionMean's dependent: `determine_steps` releases only prefixes of a producer's output, and RegionMean produces
+  `tnf_at_cell`, not `tnf_at_cell.TNF`. So it runs through the scheduler's fallback, which picks the highest-priority
+  blocked Step. Among equal priorities that pick follows set order, which is Python's hash seed, and the runner
+  randomizes the seed per run. Without the priority, the emitter ran before or after it at random. With a separate
+  Step for $u$ and $d$, MaBoSS saw the new rates one coupling interval late for half the seeds. With one Step and
+  priority 1, every row is identical over six seeds. The release rule is to be reported to process-bigraph.
 - **$f$** is NF-κB's nuclear fraction (below; derived on {doc}`../science/lipniacki-model`).
 - **κ** is how fast the fate network's NF-κB node flips, in s⁻¹ (below).
 - **`k_time`** is the death clock, Calzone units per second ({doc}`time`). Every network rate is multiplied by it, so

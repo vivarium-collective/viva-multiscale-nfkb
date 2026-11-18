@@ -45,10 +45,13 @@ A 990 s run of the field takes 8 s.
   and follows $0.5\,e^{-\lambda t}$, rel 1e-5.
 - **`checks/spatial/region-mean-bolus`:** the full composite's own field and surface, read from
   `tnf_field_cell.composite.json`, against the exact solution in a reflecting box. That solution is the free Gaussian
-  plus its mirror images in the walls, sampled at the ring's nodes with RegionMean's weights. It is checked at 2, 4,
-  10, 30 and 60 s, with tolerances three times the measured error. At 990 s the field is uniform, and the ring reads
-  the box's mean to rel 1e-9, because mass is conserved. Two mutated copies fail: D halved, and the ring moved out to
-  15–17 µm.
+  plus its mirror images in the walls, averaged over the ring's nodes with numpy rather than RegionMean. The generator
+  first asserts the composite's ring, D and bolus. It is checked at 2, 4, 10, 30 and 60 s, with tolerances three
+  times the measured error. At 990 s the field is uniform, and the ring reads the box's mean to rel 1e-9, because
+  mass is conserved. Two mutated copies fail (`--negative D50`, `--negative ring15`).
+- **`checks/coupled/bolus-occupancy`** (from the same generator): in the full composite with its bolus, the cell's
+  occupancy every 15 s is $c/(c+K_d)$ of the exact TNF at the last coupling instant. This guards the rule that the
+  dose–response Step re-runs on each kinetic update (`--negative untriggered` fails).
 
 ## v2: the nuclear envelope
 
