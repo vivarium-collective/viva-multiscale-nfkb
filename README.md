@@ -86,10 +86,10 @@ The design record, including what was ruled out and why, is in [`docs/design/`](
 
 ## Checks: the same verdict compose-api would give
 
-- **The environment.** `compose/` is a uv project pinned to the production mash-up: process-bigraph 1.9.1,
+- **The environment.** `compose/` is a uv project pinned to compose-api's registry: process-bigraph 1.9.1,
   bigraph-schema 1.8.1, Python 3.12, and each entry at the commit compose-api's registry pins.
 - **The runner.** `compose/check.sh <group> [<case>]` runs a check's document through compose-api's own `runner.py`,
-  vendored byte-for-byte at 0.7.78 (see `compose/RUNNER_SOURCE`). It scores the results with compose-api's own
+  vendored byte-for-byte at 0.7.91 (see `compose/RUNNER_SOURCE`). It scores the results with compose-api's own
   `compliance.evaluate`.
 - **The checks.** They live in `checks/<group>/<case>/case.yaml`, compose-api's compliance-case format. Every check
   has an oracle independent of the code under test, and a mutated copy that fails.
