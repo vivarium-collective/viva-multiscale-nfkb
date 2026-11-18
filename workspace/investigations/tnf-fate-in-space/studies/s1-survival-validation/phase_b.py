@@ -122,6 +122,10 @@ def main_anchored() -> None:
         ko_lost = sum(1 for x, y in zip(ko_cells, ko_baseline, strict=True) if dead(x) and not dead(y))
         r.update({"knocked_out_alive_by_anchoring": ko_saved, "knocked_out_dead_by_anchoring": ko_lost,
                   "knocked_out_anchoring_p_mcnemar_exact": _mcnemar_exact(ko_saved, ko_lost)})
+        # How the cells anchoring killed (dead anchored, alive unanchored) died: NonACD (necrosis) on at 24 h.
+        for key, cells, twins in (("dead_by_anchoring_necrosis", anchored_cells, baseline_cells),
+                                  ("knocked_out_dead_by_anchoring_necrosis", ko_cells, ko_baseline)):
+            r[key] = sum(1 for x, y in zip(cells, twins, strict=True) if dead(x) and not dead(y) and x[-1] & 4)
         summaries.append(r)
         print(f"{minutes:4d} min/unit: alive intact {r['alive_intact']:.3f}, knocked out {r['alive_knocked_out']:.3f}; "
               f"held {r['held_survival_intact']:.3f}; meets {r['meets_standard']}; net protection "

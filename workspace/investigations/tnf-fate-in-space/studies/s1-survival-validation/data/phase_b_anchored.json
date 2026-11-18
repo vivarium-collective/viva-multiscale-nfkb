@@ -38,7 +38,9 @@
    "necrosis_knocked_out_unanchored": 0.445,
    "knocked_out_alive_by_anchoring": 0,
    "knocked_out_dead_by_anchoring": 0,
-   "knocked_out_anchoring_p_mcnemar_exact": 1.0
+   "knocked_out_anchoring_p_mcnemar_exact": 1.0,
+   "dead_by_anchoring_necrosis": 0,
+   "knocked_out_dead_by_anchoring_necrosis": 0
   },
   {
    "minutes_per_unit": 120,
@@ -71,7 +73,9 @@
    "necrosis_knocked_out_unanchored": 0.485,
    "knocked_out_alive_by_anchoring": 1,
    "knocked_out_dead_by_anchoring": 6,
-   "knocked_out_anchoring_p_mcnemar_exact": 0.125
+   "knocked_out_anchoring_p_mcnemar_exact": 0.125,
+   "dead_by_anchoring_necrosis": 14,
+   "knocked_out_dead_by_anchoring_necrosis": 5
   },
   {
    "minutes_per_unit": 180,
@@ -104,7 +108,9 @@
    "necrosis_knocked_out_unanchored": 0.36,
    "knocked_out_alive_by_anchoring": 8,
    "knocked_out_dead_by_anchoring": 35,
-   "knocked_out_anchoring_p_mcnemar_exact": 4.1934157934520044e-05
+   "knocked_out_anchoring_p_mcnemar_exact": 4.1934157934520044e-05,
+   "dead_by_anchoring_necrosis": 23,
+   "knocked_out_dead_by_anchoring_necrosis": 27
   },
   {
    "minutes_per_unit": 200,
@@ -137,7 +143,9 @@
    "necrosis_knocked_out_unanchored": 0.3,
    "knocked_out_alive_by_anchoring": 15,
    "knocked_out_dead_by_anchoring": 46,
-   "knocked_out_anchoring_p_mcnemar_exact": 8.837556327558754e-05
+   "knocked_out_anchoring_p_mcnemar_exact": 8.837556327558754e-05,
+   "dead_by_anchoring_necrosis": 29,
+   "knocked_out_dead_by_anchoring_necrosis": 43
   },
   {
    "minutes_per_unit": 240,
@@ -170,7 +178,9 @@
    "necrosis_knocked_out_unanchored": 0.235,
    "knocked_out_alive_by_anchoring": 14,
    "knocked_out_dead_by_anchoring": 45,
-   "knocked_out_anchoring_p_mcnemar_exact": 6.530630444913366e-05
+   "knocked_out_anchoring_p_mcnemar_exact": 6.530630444913366e-05,
+   "dead_by_anchoring_necrosis": 26,
+   "knocked_out_dead_by_anchoring_necrosis": 37
   },
   {
    "minutes_per_unit": 480,
@@ -203,7 +213,9 @@
    "necrosis_knocked_out_unanchored": 0.015,
    "knocked_out_alive_by_anchoring": 2,
    "knocked_out_dead_by_anchoring": 11,
-   "knocked_out_anchoring_p_mcnemar_exact": 0.0224609375
+   "knocked_out_anchoring_p_mcnemar_exact": 0.0224609375,
+   "dead_by_anchoring_necrosis": 3,
+   "knocked_out_dead_by_anchoring_necrosis": 11
   }
  ]
 }

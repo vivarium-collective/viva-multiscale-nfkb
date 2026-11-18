@@ -85,8 +85,8 @@ reference/index
 :class: important
 Each layer has been built and checked on its own, and so has the kinetic → Boolean coupling. Study 0 has calibrated
 that coupling ({doc}`design/calibration`), and Study 1 found that NF-κB's net protection is at most about 10 to 13 points (percent of cells) in
-the composite, a limit set by the activation race in Calzone's network ({doc}`design/validation`). Whether to put NF-κB's activation route
-on Lipniacki's clock is open. Then come TNF's dose–response at the receptor, the spatial → kinetic coupling,
+the composite, a limit set by the activation race in Calzone's network ({doc}`design/validation`). Putting NF-κB's activation route
+on Lipniacki's clock (Option A) won that race and still did not meet the survival standard, so it was not adopted. Then come TNF's dose–response at the receptor, the spatial → kinetic coupling,
 then the integrated composite and the three
 headline studies; see {doc}`design/roadmap`. The plan of record (this workspace's design
 plan; the workspace is "section B" of compose-api's onboarding, {doc}`reference/history`) is

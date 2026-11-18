@@ -240,12 +240,15 @@ decided on Study 0's data (decision 25), so the variant changes one thing.
   (0.174, 0.174, 0.478 over the last window). It passes; with $r_\text{act}$ put on the switch-off lines it reads
   0.081, 0.082 and 0.286, and fails.
 - With the switch at 0, every earlier check still passes (11 of 11), and rerunning Study 1's 120-min-per-unit point
-  reproduces all 200 cells' fate codes exactly, at every one of 2,880 time points.
+  reproduces all 200 cells' fate codes exactly, at every one of 2,880 time points (under viva-maboss 0.1.1, the version
+  pinned then; {doc}`validation`, "Engine").
 
-**Status.** Built, and off by default (`anchor_activation` = 0 in the composite). Whether the composite adopts it
-waits on a Study 1 variant that reruns Phase B with the switch on. Alex fixed its criterion before the run: at
-one or more death clocks, at least half the NF-κB-intact cells hold survival (alive, with Survival on through the last
-2 h) and at most half the knocked-out cells are alive.
+**Status.** Built, tested, and not adopted: `anchor_activation` stays 0 in the composite. A Study 1 variant reran
+Phase B with the switch on, against a criterion Alex fixed before the run: at one or more death clocks, at least half
+the NF-κB-intact cells hold survival (alive, with Survival on through the last 2 h) and at most half the knocked-out
+cells are alive. No clock meets it ({doc}`validation`). Nearly every surviving intact cell reaches Survival, but many
+lose it again; read from the rules, and not tested, because Survival follows NF-κB's node, which cycles on and off.
+Net protection rises partly because knocked-out cells die more, mostly by necrosis, which a faster RIP1 also opens.
 
 ## Clock
 

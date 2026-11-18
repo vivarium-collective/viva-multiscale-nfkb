@@ -32,8 +32,8 @@ machinery be for TNF to kill, at each dose and each distance?
 
 Study 0 ({doc}`calibration`) found that TNF held on at saturation kills nearly every cell at every death clock it
 tested (2 to 120 min per unit). Study 1 ({doc}`validation`) found that NF-κB's net protection is at most about 10 to 13 points (percent of cells)
-at any clock from 30 to 480 min per unit, a limit set by the activation race in Calzone's own network
-({doc}`../science/calzone-network`). So the signal these studies look for comes mainly
+at any clock from 30 to 480 min per unit as built, a limit set by the activation race in Calzone's own network
+({doc}`../science/calzone-network`); with that race anchored (Option A, not adopted), the standard still fails ({doc}`validation`). So the signal these studies look for comes mainly
 from exposure: how much TNF reaches a cell, when, and for how long. That is what the dose, distance and wave-timing
 studies vary.
 
