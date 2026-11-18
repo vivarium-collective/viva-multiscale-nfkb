@@ -50,8 +50,9 @@
 
 
 
-<p id="study-question-headline" class="study-question-headline"><span class="q-glyph">Q</span> Under held, saturating TNF, can the composite let most cells with working NF-kB survive, while cells without NF-kB still die, using only the published models&#39; own parameters? If not, where is the limit?
-</p>
+<p id="study-question-headline" class="study-question-headline"><span class="q-glyph">Q</span> <span class="study-question-headline-text" data-edit-kind="study" data-edit-field="question" data-edit-value="Under held, saturating TNF, can the composite let most cells with working NF-kB survive, while cells without NF-kB still die, using only the published models&#39; own parameters? If not, where is the limit?
+" data-edit-multiline data-edit-label="Question">Under held, saturating TNF, can the composite let most cells with working NF-kB survive, while cells without NF-kB still die, using only the published models&#39; own parameters? If not, where is the limit?
+</span></p>
 
 <nav class="study-tabs" aria-label="Study sections">
   
@@ -586,7 +587,7 @@
     <div class="ctr-block">
       <h2 class="overview-label ctr-h">Result</h2>
       
-      <p class="ctr-text"></p>
+      <p class="ctr-text" data-edit-kind="study" data-edit-field="result" data-edit-value="" data-edit-multiline data-edit-label="Result"></p>
       
       
       
@@ -1043,6 +1044,92 @@
   
   
 
+  
+  <div class="overview-section" id="study-variants-section">
+    <h3>Variants <span class="muted" style="font-size:0.85em;font-weight:normal">— perturbations of the baseline to compare</span></h3>
+    
+    <table class="cond-table" style="margin-bottom:10px">
+      <thead><tr><th>Variant</th><th>Base</th><th>Parameter overrides</th><th></th></tr></thead>
+      <tbody>
+        
+        <tr>
+          <td><code>nfkb-knockout</code></td>
+          <td><code>s1-survival-validation</code></td>
+          <td>
+            
+            <em class="muted">(none)</em>
+          </td>
+          <td style="white-space:nowrap">
+            <button type="button" class="action-btn study-variant-run" data-variant="nfkb-knockout" style="font-size:0.78em" title="Run this variant">▶ Run</button>
+            <button type="button" class="action-btn study-variant-del" data-variant="nfkb-knockout" style="font-size:0.78em" title="Delete variant">✕</button>
+          </td>
+        </tr>
+        
+        <tr>
+          <td><code>transrate-ceiling</code></td>
+          <td><code>s1-survival-validation</code></td>
+          <td>
+            
+            <em class="muted">(none)</em>
+          </td>
+          <td style="white-space:nowrap">
+            <button type="button" class="action-btn study-variant-run" data-variant="transrate-ceiling" style="font-size:0.78em" title="Run this variant">▶ Run</button>
+            <button type="button" class="action-btn study-variant-del" data-variant="transrate-ceiling" style="font-size:0.78em" title="Delete variant">✕</button>
+          </td>
+        </tr>
+        
+        <tr>
+          <td><code>death-clocks</code></td>
+          <td><code>s1-survival-validation</code></td>
+          <td>
+            
+            <em class="muted">(none)</em>
+          </td>
+          <td style="white-space:nowrap">
+            <button type="button" class="action-btn study-variant-run" data-variant="death-clocks" style="font-size:0.78em" title="Run this variant">▶ Run</button>
+            <button type="button" class="action-btn study-variant-del" data-variant="death-clocks" style="font-size:0.78em" title="Delete variant">✕</button>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+    
+    
+    <form class="study-variant-add-form" onsubmit="return _submitStudyVariantAdd(this)" style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end">
+      <label style="font-size:0.78em;color:#475569">Name<br>
+        <input name="name" required pattern="[a-zA-Z0-9_-]+" placeholder="hi-dnaa"
+               style="font-family:monospace;font-size:0.82em;padding:3px 6px;min-width:130px"></label>
+      <label style="font-size:0.78em;color:#475569">Base<br>
+        <select name="base_composite" style="font-size:0.82em;padding:3px 6px">
+          <option value="s1-survival-validation">s1-survival-validation</option>
+        </select></label>
+      <label style="font-size:0.78em;color:#475569">Parameter overrides (JSON)<br>
+        <input name="overrides" placeholder='{"k_synth": 2.0}'
+               style="font-family:monospace;font-size:0.82em;padding:3px 6px;min-width:180px"></label>
+      <button type="submit" class="action-btn" style="font-size:0.82em">+ Add variant</button>
+    </form>
+    <div class="study-variant-add-status muted" style="font-size:0.8em;margin-top:4px"></div>
+    
+  </div>
+
+  
+  <div class="overview-section" id="study-interventions-section">
+    <h3>Interventions <span class="muted" style="font-size:0.85em;font-weight:normal">— named perturbations applied in this study</span></h3>
+    
+    <p class="muted" style="font-size:0.88em;margin:0 0 10px">No interventions yet.</p>
+    
+    <form class="study-intervention-add-form" onsubmit="return _submitStudyInterventionAdd(this)" style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end">
+      <label style="font-size:0.78em;color:#475569">Name<br>
+        <input name="name" required pattern="[a-zA-Z0-9_-]+" placeholder="knockout-dnaA"
+               style="font-family:monospace;font-size:0.82em;padding:3px 6px;min-width:140px"></label>
+      <label style="font-size:0.78em;color:#475569;flex:1;min-width:200px">Description<br>
+        <input name="description" placeholder="what the intervention does"
+               style="width:100%;font-size:0.82em;padding:3px 6px"></label>
+      <button type="submit" class="action-btn" style="font-size:0.82em">+ Add intervention</button>
+    </form>
+    <div class="study-intervention-add-status muted" style="font-size:0.8em;margin-top:4px"></div>
+  </div>
+
 
 
   
@@ -1432,6 +1519,57 @@
   </div>
 
   
+  <div class="overview-section" id="study-findings-authoring">
+    <h2 class="overview-label">Record a finding</h2>
+    
+    <ul class="synthesis-list" style="margin:0 0 12px">
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f1-calzone-survival-ceiling" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>Calzone&#39;s network alone, held TNF, t = 40 units, absorbing death, 20,000 trajectories. Alive with NF-kB intact rises with induction speed and saturates: 0.017, 0.078, 0.156, 0.217, 0.242 and 0.252 at TransRate 1/24, 1/4, 1, 4, 16 and 64. Knocked out, no cell is alive at any rate. Survival on is higher (0.014 to 0.319) because in Calzone&#39;s network a cell can show Survival and a death node together.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f2-why-the-ceiling" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>NF-kB&#39;s activation route (TNFR -&gt; RIP1 -&gt; RIP1ub -&gt; IKK -&gt; NFkB, four steps) races caspase-8&#39;s (TNFR + FADD -&gt; DISC -&gt; CASP8, two steps), and active caspase-8 cleaves RIP1, closing NF-kB&#39;s route. Fast induction cannot help a cell whose NF-kB never switches on. In the composite the same race runs on the death clock, because TNFR, RIP1, RIP1ub and IKK switch at k_time (cellfate_coupled.bnd). Read from the rules and the saturation in f1; not tested by varying the upstream rates.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f3-composite-protection" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>The composite, held TNF from rest, 24 h, 200 cells, at 30, 120, 180, 200, 240 and 480 min per unit. Alive intact against knocked out: 0 and 0; 0.160 and 0.055; 0.465 and 0.340; 0.550 and 0.455; 0.740 and 0.650; 0.980 and 0.985. Rescued against lost by NF-kB: 0/0, 22/1 (p = 6e-6), 36/11 (p = 3e-4), 29/10 (p = 0.003), 26/8 (p = 0.003), 1/2: a net protection of 0, 10.5, 12.5, 9.5, 9.0 and -0.5%. Cells with no fate at all, intact and knocked out: 0/0, 6/11, 43/68, 54/91, 82/130, 163/197. Survival on throughout the last 2 h: 0, 6, 11, 18, 24, 18 cells.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f4-composite-against-calzone" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>Calzone&#39;s network alone at the composite&#39;s own settings protects 12.5, 21.5, 17.1, 14.2, 8.8 and 0.3 points at the same six clocks, and its knockouts match the composite&#39;s at every clock (0.059 vs 0.055 at 120; 0.339 vs 0.340 at 180; 0.621 vs 0.650 at 240). So the death comes from Calzone&#39;s own race (f2), not from the coupling. The coupling lowers protection further at fast and middle clocks (30: 0 against 12.5; 120: 10.5 against 21.5) but not at slow ones. At 200 min per unit most intact cells are alive and most knocked-out cells dead (0.550 against 0.455), which meets the standard only through delay: 54 of 110 alive intact cells reached no fate and 18 held Survival through the last 2 h. No tested clock gives held survival to most NF-kB-competent cells.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+    </ul>
+    
+    <form class="study-finding-add-form" onsubmit="return _submitStudyFindingAdd(this)" style="display:flex;flex-direction:column;gap:8px;max-width:680px">
+      <textarea name="statement" required rows="2" placeholder="What did this study show? (one sentence)"
+                style="font-size:0.9em;padding:6px 8px;resize:vertical"></textarea>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+        <label style="font-size:0.78em;color:#475569">Status<br>
+          <select name="status" style="font-size:0.82em;padding:3px 6px">
+            <option value="novel">novel</option>
+            <option value="confirms">confirms literature</option>
+            <option value="partial">partial</option>
+            <option value="contradicts">contradicts</option>
+          </select></label>
+        <label style="font-size:0.78em;color:#475569;flex:1;min-width:200px">Why / mechanism (optional)<br>
+          <input name="explanation" style="width:100%;font-size:0.82em;padding:3px 6px"></label>
+        <button type="submit" class="action-btn" style="font-size:0.82em">+ Add finding</button>
+      </div>
+    </form>
+    <div class="study-finding-add-status muted" style="font-size:0.8em;margin-top:4px"></div>
+  </div>
+
+  
   <div class="overview-section"><h2 class="overview-label">Follow-ups &amp; decisions</h2>
 
     
@@ -1453,7 +1591,7 @@
 </section>
 
 </main>
-<script>window.__DASH_CONFIG__ = { mode: "snapshot", interactiveUrl: "https://github.com/vivarium-collective/viva-multiscale-nfkb", basePath: "/viva-multiscale-nfkb/workbench", inputsDownloadBase: "https://github.com/vivarium-collective/viva-multiscale-nfkb/raw/main", provenance: {"repo_slug": "vivarium-collective/viva-multiscale-nfkb", "repo_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb", "commit": "9a77807edf964cbf5937c5216fc7e5049eee14f2", "commit_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb/commit/9a77807edf964cbf5937c5216fc7e5049eee14f2", "branch": "main", "lockfile": "uv.lock@b7cb91b5a71d", "generated_at": "2026-11-06 19:22 UTC"} };</script>
+<script>window.__DASH_CONFIG__ = { mode: "snapshot", interactiveUrl: "https://github.com/vivarium-collective/viva-multiscale-nfkb", basePath: "/viva-multiscale-nfkb/workbench", inputsDownloadBase: "https://github.com/vivarium-collective/viva-multiscale-nfkb/raw/main", provenance: {"repo_slug": "vivarium-collective/viva-multiscale-nfkb", "repo_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb", "commit": "04fef209ee15555267879865a46ed9a05f702715", "commit_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb/commit/04fef209ee15555267879865a46ed9a05f702715", "branch": "main", "lockfile": "uv.lock@9349e97cfe94", "generated_at": "2026-11-18 15:20 UTC"} };</script>
 <script src="/viva-multiscale-nfkb/workbench/assets/data-source.js"></script>
 <script src="/viva-multiscale-nfkb/workbench/assets/toast.js"></script>
 <script>

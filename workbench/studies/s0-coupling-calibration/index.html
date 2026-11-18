@@ -64,8 +64,9 @@
 
 
 
-<p id="study-question-headline" class="study-question-headline"><span class="q-glyph">Q</span> How fast must the Boolean NF-kB node follow Lipniacki&#39;s nuclear NF-kB (kappa), and how fast is the death machinery (k_time), for the composite&#39;s survival / apoptosis / necrosis split under TNF to depend on NF-kB at all?
-</p>
+<p id="study-question-headline" class="study-question-headline"><span class="q-glyph">Q</span> <span class="study-question-headline-text" data-edit-kind="study" data-edit-field="question" data-edit-value="How fast must the Boolean NF-kB node follow Lipniacki&#39;s nuclear NF-kB (kappa), and how fast is the death machinery (k_time), for the composite&#39;s survival / apoptosis / necrosis split under TNF to depend on NF-kB at all?
+" data-edit-multiline data-edit-label="Question">How fast must the Boolean NF-kB node follow Lipniacki&#39;s nuclear NF-kB (kappa), and how fast is the death machinery (k_time), for the composite&#39;s survival / apoptosis / necrosis split under TNF to depend on NF-kB at all?
+</span></p>
 
 <nav class="study-tabs" aria-label="Study sections">
   
@@ -600,7 +601,7 @@
     <div class="ctr-block">
       <h2 class="overview-label ctr-h">Result</h2>
       
-      <p class="ctr-text"></p>
+      <p class="ctr-text" data-edit-kind="study" data-edit-field="result" data-edit-value="" data-edit-multiline data-edit-label="Result"></p>
       
       
       
@@ -1269,6 +1270,48 @@ Caveats. The estimate is quasi-steady: the node&#39;s phases (11 and 29 min) are
   
   
 
+  
+  <div class="overview-section" id="study-variants-section">
+    <h3>Variants <span class="muted" style="font-size:0.85em;font-weight:normal">— perturbations of the baseline to compare</span></h3>
+    
+    <p class="muted" style="font-size:0.88em;margin:0 0 10px">No variants yet — add one to perturb the baseline and compare against it.</p>
+    
+    
+    <form class="study-variant-add-form" onsubmit="return _submitStudyVariantAdd(this)" style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end">
+      <label style="font-size:0.78em;color:#475569">Name<br>
+        <input name="name" required pattern="[a-zA-Z0-9_-]+" placeholder="hi-dnaa"
+               style="font-family:monospace;font-size:0.82em;padding:3px 6px;min-width:130px"></label>
+      <label style="font-size:0.78em;color:#475569">Base<br>
+        <select name="base_composite" style="font-size:0.82em;padding:3px 6px">
+          <option value="kinetic-boolean">kinetic-boolean</option>
+        </select></label>
+      <label style="font-size:0.78em;color:#475569">Parameter overrides (JSON)<br>
+        <input name="overrides" placeholder='{"k_synth": 2.0}'
+               style="font-family:monospace;font-size:0.82em;padding:3px 6px;min-width:180px"></label>
+      <button type="submit" class="action-btn" style="font-size:0.82em">+ Add variant</button>
+    </form>
+    <div class="study-variant-add-status muted" style="font-size:0.8em;margin-top:4px"></div>
+    
+  </div>
+
+  
+  <div class="overview-section" id="study-interventions-section">
+    <h3>Interventions <span class="muted" style="font-size:0.85em;font-weight:normal">— named perturbations applied in this study</span></h3>
+    
+    <p class="muted" style="font-size:0.88em;margin:0 0 10px">No interventions yet.</p>
+    
+    <form class="study-intervention-add-form" onsubmit="return _submitStudyInterventionAdd(this)" style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end">
+      <label style="font-size:0.78em;color:#475569">Name<br>
+        <input name="name" required pattern="[a-zA-Z0-9_-]+" placeholder="knockout-dnaA"
+               style="font-family:monospace;font-size:0.82em;padding:3px 6px;min-width:140px"></label>
+      <label style="font-size:0.78em;color:#475569;flex:1;min-width:200px">Description<br>
+        <input name="description" placeholder="what the intervention does"
+               style="width:100%;font-size:0.82em;padding:3px 6px"></label>
+      <button type="submit" class="action-btn" style="font-size:0.82em">+ Add intervention</button>
+    </form>
+    <div class="study-intervention-add-status muted" style="font-size:0.8em;margin-top:4px"></div>
+  </div>
+
 
 
   
@@ -1660,6 +1703,131 @@ Caveats. The estimate is quasi-steady: the node&#39;s phases (11 and 29 min) are
   </div>
 
   
+  <div class="overview-section" id="study-findings-authoring">
+    <h2 class="overview-label">Record a finding</h2>
+    
+    <ul class="synthesis-list" style="margin:0 0 12px">
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f1-near-total-death" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>Alive at 24 h (no death node ever on): 0 at 2, 10 and 30 min per Calzone unit for every kappa. At 120 min per unit it is 6.5% (calzone-flicker), 9.5% (lipniacki-gene) and 16% (lipniacki-nfkb). Durable survival (alive with Survival on at 24 h) is 0.5-4.5% at 120 min per unit and 0 elsewhere. 24 h is only 12 Calzone units at 120 min per unit, short of the 40 at which Calzone&#39;s own run is read, so some of those cells may still die.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f2-near-calzone-not-equal" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>Near-total death is also Calzone&#39;s own answer, but the split is not the same. The unmodified network on the MaBoSS engine (TNF on, cellfate.cfg TransRate 1/24) gives Survival 0.014, Apoptosis 0.953 and NonACD 0.029 at t = 40. At 2 min per unit (effective TransRate r_tx/k_time = 0.039, about 1/25; 24 h is far past t = 40 there) the composite gives no survivor in 600 cells (8 expected at 0.014), apoptosis 0.915-0.95 and necrosis 0.05-0.085 at the end. The difference is the coupling. Calzone&#39;s NFkB switches on at rate 1 per unit while its gate is open and stays on. The coupled node switches on at f*kappa and off at (1-f)*kappa even with the gate open (about 9 min to switch on at f = 0.9 and kappa = ln2/337 s, against 2 min for Calzone&#39;s at this clock).
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f3-decay-confounded" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>Study 0b is confounded and does not test protective-protein persistence. Its edit (decay-lipniacki) also slowed the switch-off of mROS (on when NF-kB is OFF; it licenses ROS, a necrosis driver) and of Survival (the readout node). Cell by cell against the grid: - it changes no cell&#39;s alive/dead outcome beyond noise in any pair; - at 2 and 10 min per unit, all six pairs shift the death mode toward necrosis: 9 of 9 changed cells at 2 min per
+  unit for both calzone-flicker and lipniacki-nfkb (p = 0.004 each); 15 against 3 at calzone-flicker 10 min per unit
+  (p = 0.008);
+- at 120 min per unit, where Lipniacki&#39;s turnover is 2.2x FASTER than Calzone&#39;s switch-off, durable survival at
+  lipniacki-nfkb falls from 9 cells to 0 (p = 0.004). Corrected 2026-11-06 (after 0d): it was first read as the
+  Survival node decaying faster, but 7 of the 9 die and 2 stay alive with Survival off. 0d, which leaves Survival
+  alone, gives the same counts (6 of the 7 dead cells are the same cells), so the faster loss of the protective
+  products is enough to cost all 9. 0d does not show that Survival&#39;s own faster decay added nothing in 0b.
+The p values are uncorrected. None passes a Bonferroni threshold over 48 tests on its own, but the direction is the same in every fast-clock pair, and the mechanism (mROS) is in the edit. Study 0d is the corrected rerun.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f4-clock-sets-mode" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>The death clock sets the death mode. At kappa = lipniacki-nfkb, end-state apoptosis falls from 0.935 (2 min per unit) through 0.79 and 0.69 to 0.455 (120 min per unit), while necrosis rises from 0.065 through 0.21 and 0.31 to 0.355. The first fate arrives after about 5-9 Calzone units at every clock (medians 18, 74-76, 205-213 and 658-766 min). The median counts only cells with a fate by 24 h, so at 120 min per unit it is biased low.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f5-kappa-small" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>kappa does not change survival at 2-30 min per unit (no cell alive for any kappa). It moves the apoptosis/necrosis split by up to 0.135 (apoptosis at 30 min per unit). At 120 min per unit, lipniacki-nfkb leaves the most cells alive (16%, against 6.5% and 9.5%). Decision (Alex, 2026-11-06): the composite uses kappa = lipniacki-nfkb (ln2/337 s), the speed measured in Lipniacki&#39;s own model, which keeps NF-kB&#39;s speed independent of the assumed death clock.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f6-two-regimes" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>Two regimes, depending on the clock. - Fast clocks (2-10 min per unit). Cells die (medians 18-76 min) before the protective products can be made: they
+  switch on at r_tx, a 35-min half-rise, while NF-kB is still in its first wave (f peaks at 0.933 at 24 min). The
+  limit is how fast they are made, not how fast they decay. Study 0c supports this: even never-decaying products
+  save only 3% at 2 min per unit and 8.5% at 10 min per unit.
+- Slow clocks (30-120 min per unit). NF-kB falls to f = 0.020 at 80 min and settles at f = 0.28 after about 6 h. The
+  coupled node is then on about 28% of the time, so the protective products&#39; logic keeps failing while the death arms
+  run without pause under TNF. Of the cells that show Survival first, 69-100% die later (grid). Study 0c supports
+  this too: persistence saves the most cells at the slowest clocks.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f7-knockouts" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>Calzone&#39;s gates divert death but do not prevent it. Removing caspase-8&#39;s cleavage of RIP1 turns every death into necrosis (cell by cell, 158 and 138 apoptotic cells all became necrotic). Removing both gates (that cleavage and SMAC&#39;s sequestration of cIAP) leaves every cell dead at some point in 24 h (200 of 200 at 10 and 30 min per unit). The 22-27% that the end state showed as alive had died and then lost the death signal.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f8-persistence-bound" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>Study 0c, an upper bound and not a model: cFLIP, BCL2, mXIAP and mcIAP never switch off once made (kappa = lipniacki-nfkb). Alive at 24 h is 3%, 8.5%, 13% and 33.5% at 2, 10, 30 and 120 min per unit, against 0, 0, 0 and 16% in the grid. Cell by cell, almost every change is dead to alive: 6, 17 and 26 cells saved with none lost at 2, 10 and 30 min (p = 0.031, &lt; 0.001, &lt; 0.001), and 39 saved against 4 lost at 120 min (p &lt; 0.001). Most of the rescued cells have the Survival node OFF at 24 h (durable survival only 0-10.5%), because Survival follows the flickering NFkB node. Alive, not the Survival node, is the readout of a protected cell in this composite.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f9-measured-turnover" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>Study 0d (decay-protective, the corrected 0b; kappa = lipniacki-nfkb): cFLIP, BCL2, mXIAP and mcIAP switch off at Lipniacki&#39;s protein turnover rate r_deg = 3e-4/s (A20&#39;s c5; half-life 38.5 min, so on average 56 min after their logic fails) at every clock, instead of after one Calzone unit (2, 10, 30 or 120 min). Nothing else is edited. The rate is Lipniacki&#39;s; applying it only while the logic fails is the network&#39;s form (Lipniacki&#39;s decay is constitutive, which would remove the products faster still). Alive at 24 h is 0, 0, 0 and 12% at 2, 10, 30 and 120 min per unit, against 0, 0, 0 and 16% in the grid and 3, 8.5, 13 and 33.5% in the Study 0c bound. Cell by cell against the grid: - at 2-30 min per unit the products take 1.9-28x longer to switch off once NFkB is off, yet 200 of 200 cells die in
+  every pair; every cell that 0c saved there dies;
+- at 120 min per unit, where the turnover is 2.2x FASTER than the grid&#39;s switch-off, 17 cells are newly dead and 9
+  newly alive (p = 0.17, no change beyond noise), end-state apoptosis rises from 91 to 103 cells (p = 0.050,
+  uncorrected), and durable survival falls from 9 cells to 0 (p = 0.004). Of those 9 grid cells, 7 die and 2 stay
+  alive with Survival off (0c keeps 8 of them alive, 3 with Survival on).
+Of the cells that show Survival first, all have a death node on later at 2-30 min per unit, and 68 of 86 (79%) at 120 min per unit (grid 59 of 85, 69%; 0c 29 of 87, 33%). The measured turnover rate gives none of the bound&#39;s rescue.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f10-where-turnover-acts" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>Where the turnover can act depends on the clock. - 2-30 min per unit: 171-200 of the 200 cells in 0d have died before NF-kB settles (6 h), during its first wave
+  (f peaks at 0.933 at 24 min), the trough after it (f &lt; 0.1 from 65 to 100 min) and the damped oscillation that
+  follows (f 0.2-0.38). At 2 min per unit cells die (median first fate 18 min) before the products are made at all
+  (a 35-min half-rise), so their decay cannot matter there. At 10-30 min per unit the bound saves 8.5-13% and the
+  measured rate saves none; with no product states recorded, these runs cannot say which part of the transient
+  decides that.
+- 120 min per unit: 2-4 first deaths (of 133-176 dead cells) come before 6 h, so the settled duty cycle is the
+  regime that matters. Quasi-steady, a product&#39;s occupancy is f r_tx / (f r_tx + (1-f) r_off): r_tx = 3.3e-4/s
+  acts only while the coupled node is on (about 28% of the time; about 11 min on and 29 min off) and r_off only
+  while it is off. The grid&#39;s r_off = k_time = 1.39e-4/s gives 0.48; 0d&#39;s r_deg = 3e-4/s gives 0.30; 0c&#39;s r_off = 0
+  tends to 1. The order matches durable survival (grid 9 cells, 0d 0, 0c 21) and alive (16%, 12%, 33.5%).
+Caveats. The estimate is quasi-steady: the node&#39;s phases (11 and 29 min) are not much shorter than the products&#39; time constants (51 and 56 min). The duty cycle is not external: NFkB&#39;s logic is IKK AND NOT CASP3, so the death arms close the route the estimate assumes open. Occupancy is not why nearly every cell dies: the 0c bound, with products that stay once made, still kills 87-97% at 2-30 min per unit. Recording the four products&#39; states in a run would test the estimate.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+      <li style="display:flex;align-items:flex-start;gap:8px">
+        <button type="button" class="action-btn study-finding-del" data-id="f11-absorbing-death-regression" title="Delete finding" style="font-size:0.72em;line-height:1;padding:2px 6px">✕</button>
+        <span>Absorbing death (decision 28: Apoptosis and NonACD never switch off once on, absorb_death = 1) left the baseline&#39;s alive/dead outcome unchanged where it was rerun: on the grid&#39;s 200 seeds at kappa = lipniacki-nfkb, 30 and 120 min per unit, no cell&#39;s first death moved (0 of 400), the alive set is the same cell for cell (0 and 16%), the first-fate fractions are the same, and no cell revives (120 min per unit: revived 7.5% -&gt; 0, so the end state now equals ever-dead, 0.84). This is observed, not guaranteed: no node&#39;s logic reads a death node, but the composite records one sampled joint state per 30 s interval, so a death that switched on and off within one interval can be missed at absorb_death = 0 and recorded at 1 (an earlier recorded death, never a later one). The decay, persist and knockout variants were not rerun; every Study 0 run other than absorb-* used absorb_death = 0. Their recorded document_sha256 values predate decision 28: population.py now writes the death nodes&#39; switch-off as ($absorb_death ? 0 : 1) and sets absorb_death = 0 in each cell&#39;s parameters, so a rebuilt document differs from the recorded hash by those two rate lines and that key, while every rate is numerically the same.
+ <span class="muted small">(novel)</span></span>
+      </li>
+      
+    </ul>
+    
+    <form class="study-finding-add-form" onsubmit="return _submitStudyFindingAdd(this)" style="display:flex;flex-direction:column;gap:8px;max-width:680px">
+      <textarea name="statement" required rows="2" placeholder="What did this study show? (one sentence)"
+                style="font-size:0.9em;padding:6px 8px;resize:vertical"></textarea>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+        <label style="font-size:0.78em;color:#475569">Status<br>
+          <select name="status" style="font-size:0.82em;padding:3px 6px">
+            <option value="novel">novel</option>
+            <option value="confirms">confirms literature</option>
+            <option value="partial">partial</option>
+            <option value="contradicts">contradicts</option>
+          </select></label>
+        <label style="font-size:0.78em;color:#475569;flex:1;min-width:200px">Why / mechanism (optional)<br>
+          <input name="explanation" style="width:100%;font-size:0.82em;padding:3px 6px"></label>
+        <button type="submit" class="action-btn" style="font-size:0.82em">+ Add finding</button>
+      </div>
+    </form>
+    <div class="study-finding-add-status muted" style="font-size:0.8em;margin-top:4px"></div>
+  </div>
+
+  
   <div class="overview-section"><h2 class="overview-label">Follow-ups &amp; decisions</h2>
 
     
@@ -1741,7 +1909,7 @@ Caveats. The estimate is quasi-steady: the node&#39;s phases (11 and 29 min) are
 </section>
 
 </main>
-<script>window.__DASH_CONFIG__ = { mode: "snapshot", interactiveUrl: "https://github.com/vivarium-collective/viva-multiscale-nfkb", basePath: "/viva-multiscale-nfkb/workbench", inputsDownloadBase: "https://github.com/vivarium-collective/viva-multiscale-nfkb/raw/main", provenance: {"repo_slug": "vivarium-collective/viva-multiscale-nfkb", "repo_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb", "commit": "9a77807edf964cbf5937c5216fc7e5049eee14f2", "commit_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb/commit/9a77807edf964cbf5937c5216fc7e5049eee14f2", "branch": "main", "lockfile": "uv.lock@b7cb91b5a71d", "generated_at": "2026-11-06 19:22 UTC"} };</script>
+<script>window.__DASH_CONFIG__ = { mode: "snapshot", interactiveUrl: "https://github.com/vivarium-collective/viva-multiscale-nfkb", basePath: "/viva-multiscale-nfkb/workbench", inputsDownloadBase: "https://github.com/vivarium-collective/viva-multiscale-nfkb/raw/main", provenance: {"repo_slug": "vivarium-collective/viva-multiscale-nfkb", "repo_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb", "commit": "04fef209ee15555267879865a46ed9a05f702715", "commit_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb/commit/04fef209ee15555267879865a46ed9a05f702715", "branch": "main", "lockfile": "uv.lock@9349e97cfe94", "generated_at": "2026-11-18 15:20 UTC"} };</script>
 <script src="/viva-multiscale-nfkb/workbench/assets/data-source.js"></script>
 <script src="/viva-multiscale-nfkb/workbench/assets/toast.js"></script>
 <script>
