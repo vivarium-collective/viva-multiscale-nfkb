@@ -81,15 +81,13 @@ verification/index
 reference/index
 ```
 
-```{admonition} Status (2026-11-06)
+```{admonition} Where it stands
 :class: important
-Each layer has been built and checked on its own, and so has the kinetic → Boolean coupling. Study 0 has calibrated
-that coupling ({doc}`design/calibration`), and Study 1 found that NF-κB's net protection is at most about 10 to 13 points (percent of cells) in
-the composite, a limit set by the activation race in Calzone's network ({doc}`design/validation`). Putting NF-κB's activation route
-on Lipniacki's clock (Option A) won that race and still did not meet the survival standard, so it was not adopted. Then come TNF's dose–response at the receptor, the spatial → kinetic coupling,
-then the integrated composite and the three
-headline studies; see {doc}`design/roadmap`. The plan of record (this workspace's design
-plan; the workspace is "section B" of compose-api's onboarding, {doc}`reference/history`) is
-[`docs/design/plan-section-b.md`](https://github.com/vivarium-collective/viva-multiscale-nfkb/blob/main/docs/design/plan-section-b.md).
-This documentation explains and justifies that plan, and does not replace it.
+- **All three layers run together** as one composite: one cell in a TNF field. It is checked layer by layer and as a
+  whole, and it runs both locally and on compose-api ({doc}`design/roadmap`).
+- **Under constant, saturating TNF, it kills far more cells than experiments show.** NF-κB protects at most about 12
+  cells in 100 at every speed tested for the fate network ({doc}`design/validation`).
+- **Letting NF-κB activate on the signalling model's own timing** (Option A) still did not meet the survival standard,
+  so it was not adopted.
+- **Next, the studies vary exposure:** dose, distance from a TNF source, and when TNF arrives ({doc}`design/studies`).
 ```
