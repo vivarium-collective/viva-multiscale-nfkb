@@ -10,6 +10,9 @@
 | Cell compartments (cytoplasm, nucleus) | <span class="layer kinetic">kinetic</span> | 15 molecular concentrations (µM) and a TNF signal (0 to 1), continuous and deterministic |
 | Cell phenotype | <span class="layer boolean">Boolean</span> | 31 on/off nodes; a probability distribution over fates |
 
+All three run together in one composite: the field's concentration at the cell sets the receptor occupancy, which
+drives both the kinetic layer's TNF input and the fate network's TNF node ({doc}`../design/coupling`).
+
 The layers don't share state. Each quantity is written by exactly one layer, and the adapters translate it for the
 layer that reads it. {doc}`../design/architecture` gives this rule ("one owner") and its reason.
 

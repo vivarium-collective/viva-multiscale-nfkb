@@ -6,7 +6,7 @@ each cell's fate code (Survival + 2*Apoptosis + 4*NonACD), so the results file h
 per tick and NF-kB's f, not N x 31 nodes per tick.
 
 The document is built from the registered composite spec (viva_multiscale_nfkb/composites/kinetic_boolean.composite.json)
-and run through compose-api's own runner (compose/runner.py, vendored at 0.7.78) in the pinned environment compose/,
+and run through compose-api's own runner (compose/runner.py, vendored byte for byte; compose/RUNNER_SOURCE names the version) in the pinned environment compose/,
 exactly as the workspace's checks run, so results are what compose-api would produce.
 
     uv run --project compose python -I <this file> --kappa K --k-time T --cells N --hours H --out DIR [--seed S]

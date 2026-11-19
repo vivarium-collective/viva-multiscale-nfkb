@@ -30,7 +30,7 @@ Symbols in the table:
   blocked Step. Among equal priorities that pick follows set order, which is Python's hash seed, and the runner
   randomizes the seed per run. Without the priority, the emitter ran before or after it at random. With a separate
   Step for $u$ and $d$, MaBoSS saw the new rates one coupling interval late for half the seeds. With one Step and
-  priority 1, every row is identical over six seeds. The release rule is to be reported to process-bigraph.
+  priority 1, every row is identical over six seeds. The release rule is reported upstream as [process-bigraph#284](https://github.com/vivarium-collective/process-bigraph/issues/284).
 - **$f$** is NF-κB's nuclear fraction (below; derived on {doc}`../science/lipniacki-model`).
 - **κ** is how fast the fate network's NF-κB node flips, in s⁻¹ (below).
 - **`k_time`** is the death clock, Calzone units per second ({doc}`time`). Every network rate is multiplied by it, so

@@ -82,7 +82,7 @@ Every check in this project has two more properties:
 
 **Running checks locally.** `compose/check.sh <group> [<case>]` runs a case exactly as compose-api does:
 - it uses compose-api's own runner, copied into this repository;
-- it runs in `compose/`, an environment pinned to the same packages as the production mash-up;
+- it runs in `compose/`, an environment pinned to the packages compose-api's registry pins;
 - it scores with `compliance.evaluate` from a compose-api checkout.
 
 Two of compose-api's own cases, copied unchanged into `checks/harness`, show that the local result matches the live

@@ -32,5 +32,6 @@ The same day, all seven compliance cases passed on production, each in its own a
 
 **What B adds.** A proved each framework on its own. B builds one model that spans scales and engines (Boolean, ODE and
 spatial PDE). It needs no new registry entry: compose-api runs it as an inferred mash-up of viva-maboss,
-viva-tellurium, viva-pde-particle and viva-basic-processes. Only viva-pde-particle's pin must move, once `RegionMean`
-(viva-pde-particle#70) is merged.
+viva-tellurium, viva-pde-particle and viva-basic-processes. Two pins moved for it: viva-pde-particle to 25e8a05 for
+`RegionMean` (compose-api 0.7.90, #540), and viva-maboss to 0.1.2 (0.7.91, #541). Its first live runs are
+simulations 12516 and 12524 ({doc}`../design/roadmap`, phase 6).
