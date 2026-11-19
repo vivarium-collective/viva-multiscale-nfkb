@@ -66,6 +66,10 @@ and fate layers on their own, with TNF held on.
   - That change was not adopted. The gap is recorded as an open question, not tuned away.
 - **Next: what exposure does.** Studies of dose, of distance from a TNF source, and of when TNF arrives. They ask
   whether space matters only through how much TNF reaches a cell, or also through when it arrives.
+  - **The design:** cells 100 µm, 300 µm and 1 mm from a pulse of TNF in an open medium, so that it reaches them after
+    about half a minute, 4 minutes and 40 minutes, at three speeds of the death machinery.
+  - **The survival test:** survival at 24 hours is compared with cells given the same dose uniformly; distance acts
+    only through dose if survival matches within 5 cells in 100.
 - **The model runs the same everywhere.** The three scales run together on a laptop and on BioSimulations'
   compose-api, the service that runs these models on a compute cluster. A run there, on Linux, reproduces a local run
   on macOS to within floating-point noise (`compose/live/tnf_field_cell.yaml`).

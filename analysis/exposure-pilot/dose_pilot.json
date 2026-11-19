@@ -1,0 +1,105 @@
+{
+ "cells": 200,
+ "seed": 1,
+ "hours": 24.0,
+ "kappa": "ln2/337",
+ "absorb_death": 1,
+ "points": [
+  {
+   "minutes_per_unit": 30,
+   "occupancy": 0.05,
+   "cells": 200,
+   "alive": 0.5,
+   "no_fate": 80,
+   "median_first_death_min": 357.0
+  },
+  {
+   "minutes_per_unit": 30,
+   "occupancy": 0.2,
+   "cells": 200,
+   "alive": 0.11,
+   "no_fate": 16,
+   "median_first_death_min": 401.25
+  },
+  {
+   "minutes_per_unit": 30,
+   "occupancy": 0.5,
+   "cells": 200,
+   "alive": 0.005,
+   "no_fate": 0,
+   "median_first_death_min": 287.0
+  },
+  {
+   "minutes_per_unit": 30,
+   "occupancy": 1.0,
+   "cells": 200,
+   "alive": 0.0,
+   "no_fate": 0,
+   "median_first_death_min": 234.0
+  },
+  {
+   "minutes_per_unit": 60,
+   "occupancy": 0.05,
+   "cells": 200,
+   "alive": 0.595,
+   "no_fate": 102,
+   "median_first_death_min": 407.5
+  },
+  {
+   "minutes_per_unit": 60,
+   "occupancy": 0.2,
+   "cells": 200,
+   "alive": 0.31,
+   "no_fate": 41,
+   "median_first_death_min": 548.75
+  },
+  {
+   "minutes_per_unit": 60,
+   "occupancy": 0.5,
+   "cells": 200,
+   "alive": 0.085,
+   "no_fate": 5,
+   "median_first_death_min": 503.0
+  },
+  {
+   "minutes_per_unit": 60,
+   "occupancy": 1.0,
+   "cells": 200,
+   "alive": 0.005,
+   "no_fate": 0,
+   "median_first_death_min": 455.5
+  },
+  {
+   "minutes_per_unit": 120,
+   "occupancy": 0.05,
+   "cells": 200,
+   "alive": 0.745,
+   "no_fate": 127,
+   "median_first_death_min": 705.0
+  },
+  {
+   "minutes_per_unit": 120,
+   "occupancy": 0.2,
+   "cells": 200,
+   "alive": 0.61,
+   "no_fate": 88,
+   "median_first_death_min": 822.0
+  },
+  {
+   "minutes_per_unit": 120,
+   "occupancy": 0.5,
+   "cells": 200,
+   "alive": 0.32,
+   "no_fate": 36,
+   "median_first_death_min": 909.0
+  },
+  {
+   "minutes_per_unit": 120,
+   "occupancy": 1.0,
+   "cells": 200,
+   "alive": 0.15,
+   "no_fate": 5,
+   "median_first_death_min": 859.75
+  }
+ ]
+}
