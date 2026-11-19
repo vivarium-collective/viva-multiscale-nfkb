@@ -27,8 +27,7 @@ These are unresolved, and each is stated where it is used:
   way, intact cells reach Survival and many lose it again. Read from the rules, and not yet tested, Survival follows
   NF-κB's node, which under held TNF is on only about 28% of the time. With the route anchored, knocked-out cells also
   die more, mostly by necrosis, so the standard's knocked-out half is met partly through a death route anchoring
-  opened. How Survival should read a cycling NF-κB node, and the necrosis route's timing, are decisions for Alex;
-  nothing is tuned without him.
+  opened. Alex recorded both as open, and the exposure studies come next (decision 37); nothing is tuned without him.
 - **Is receptor binding fast enough to use its equilibrium (d1)?** It relaxes within about 100 s, against NF-κB's 337 s
   half-rise: a factor of about 3 ({doc}`rule-based`). The first form assumes it (decision 32); McMillan 2021's fit
   is where to check it.

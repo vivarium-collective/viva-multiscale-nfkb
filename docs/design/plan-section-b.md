@@ -6,7 +6,7 @@ Section B of `agenda-onboarding.md` (lines 113–191) asks for the design of one
 from the simulators onboarded in A. Its layers are Boolean → ODE kinetic core → optional rule-based → spatial particle +
 PDE. d7 (eDMD/VAC) is already scoped there. This plan does not redo d7; its timing step is d7's "use 1".
 
-**Status (2026-11-18): Studies 0 and 1 done; Option A (NF-κB's activation route on Lipniacki's clock) tested and not adopted; what stands between the composite and the survival standard is open (Alex).**
+**Status (2026-11-18): Studies 0 and 1 done; Option A (NF-κB's activation route on Lipniacki's clock) tested and not adopted; what stands between the composite and the survival standard is recorded as open, and the exposure studies come next (Alex, 2026-11-19, decision 37).**
 - **Study 0** (`workspace/investigations/tnf-fate-in-space/studies/s0-coupling-calibration`; documented in
   `documentation/design/calibration.md`) decided:
   - κ = ln 2/337 s (decision 25), now the composite's default, read from `transcription_anchor.json`;

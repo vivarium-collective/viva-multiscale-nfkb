@@ -7,7 +7,7 @@ investigation: tnf-fate-in-space
 title: Survival under TNF (validation against NF-kB-dependent survival)
 created: '2026-11-06'
 status: ran
-phase: Evaluate
+phase: Decide
 parent_studies:
 - {study: s0-coupling-calibration, condition: ran, relation: leads-to}
 
@@ -218,7 +218,8 @@ followup_study_proposals:
   motivation: >
     Intact cells reach Survival but many lose it, as built and with NF-kB's activation route anchored, and with the
     route anchored knocked-out cells die more, mostly by necrosis (f4, f6). How Survival should read a cycling NF-kB, and whether the necrosis
-    route should be timed differently, are modelling decisions for Alex; nothing is tuned without him.
+    route should be timed differently, are modelling decisions for Alex; nothing is tuned without him. Alex
+    (2026-11-19, decision 37): recorded as open, not pursued now; the exposure studies come next.
 
 runs:
 - name: phase-a-calzone-alone

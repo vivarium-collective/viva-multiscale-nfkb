@@ -173,8 +173,8 @@ The account of why is read from the network's rules; it was not tested by changi
   hold it); anchoring lets more cells reach Survival, and many of them lapse too.
 - Necrosis bears on what the result means, not on whether it meets the standard. It meets the knocked-out half partly
   through a death route that anchoring opened, and it kills intact cells too.
-- How Survival should read an NF-κB node that cycles, and whether the necrosis route should be timed differently, are
-  modelling decisions for the project lead ({doc}`roadmap`).
+- How Survival should read an NF-κB node that cycles, and whether the necrosis route should be timed differently, stay
+  open: the project lead chose to record them and go on to the exposure studies ({doc}`decision 37 <decisions>`).
 
 **Engine.** These runs, like Phase B's, used viva-maboss 0.1.1, the version pinned then, so each pair compares like with
 like. Each cell carries one sampled state of the fate network from one interval to the next ({doc}`../math/maboss`).
