@@ -42,10 +42,11 @@ studies vary.
 
 ## Why a bolus
 
-A bolus is an initial condition of the `fields` store, which `FVReactionDiffusion` supports today. A sustained point
-source isn't expressible, because the reaction rate is one scalar over the whole domain ({doc}`spatial`). A bolus
-diffusing in a reflecting box *is* a moving front, and it has an exact solution (a Gaussian, with image terms at the
-walls).
+A bolus is an initial condition of the `fields` store. A bolus diffusing *is* a moving front, and its arrival at each
+cell is what the distance and wave-timing studies time. It also has an exact solution: a Gaussian. In the 6 mm box with
+its absorbing band, every cell matches the open-medium Gaussian (decision 39). A sustained source could be expressed
+too, as a reaction term made local by a mask (decision 8b), and the band is built that way. But a sustained source
+holds each cell at a steady dose, which would hide when TNF arrives ({doc}`spatial`).
 
 ## Grid
 

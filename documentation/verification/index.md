@@ -59,6 +59,7 @@ but not checked. The MVP's record is `compose/live/tnf_field_cell.yaml`
 | `kinetic/preequilibrated-steady` | the saved rest state is a steady state and matches COPASI before the stimulus | corpus | — |
 | `spatial/gaussian-diffusion` | FV diffusion of a Gaussian bolus | closed form | — |
 | `spatial/uniform-bath-decay` | a uniform bath stays uniform and decays | closed form | — |
+| `spatial/local-source` | a source confined to a patch by an `external_conc` mask, with decay, through a full Composite (decision 8b) | the scheme's exact mass, $(sA/\lambda)(1-(1-\lambda\,dt)^n)$ | an unseeded mask; an unwired mask (both zero) |
 | `spatial/region-mean-bolus` | the full composite's own field and surface: TNF at the cell's surface ring as a bolus arrives and mixes (decisions 33, 34) | exact solution in a reflecting box (mirror images), averaged over the ring with numpy; mass conservation at 990 s | D halved; the ring moved out to 15–17 µm |
 | `coupled/bolus-occupancy` | in the full composite, the cell's occupancy follows the TNF at each coupling instant (decision 35) | $c/(c+K_d)$ of the exact solution at the last coupling instant | the dose–response Step not triggered by the kinetic layer |
 | `coupled/field-ablation` | the full composite's field → cell edge adds nothing when the field is flat; occupancy is $c/(c+K_d)$ (decisions 31, 32, 35) | the same document with that edge removed and `tnf_at_cell` seeded; the closed form | $K_d$ doubled; MaBoSS's TNF rates swapped; Tellurium's `TNF_R` unwired |

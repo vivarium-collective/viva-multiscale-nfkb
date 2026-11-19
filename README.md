@@ -119,7 +119,7 @@ model's own results. Most checks also have a deliberately broken copy that is sh
 ```bash
 compose/check.sh kinetic    # Lipniacki's model against COPASI's reference run
 compose/check.sh boolean    # the fate network against Calzone's own network and analytic results
-compose/check.sh spatial    # TNF diffusion against its exact solution
+compose/check.sh spatial    # TNF diffusion, and a TNF source confined to one spot, against exact solutions
 compose/check.sh coupled    # receptor occupancy against its formula; the full model against a copy with the field-to-cell link cut
 ```
 

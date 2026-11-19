@@ -275,9 +275,10 @@ One composite and one parameter sweep give all three. Each is a workspace study 
   - A uniform bath and a **point bolus are both initial conditions** of the `fields` store, which
     `FVReactionDiffusion` supports today. A bolus diffusing in a reflecting box is the distance study's moving front, and it has
     an analytic solution: a Gaussian with image terms, which is also Phase 3's spatial oracle.
-  - A **sustained point source cannot be expressed today.** `FVReactionDiffusion`'s reaction terms take one scalar
-    `k` over the whole domain. A sustained source would need a spatially varying source term upstream, outside v1. v1
-    uses the bolus, and that limitation is recorded here.
+  - ~~A **sustained point source cannot be expressed today.** `FVReactionDiffusion`'s reaction terms take one scalar
+    `k` over the whole domain.~~ **Corrected 2026-11-19 (decision 8b):** a reaction term is mass action over any
+    species, and `external_conc` species are arrays over the grid, so a mask makes a source (or uptake) local
+    (`checks/spatial/local-source`). The studies keep the bolus because its arrival is what they time (decision 39).
 - **Resolution (measured 2026-11-04, `checks/spatial/gaussian-diffusion`):** the FV scheme's error in a front's tail converges with dx and dt. At r = 40 um, t = 1 s it is +1.15% at dx 2 um / dt 0.01 s and +0.29% at dx 1 um / dt 0.0025 s. Choose the distance study's grid with the TNF value at the cell in mind, and confirm the choice with one refinement run.
 - **The death-clock axis `k_time` crosses all three studies** (Alex, 2026-11-04). It maps the race itself: how fast
   the death machinery must be for TNF to kill, at each dose and distance. Gene expression stays
