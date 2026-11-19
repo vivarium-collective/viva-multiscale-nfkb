@@ -66,7 +66,7 @@ released before the workspace uses it. The workspace does not carry a local copy
 - **viva-pde-particle** adds `RegionMean` and `RegionTotal`, which reduce a field to one concentration at the cell
   (viva-pde-particle#70, merged as 25e8a05; the full composite uses `RegionMean`).
 - **viva-maboss 0.1.2** draws the fate network's sampled state in a fixed order, so that a seed gives the same
-  trajectory on every platform (viva-maboss#1); a live rerun checks this ({doc}`roadmap`, phase 6).
+  trajectory on every platform (viva-maboss#1). A live rerun confirmed it ({doc}`roadmap`, phase 6).
 
 ### 4. Every claim has a check that can fail
 
@@ -77,7 +77,7 @@ test, and, where one is recorded, a mutated copy proven to fail. See {doc}`../ve
 
 The checks run through compose-api's own runner and scorer, in an environment pinned to compose-api's registry:
 every simulator package is at the commit the registry pins (0.7.91). An environment the service has already built
-keeps its packages until an administrator makes its next version, so the MVP's mash-up still has viva-maboss 0.1.1
+keeps its packages until an administrator makes its next version, so the MVP's mash-up kept viva-maboss 0.1.1 until its version 2 (2026-11-19)
 ({doc}`roadmap`, phase 6). So a document that passes here runs on
 the service without a new registry entry, as a mash-up compose-api infers from the document's processes (viva-maboss,
 viva-tellurium, viva-pde-particle and viva-basic-processes). The full composite ran this way on compose-api 0.7.90,

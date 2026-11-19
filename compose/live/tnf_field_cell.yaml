@@ -18,6 +18,10 @@ runs:
   environment: mash-bb433b1002@1
   document_sha256: e61ee54b3d394a61ee0f0ee1eb8fc25ff86ff885365c3c8c2df302ab29594e8e
   rows: 991
+- id: 12534
+  environment: mash-bb433b1002@2
+  document_sha256: c44ceab830253a72dcb0534632386d771b2235fcc11f29410f0b229543e115fc
+  rows: 991
 comparisons:
 - between:
   - 12516
@@ -64,6 +68,28 @@ comparisons:
       verdict: within RTOL
       relative_difference: 3.3e-14
 - between:
+  - 12534
+  - local
+  keys:
+    global_time:
+      verdict: identical
+      relative_difference: 0.0
+    nfkb_fraction:
+      verdict: within RTOL
+      relative_difference: 1.0e-14
+    nfkb_fraction_time:
+      verdict: identical
+      relative_difference: 0.0
+    node_probabilities:
+      verdict: within RTOL
+      relative_difference: 1.5e-13
+    tnf_at_cell:
+      verdict: within RTOL
+      relative_difference: 3.6e-13
+    tnf_occupancy:
+      verdict: within RTOL
+      relative_difference: 3.3e-14
+- between:
   - 12516
   - 12524
   keys:
@@ -79,6 +105,50 @@ comparisons:
     node_probabilities:
       verdict: identical
       relative_difference: 0.0
+    tnf_at_cell:
+      verdict: identical
+      relative_difference: 0.0
+    tnf_occupancy:
+      verdict: identical
+      relative_difference: 0.0
+- between:
+  - 12516
+  - 12534
+  keys:
+    global_time:
+      verdict: identical
+      relative_difference: 0.0
+    nfkb_fraction:
+      verdict: identical
+      relative_difference: 0.0
+    nfkb_fraction_time:
+      verdict: identical
+      relative_difference: 0.0
+    node_probabilities:
+      verdict: differs
+      relative_difference: 1.0
+    tnf_at_cell:
+      verdict: identical
+      relative_difference: 0.0
+    tnf_occupancy:
+      verdict: identical
+      relative_difference: 0.0
+- between:
+  - 12524
+  - 12534
+  keys:
+    global_time:
+      verdict: identical
+      relative_difference: 0.0
+    nfkb_fraction:
+      verdict: identical
+      relative_difference: 0.0
+    nfkb_fraction_time:
+      verdict: identical
+      relative_difference: 0.0
+    node_probabilities:
+      verdict: differs
+      relative_difference: 1.0
     tnf_at_cell:
       verdict: identical
       relative_difference: 0.0

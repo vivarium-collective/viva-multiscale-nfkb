@@ -89,7 +89,7 @@ one interval to the next:
    probability of being on over that last window (with one trajectory, the fraction of the window it was on).
 3. Both the engine's random seed and the sampler's come from `numpy.random.SeedSequence([seed, step])`, where `step` counts the intervals run so far, so a run is
    reproducible from its seed with the same viva-maboss version. viva-maboss 0.1.2 lists the network's states in a fixed
-   order before each draw, so that the result does not depend on the platform either; a live rerun is to confirm this
+   order before each draw, so that the result does not depend on the platform either, as a live rerun on Linux against macOS confirmed
    ({doc}`../design/validation`, "Engine").
 
 In the studies every cell is one `MaBoSSProcess` with `sample_count = 1`: one trajectory per interval, and the sampled
