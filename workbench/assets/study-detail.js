@@ -433,7 +433,7 @@
             var links = (a.ptools || []).map(function (pp) {
               var fname = pp.replace(/^ptools\//, '');
               var url = '/api/remote-analysis-figure?simulation_id=' + enc(s.simulation_id)
-                + '&analysis=' + enc(a.name) + '&path=' + enc(pp);
+                + '&analysis=' + enc(a.name) + '&path=' + enc(pp) + '&study=' + enc(slug);
               return '<li><a href="' + url + '" download="' + esc(fname) + '">' + esc(fname) + '</a></li>';
             }).join('');
             var more = a.n_ptools > (a.ptools || []).length
@@ -888,7 +888,7 @@
           (s.analyses || []).forEach(function (a) {
             (a.figures || []).forEach(function (fp) {
               var url = '/api/remote-analysis-figure?simulation_id=' + enc(s.simulation_id)
-                + '&analysis=' + enc(a.name) + '&path=' + enc(fp);
+                + '&analysis=' + enc(a.name) + '&path=' + enc(fp) + '&study=' + enc(slug);
               cards.push('<div class="figure-card">'
                 + '<iframe src="' + url + '" loading="lazy" '
                 + 'class="figure-media-frame figure-media-frame--native"></iframe>'
@@ -1957,6 +1957,34 @@
     var sectionLabel = function (label) {
       return '<div class="muted" style="font-size:0.78em;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">' + e(label) + '</div>';
     };
+    // Provenance of an adopted remote run: these fields are engine-authored onto
+    // the run row (lib/simulations_index._row_to_dict → remote_origin/ran_on/
+    // source_ref) but were never surfaced in this panel. Render each ONLY when it
+    // is actually present on the row — never invent or default a provenance value.
+    var _ro = row.remote_origin || null;
+    var _sref = row.source_ref || null;
+    var _provRows = '';
+    // A run computed on a remote backend. remote_origin present → its data is
+    // still remote (s3); ran_on alone → the results were landed/adopted into
+    // this workspace. The wording reflects what the fields actually say.
+    if (_ro) {
+      _provRows += kv('Method', 'remote run');
+    } else if (row.ran_on) {
+      _provRows += kv('Method', 'adopted remote run');
+    }
+    if (_ro && _ro.deployment) _provRows += kv('Origin host', '<code>' + e(_ro.deployment) + '</code>');
+    var _backend = (_ro && _ro.backend) || row.ran_on;
+    if (_backend) _provRows += kv('Backend', e(_backend));
+    if (_ro && _ro.simulation_id != null) _provRows += kv('Simulation', '<code>' + e(_ro.simulation_id) + '</code>');
+    if (_ro && _ro.experiment_id) _provRows += kv('Experiment', '<code>' + e(_ro.experiment_id) + '</code>');
+    if (_ro && _ro.s3_uri) _provRows += kv('Source artifact', '<code>' + e(_ro.s3_uri) + '</code>');
+    if (_sref && (_sref.commit_short || _sref.commit)) {
+      var _short = _sref.commit_short || String(_sref.commit).slice(0, 10);
+      var _commitHtml = _sref.commit_url
+        ? '<a href="' + e(_sref.commit_url) + '" target="_blank" rel="noopener"><code>' + e(_short) + '</code></a>'
+        : '<code>' + e(_short) + '</code>';
+      _provRows += kv('Source commit', _commitHtml);
+    }
     host.innerHTML =
       '<div class="panel" style="padding:12px 14px">' +
         '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
@@ -1971,6 +1999,11 @@
           kv('Time', e(S.fmtTime(row.completed_at || row.started_at))) +
           (row.n_steps != null ? kv('Steps', e(row.n_steps)) : '') +
         '</div>' +
+        (_provRows
+          ? '<div style="margin-bottom:10px">' + sectionLabel('Provenance') +
+              '<div style="display:grid;gap:4px;font-size:0.88em">' + _provRows + '</div>' +
+            '</div>'
+          : '') +
         '<div style="display:flex;flex-wrap:wrap;gap:8px">' + dl + ' ' + an + ' ' + explore + '</div>' +
         '<div style="margin-top:12px">' + sectionLabel('Figures') +
           '<div id="run-detail-figures">' + figs.html + '</div>' +
@@ -3091,7 +3124,8 @@
     var e = escapeHtmlForTests;
     if (!window.confirm('Stop campaign ' + runId + '? This cancels every seed still in flight.')) return;
     btn.disabled = true; btn.textContent = 'Stopping…';
-    api('POST', '/api/remote-run-cancel', { simulation_id: runId })
+    // study: the server finds the run's own record in this study's runs DB (docs/backend-adapters.md step 1c)
+    api('POST', '/api/remote-run-cancel', { simulation_id: runId, study: studyName() })
       .then(function (res) {
         if (res.status !== 200) {
           btn.disabled = false; btn.textContent = '■ Stop campaign';
@@ -3130,6 +3164,12 @@
     if (d.phase === 'unreachable') {
       track.style.display = 'none';
       label.textContent = '⚠ progress unavailable (remote backend unreachable)';
+      return;
+    }
+    if (d.phase === 'other-backend' || d.phase === 'not-sms') {
+      // Refused: the run belongs to another backend than this workbench's (step 1c). Terminal; no Stop button.
+      track.style.display = 'none';
+      label.textContent = '⚠ ' + (d.error || 'this run belongs to another backend');
       return;
     }
     var e = escapeHtmlForTests;
@@ -3176,7 +3216,8 @@
     // A legacy run is an integer simulation id; a /viva/v1 run (serve --backend-base-url)
     // carries the backend's opaque string id, asked for as run_id.
     var idParam = /^\d+$/.test(String(runId)) ? 'simulation_id' : 'run_id';
-    api('GET', '/api/remote-run-chain-progress?' + idParam + '=' + encodeURIComponent(runId))
+    api('GET', '/api/remote-run-chain-progress?' + idParam + '=' + encodeURIComponent(runId) +
+        '&study=' + encodeURIComponent(studyName() || ''))
       .then(function (res) {
         var d = res.body || {};
         _renderChainProgress(d);
@@ -3195,7 +3236,7 @@
         // flight, or vice versa) must never trigger this run's reload.
         if (_gradeAfterRunId != null && String(_gradeAfterRunId) === String(runId)) {
           _gradeAfterRunId = null;
-          if (d.terminal) _reloadStudyAndTests();
+          if (d.terminal && d.phase !== 'other-backend' && d.phase !== 'not-sms') _reloadStudyAndTests();
         }
       })
       .catch(function () {
