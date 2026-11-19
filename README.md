@@ -70,6 +70,9 @@ and fate layers on their own, with TNF held on.
     about half a minute, 4 minutes and 40 minutes, at three speeds of the death machinery.
   - **The survival test:** survival at 24 hours is compared with cells given the same dose uniformly; distance acts
     only through dose if survival matches within 5 cells in 100.
+- **After that: many cells on one field.** Each cell has its own signalling and fate models. Taking up TNF lets
+  neighbours shade one another, which turns a set of cells into a tissue. The machinery comes first; uptake follows
+  once the exposure studies show how dose alone acts.
 - **The model runs the same everywhere.** The three scales run together on a laptop and on BioSimulations'
   compose-api, the service that runs these models on a compute cluster. A run there, on Linux, reproduces a local run
   on macOS to within floating-point noise (`compose/live/tnf_field_cell.yaml`).
@@ -119,7 +122,7 @@ model's own results. Most checks also have a deliberately broken copy that is sh
 ```bash
 compose/check.sh kinetic    # Lipniacki's model against COPASI's reference run
 compose/check.sh boolean    # the fate network against Calzone's own network and analytic results
-compose/check.sh spatial    # TNF diffusion, and a TNF source confined to one spot, against exact solutions
+compose/check.sh spatial    # TNF diffusion, a TNF source confined to one spot, and the studies' geometry, against exact solutions
 compose/check.sh coupled    # receptor occupancy against its formula; the full model against a copy with the field-to-cell link cut
 ```
 

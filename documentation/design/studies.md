@@ -18,7 +18,8 @@ integrated over time.
 
 What counts as "collapses" was fixed before the distance study runs, so that the answer cannot be tuned to the result
 (decision 40):
-- it is an equivalence test, with a margin of ±0.05 in the fraction alive at 24 h and about 270 cells per point;
+- it is an equivalence test, with a margin of ±0.05 in the fraction alive at 24 h and about 1,700 cells per point,
+  which gives an 80% chance of showing equivalence when it holds (decision 40b);
 - it compares each run with a monotone fit of the dose curve, mapped by the TNF dose that reached the cell;
 - runs outside the dose study's range are reported, not extrapolated.
 
@@ -30,6 +31,17 @@ The wave-timing study shows the mechanism behind either answer.
 pilot: `analysis/exposure-pilot/`). Gene expression stays anchored at
 $r_\text{tx} = 3.29\times10^{-4}\ \text{s}^{-1}$, so each study maps the protection race directly: how fast must the death
 machinery be for TNF to kill, at each dose and each distance?
+
+## Settings
+
+- **Pulse sizes** come from the open-medium solution, chosen before running so that the three cells' peak doses span
+  the dose curve at each clock (decision 42).
+- **The dose study's baths** run from receptor occupancy about 0.005 up to the highest peak any cell reaches (up to 1),
+  denser below 0.2, where the pilot shows survival changing fastest. Decaying baths cover the distance runs' pulse
+  durations (decision 43).
+- **Runs execute locally,** through compose-api's own runner, because a study runs 24 h and compose-api stops runs at
+  1000 s. Each new composite also gets one 990 s live run (decision 44).
+- **TNF diffuses at 100 µm²/s,** the measured free-solution value (decision 45).
 
 ## What Study 0 changes
 

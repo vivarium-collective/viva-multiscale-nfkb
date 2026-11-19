@@ -4,6 +4,15 @@ Status: draft 3, 2026-11-19: revised after an adversarial review, a review by th
 Many cells" (one TNF field feeding N cells, each with its own kinetic and Boolean stack). The MVP plan named it the
 next step after one cell (decision 31).
 
+## Decided (Alex, 2026-11-19)
+
+- **T1 (decision 46):** v1 as infrastructure now, with no study of its own; v2 after the distance study.
+- **T2, T3 (decision 47):** the layout as recommended. The number of runs is decided after measuring cost at 6 and 24
+  cells.
+- **T4, T5 (decision 48):** no variation between cells in v1. v2's uptake is drafted as a proposal from the binding
+  numbers ($K_d$, $k_\text{off}$), with the receptor number and the internalisation rate swept, for Alex's approval.
+  Binding alone removes no TNF at equilibrium.
+
 ## What the sources say
 
 - **Scale.** compose-api's scale ladder (`docs/plan/plan-scaling-classification.md`): "Many cells of a multicellular

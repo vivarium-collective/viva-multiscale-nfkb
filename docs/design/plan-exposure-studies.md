@@ -9,7 +9,7 @@ puts to Alex what they still leave open.
 - **Clocks (E5):** 30, 60 and 120 min per unit, equally ("30, 60 and 120 equally").
 - **Geometry (E1, E1b):** cells at 100, 300 and 1000 µm, with the box widened to 6 mm so the far cell stays clear of
   the absorbing band ("Keep 1000 µm, 6 mm box").
-- **Equivalence (E4):** a margin of ±0.05 in the alive fraction, with about 270 cells per point.
+- **Equivalence (E4):** a margin of ±0.05 in the alive fraction, with about 1,700 cells per point (decision 40b; 270 was a sizing error).
 - **Readout (E6):** "whatever is most biologically accurate". That is the fraction of cells alive at 24 h.
   - A cell with no fate switched on is a living cell, and any viability measurement at 24 h counts it as alive. So
     "alive at 24 h" is the biological quantity, and the dose-matching test uses it.
@@ -18,8 +18,7 @@ puts to Alex what they still leave open.
   - The draft's rule of switching readouts on the undecided fraction is dropped, because it was a statistical device,
     not biology.
   - Held survival is a model state, not something an experiment measures, so it is reported but not tested.
-- **Still recommendations, not yet confirmed by Alex:** E2 (bolus sizes from the free-space solution), E3 (the dose
-  range), E7 (local runs) and E8 (D 100).
+- **E2, E3, E7 and E8, accepted as recommended** (Alex, 2026-11-19: "Accept all four"); decisions 42 to 45.
 
 ## What the sources say
 
@@ -123,7 +122,7 @@ puts to Alex what they still leave open.
 | E1b | Where the bolus goes once it has passed: the box keeps it (finding 1) | **Decided: an absorbing outer band**, a local uptake term on the box's edge nodes (finding 3), **in a 6 mm box** | Geometry pilot, against the open-medium (free-space) solution over 3 h. A 3 mm closed box: the 1000 µm cell plateaus (last/peak 0.90; dose 1.31×). A 3 mm box with the band: the 1000 µm cell, 350 µm from the band, is pulled down (peak 0.94×, dose 0.69×). **The 6 mm box with the band: every cell matches** (peak 0.997, 0.999 and 0.9999; 3 h dose 1.000, 1.000 and 0.999 at 100, 300 and 1000 µm). Uniform clearance λ can't separate peak from plateau (finding 1). The band stands for an open medium, not a biological mechanism |
 | E2 | The bolus sizes | **Chosen from the free-space solution before running** (the band makes the medium open), so that the peak occupancy at the three distances spans the dose curve's range at the chosen clock | `studies.md` sweeps the bolus size. With $K_d$ at 19 pM, the size decides whether every ring saturates |
 | E3 | The dose study's exposures | **Held baths from occupancy about 0.005 up to the highest peak E2's cells reach (up to 1), denser below 0.2 where the pilot's curve is steepest, plus decaying baths** whose half-lives span the pulse durations the distance runs produce (computed from the free-space solution at E1's distances) | The dose curve must cover what the distance runs deliver, both peak and duration. A decay fast against 30 s (half-life under a minute) never registers at the first coupling sample |
-| E4 | The collapse test, fixed before the distance runs | **Decided: an equivalence test** (two one-sided tests) **with a margin of ±0.05 in the alive fraction and about 270 cells per point.** Map by the TNF dose at the cell (its peak and time integral, as `studies.md` says), report occupancy alongside, and compare against an isotonic fit of the dose curve. The unit is the cell (one seed). Runs outside the dose study's range are reported, not extrapolated | A 90% interval needs about (1.645 × 0.5 / margin)² cells per point, so ±0.05 needs about 270. An isotonic fit handles points that aren't monotone |
+| E4 | The collapse test, fixed before the distance runs | **Decided: an equivalence test** (two one-sided tests) **with a margin of ±0.05 in the alive fraction and about 1,700 cells per point (decision 40b; 270 was a sizing error).** Map by the TNF dose at the cell (its peak and time integral, as `studies.md` says), report occupancy alongside, and compare against an isotonic fit of the dose curve. The unit is the cell (one seed). Runs outside the dose study's range are reported, not extrapolated | Decision 40 sized it so the 90% interval's half-width equals the margin, which gives a test that almost never passes. For an 80% chance of passing when the run truly matches, ±0.05 needs about 1,700 cells per point, for the runs and the curve alike (decision 40b, simulated). An isotonic fit handles points that aren't monotone |
 | E5 | Clocks | **Decided: 30, 60 and 120 min per unit, equally** | Dose pilot (finding 2): at 60 the curve spans 0.6 to 0.005; at 30 it falls to near zero by occupancy 0.5; at 120 undecided cells dominate the low doses. Running all three shows whether a conclusion depends on the clock |
 | E6 | The readout | **Decided: alive at 24 h**, the fraction of cells with no death node ever on, which is what a viability measurement counts. The survival curve and the death mode are reported with it; held survival is reported, not tested | See "Decided" above |
 | E7 | Where runs execute | **Locally**, in `compose/` through compose-api's runner, plus one 990 s live run per new composite | 24 h is 86 times compose-api's cap, and compose-api can't resume a run. Lifting the cap would be a question for Jim |
@@ -137,9 +136,10 @@ puts to Alex what they still leave open.
      absorbing band (E1b), at candidate dx and dt (finding 4) and with 30 s coupling. It reports each cell's peak,
      integral and arrival, and the band's reflection error.
 2. **The geometry check** `spatial/far-bolus`: the chosen box, band and grid against the free-space solution at the
-   three rings, within the measured band error. Its negatives are D 50, a misplaced ring and the band removed (the
-   reflecting box), as in `region-mean-bolus`.
-3. **The dose study**, at E5's clocks and E3's exposures, intact and knocked out, with seeds 1–200.
+   three rings, within the measured band error. Its negatives are D 50 and a misplaced ring (done 2026-11-19: `checks/spatial/far-bolus`).
+   The band acts only after about 6 h, beyond the check's hour, so its effect is measured in the 24 h exposure runs.
+3. **The dose study**, at E5's clocks and E3's exposures, intact and knocked out, with about 1,700 cells per point
+   (decision 40b), run as batches of 270 seeds.
 4. **Pre-register E4** in the study before any distance run.
 5. **The distance study:**
    - several rings in one document, which is valid because cells only sample the field;
