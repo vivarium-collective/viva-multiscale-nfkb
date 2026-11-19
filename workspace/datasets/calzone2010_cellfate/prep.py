@@ -37,8 +37,20 @@ The other changes:
   `$absorb_death = 0` is Calzone's network, and any nonzero value (1 by convention) makes Apoptosis and NonACD
   absorbing. Written as a switch, not as `1 - $absorb_death`, it can never give a negative rate. No node's logic reads
   either death node.
-- With u_NFkB = 1, d_NFkB = 0, TNF held (u_TNF = d_TNF = 0), k_time = 1, r_tx = 1/24 and absorb_death = 0, the network
-  is Calzone's MaBoSS example exactly (checks/boolean/coupled-equals-full).
+- **NF-kB's activation route can run on Lipniacki's clock (Alex, 2026-11-06, decision 30; "Option A").** In Calzone's
+  network NF-kB's route (RIP1 -> RIP1ub -> IKK) races caspase-8's (DISC_TNF -> CASP8). On one shared k_time clock the
+  death clock cannot change that race (Study 1). Lipniacki times the same activation in seconds, so the switch-ON
+  rate of RIP1, RIP1ub and IKK becomes `($anchor_activation ? ($r_act / $k_time) : 1)`: after the k_time scaling, each
+  switches on at `r_act` per second when `$anchor_activation` is nonzero, and at Calzone's rate when it is 0.
+  - Only switch-ON moves. Each node's switch-OFF is its loss (RIP1's is caspase-8 cleaving it), which is death
+    machinery, so it stays on k_time, as the TransRate nodes' switch-off does.
+  - TNFR is not moved: it starts both routes, so moving it would speed caspase-8's start too. It belongs with the
+    receptor dose-response (d1).
+  - RIP1 also feeds RIP1K (necrosis's start), which is not moved but now sees RIP1 on earlier and longer.
+  - `$Low_RIP1` (Calzone's mutant switch) keeps its meaning: it still holds RIP1 off.
+  - `r_act` comes from anchor_activation.py (Lipniacki's IKK_active half-rise, matched by the three steps' median).
+- With u_NFkB = 1, d_NFkB = 0, TNF held (u_TNF = d_TNF = 0), k_time = 1, r_tx = 1/24, absorb_death = 0 and
+  anchor_activation = 0, the network is Calzone's MaBoSS example exactly (checks/boolean/coupled-equals-full).
 
 Everything else is kept byte for byte. The script refuses to write unless the input is the pinned file and each
 rewritten node's text is exactly what it expects.
@@ -89,6 +101,46 @@ REPLACED = {
         "}",
         "an input: the receptor-occupancy signal that drives Lipniacki's TNF_R drives $u_TNF/$d_TNF",
     ),
+    "RIP1": (
+        "node RIP1 {\n"
+        "  logic = (DISC_FAS OR TNFR) AND (NOT CASP8);\n"
+        "  rate_up = ($Low_RIP1 ? 0 : (@logic ? 1 : 0));\n"
+        "  rate_down = ($Low_RIP1 ? 1e+100 : (@logic ? 0 : 1));\n"
+        "}",
+        "node RIP1 {\n"
+        "  logic = (DISC_FAS OR TNFR) AND (NOT CASP8);\n"
+        "  rate_up = ($Low_RIP1 ? 0 : (@logic ? ($anchor_activation ? ($r_act / $k_time) : 1) : 0));\n"
+        "  rate_down = ($Low_RIP1 ? 1e+100 : (@logic ? 0 : 1));\n"
+        "}",
+        "logic and switch-off kept; switches on at r_act per second when $anchor_activation is nonzero (NF-kB's "
+        "activation route on Lipniacki's clock, decision 30), at Calzone's rate when it is 0",
+    ),
+    "RIP1ub": (
+        "node RIP1ub {\n"
+        "  logic = cIAP AND RIP1;\n"
+        "  rate_up = @logic ? 1 : 0;\n"
+        "  rate_down = @logic ? 0 : 1;\n"
+        "}",
+        "node RIP1ub {\n"
+        "  logic = cIAP AND RIP1;\n"
+        "  rate_up = @logic ? ($anchor_activation ? ($r_act / $k_time) : 1) : 0;\n"
+        "  rate_down = @logic ? 0 : 1;\n"
+        "}",
+        "logic and switch-off kept; switches on at r_act per second when $anchor_activation is nonzero (decision 30)",
+    ),
+    "IKK": (
+        "node IKK {\n"
+        "  logic = RIP1ub;\n"
+        "  rate_up = @logic ? 1 : 0;\n"
+        "  rate_down = @logic ? 0 : 1;\n"
+        "}",
+        "node IKK {\n"
+        "  logic = RIP1ub;\n"
+        "  rate_up = @logic ? ($anchor_activation ? ($r_act / $k_time) : 1) : 0;\n"
+        "  rate_down = @logic ? 0 : 1;\n"
+        "}",
+        "logic and switch-off kept; switches on at r_act per second when $anchor_activation is nonzero (decision 30)",
+    ),
     "NonACD": (
         "node NonACD {\n"
         "  logic = NOT ATP;\n"
@@ -121,7 +173,7 @@ REPLACED = {
 PARAMETERS_REMOVED = {
     "TransRate": "replaced by $r_tx / $k_time: target-gene induction on Lipniacki's clock (anchor_transcription.py)",
 }
-PARAMETERS_ADDED = ("u_NFkB", "d_NFkB", "u_TNF", "d_TNF", "k_time", "r_tx", "absorb_death")
+PARAMETERS_ADDED = ("u_NFkB", "d_NFkB", "u_TNF", "d_TNF", "k_time", "r_tx", "absorb_death", "anchor_activation", "r_act")
 _RATE = re.compile(r"(rate_up|rate_down)\s*=\s*([^;]+);")
 _BLOCK = re.compile(r"^node\s+(\w+)\s*\{.*?^\}", re.MULTILINE | re.DOTALL)
 

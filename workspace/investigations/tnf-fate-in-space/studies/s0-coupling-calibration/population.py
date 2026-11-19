@@ -111,13 +111,13 @@ def _substitute(node, values):
 
 
 def build(kappa: float, k_time: float, cells: int, seed: int, interval: float, edits: tuple[str, ...] = (),
-          absorb_death: float = 0.0) -> dict:
+          absorb_death: float = 0.0, anchor_activation: float = 0.0) -> dict:
     # absorb_death: 0 is Calzone's reversible death nodes, on which every Study 0 run was recorded; 1 is the
     # composite's absorbing death (decision 28). Set explicitly, never taken from the composite's default.
     spec = json.loads(SPEC.read_text())
     values = {name: p["default"] for name, p in spec["parameters"].items()}
     values.update({"kappa": kappa, "k_time": k_time, "interval": interval, "sample_count": 1,
-                   "absorb_death": absorb_death})
+                   "absorb_death": absorb_death, "anchor_activation": anchor_activation})
     state: dict = _substitute(spec["state"], {**values, "seed": seed})
     one = state.pop("cellfate")
     for edit in edits:
@@ -191,8 +191,11 @@ def main() -> None:
     a.add_argument("--edit", action="append", default=[], choices=sorted(EDITS), help="named network edit (repeatable)")
     a.add_argument("--absorb-death", type=float, default=0.0, choices=(0.0, 1.0),
                    help="1: Apoptosis and NonACD never switch off once on (decision 28); 0: Calzone's network")
+    a.add_argument("--anchor-activation", type=float, default=0.0, choices=(0.0, 1.0),
+                   help="1: NF-kB's activation route switches on at r_act per second (decision 30); 0: Calzone's clock")
     args = a.parse_args()
-    pber = run(build(args.kappa, args.k_time, args.cells, args.seed, args.interval, tuple(args.edit), args.absorb_death), args.hours,
+    pber = run(build(args.kappa, args.k_time, args.cells, args.seed, args.interval, tuple(args.edit), args.absorb_death,
+                     args.anchor_activation), args.hours,
                args.out)
     rows = json.loads(pber.read_text())["emitter"]
     last = rows[-1]

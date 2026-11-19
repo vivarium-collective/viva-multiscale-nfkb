@@ -13,19 +13,21 @@ changes, U1 and U2:
 | 6 | A live run on compose-api as an inferred mash-up, dispatched from the workbench | **done** on compose-api 0.7.90: simulation 12516 from the command line built the mash-up (mash-bb433b1002, version 1), and 12524 from the workbench ran in it. The two are identical on all 991 rows. Against a local run of the same document, the TNF at the cell, the occupancy and NF-κB's nuclear fraction agree within a relative 10⁻⁹ (`compose/live/tnf_field_cell.yaml`, from `compose/live.py`). The fate network's probabilities differ: the live runs used viva-maboss 0.1.1 on Linux and the local run 0.1.2 on macOS, and the two versions draw a cell's sampled state in different orders, so they differ even on one machine (viva-maboss#1). A rerun checks whether 0.1.2 gives the same trajectory on Linux and macOS, once the mash-up has a version with 0.1.2 |
 | Study 0 | Calibration of the coupling ({doc}`calibration`): κ decided; under held, saturating TNF nearly every cell dies; protein persistence saves cells only well beyond the measured turnover | **done** |
 | Decision 28 | Absorbing death in the network ({doc}`boolean`) | **done** |
-| Study 1, validation | Can NF-κB protect cells in the composite? ({doc}`validation`, decision 29) | **done**: no clock meets the standard with held survival; the limit is the activation race in Calzone's network |
+| Study 1, validation | Can NF-κB protect cells in the composite? ({doc}`validation`, decision 29) | **done**: no clock meets the standard with held survival; the limit is the activation race in Calzone's network. Option A (decision 30) then removed that race's handicap, and the standard still fails: intact cells that reach Survival lose it, as built and anchored |
+| Decision 30 | NF-κB's activation route on Lipniacki's clock ("Option A"; {doc}`boolean`) | **tested**, not adopted: no clock meets the criterion fixed before the run; intact cells reach Survival but many lose it (read from the rules: Survival follows NF-κB's cycling node), and knocked-out cells die more, mostly by necrosis ({doc}`validation`) |
 | d1 | TNF's dose–response at the receptor (decision 27) | first form **built**: one-site occupancy, $K_d$ 19 pM (decision 32); McMillan 2021's fit is the refinement |
 | compose-api | Pin bumps: viva-tellurium 0.2.3 **done** (compose-api 0.7.79, #502); viva-pde-particle 25e8a05 **done** in 0.7.90 (#540); viva-maboss 0.1.2 **done** in 0.7.91 (#541) | one compose-api release at a time |
 
 ## Open questions
 
 These are unresolved, and each is stated where it is used:
-- **Should NF-κB's activation route run on Lipniacki's clock?** Under held TNF, NF-κB's net protection in the composite is at most about 10 to 13
-  points (percent of cells), and no death clock meets the standard with held survival ({doc}`validation`). The
-  limit is the activation race in Calzone's network, between caspase-8 and NF-κB's activation route (TNFR, RIP1, RIP1ub, IKK), which runs on
-  the death clock even though Lipniacki already times that activation (337 s). Anchoring it to Lipniacki, as
-  $r_\text{tx}$ does for the genes, is the model-native option, to be tested as a Study 1 variant first. A decision for
-  Alex before d1.
+- **What stands between the composite and the survival standard?** Under held TNF, no death clock meets it
+  ({doc}`validation`). NF-κB's net protection is at most 12.5 points (percent of cells) as built, and at most 35.5 with
+  NF-κB's activation route on Lipniacki's clock (decision 30, "Option A"), which the composite did not adopt. Either
+  way, intact cells reach Survival and many lose it again. Read from the rules, and not yet tested, Survival follows
+  NF-κB's node, which under held TNF is on only about 28% of the time. With the route anchored, knocked-out cells also
+  die more, mostly by necrosis, so the standard's knocked-out half is met partly through a death route anchoring
+  opened. Alex recorded both as open, and the exposure studies come next (decision 37); nothing is tuned without him.
 - **Is receptor binding fast enough to use its equilibrium (d1)?** It relaxes within about 100 s, against NF-κB's 337 s
   half-rise: a factor of about 3 ({doc}`rule-based`). The first form assumes it (decision 32); McMillan 2021's fit
   is where to check it.

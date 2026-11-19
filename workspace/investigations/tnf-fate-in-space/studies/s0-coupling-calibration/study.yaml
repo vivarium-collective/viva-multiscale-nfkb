@@ -291,7 +291,10 @@ findings:
     equals ever-dead, 0.84). This is observed, not guaranteed: no node's logic reads a death node, but the composite
     records one sampled joint state per 30 s interval, so a death that switched on and off within one interval can be
     missed at absorb_death = 0 and recorded at 1 (an earlier recorded death, never a later one). The decay, persist and
-    knockout variants were not rerun; every Study 0 run other than absorb-* used absorb_death = 0.
+    knockout variants were not rerun; every Study 0 run other than absorb-* used absorb_death = 0. Decision 30
+    (2026-11-06) changed the network again (RIP1, RIP1ub and IKK's switch-on, and the anchor_activation and r_act
+    parameters); at anchor_activation = 0 every rate is unchanged, but rebuilt documents no longer match the recorded
+    document_sha256 for that reason too.
     Their recorded document_sha256 values predate decision 28: population.py now writes the death nodes' switch-off as
     ($absorb_death ? 0 : 1) and sets absorb_death = 0 in each cell's parameters, so a rebuilt document differs from the
     recorded hash by those two rate lines and that key, while every rate is numerically the same.

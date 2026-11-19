@@ -7,7 +7,7 @@ investigation: tnf-fate-in-space
 title: Survival under TNF (validation against NF-kB-dependent survival)
 created: '2026-11-06'
 status: ran
-phase: Evaluate
+phase: Decide
 parent_studies:
 - {study: s0-coupling-calibration, condition: ran, relation: leads-to}
 
@@ -56,10 +56,30 @@ conditions:
     description: "Phase A ceiling: TransRate 1/24, 1/4, 1, 4, 16, 64 per unit, read at t = 40 units, 20,000 trajectories."
   - name: death-clocks
     description: "Phase A matched and Phase B: death clocks 30, 120, 180, 200, 240, 480 min per unit; 24 h."
+  - name: activation-anchored
+    description: >-
+      Option A (decision 30): NF-kB's activation route (RIP1, RIP1ub, IKK) switches on at r_act = 0.0239/s (Lipniacki's
+      IKK_active half-rise, 112 s), not on k_time; TNFR and every switch-off stay on k_time; kappa kept at ln 2/337 s
+      (Alex, 2026-11-06). Phase B's six clocks rerun on the same 200 seeds, intact and knocked out.
+    parameter_overrides:
+      anchor_activation: 1.0
   model_settings:
   - name: phase-b-cells
     gate: optional
     description: "Phase B: 200 cells on Study 0's seeds 1-200, coupling every 30 s, kappa = ln 2/337 s when intact."
+
+tests:
+# Fixed BEFORE the activation-anchored runs (Alex, 2026-11-06), so the criterion cannot be chosen after the data.
+- name: anchored-meets-standard
+  description: >-
+    The activation-anchored variant meets the survival standard at a death clock if at least half the NF-kB-intact
+    cells hold survival (alive, with Survival on through the last 2 h of the 24 h run; undecided cells do not count)
+    AND at most half the knocked-out cells are alive. The variant meets the standard if this holds at one or more of
+    the six clocks.
+  measure:
+    source: data/phase_b_anchored.json
+    per_clock: [held_survival_intact, alive_knocked_out]
+  pass_if: "held_survival_intact >= 0.5 and alive_knocked_out <= 0.5 at one or more clocks"
 
 controls:
   negative: "NF-kB knocked out: no cell can show Survival (its rule is NFkB); cells die, or stay undecided at slow clocks."
@@ -83,6 +103,12 @@ alternative_hypotheses:
     The knockouts match the comparator within about 2 standard errors at every clock, and the composite never protects
     significantly more than Calzone alone. The
     ceiling saturates as induction speeds up (f1), and NF-kB's activation route runs on the death clock in both.
+- hypothesis: "Putting NF-kB's activation route on Lipniacki's clock (decision 30, Option A) lets the composite meet the standard."
+  status: not supported
+  how_tested: >
+    The activation-anchored variant reran Phase B against a criterion fixed before the run; no clock meets it (f5).
+    Intact cells reach Survival but many lose it, and net protection rises partly because knocked-out cells die more,
+    mostly by necrosis (f6).
 
 falsifiability: >
   Protection in the composite clearly above Calzone alone at matched settings would contradict f4. A clock with most
@@ -93,15 +119,19 @@ limitations: >
   The standard is qualitative, from the two accepted sources; reading "survive" as Survival held through the last 2 h
   (not merely undecided) was fixed after Phase B. The 24 h horizon is only
   3 to 12 Calzone units at 120-480 min per unit, so at slow clocks many cells are undecided and protection is still
-  changing. The p values are not corrected for the six comparisons. The pairing by seed is partial (trajectories share
+  changing. The p values are not corrected for the six comparisons, nor are f5's 12 paired tests (at 0.05/12 the
+  intact change at 180 and the knocked-out change at 480 would not count). The pairing by seed is partial (trajectories share
   random numbers only until they diverge), so the paired p values overstate the separation somewhat. Only rates are
   varied; the network's structure is not.
 
 claim: >
   Under held, saturating TNF the composite does not meet the standard, read as held survival, at any death clock: NF-kB's net protection is at
   most about 10-13 points at 24 h, and where most intact cells are alive (200 min per unit and slower) it is because
-  many have not yet reached any fate. The limit is Calzone's own race between caspase-8 and NF-kB's activation route,
-  both on the death clock; the coupling lowers protection further only at fast and middle clocks.
+  many have not yet reached any fate or reached Survival and lost it. The limit is Calzone's own race between caspase-8 and NF-kB's activation route,
+  both on the death clock; the coupling lowers protection further only at fast and middle clocks. Putting NF-kB's
+  activation route on Lipniacki's clock (Option A) does not meet the standard either (f5): nearly every surviving
+  intact cell reaches Survival but many lose it, as some do as built, and net protection rises to at most 35.5 points
+  partly because knocked-out cells die more, mostly by necrosis (f4, f6).
 confidence: Investigating
 
 findings:
@@ -141,17 +171,55 @@ findings:
     180; 0.621 vs 0.650 at 240). So the death comes from Calzone's own race (f2), not from the coupling. The coupling
     lowers protection further at fast and middle clocks (30: 0 against 12.5; 120: 10.5 against 21.5) but not at slow
     ones. At 200 min per unit most intact cells are alive and most knocked-out cells dead (0.550 against 0.455), which
-    meets the standard only through delay: 54 of 110 alive intact cells reached no fate and 18 held Survival through
-    the last 2 h. No tested clock gives held survival to most NF-kB-competent cells.
+    meets the standard only through delay and lapse: 54 of 110 alive intact cells reached no fate, and of the 56 that
+    reached Survival only 18 held it through the last 2 h. No tested clock gives held survival to most NF-kB-competent cells.
   evidence: f1; f3; data/phase_a.json (matched)
-
+- id: f5-anchored-against-standard
+  tier: observation
+  summary: >
+    Option A (activation-anchored: RIP1, RIP1ub and IKK switch on at r_act = 0.0239/s), Phase B's six clocks, the same
+    200 seeds. Held survival intact: 0, 0.05, 0.17, 0.215, 0.36 and 0.56; alive knocked out: 0, 0.03, 0.205, 0.30,
+    0.495 and 0.94. The pre-registered standard (held survival >= 0.5 intact and alive <= 0.5 knocked out, at one or
+    more clocks) is met at none; only 480 min per unit reaches 0.5 held survival, where almost no cell dies in 24 h
+    with or without NF-kB. Net protection: 0, 25.5, 35.5, 34.5, 30.0 and 4.5 points (unanchored 0, 10.5, 12.5, 9.5,
+    9.0, -0.5). Paired with their unanchored twins, intact cells saved / lost by anchoring: 0/0, 42/17, 47/28, 53/34,
+    40/29, 4/3; knocked-out cells: 0/0, 1/6, 8/35, 15/46, 14/45, 2/11. Alive intact cells, unanchored -> anchored, at
+    120-480: 32->57, 93->112, 110->129, 148->159, 196->197; of them reached Survival (alive minus no fate) 26->56,
+    50->110, 56->129, 66->155, 33->174; Survival on at 24 h 9->13, 17->46, 28->63, 40->91, 27->133; held through the
+    last 2 h 6->10, 11->34, 18->43, 24->72, 18->112. Engine: viva-maboss 0.1.1 (3fdccd7), as in Phase B.
+  evidence: data/phase_b_anchored.json; parquet-runs/anchored-*/timeseries.parquet; phase_b.py --variant activation-anchored
+- id: f6-anchored-survival-and-necrosis
+  tier: interpretation
+  mechanism_origin: emergent
+  summary: >
+    One thing keeps the anchored composite from the standard: intact cells reach Survival but many lose it. At 240 min
+    per unit, 155 of 159 alive intact cells reached Survival, 91 had it on at 24 h and 72 held it through the last 2 h;
+    Phase B shows the same lapse as built (200 min per unit: 56 reached, 18 held). Survival's rule is NFkB (on at the
+    gene rate while the node is on, off on the death clock while it is off), and under held TNF the NF-kB node is a
+    duty cycle, on about 28% of the time (coupling), so Survival lapses in the off spells. A second change bears on
+    what the result means, not on the standard: net protection, alive intact minus alive knocked out, rises partly
+    because knocked-out cells die more (180: intact +9.5 points, knocked out -13.5; 200 and 240: knocked out -15.5 at
+    each against intact +9.5 and +5.5), which meets the knocked-out half partly through a death route anchoring
+    opened. Of the cells anchoring killed, most had NonACD (necrosis) on: knocked out 27/35, 43/46, 37/45 and intact
+    23/28, 29/34, 26/29 at 180, 200, 240. Anchoring speeds RIP1, which also starts RIP1 -> RIP1K -> ROS (with mROS) ->
+    MPT (without BCL2) -> ATP off -> NonACD; a knocked-out cell has mROS on and BCL2 off (mROS = NOT NFkB; BCL2 =
+    NFkB). Both accounts are read from the rules and these counts; neither was tested by changing how Survival reads
+    NF-kB or the necrosis route.
+  evidence: f5; data/phase_b_anchored.json (incl. dead_by_anchoring_necrosis); data/phase_b.json; datasets/calzone2010_cellfate/processed/cellfate_coupled.bnd
 followup_study_proposals:
 - title: Anchor NF-kB's activation route to Lipniacki
   motivation: >
     In the composite, NF-kB's activation route (TNFR, RIP1, RIP1ub, IKK) runs on the death clock, although Lipniacki's
     model already times the same activation (nuclear NF-kB's half-rise 337 s). Putting that route on Lipniacki's clock,
     as r_tx does for the genes, would let NF-kB activate before caspase-8 at slow death clocks without adding a
-    mechanism. A decision for Alex; to be tested as a Study 1 variant before any model change.
+    mechanism. A decision for Alex; to be tested as a Study 1 variant before any model change. Tested as the
+    activation-anchored variant (f5, f6): it does not meet the standard, so it is not adopted.
+- title: What stands between the composite and the survival standard
+  motivation: >
+    Intact cells reach Survival but many lose it, as built and with NF-kB's activation route anchored, and with the
+    route anchored knocked-out cells die more, mostly by necrosis (f4, f6). How Survival should read a cycling NF-kB, and whether the necrosis
+    route should be timed differently, are modelling decisions for Alex; nothing is tuned without him. Alex
+    (2026-11-19, decision 37): recorded as open, not pursued now; the exposure studies come next.
 
 runs:
 - name: phase-a-calzone-alone
@@ -166,3 +234,9 @@ runs:
     kind: parquet
     store: parquet-runs/
   params: "{\"cells\": 200, \"hours\": 24, \"seed\": 1, \"absorb_death\": 1, \"kappa\": {\"intact\": \"ln2/337\", \"knocked_out\": 0}, \"minutes_per_unit\": [30, 120, 180, 200, 240, 480], \"builder\": \"../s0-coupling-calibration/population.py\", \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\"}"
+- name: phase-b-anchored
+  status: complete
+  emitter:
+    kind: parquet
+    store: parquet-runs/
+  params: "{\"variant\": \"activation-anchored\", \"cells\": 200, \"hours\": 24, \"seed\": 1, \"absorb_death\": 1, \"anchor_activation\": 1, \"r_act\": 0.0239, \"kappa\": {\"intact\": \"ln2/337\", \"knocked_out\": 0}, \"minutes_per_unit\": [30, 120, 180, 200, 240, 480], \"builder\": \"../s0-coupling-calibration/population.py\", \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1; viva-maboss 0.1.1, 3fdccd7)\", \"summary\": \"data/phase_b_anchored.json\"}"

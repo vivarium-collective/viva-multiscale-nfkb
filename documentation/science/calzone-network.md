@@ -72,8 +72,8 @@ With TNF held on and Calzone's own rates, the network gives apoptosis 0.953, nec
 {doc}`../verification/index`). Faster genes win more of the protection race, but the activation race caps what they
 can do: even infinitely fast genes leave only about a quarter of cells alive ({doc}`../design/validation`). The
 studies vary the protection race (through `k_time`, with the genes anchored; {doc}`../design/time`). The activation
-race runs wholly on `k_time`, so it sets the cap; whether to move it onto Lipniacki's clock is open
-({doc}`../design/roadmap`).
+race runs wholly on `k_time`, so it sets the cap. Moving it onto Lipniacki's clock was tested as decision 30 and not
+adopted ({doc}`../design/validation`).
 
 ## Every node
 

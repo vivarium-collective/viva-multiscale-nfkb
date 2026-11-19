@@ -32,6 +32,7 @@ SBML = DATA / "lipniacki2004" / "processed" / "lipniacki2004_driven.xml"
 STEADY = DATA / "lipniacki2004" / "processed" / "lipniacki2004_steady_state.json"
 NETWORK = DATA / "calzone2010_cellfate" / "processed" / "cellfate_coupled.bnd"
 ANCHOR = DATA / "calzone2010_cellfate" / "processed" / "transcription_anchor.json"
+ACTIVATION = DATA / "calzone2010_cellfate" / "processed" / "activation_anchor.json"
 OUT = Path(__file__).resolve().parent / "kinetic_boolean.composite.json"
 NFKB_SPECIES = ("IKKactive_IkB_NFKB", "NFKB", "IkB_NFKB", "NFKB_nuc", "IkB_NFKB_nuc")
 ON_AT_START = ("FADD", "ATP", "cIAP", "TNF")  # cellfate.cfg's istates, with TNF on (the stimulus is on)
@@ -58,6 +59,8 @@ def main() -> None:
     initial = {n: float(n in ON_AT_START) for n in nodes}
     anchor = json.loads(ANCHOR.read_text())
     r_tx = anchor["r_tx_per_s"]
+    # decision 30: three steps at r_act reach IKK with median = Lipniacki's IKK_active half-rise (anchor_activation.py)
+    r_act = json.loads(ACTIVATION.read_text())["r_act_per_s_for_ikk_half_rise"]
     # decision 25 (Alex, 2026-11-06; Study 0): the NF-kB node flips at Lipniacki's own nuclear half-rise, ln 2 / 337 s
     kappa = math.log(2) / anchor["nfkb_nuc_half_rise_s"]
     rule, kv = nfkb_rule_and_kv()
@@ -81,6 +84,11 @@ def main() -> None:
                              "description": "1: Apoptosis and NonACD stay on once on (death is irreversible; decision 28); "
                                             "0: Calzone's reversible death nodes. A switch: any nonzero value "
                                             "is absorbing"},
+            "anchor_activation": {"type": "float", "default": 0.0,
+                                  "description": "1: NF-kB's activation route (RIP1, RIP1ub, IKK) switches on at r_act per "
+                                                 "second (decision 30); 0: Calzone's clock, k_time. A switch"},
+            "r_act": {"type": "float", "default": r_act,
+                      "description": "activation route's ON rate (1/s), from Lipniacki's IKK_active half-rise"},
             "seed": {"type": "int", "default": 1, "description": "MaBoSS seed for this cell"},
             "interval": {"type": "float", "default": 30.0, "description": "coupling step (s) for both layers"},
             "sample_count": {"type": "int", "default": 1, "description": "MaBoSS trajectories per interval"},
@@ -133,7 +141,8 @@ def main() -> None:
                     "parameters": {"High_NFkB": 0.0, "Low_CASP8": 0.0, "Low_RIP1": 0.0, "Low_cIAP": 0.0,
                                    "u_NFkB": 0.0, "d_NFkB": 0.0, "u_TNF": 0.0, "d_TNF": 0.0,
                                    "k_time": "${k_time}", "r_tx": "${r_tx}",
-                                   "absorb_death": "${absorb_death}"},
+                                   "absorb_death": "${absorb_death}",
+                                   "anchor_activation": "${anchor_activation}", "r_act": "${r_act}"},
                     "initial_state": {n: 1.0 for n in ON_AT_START},
                     "sample_count": "${sample_count}",
                     "windows_per_interval": 10,

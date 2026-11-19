@@ -1,7 +1,9 @@
 """Study 1's tables for documentation/design/validation.md, generated from the study's committed data.
 
-Reads workspace/investigations/tnf-fate-in-space/studies/s1-survival-validation/data/phase_{a,b}.json and writes
-documentation/design/_validation_phase_a.md, _validation_phase_b.md and _validation_matched.md.
+Reads workspace/investigations/tnf-fate-in-space/studies/s1-survival-validation/data/phase_{a,b}.json and
+phase_b_anchored.json, and writes documentation/design/_validation_phase_a.md, _validation_phase_b.md,
+_validation_matched.md, _validation_anchored.md, _validation_anchored_survival.md and
+_validation_anchored_modes.md.
 
 Standard errors: an alive fraction p over n cells has SE sqrt(p(1-p)/n). Net protection (b - c)/n, from paired cells
 where b were alive only with NF-kB and c only without, has SE sqrt((b + c) - (b - c)^2/n)/n (the variance of a mean of
@@ -85,14 +87,81 @@ def matched(a: dict, b: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _change(before: float, after: float, saved: int, lost: int, p: float) -> str:
+    """An alive fraction without and with anchoring, and the paired cells anchoring saved and lost."""
+    shown = _p(p).strip()[1:-1]  # "p = …", or empty from 0.05 up
+    return f"{_alive(before)} → {_alive(after)} ({saved} / {lost}{', ' + shown if shown else ''})"
+
+
+def anchored(b: dict, c: dict) -> str:
+    """The activation-anchored variant (decision 30) against the pre-registered standard, unanchored → anchored, and
+    where its change in net protection comes from: each arm's cells paired with their unanchored twins (same seed)."""
+    before = {r["minutes_per_unit"]: r for r in b["points"]}
+    lines = ["| Clock (min per unit) | Held survival, intact | Alive, knocked out | Meets the standard "
+             "| Net protection (points) | Alive, intact (cells saved / lost by anchoring) "
+             "| Alive, knocked out (saved / lost) |",
+             "|---|---|---|---|---|---|---|"]
+    for r in c["points"]:
+        u = before[r["minutes_per_unit"]]
+        held_before = u["survival_on_last_2h_intact"] / u["cells"]
+        intact = _change(u["alive_intact"], r["alive_intact"], r["alive_by_anchoring"], r["dead_by_anchoring"],
+                         r["anchoring_p_mcnemar_exact"])
+        knocked = _change(u["alive_knocked_out"], r["alive_knocked_out"], r["knocked_out_alive_by_anchoring"],
+                          r["knocked_out_dead_by_anchoring"], r["knocked_out_anchoring_p_mcnemar_exact"])
+        lines.append(f"| {r['minutes_per_unit']} | {_alive(held_before)} → {_alive(r['held_survival_intact'])} "
+                     f"| {_alive(u['alive_knocked_out'])} → {_alive(r['alive_knocked_out'])} "
+                     f"| {'yes' if r['meets_standard'] else 'no'} "
+                     f"| {_points(u['net_protection'])} → {_points(r['net_protection'])} | {intact} | {knocked} |")
+    return "\n".join(lines) + "\n"
+
+
+def anchored_survival(b: dict, c: dict) -> str:
+    """Intact cells alive at 24 h, unanchored → anchored: how many reached Survival (an alive cell that reached any
+    fate reached Survival, the only fate that is not death), had it on at 24 h, and held it through the last 2 h."""
+    before = {r["minutes_per_unit"]: r for r in b["points"]}
+    lines = ["| Clock (min per unit) | Alive, intact (cells) | Reached Survival | Survival on at 24 h "
+             "| Held through the last 2 h |", "|---|---|---|---|---|"]
+    for r in c["points"]:
+        u = before[r["minutes_per_unit"]]
+        cells = []
+        for key in ("alive", "reached", "survival_on_at_24h_intact", "survival_on_last_2h_intact"):
+            pair = []
+            for point in (u, r):
+                alive = round(point["alive_intact"] * point["cells"])
+                pair.append(alive if key == "alive" else alive - point["no_fate_intact"] if key == "reached"
+                            else point[key])
+            cells.append(f"{pair[0]} → {pair[1]}")
+        lines.append(f"| {r['minutes_per_unit']} | " + " | ".join(cells) + " |")
+    return "\n".join(lines) + "\n"
+
+
+def anchored_modes(c: dict) -> str:
+    """How cells die, without and with anchoring: the fraction with Apoptosis (or NonACD, necrosis) on at 24 h. Death
+    is absorbing, so on at 24 h means it ever switched on; a cell can show both. The last column follows the cells
+    anchoring killed (dead anchored, alive unanchored, paired by seed): how many had NonACD on."""
+    lines = ["| Clock (min per unit) | Apoptosis, intact | Necrosis, intact | Apoptosis, knocked out "
+             "| Necrosis, knocked out | Killed by anchoring, with necrosis (intact / knocked out) |",
+             "|---|---|---|---|---|---|"]
+    for r in c["points"]:
+        cells = [f"{_alive(r[f'{mode}_{arm}_unanchored'])} → {_alive(r[f'{mode}_{arm}'])}"
+                 for arm in ("intact", "knocked_out") for mode in ("apoptosis", "necrosis")]
+        killed = (f"{r['dead_by_anchoring_necrosis']} of {r['dead_by_anchoring']} / "
+                  f"{r['knocked_out_dead_by_anchoring_necrosis']} of {r['knocked_out_dead_by_anchoring']}")
+        lines.append(f"| {r['minutes_per_unit']} | " + " | ".join(cells) + f" | {killed} |")
+    return "\n".join(lines) + "\n"
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true", help="fail if a committed table differs")
     args = parser.parse_args()
     a = json.loads((DATA / "phase_a.json").read_text())
     b = json.loads((DATA / "phase_b.json").read_text())
+    c = json.loads((DATA / "phase_b_anchored.json").read_text())
     tables = {"_validation_phase_a.md": phase_a(a), "_validation_phase_b.md": phase_b(b),
-              "_validation_matched.md": matched(a, b)}
+              "_validation_matched.md": matched(a, b), "_validation_anchored.md": anchored(b, c),
+              "_validation_anchored_survival.md": anchored_survival(b, c),
+              "_validation_anchored_modes.md": anchored_modes(c)}
     stale = []
     for name, text in tables.items():
         path = OUT / name

@@ -10,10 +10,17 @@ rerun. data/phase_b.json gets, per clock and from those files: the fraction aliv
 reached no fate at all, Survival on at 24 h and on throughout the last 2 h, the median first-death time, and the paired
 comparison of each intact cell with its knocked-out twin (rescued, lost, exact McNemar p).
 
+`--variant activation-anchored` reruns the same points with NF-kB's activation route on Lipniacki's clock
+(population.py --anchor-activation=1.0; decision 30), as parquet-runs/anchored-<name>/, and writes
+data/phase_b_anchored.json: the same summary, the pre-registered criterion per clock (study.yaml tests:
+anchored-meets-standard, fixed before these runs), each anchored cell paired with its unanchored twin (intact and
+knocked out), and the death mode (apoptosis, necrosis) in every arm.
+
     uv run --project ~/viva/viva-multiscale-nfkb --no-sync python -I \
         workspace/investigations/tnf-fate-in-space/studies/s1-survival-validation/phase_b.py
 """
 
+import argparse
 import json
 import math
 import statistics
@@ -31,16 +38,17 @@ MINUTES = (30, 120, 180, 200, 240, 480)
 CELLS, HOURS, SEED = 200, 24.0, 1
 
 
-def run_point(nfkb: str, minutes: int) -> Path:
+def run_point(nfkb: str, minutes: int, anchored: bool = False) -> Path:
     """Run one point unless its timeseries exists; return the timeseries path."""
-    name = f"{nfkb}-{minutes}min"
+    name = ("anchored-" if anchored else "") + f"{nfkb}-{minutes}min"
     out = HERE / "parquet-runs" / name
     if (out / "timeseries.parquet").exists():
         return out / "timeseries.parquet"
     result = subprocess.run(
         ["uv", "run", "--project", str(ROOT / "compose"), "--frozen", "python", "-I", str(POPULATION),
          "--kappa", repr(KAPPA[nfkb]), "--k-time", repr(1.0 / (60.0 * minutes)), "--cells", str(CELLS),
-         "--hours", str(HOURS), "--seed", str(SEED), "--out", str(out / "raw"), "--absorb-death=1.0"],
+         "--hours", str(HOURS), "--seed", str(SEED), "--out", str(out / "raw"), "--absorb-death=1.0",
+         *(["--anchor-activation=1.0"] if anchored else [])],
         cwd=ROOT, capture_output=True, text=True, check=False)
     if result.returncode != 0:
         raise RuntimeError(f"{name}: population.py failed\n{result.stderr[-2000:]}")
@@ -87,6 +95,51 @@ def summarize(minutes: int, intact: Path, knocked_out: Path) -> dict:
             "p_mcnemar_exact": _mcnemar_exact(rescued, lost)}
 
 
+def main_anchored() -> None:
+    """The activation-anchored variant, evaluated against the criterion fixed before it ran."""
+    summaries = []
+    for minutes in MINUTES:
+        paths = {nfkb: run_point(nfkb, minutes, anchored=True) for nfkb in KAPPA}
+        r = summarize(minutes, paths["intact"], paths["knocked_out"])
+        r["held_survival_intact"] = r["survival_on_last_2h_intact"] / r["cells"]
+        r["meets_standard"] = r["held_survival_intact"] >= 0.5 and r["alive_knocked_out"] <= 0.5
+        _, anchored_cells = _cells(paths["intact"])
+        _, baseline_cells = _cells(run_point("intact", minutes))
+        dead = lambda s: any(x & 6 for x in s)
+        saved = sum(1 for x, y in zip(anchored_cells, baseline_cells, strict=True) if not dead(x) and dead(y))
+        lost = sum(1 for x, y in zip(anchored_cells, baseline_cells, strict=True) if dead(x) and not dead(y))
+        r.update({"alive_by_anchoring": saved, "dead_by_anchoring": lost,
+                  "anchoring_net": (saved - lost) / r["cells"], "anchoring_p_mcnemar_exact": _mcnemar_exact(saved, lost)})
+        # Death mode at 24 h (death is absorbing, so on at the end = ever on; the two are not exclusive), both arms:
+        # anchoring RIP1 also speeds RIP1K, necrosis's start, so saved apoptosis could reappear as necrosis.
+        _, ko_cells = _cells(paths["knocked_out"])
+        _, ko_baseline = _cells(run_point("knocked_out", minutes))
+        for arm, cells in (("intact", anchored_cells), ("knocked_out", ko_cells),
+                           ("intact_unanchored", baseline_cells), ("knocked_out_unanchored", ko_baseline)):
+            r[f"apoptosis_{arm}"] = sum(1 for c in cells if c[-1] & 2) / len(cells)
+            r[f"necrosis_{arm}"] = sum(1 for c in cells if c[-1] & 4) / len(cells)
+        ko_saved = sum(1 for x, y in zip(ko_cells, ko_baseline, strict=True) if not dead(x) and dead(y))
+        ko_lost = sum(1 for x, y in zip(ko_cells, ko_baseline, strict=True) if dead(x) and not dead(y))
+        r.update({"knocked_out_alive_by_anchoring": ko_saved, "knocked_out_dead_by_anchoring": ko_lost,
+                  "knocked_out_anchoring_p_mcnemar_exact": _mcnemar_exact(ko_saved, ko_lost)})
+        # How the cells anchoring killed (dead anchored, alive unanchored) died: NonACD (necrosis) on at 24 h.
+        for key, cells, twins in (("dead_by_anchoring_necrosis", anchored_cells, baseline_cells),
+                                  ("knocked_out_dead_by_anchoring_necrosis", ko_cells, ko_baseline)):
+            r[key] = sum(1 for x, y in zip(cells, twins, strict=True) if dead(x) and not dead(y) and x[-1] & 4)
+        summaries.append(r)
+        print(f"{minutes:4d} min/unit: alive intact {r['alive_intact']:.3f}, knocked out {r['alive_knocked_out']:.3f}; "
+              f"held {r['held_survival_intact']:.3f}; meets {r['meets_standard']}; net protection "
+              f"{r['net_protection']:.3f}; vs unanchored +{saved}/-{lost}; apoptosis/necrosis intact "
+              f"{r['apoptosis_intact']:.3f}/{r['necrosis_intact']:.3f} (unanchored {r['apoptosis_intact_unanchored']:.3f}/"
+              f"{r['necrosis_intact_unanchored']:.3f})", flush=True)
+    (HERE / "data" / "phase_b_anchored.json").write_text(json.dumps(
+        {"cells": CELLS, "hours": HOURS, "seed": SEED, "absorb_death": 1.0, "anchor_activation": 1.0,
+         "criterion": "held_survival_intact >= 0.5 and alive_knocked_out <= 0.5 at one or more clocks (fixed before "
+                      "the runs; study.yaml tests: anchored-meets-standard)",
+         "meets_standard": any(r["meets_standard"] for r in summaries), "points": summaries}, indent=1) + "\n")
+    print("wrote data/phase_b_anchored.json")
+
+
 def main() -> None:
     summaries = []
     for minutes in MINUTES:
@@ -103,4 +156,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--variant", choices=("baseline", "activation-anchored"), default="baseline")
+    if parser.parse_args().variant == "activation-anchored":
+        main_anchored()
+    else:
+        main()

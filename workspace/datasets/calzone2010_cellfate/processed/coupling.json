@@ -1,13 +1,16 @@
 {
   "source": "raw/cellfate.bnd (sysbio-curie/MaBoSS@375ffad engine/tests/maboss/cellfate/cellfate.bnd)",
   "source_sha256": "cfef1e7054d77f4736d8e36e712946ad1043c2f967913e400ec449b56a3d26dc",
-  "output_sha256": "f90525f153859a4cd7e64e18bb1514015d14ff4673c7385c7425c00a229902fa",
+  "output_sha256": "f8a5469ce52c79e7b3b1bbb95410ff06284ef15e7262d27a0b0bc987a4ea5abf",
   "nodes": 31,
   "removed": {},
   "ownership": "Lipniacki owns how much NF-kB (f); Calzone owns whether the activation route is open (logic kept)",
   "rewritten": {
     "NFkB": "logic kept (Calzone gates: the activation route is open and caspase-3 is off); while it holds, NF-kB follows Lipniacki's nuclear fraction f through $u_NFkB = f and $d_NFkB = 1 - f",
     "TNF": "an input: the receptor-occupancy signal that drives Lipniacki's TNF_R drives $u_TNF/$d_TNF",
+    "RIP1": "logic and switch-off kept; switches on at r_act per second when $anchor_activation is nonzero (NF-kB's activation route on Lipniacki's clock, decision 30), at Calzone's rate when it is 0",
+    "RIP1ub": "logic and switch-off kept; switches on at r_act per second when $anchor_activation is nonzero (decision 30)",
+    "IKK": "logic and switch-off kept; switches on at r_act per second when $anchor_activation is nonzero (decision 30)",
     "NonACD": "logic kept; once on it switches off only when $absorb_death = 0 (Calzone's network). The composite sets it to 1 (any nonzero value): death is irreversible, so a dead cell stays dead (decision 28)",
     "Apoptosis": "logic kept; once on it switches off only when $absorb_death = 0 (Calzone's network). The composite sets it to 1 (any nonzero value): death is irreversible, so a dead cell stays dead (decision 28)"
   },
@@ -32,6 +35,8 @@
     "d_TNF",
     "k_time",
     "r_tx",
-    "absorb_death"
+    "absorb_death",
+    "anchor_activation",
+    "r_act"
   ]
 }

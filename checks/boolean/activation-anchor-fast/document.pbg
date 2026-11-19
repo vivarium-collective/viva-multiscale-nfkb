@@ -1,0 +1,89 @@
+{
+  "global_time_precision": 6,
+  "state": {
+    "node_state": {
+      "TNFR": 1.0,
+      "CASP8": 0.0,
+      "DISC_FAS": 0.0,
+      "cIAP": 1.0,
+      "RIP1": 0.0,
+      "RIP1ub": 0.0,
+      "IKK": 0.0
+    },
+    "node_probabilities": {
+      "TNFR": 1.0,
+      "CASP8": 0.0,
+      "DISC_FAS": 0.0,
+      "cIAP": 1.0,
+      "RIP1": 0.0,
+      "RIP1ub": 0.0,
+      "IKK": 0.0
+    },
+    "parameters": {},
+    "steps": 0,
+    "cellfate": {
+      "_type": "process",
+      "address": "local:viva_maboss.processes.MaBoSSProcess",
+      "config": {
+        "network": "node TNFR {\n  rate_up = 0;\n  rate_down = 0;\n}\n\nnode CASP8 {\n  rate_up = 0;\n  rate_down = 0;\n}\n\nnode DISC_FAS {\n  rate_up = 0;\n  rate_down = 0;\n}\n\nnode cIAP {\n  rate_up = 0;\n  rate_down = 0;\n}\n\nnode RIP1 {\n  logic = (DISC_FAS OR TNFR) AND (NOT CASP8);\n  rate_up = $k_time * (($Low_RIP1 ? 0 : (@logic ? ($anchor_activation ? ($r_act / $k_time) : 1) : 0)));\n  rate_down = $k_time * (($Low_RIP1 ? 1e+100 : (@logic ? 0 : 1)));\n}\n\nnode RIP1ub {\n  logic = cIAP AND RIP1;\n  rate_up = $k_time * (@logic ? ($anchor_activation ? ($r_act / $k_time) : 1) : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n\nnode IKK {\n  logic = RIP1ub;\n  rate_up = $k_time * (@logic ? ($anchor_activation ? ($r_act / $k_time) : 1) : 0);\n  rate_down = $k_time * (@logic ? 0 : 1);\n}\n",
+        "parameters": {
+          "k_time": 0.016666666666666666,
+          "Low_RIP1": 0.0,
+          "anchor_activation": 1.0,
+          "r_act": 0.023875538515388928
+        },
+        "initial_state": {
+          "TNFR": 1.0,
+          "cIAP": 1.0
+        },
+        "sample_count": 50000,
+        "windows_per_interval": 8,
+        "seed": 23
+      },
+      "interval": 112.0,
+      "inputs": {
+        "node_state": [
+          "node_state"
+        ],
+        "node_probabilities": [
+          "node_probabilities"
+        ],
+        "parameters": [
+          "parameters"
+        ],
+        "steps": [
+          "steps"
+        ]
+      },
+      "outputs": {
+        "node_state": [
+          "node_state"
+        ],
+        "node_probabilities": [
+          "node_probabilities"
+        ],
+        "steps": [
+          "steps"
+        ]
+      }
+    },
+    "emitter": {
+      "_type": "step",
+      "address": "local:RAMEmitter",
+      "config": {
+        "emit": {
+          "node_probabilities": "map[float]",
+          "steps": "integer"
+        }
+      },
+      "inputs": {
+        "node_probabilities": [
+          "node_probabilities"
+        ],
+        "steps": [
+          "steps"
+        ]
+      }
+    }
+  }
+}

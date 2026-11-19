@@ -8,11 +8,11 @@
 | **DISC_TNF** | the death-inducing signalling complex at the TNF receptor, which activates caspase-8 | `FADD AND TNFR` | `@logic ? 1 : 0` | `@logic ? 0 : 1` | CASP8 | off | — |
 | **DISC_FAS** | the same complex at the Fas receptor | `FASL AND FADD` | `@logic ? 1 : 0` | `@logic ? 0 : 1` | CASP8, RIP1 | off | — |
 | **CASP8** | caspase-8, the initiator caspase of receptor-driven apoptosis | `(DISC_TNF OR (DISC_FAS OR CASP3)) AND (NOT cFLIP)` | `($Low_CASP8 ? 0 : (@logic ? 1 : 0))` | `($Low_CASP8 ? 1e+100 : (@logic ? 0 : 1))` | RIP1, BAX | off | — |
-| **RIP1** | RIP1, a kinase at the receptor; caspase-8 cleaves and so inactivates it | `(DISC_FAS OR TNFR) AND (NOT CASP8)` | `($Low_RIP1 ? 0 : (@logic ? 1 : 0))` | `($Low_RIP1 ? 1e+100 : (@logic ? 0 : 1))` | RIP1ub, RIP1K | off | — |
+| **RIP1** | RIP1, a kinase at the receptor; caspase-8 cleaves and so inactivates it | `(DISC_FAS OR TNFR) AND (NOT CASP8)` | `($Low_RIP1 ? 0 : (@logic ? 1 : 0))` | `($Low_RIP1 ? 1e+100 : (@logic ? 0 : 1))` | RIP1ub, RIP1K | off | rates rewritten |
 | **cIAP** | cIAP1/2, which attach ubiquitin to RIP1; SMAC removes them | `(mcIAP AND (NOT SMAC))` | `($Low_cIAP ? 0 : (@logic ? $TransRate : 0))` | `($Low_cIAP ? 1e+100 : ((SMAC) ? 1 : 0))` | RIP1ub | on | `$TransRate` → `$r_tx / $k_time` |
-| **RIP1ub** | ubiquitinated RIP1, the scaffold that activates IKK (survival route) | `cIAP AND RIP1` | `@logic ? 1 : 0` | `@logic ? 0 : 1` | IKK | off | — |
+| **RIP1ub** | ubiquitinated RIP1, the scaffold that activates IKK (survival route) | `cIAP AND RIP1` | `@logic ? 1 : 0` | `@logic ? 0 : 1` | IKK | off | rates rewritten |
 | **RIP1K** | RIP1's kinase activity, which drives reactive oxygen species (necrosis route) | `RIP1` | `@logic ? 1 : 0` | `@logic ? 0 : 1` | ROS | off | — |
-| **IKK** | the IκB kinase, which frees NF-κB by marking its inhibitor IκB for destruction | `RIP1ub` | `@logic ? 1 : 0` | `@logic ? 0 : 1` | NFkB | off | — |
+| **IKK** | the IκB kinase, which frees NF-κB by marking its inhibitor IκB for destruction | `RIP1ub` | `@logic ? 1 : 0` | `@logic ? 0 : 1` | NFkB | off | rates rewritten |
 | **NFkB** | NF-κB active in the nucleus | `IKK AND (NOT CASP3)` | `($High_NFkB ? 1e+100 : (@logic ? 1 : 0))` | `($High_NFkB ? 0 : (@logic ? 0 : 1))` | cFLIP, BCL2, mXIAP, mcIAP, mROS, Survival | off | rates rewritten |
 | **cFLIP** | cFLIP, an NF-κB target that blocks caspase-8 | `NFkB` | `(@logic) ? $TransRate : 0` | `(@logic ? 0 : 1)` | CASP8 | off | `$TransRate` → `$r_tx / $k_time` |
 | **BCL2** | BCL-2, an NF-κB target that blocks BAX and the permeability transition | `NFkB` | `(@logic ? $TransRate : 0)` | `@logic ? 0 : 1` | BAX, MPT | off | `$TransRate` → `$r_tx / $k_time` |
