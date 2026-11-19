@@ -112,7 +112,8 @@ puts to Alex what they still leave open.
   - spatial.md and studies.md are corrected;
   - a check that a seeded masked source works through a Composite is added, with negative copies for an unseeded and
     an unwired mask.
-- **Its own PR,** with Alex's OK, independent of everything below.
+- **Its own PR,** under Alex's standing approval for this repository: done 2026-11-19 (decision 8b,
+  `checks/spatial/local-source`).
 
 ## Decisions for Alex (each with a recommendation)
 
