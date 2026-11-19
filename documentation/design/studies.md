@@ -31,6 +31,17 @@ pilot: `analysis/exposure-pilot/`). Gene expression stays anchored at
 $r_\text{tx} = 3.29\times10^{-4}\ \text{s}^{-1}$, so each study maps the protection race directly: how fast must the death
 machinery be for TNF to kill, at each dose and each distance?
 
+## Settings
+
+- **Pulse sizes** come from the open-medium solution, chosen before running so that the three cells' peak doses span
+  the dose curve at each clock (decision 42).
+- **The dose study's baths** run from receptor occupancy about 0.005 up to the highest peak any cell reaches (up to 1),
+  denser below 0.2, where the pilot shows survival changing fastest. Decaying baths cover the distance runs' pulse
+  durations (decision 43).
+- **Runs execute locally,** through compose-api's own runner, because a study runs 24 h and compose-api stops runs at
+  1000 s. Each new composite also gets one 990 s live run (decision 44).
+- **TNF diffuses at 100 µm²/s,** the measured free-solution value (decision 45).
+
 ## What Study 0 changes
 
 Study 0 ({doc}`calibration`) found that TNF held on at saturation kills nearly every cell at every death clock it

@@ -18,8 +18,7 @@ puts to Alex what they still leave open.
   - The draft's rule of switching readouts on the undecided fraction is dropped, because it was a statistical device,
     not biology.
   - Held survival is a model state, not something an experiment measures, so it is reported but not tested.
-- **Still recommendations, not yet confirmed by Alex:** E2 (bolus sizes from the free-space solution), E3 (the dose
-  range), E7 (local runs) and E8 (D 100).
+- **E2, E3, E7 and E8, accepted as recommended** (Alex, 2026-11-19: "Accept all four"); decisions 42 to 45.
 
 ## What the sources say
 
