@@ -1,0 +1,195 @@
+{
+ "note": "each entry is geometry_pilot.py's output, unedited (box_um added for the 3 mm runs made before the parameter existed); wall_s was measured with other jobs sharing the machine",
+ "configs": [
+  {
+   "dx": 10.0,
+   "dt": 0.25,
+   "band": true,
+   "hours": 3.0,
+   "nodes": 90601,
+   "wall_s": 319.9,
+   "cells": [
+    {
+     "r_um": 100.0,
+     "peak_rel_free": 0.9967,
+     "peak_time_s": 30.0,
+     "free_peak_time_s": 30.0,
+     "half_rise_s": 30.0,
+     "integral_rel_free": 0.9637,
+     "last_over_peak": 0.0032
+    },
+    {
+     "r_um": 300.0,
+     "peak_rel_free": 0.9994,
+     "peak_time_s": 240.0,
+     "free_peak_time_s": 240.0,
+     "half_rise_s": 90.0,
+     "integral_rel_free": 0.9371,
+     "last_over_peak": 0.0272
+    },
+    {
+     "r_um": 1000.0,
+     "peak_rel_free": 0.9376,
+     "peak_time_s": 2160.0,
+     "free_peak_time_s": 2490.0,
+     "half_rise_s": 900.0,
+     "integral_rel_free": 0.6879,
+     "last_over_peak": 0.1576
+    }
+   ],
+   "box_um": 3000.0
+  },
+  {
+   "dx": 10.0,
+   "dt": 0.25,
+   "band": false,
+   "hours": 3.0,
+   "nodes": 90601,
+   "wall_s": 307.6,
+   "cells": [
+    {
+     "r_um": 100.0,
+     "peak_rel_free": 0.9967,
+     "peak_time_s": 30.0,
+     "free_peak_time_s": 30.0,
+     "half_rise_s": 30.0,
+     "integral_rel_free": 1.0353,
+     "last_over_peak": 0.01
+    },
+    {
+     "r_um": 300.0,
+     "peak_rel_free": 0.9994,
+     "peak_time_s": 240.0,
+     "free_peak_time_s": 240.0,
+     "half_rise_s": 90.0,
+     "integral_rel_free": 1.0602,
+     "last_over_peak": 0.0884
+    },
+    {
+     "r_um": 1000.0,
+     "peak_rel_free": 1.0675,
+     "peak_time_s": 3180.0,
+     "free_peak_time_s": 2490.0,
+     "half_rise_s": 990.0,
+     "integral_rel_free": 1.3131,
+     "last_over_peak": 0.8966
+    }
+   ],
+   "box_um": 3000.0
+  },
+  {
+   "dx": 10.0,
+   "dt": 0.05,
+   "band": true,
+   "hours": 3.0,
+   "nodes": 90601,
+   "wall_s": 1447.0,
+   "cells": [
+    {
+     "r_um": 100.0,
+     "peak_rel_free": 0.9988,
+     "peak_time_s": 30.0,
+     "free_peak_time_s": 30.0,
+     "half_rise_s": 30.0,
+     "integral_rel_free": 0.9635,
+     "last_over_peak": 0.0032
+    },
+    {
+     "r_um": 300.0,
+     "peak_rel_free": 0.9998,
+     "peak_time_s": 240.0,
+     "free_peak_time_s": 240.0,
+     "half_rise_s": 90.0,
+     "integral_rel_free": 0.9371,
+     "last_over_peak": 0.0272
+    },
+    {
+     "r_um": 1000.0,
+     "peak_rel_free": 0.9376,
+     "peak_time_s": 2160.0,
+     "free_peak_time_s": 2490.0,
+     "half_rise_s": 900.0,
+     "integral_rel_free": 0.6879,
+     "last_over_peak": 0.1575
+    }
+   ],
+   "box_um": 3000.0
+  },
+  {
+   "dx": 5.0,
+   "dt": 0.25,
+   "band": true,
+   "hours": 3.0,
+   "nodes": 361201,
+   "wall_s": 1349.7,
+   "cells": [
+    {
+     "r_um": 100.0,
+     "peak_rel_free": 0.9972,
+     "peak_time_s": 30.0,
+     "free_peak_time_s": 30.0,
+     "half_rise_s": 30.0,
+     "integral_rel_free": 0.9635,
+     "last_over_peak": 0.0032
+    },
+    {
+     "r_um": 300.0,
+     "peak_rel_free": 0.9995,
+     "peak_time_s": 240.0,
+     "free_peak_time_s": 240.0,
+     "half_rise_s": 90.0,
+     "integral_rel_free": 0.9371,
+     "last_over_peak": 0.0272
+    },
+    {
+     "r_um": 1000.0,
+     "peak_rel_free": 0.9375,
+     "peak_time_s": 2160.0,
+     "free_peak_time_s": 2490.0,
+     "half_rise_s": 900.0,
+     "integral_rel_free": 0.6877,
+     "last_over_peak": 0.1574
+    }
+   ],
+   "box_um": 3000.0
+  },
+  {
+   "box_um": 6000.0,
+   "dx": 10.0,
+   "dt": 0.25,
+   "band": true,
+   "hours": 3.0,
+   "nodes": 361201,
+   "wall_s": 1182.0,
+   "cells": [
+    {
+     "r_um": 100.0,
+     "peak_rel_free": 0.9967,
+     "peak_time_s": 30.0,
+     "free_peak_time_s": 30.0,
+     "half_rise_s": 30.0,
+     "integral_rel_free": 1.0004,
+     "last_over_peak": 0.0064
+    },
+    {
+     "r_um": 300.0,
+     "peak_rel_free": 0.9994,
+     "peak_time_s": 240.0,
+     "free_peak_time_s": 240.0,
+     "half_rise_s": 90.0,
+     "integral_rel_free": 1.0,
+     "last_over_peak": 0.0555
+    },
+    {
+     "r_um": 1000.0,
+     "peak_rel_free": 0.9999,
+     "peak_time_s": 2490.0,
+     "free_peak_time_s": 2490.0,
+     "half_rise_s": 960.0,
+     "integral_rel_free": 0.9994,
+     "last_over_peak": 0.4964
+    }
+   ]
+  }
+ ]
+}

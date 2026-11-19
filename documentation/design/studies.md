@@ -5,8 +5,8 @@ project's investigation ({doc}`../reference/glossary`) (Study 0, {doc}`calibrati
 
 | Name | Study | Spatial setup | Swept | Readouts |
 |---|---|---|---|---|
-| Dose | **Fate vs uniform TNF dose.** The control | Uniform bath at concentration $c_0$, optional first-order decay (rate $\lambda$, {doc}`../math/diffusion`) | $c_0$, `k_time` | fraction of cells alive (no death node ever on) and with durable survival (or Study 1's stricter held survival, {doc}`validation`; which one is reported is decided with the collapse statistic); the death mode (apoptosis, necrosis) ({doc}`calibration`); NF-κB's first nuclear peak (height, time) and period |
-| Distance | **Fate vs distance from a TNF bolus.** The headline: what space adds | Point bolus at distance r from the cell's surface region | r, bolus size, `k_time` | as the dose study, plus TNF at the cell over time (`RegionMean`) |
+| Dose | **Fate vs uniform TNF dose.** The control | Uniform bath at concentration $c_0$, optional first-order decay (rate $\lambda$, {doc}`../math/diffusion`) | $c_0$, `k_time` | the fraction of cells alive at 24 h (no death node ever on; decision 41), with the survival curve and the death mode (apoptosis, necrosis) ({doc}`calibration`); NF-κB's first nuclear peak (height, time) and period |
+| Distance | **Fate vs distance from a TNF bolus.** The headline: what space adds | A point bolus at the centre of a 6 mm box with an absorbing band at its edges (an open medium); cells at r = 100, 300 and 1000 µm (decision 39) | r, bolus size, `k_time` | as the dose study, plus TNF at the cell over time (`RegionMean`) |
 | Wave timing | **NF-κB wave timing under a moving TNF front.** The mechanism | the distance study's runs (no new runs) | r | TNF front arrival vs the times of NF-κB's nuclear peaks |
 
 ## The scientific test
@@ -16,15 +16,18 @@ integrated over time.
 - **If fate collapses onto the dose study's curve,** space acts only through dose.
 - **If it doesn't,** arrival timing matters.
 
-What counts as "collapses" (the statistic that compares the mapped distance-study results with the dose study's curve, and the
-threshold) is not chosen yet. It will be fixed and recorded here before the distance study runs, so that the answer cannot be
-tuned to the result.
+What counts as "collapses" was fixed before the distance study runs, so that the answer cannot be tuned to the result
+(decision 40):
+- it is an equivalence test, with a margin of ±0.05 in the fraction alive at 24 h and about 270 cells per point;
+- it compares each run with a monotone fit of the dose curve, mapped by the TNF dose that reached the cell;
+- runs outside the dose study's range are reported, not extrapolated.
 
 The wave-timing study shows the mechanism behind either answer.
 
 ## The death clock
 
-`k_time` runs across all three studies ({doc}`time`). Gene expression stays anchored at
+`k_time` runs across all three studies ({doc}`time`), at 30, 60 and 120 min per unit (decision 38, from a dose
+pilot: `analysis/exposure-pilot/`). Gene expression stays anchored at
 $r_\text{tx} = 3.29\times10^{-4}\ \text{s}^{-1}$, so each study maps the protection race directly: how fast must the death
 machinery be for TNF to kill, at each dose and each distance?
 
@@ -46,5 +49,6 @@ walls).
 
 ## Grid
 
-The grid is chosen from the convergence table in {doc}`spatial`, with the TNF value at the cell in mind, and confirmed
-by one refinement run.
+dx 10 µm and dt 0.25 s in the 6 mm box (decision 39). A geometry pilot found they give the same TNF at every cell as dx 5
+µm or dt 0.05 s, to three decimals, and that every cell then matches the open-medium solution
+(`analysis/exposure-pilot/geometry_pilot.json`). A 24 h run of that field takes about 2.6 h.
