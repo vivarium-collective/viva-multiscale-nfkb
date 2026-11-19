@@ -8,98 +8,71 @@
 [![license](https://img.shields.io/github/license/vivarium-collective/viva-multiscale-nfkb)](./LICENSE)
 <!-- END:badges -->
 
-A multiscale process-bigraph composite of how a cell decides its fate after TNF stimulation. It couples a Boolean
-cell-fate network (MaBoSS), an NF-κB signalling model (Lipniacki 2004, BioModels BIOMD0000000786, on Tellurium) and
-the TNF concentration field around the cell (viva-pde-particle). NF-κB is *nuclear factor kappa-light-chain-enhancer
-of activated B cells*, the transcription factor TNF switches into the nucleus. Scaffolded from
-[viva-template](https://github.com/vivarium-collective/viva-template).
+**When TNF reaches a cell, does the cell live or die, and does it matter how far the TNF had to travel?**
 
-## Why this workspace exists
+TNF (tumour necrosis factor) is a signalling protein that cells release during inflammation. When it reaches another
+cell, it starts two programmes at once. One leads to death, by apoptosis or by necrosis. The other runs through the
+transcription factor NF-κB, which moves into the nucleus and switches on genes that protect the cell. Which programme
+wins decides the cell's fate.
 
-This workspace exists in large part because of a specific step in
-[compose-api](https://github.com/biosimulations/compose-api), the BioSimulations service that runs process-bigraph
-documents on HPC: the onboarding of the **multi-framework viva workspace simulator packages**.
+This repository builds that decision as a single model that spans three scales:
+- the TNF spreading through the medium around the cell;
+- the NF-κB signalling inside the cell;
+- the cell's fate.
 
-- **The agenda.** Alex Patrie set it on 2026-11-03 as three gated parts:
-  - **A:** onboard the viva simulator workspaces into compose-api, grouped by modelling framework.
-  - **B:** design one multiscale composite from what A onboarded. That is this workspace.
-  - **C:** classify every compliance case by biological scale.
+The signalling and fate layers are published models, and the TNF field is plain diffusion with a measured diffusion
+coefficient. Each runs in its own simulator and talks to the others through small, checked translation steps. The model is a [process-bigraph](https://github.com/vivarium-collective/process-bigraph) composite.
 
-  A's groups are the five modelling paradigms the viva ecosystem had wrappers for, so that B could compose across
-  them.
-- **The onboarding.** compose-api added seven viva simulator packages to its registry at level `tested`
-  ([compose-api#499](https://github.com/biosimulations/compose-api/pull/499), opened 2026-11-03, merged 2026-11-04).
-  They span five modelling frameworks:
+## The biology, step by step
 
-  | Framework | Package |
-  |---|---|
-  | ODE/SBML | viva-copasi, viva-tellurium |
-  | flux balance (FBA) | viva-cobra |
-  | Boolean | viva-maboss |
-  | rule-based | viva-nfsim |
-  | spatial | viva-smoldyn, viva-fenics |
+1. **TNF diffuses** through the medium from where it was released.
+2. **Receptors at the cell surface** (TNFR1) bind the TNF that reaches them. The fraction bound is
+   $c/(c + K_d)$, where $c$ is the TNF concentration at the cell's surface and $K_d$ = 19 pM (Grell et al. 1998).
+   That fraction is the signal the cell feels.
+3. **Inside the cell**, the bound receptors activate the kinase IKK. IKK marks the inhibitor IκBα for destruction,
+   which frees NF-κB to enter the nucleus. There NF-κB switches on its own brakes: IκBα, which carries it back out of
+   the nucleus, and A20, which switches IKK off. So nuclear NF-κB rises and falls in damped waves.
+4. **The cell-fate network** weighs NF-κB's protective genes against the death signals TNF starts directly (caspase-8
+   for apoptosis, RIP1 kinase for necrosis), and settles on survival, apoptosis or necrosis.
 
-  - **Each package passed its compliance case in a real composed environment.** Before the merge, all seven also
-    passed together in one 491-package environment, locked through compose-api's own pixi path. That combined pass
-    is the multi-framework evidence this workspace builds on.
-  - **Boolean:** no wrapper existed. BoolNet, the library first suggested, is R-only, so
-    [viva-maboss](https://github.com/vivarium-collective/viva-maboss) was built for this, on 2026-11-03.
-  - **viva-biomodels** is held at `listed`, for the reasons in #499.
-  - **Seven other workspaces** first carried on #499's branch (viva-mcom, viva-bbe-systems, viva-comets, viva-medyan,
-    viva-yalla, viva-simbio and viva-bioreactordesign) were parked on `registry/onboard-verified-workspaces-batch1`
-    when the PR was refocused on the five frameworks. They are not onboarded.
-- **Combining frameworks in one run.** compose-api infers a combined environment, a "mash-up", from a document's
-  process addresses (its environment-composition plan, D7).
-  - **The bug.** The first live run (copasi.omex) found that a signed-in run of these packages that used the core
-    emitter `local:RAMEmitter` was refused with a 400. Inference treated the short name as unregistered and fell back
-    to `registry_env`.
-  - **The fix.** [compose-api#501](https://github.com/biosimulations/compose-api/pull/501) (release 0.7.78,
-    2026-11-04) qualifies short names as validation does, so a single document can mix these frameworks and run as one
-    job.
-  - **Proven live.** The same day, all seven compliance cases passed on production (compose.cam.uchc.edu, 0.7.78),
-    each in its own inferred mash-up.
-- **What this workspace adds.** Onboarding proved each framework on its own. This workspace builds one model that
-  spans scales from several of the newly onboarded frameworks: Boolean, ODE, and the spatial PDE layer. It needs no
-  new registry entry, because it runs in a mash-up of viva-maboss, viva-tellurium, viva-pde-particle and
-  viva-basic-processes.
-- **Gaps it exposed,** each fixed upstream rather than worked around here:
-  - **Kinetic layer:** Tellurium could not take parameter values from another layer during a run. The fix is a
-    `parameters_in` port on viva-tellurium.
-  - **Spatial layer:** the spatial package had no way to turn a field into one concentration at the cell. The fix is
-    `RegionMean`/`RegionTotal` in viva-pde-particle.
-  - **Not used, by finding:**
-    - viva-smoldyn takes no inputs.
-    - viva-fenics meshes only the unit square.
-    - viva-nfsim drops bound complexes between intervals.
+## The model
 
-The design record, including what was ruled out and why, is in [`docs/design/`](docs/design/). The plan is
-[`plan-section-b.md`](docs/design/plan-section-b.md).
+| Scale | What it represents | Model (source) | Simulator |
+|---|---|---|---|
+| Medium around the cell | TNF diffusing in two dimensions | 2-D diffusion, D = 100 µm²/s (Wu et al. 2011) | viva-pde-particle |
+| Signalling inside the cell | TNF → IKK → NF-κB, its nuclear waves and target genes | Lipniacki et al. 2004 (BioModels BIOMD0000000786) | Tellurium (libRoadRunner), via viva-tellurium |
+| Cell fate | Survival, apoptosis or necrosis | Calzone et al. 2010 cell-fate network, all 31 nodes. Its NF-κB node follows the signalling layer's NF-κB while the network's own gate (IKK on, caspase-3 off) is open | MaBoSS, via viva-maboss |
+| Translation between scales | TNF at the cell's surface; receptor occupancy; NF-κB's nuclear fraction into the fate network | — | `RegionMean`, `MathExpressionStep` |
 
-## Layers
+The composite that joins all three is `tnf-field-cell`: one cell in a TNF field. `kinetic-boolean` is the signalling
+and fate layers on their own, with TNF held on.
 
-| Layer | Engine (registry entry) | What it owns |
-|---|---|---|
-| Boolean cell fate | MaBoSS (`viva-maboss`): Calzone 2010 network, minus the arm the kinetic layer models | Survival / apoptosis / necrosis decision |
-| NF-κB kinetics | libRoadRunner (`viva-tellurium`): Lipniacki 2004, BIOMD0000000786 | TNF → IKK → NF-κB activation and nuclear transport |
-| Extracellular TNF field | finite-volume PDE (`viva-pde-particle`) | TNF diffusion around the cell |
-| Adapters | `viva-basic-processes` `MathExpressionStep`; `viva-pde-particle` `RegionMean` | Unit and rate mappings between layers |
+## What it shows so far
 
-## Checks: the same verdict compose-api would give
+- **Under constant, saturating TNF, the model kills far more cells than experiments do.**
+  - In experiments, cells with working NF-κB mostly survive TNF alone, and die when NF-κB is blocked.
+  - The fate network has no clock of its own: how long each of its steps takes in real time is unknown, so the studies
+    sweep it.
+  - A first calibration study found nearly every cell dead within 24 hours at 2 to 120 minutes per step.
+  - At every speed tested, NF-κB protects at most about 12 cells in 100.
+  - At slower speeds more cells are alive at 24 hours, but mostly because they haven't reached a fate yet, or reached
+    survival and lost it. Cells without NF-κB survive almost as often.
+- **The limit lies in a race inside the fate network.** Caspase-8 is two steps from the bound receptor, NF-κB is four,
+  and active caspase-8 shuts NF-κB's route.
+  - Letting NF-κB activate on the signalling model's own timing wins that race, but still doesn't make most cells
+    survive. They reach the survival state and then lose it, apparently because under constant TNF the fate network's
+    NF-κB node is on only about a quarter of the time.
+  - Cells without NF-κB also die more, mostly by necrosis.
+  - That change was not adopted. The gap is recorded as an open question, not tuned away.
+- **Next: what exposure does.** Studies of dose, of distance from a TNF source, and of when TNF arrives. They ask
+  whether space matters only through how much TNF reaches a cell, or also through when it arrives.
+- **The model runs the same everywhere.** The three scales run together on a laptop and on BioSimulations'
+  compose-api, the service that runs these models on a compute cluster. A run there, on Linux, reproduces a local run
+  on macOS to within floating-point noise (`compose/live/tnf_field_cell.yaml`).
 
-- **The environment.** `compose/` is a uv project pinned to compose-api's registry: process-bigraph 1.9.1,
-  bigraph-schema 1.8.1, Python 3.12, and each entry at the commit compose-api's registry pins.
-- **The runner.** `compose/check.sh <group> [<case>]` runs a check's document through compose-api's own `runner.py`,
-  vendored byte-for-byte at 0.7.91 (see `compose/RUNNER_SOURCE`). It scores the results with compose-api's own
-  `compliance.evaluate`.
-- **The checks.** They live in `checks/<group>/<case>/case.yaml`, compose-api's compliance-case format. Every check
-  has an oracle independent of the code under test, and a mutated copy that fails.
-- **Scoring needs compose-api.** It uses a compose-api checkout, set with `COMPOSE_API_DIR` (it defaults to
-  `~/uchc/biosimulations/compose-api`) and only read.
-
-```bash
-compose/check.sh harness   # compose-api's own maboss and tellurium cases: the harness gives their verdicts
-compose/check.sh kinetic   # Lipniacki vs COPASI's sim1; the pre-equilibrated steady state
-```
+The full story, from the biology and the mathematics to every design decision and why, is in the documentation
+(`documentation/`). Build it with
+`uv run --group docs sphinx-build -W -b html documentation documentation/_build/html`.
 
 <!-- BEGIN:dashboard -->
 <!-- generated by `vivarium-workbench gen-readme` — edit the source, not this table -->
@@ -108,10 +81,6 @@ compose/check.sh kinetic   # Lipniacki vs COPASI's sim1; the pre-equilibrated st
 <!-- END:dashboard -->
 
 ## What's inside
-
-<!-- A short, plain description of what this workspace contains — the families of
-     studies, the key composites, what a reader should look at first. The two tables
-     below are generated from the workspace; this prose is yours. -->
 
 ### Composites
 
@@ -134,52 +103,43 @@ compose/check.sh kinetic   # Lipniacki vs COPASI's sim1; the pre-equilibrated st
 | [TNF fate in space _(planning)_](https://vivarium-collective.github.io/viva-multiscale-nfkb/workbench/reports/investigation-tnf-fate-in-space.html) | What decides whether a cell survives or dies when TNF reaches it by diffusion, and does space act only through the dose that arrives, or also through when it arrives? |
 <!-- END:investigations -->
 
-## Run it locally
+## How the results are checked
 
-    bash scripts/serve.sh            # starts the workbench and opens it
+Every layer, and every connection between layers, has a check: a small simulation compared with an answer that
+doesn't come from the code being tested. That answer can be a formula, another simulator's output, or the published
+model's own results. Most checks also have a deliberately broken copy that is shown to fail.
+- **Checks run as the cluster runs them:** through compose-api's own runner and scorer, in an environment pinned to
+  the exact simulator versions compose-api installs (`compose/`).
+- **Running a check needs a compose-api checkout** (`COMPOSE_API_DIR`, by default `~/uchc/biosimulations/compose-api`).
+
+```bash
+compose/check.sh kinetic    # Lipniacki's model against COPASI's reference run
+compose/check.sh boolean    # the fate network against Calzone's own network and analytic results
+compose/check.sh spatial    # TNF diffusion against its exact solution
+compose/check.sh coupled    # receptor occupancy against its formula; the full model against a copy with the field-to-cell link cut
+```
+
+## Where it came from
+
+The model began as a test of compose-api when it opened up to simulators from several modelling traditions: Boolean
+networks, ODE kinetics, flux balance, rule-based models and spatial diffusion. Joining three of them in one model
+showed two gaps, and each was fixed in the simulator package itself rather than patched over here:
+- Tellurium could not take a parameter from another model during a run; it now has a `parameters_in` port.
+- The spatial package could not report the concentration at a cell; it now has `RegionMean`.
+
+The project's history and decisions are in `documentation/reference/history.md` and
+`documentation/design/decisions.md`.
+
+## Working in this repository
+
+    bash scripts/serve.sh            # the workbench: browse composites, studies and results
     python3 scripts/lint-workspace.py
 
-`NEXT_STEPS.md` is the full tour. The code lives in `viva_multiscale_nfkb/`;
-`build_core()` in `core.py` registers the processes and composites. Working with an
-AI coding assistant? `docs/first-run-agent-guide.md` takes it from a clean clone to a
-running workbench.
-
-## Building on it
-
-[viva-superpowers](https://github.com/vivarium-collective/viva-superpowers) is the
-Claude Code plugin whose skills build and extend this kind of workspace:
-
-- `/viva-study <slug>` — start a study (Design → Build → Simulate → Evaluate → Decide).
-- `/viva-investigation <slug>` — group studies under one research question.
-- `/viva-expert <tool>` — wrap a simulator as a process-bigraph process or step (`--lightweight` writes in-workspace).
-- `/viva-viz` — generate a visualization from a description.
-- `/viva-report` — rebuild the reports.
-
-Decide-phase studies can record `followup_proposals[]`; seed a child study from one
-with `/viva-study seed-from-followup <parent>/<proposal_id>`.
-
-## Layout
-
-Project code lives at the repo root; research state is grouped under `workspace/`
-(the `.pbg/` machine state stays at the root like `.git/`). Directory locations come
-from the `layout:` map in `workspace.yaml` — edit it to move things.
-
-- `workspace.yaml` — canonical state (validated against `.pbg/schemas/workspace.schema.json`).
-- `viva_multiscale_nfkb/` — your Python package (`core.py` exposes `build_core()`).
-- `scripts/` — `lint-workspace.py`, `serve.sh`, helpers.
-- `workspace/studies/`, `workspace/composites/`, `workspace/references/`, `workspace/datasets/` — research artifacts.
-- `workspace/notes/` — friction logs, walkthroughs, agent transcripts, ADRs. See `workspace/notes/README.md` for the
-  cleanup rule: **files under `notes/` survive cleanup sweeps by default**, because they're the
-  input to the next round of infrastructure improvements.
-- `.pbg/schemas/` — JSON schemas the lint + dashboard validate against.
-
-## Cleanup conventions
-
-Cleanup PRs (`chore(cleanup): …`, `chore(repo): trim …`) routinely remove generated files,
-one-shot scripts, and stale planning docs. Two locations are off-limits to bulk cleanup:
-
-- `workspace/notes/**` — see the rule in `workspace/notes/README.md`.
-- `workspace/references/notes/**` — per-paper literature notes, used by the findings protocol.
-
-If a specific file in either location is genuinely obsolete, delete it in its own commit
-with a one-line justification per file. Don't bundle with unrelated cleanup.
+- **The code** is in `viva_multiscale_nfkb/`. `build_core()` in `core.py` registers the processes and composites;
+  the composites are generated by `viva_multiscale_nfkb/composites/make_*.py`.
+- **The research record** lives under `workspace/`: studies, datasets and references. `workspace.yaml` describes the
+  layout.
+- **`workspace/notes/`** holds working notes and transcripts.
+- **Tooling.** The workspace was scaffolded from [viva-template](https://github.com/vivarium-collective/viva-template);
+  [viva-superpowers](https://github.com/vivarium-collective/viva-superpowers) provides the tools for adding studies
+  and simulators. `NEXT_STEPS.md` is the longer tour.

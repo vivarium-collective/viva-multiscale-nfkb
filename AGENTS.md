@@ -87,3 +87,9 @@ tracked artifact), commits on the branch, and opens a PR. **Never auto-
 merges.** Reviewer clicks merge in the GitHub UI.
 
 See `/viva-investigation close --help` for details.
+
+## Notes are kept on purpose
+
+`workspace/notes/**` and `workspace/references/notes/**` survive cleanup sweeps: they are working notes, transcripts
+and per-paper literature notes that later work reads. Delete a file there only when it is genuinely obsolete, in its own
+commit with a one-line reason per file, never bundled with unrelated cleanup (`workspace/notes/README.md`).
