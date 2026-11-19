@@ -21,7 +21,8 @@ kinetic_boolean.composite.json (regenerate that first). This adds the spatial la
   prefixes of a producer's output. So it runs through the scheduler's fallback, the highest-priority blocked Step
   (scheduling.py:605). Among equal priorities that pick follows set order, which is Python's hash seed. A split Step
   for u_TNF and d_TNF went the same way, and MaBoSS then saw TNF one interval late for some seeds
-  (process-bigraph#284).
+  (process-bigraph#284; fixed upstream by #285, 73ca6fb, 2026-11-19, not yet released, so the priority stays
+  until a release with the fix reaches compose-api's environments, which pin 1.9.1).
 - **Boolean start:** TNF is off; the bolus has not arrived.
 - **Kinetic model:** the driven SBML is inline (`model`, `model_format: sbml`), so the document runs as one file.
 
