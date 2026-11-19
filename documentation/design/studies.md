@@ -18,7 +18,8 @@ integrated over time.
 
 What counts as "collapses" was fixed before the distance study runs, so that the answer cannot be tuned to the result
 (decision 40):
-- it is an equivalence test, with a margin of ±0.05 in the fraction alive at 24 h and about 270 cells per point;
+- it is an equivalence test, with a margin of ±0.05 in the fraction alive at 24 h and about 1,700 cells per point,
+  which gives an 80% chance of showing equivalence when it holds (decision 40b);
 - it compares each run with a monotone fit of the dose curve, mapped by the TNF dose that reached the cell;
 - runs outside the dose study's range are reported, not extrapolated.
 

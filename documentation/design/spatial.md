@@ -59,7 +59,10 @@ A 990 s run of the field takes 8 s.
     about half of each cell's peak time to 1 h.
   - The tolerances are three times the measured error (floor rel 1e-3). The largest errors are 0.33%, 0.26% and
     0.025%.
-  - Three mutated copies fail: D 50, the near cell moved to 110 µm, and the band removed.
+  - Two mutated copies fail: D 50, and the near cell moved to 110 µm.
+  - The band itself only acts once TNF reaches the walls, after about 6 h in this box, so within the check's hour a
+    box without it gives the same values. Its effect over a day is measured in the 24 h exposure runs that size the
+    studies' pulses (decision 42).
 - **`checks/coupled/bolus-occupancy`** (from the same generator): in the full composite with its bolus, the cell's
   occupancy every 15 s is $c/(c+K_d)$ of the exact TNF at the last coupling instant. This guards the rule that the
   dose–response Step re-runs on each kinetic update (`--negative untriggered` fails).

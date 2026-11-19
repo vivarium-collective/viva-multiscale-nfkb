@@ -15,11 +15,14 @@ Each tolerance is three times the error measured at that point, with a floor of 
 running the same field at the process level before it writes the case. The measured errors go into the case's
 description.
 
-`--negative {D50,ring110,noband}` writes `far-bolus-negative` with the mutated document and the same expectations; it
-must fail.
+`--negative {D50,ring110}` writes `far-bolus-negative` with the mutated document and the same expectations; it must
+fail.
 - D50 halves D.
 - ring110 moves the near cell from 100 to 110 um.
-- noband removes the absorbing band, giving a closed box.
+
+The band itself is not tested here. It acts only once TNF reaches the walls, after about L^2 / 4D = 6 h in this box,
+so within this check's hour a box without it gives the same values (tried: that copy passes). Its effect over a day is
+measured in the 24 h exposure runs that size the studies' pulses (decision 42).
 
     uv run --project compose python -I checks/spatial/make_far_bolus.py [--negative NAME]
 """
@@ -47,7 +50,7 @@ TIMES = {"near": (30, 60, 120, 240, 600, 1800, 3600), "middle": (120, 240, 600, 
          "far": (1200, 1800, 2490, 3600)}
 ALL_TIMES = sorted({t for times in TIMES.values() for t in times})
 END = float(ALL_TIMES[-1])
-NEGATIVES = ("D50", "ring110", "noband")
+NEGATIVES = ("D50", "ring110")
 
 
 def axes() -> tuple[np.ndarray, np.ndarray]:
