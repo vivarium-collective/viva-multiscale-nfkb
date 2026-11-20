@@ -1,93 +1,78 @@
 # viva-multiscale-nfkb
 
-**How does a cell decide whether to live or die when a TNF signal reaches it, and what does space add to that
-decision?**
+**A model of one cell deciding whether to live or die when TNF reaches it.**
 
-This workspace builds one multiscale model to answer that question. It is a
-[process-bigraph](https://github.com/vivarium-collective/process-bigraph) composite of two published models, Lipniacki's
-NF-κB model and Calzone's cell-fate network, and a TNF diffusion field. Each runs in its own engine and is responsible
-for one part of the biology. The engines are wrapped as processes by the `viva-*` packages (the vivarium-collective
-family of simulator wrappers); the adapters are small translation steps ({doc}`design/composite-primer`):
+TNF is a signalling protein that cells release during inflammation. When it reaches a cell it starts two programmes
+at once: one leads to death, the other runs through NF-κB and protects the cell. This model follows that decision
+across three scales, from the TNF spreading through the medium to the cell's fate.
 
-| Layer | What it models | Model | Engine |
-|---|---|---|---|
-| <span class="layer spatial">spatial</span> | TNF diffusing through the medium around the cell | finite-volume reaction–diffusion | viva-pde-particle `FVReactionDiffusion` |
-| <span class="layer kinetic">kinetic</span> | TNF → IKK → NF-κB activation; NF-κB's nuclear oscillations and target genes | Lipniacki 2004 (BioModels BIOMD0000000786) | viva-tellurium `TelluriumProcess` (libRoadRunner) |
-| <span class="layer boolean">Boolean</span> | The cell-fate decision: survival, apoptosis or necrosis | Calzone 2010 cell-fate network, all 31 nodes, gating Lipniacki's NF-κB | viva-maboss `MaBoSSProcess` (MaBoSS) |
-| <span class="layer adapter">adapters</span> | Unit and meaning conversions between layers | — | `MathExpressionStep`, `RegionMean` |
+```{image} _static/model-overview.svg
+:alt: TNF spreads from a source to a cell; receptors bind it; NF-κB responds in damped waves; the cell's fate network settles on survival, apoptosis or necrosis.
+:width: 100%
+```
 
-TNF spreads through the medium. The receptors at the cell surface turn the TNF that reaches them into a
-receptor-activation signal. NF-κB then enters the nucleus in damped waves. The cell's fate network weighs NF-κB's
-protective genes against the death signals TNF itself starts. Each arrow in that chain is a coupling between two engines,
-and each coupling built so far is checked against an independent oracle.
+## Try it
 
-**New here?** A *composite* is one document that wires several models together; each model runs as a *process* that
-reads and writes shared values. A *check* runs a small document and compares its results with an *oracle*, an expected
-value that does not come from the code under test, such as a formula or another engine's output. The pages build these
-up in order: the biology and the models ({doc}`science/index`), the mathematics the checks rely on
-({doc}`math/index`), and the design decisions ({doc}`design/index`), starting from {doc}`design/composite-primer`. Decisions marked "Alex" were made by Alex Patrie,
-who leads the project ({doc}`design/decisions`).
+```bash
+git clone https://github.com/vivarium-collective/viva-multiscale-nfkb
+cd viva-multiscale-nfkb
+uv sync --frozen --extra simulators
+uv run --frozen --extra simulators \
+    multiscale-nfkb run tnf_field_cell.tnf-field-cell --steps 600 \
+    --emit nfkb_fraction,node_probabilities/Survival,node_probabilities/Apoptosis
+```
 
-::::{grid} 2
-:gutter: 2
+That runs ten minutes of one cell in a TNF field and prints how much of its NF-κB has moved into the nucleus, and
+how likely each fate is so far. {doc}`getting-started` explains each step, and how to browse and run the model in the
+workbench, on your machine or on a compute cluster.
 
-:::{grid-item-card} 🚀 Getting started
+::::{grid} 1 2 2 2
+:gutter: 3
+
+:::{grid-item-card} Getting started
 :link: getting-started
 :link-type: doc
-Install the pinned environment and run every check in one command.
+Install the model, run it from the command line, and open it in the workbench.
 :::
 
-:::{grid-item-card} 🧪 Tutorials
+:::{grid-item-card} What the model shows
+:link: findings
+:link-type: doc
+What the studies have found so far, and what comes next.
+:::
+
+:::{grid-item-card} Tutorials
 :link: tutorials/index
 :link-type: doc
-Run each layer, then the couplings, then sweep the clock.
+Run each part of the model on its own, then together.
 :::
 
-:::{grid-item-card} 🧬 The science
+:::{grid-item-card} The science
 :link: science/index
 :link-type: doc
-TNF, NF-κB, apoptosis and necrosis, and the three models chosen to represent them.
-:::
-
-:::{grid-item-card} 🏗️ Design
-:link: design/index
-:link-type: doc
-Each layer, each coupling and each clock, with the reason for every decision.
-:::
-
-:::{grid-item-card} ∑ Mathematics
-:link: math/index
-:link-type: doc
-The switch, window-average, nuclear-fraction, clock-invariance and diffusion results the checks rely on.
-:::
-
-:::{grid-item-card} ✅ Verification
-:link: verification/index
-:link-type: doc
-How a check is scored, and the catalogue of checks, each with its oracle and, where one is recorded, a proven-failing negative.
+TNF, NF-κB, apoptosis and necrosis, and the published models that represent them.
 :::
 ::::
 
+The {doc}`reference section <reference/index>` holds the design, the mathematics and the checks behind every part of
+the model.
+
 ```{toctree}
 :hidden:
-:maxdepth: 2
+:caption: User guide
 
 getting-started
-science/index
-math/index
-design/index
+findings
 tutorials/index
-verification/index
-reference/index
+science/index
 ```
 
-```{admonition} Where it stands
-:class: important
-- **All three layers run together** as one composite: one cell in a TNF field. It is checked layer by layer and as a
-  whole, and it runs both locally and on compose-api ({doc}`design/roadmap`).
-- **Under constant, saturating TNF, it kills far more cells than experiments show.** NF-κB protects at most about 12
-  cells in 100 at every speed tested for the fate network ({doc}`design/validation`).
-- **Letting NF-κB activate on the signalling model's own timing** (Option A) still did not meet the survival standard,
-  so it was not adopted.
-- **Next, the studies vary exposure:** dose, distance from a TNF source, and when TNF arrives ({doc}`design/studies`).
+```{toctree}
+:hidden:
+:caption: Reference
+
+design/index
+math/index
+verification/index
+reference/index
 ```

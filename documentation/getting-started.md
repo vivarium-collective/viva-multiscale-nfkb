@@ -1,52 +1,67 @@
 # Getting started
 
-This page installs the environments and runs every check. What compose-api, a check, a mash-up and the registry are is
-explained in {doc}`design/composite-primer`; COPASI and libRoadRunner are two independent ODE solvers, which the kinetic
-checks compare.
+## Install
 
-## What you need
-
-- [uv](https://docs.astral.sh/uv/). Every Python command here runs through it.
-- A checkout of [compose-api](https://github.com/biosimulations/compose-api). The checks are scored by compose-api's
-  own `compliance.evaluate` (see {doc}`verification/index`). Point `COMPOSE_API_DIR` at it; it defaults to
-  `~/uchc/biosimulations/compose-api` and is only read.
-- macOS (arm64 or x86-64) or Linux x86-64. libRoadRunner publishes no Linux aarch64 wheel, so Linux on arm64 cannot
-  install the run environment (this is also why the container image of this repository cannot be built for
-  linux/arm64).
+You need [uv](https://docs.astral.sh/uv/getting-started/installation/) and git, on macOS or on Linux x86-64. (Linux on
+arm64 is not supported: libRoadRunner, the engine of the signalling model, publishes no wheel for it.)
 
 ```bash
 git clone https://github.com/vivarium-collective/viva-multiscale-nfkb
 cd viva-multiscale-nfkb
-export COMPOSE_API_DIR=/path/to/compose-api
+uv sync --frozen --extra simulators
 ```
 
-## Two environments, on purpose
+`--extra simulators` installs the three simulators the model joins: viva-pde-particle for the TNF field, Tellurium
+for the NF-κB signalling and MaBoSS for the cell's fate. Keep it on every `uv run` too, or uv removes them again.
 
-| Environment | Where | What it is for |
-|---|---|---|
-| **The run environment** | `compose/` (its own `pyproject.toml` and `uv.lock`) | Pinned to what compose-api's registry installs in a new environment: process-bigraph 1.9.1 and its type system, bigraph-schema 1.8.1, Python 3.12, and each simulator package at the commit compose-api's registry pins. Every check runs here. |
-| **The workspace environment** | the repository root | This repository's own Python package (`viva_multiscale_nfkb`), the vivarium-workbench dashboard that records study runs, and the `docs` group that builds this documentation. |
-
-They are separate because a check that passes here must pass the same way on compose-api. The run environment
-installs the same packages at the same versions the service's composed image does.
-
-## Run every check
+## Run the model
 
 ```bash
-bash compose/check.sh harness    # compose-api's own maboss and tellurium cases: proves the harness
-bash compose/check.sh kinetic    # Lipniacki vs COPASI; the rest state (design/kinetic)
-bash compose/check.sh spatial    # diffusion and decay against closed-form solutions
-bash compose/check.sh boolean    # MaBoSS reference, equivalence with Calzone's network, the couplings, the clock (design/boolean, design/time)
+uv run --frozen --extra simulators \
+    multiscale-nfkb run tnf_field_cell.tnf-field-cell --steps 600 \
+    --emit nfkb_fraction,node_probabilities/Survival,node_probabilities/Apoptosis,node_probabilities/NonACD
 ```
 
-Each check prints `PASS` or one `FAIL` line per expectation it missed. The runs write to `.checks-out/<group>/<case>/`
-(the runner log and the results file), which git ignores.
+This runs `tnf-field-cell`, one cell in a field of TNF, for 600 simulated seconds and prints the values named in
+`--emit` at the end:
 
-## Build this documentation
+```text
+nfkb_fraction = 0.7001305988285712
+node_probabilities/Survival = 0.0
+node_probabilities/Apoptosis = 0.0
+node_probabilities/NonACD = 0.0
+```
+
+- `nfkb_fraction` is the share of the cell's NF-κB in the nucleus: 70% ten minutes after TNF arrives.
+- `node_probabilities/...` are the chances of each fate (`NonACD` is necrosis). At ten minutes none has been reached
+  yet; the fate network takes longer to decide.
+
+Leave out `--emit` to print the model's whole state. `kinetic_boolean.kinetic-boolean` runs the signalling and fate
+models on their own, with TNF held on.
+
+## Open it in the workbench
+
+The workbench is a browser interface for the model: its composites, studies and results.
 
 ```bash
-uv run --group docs sphinx-build -W -b html documentation documentation/_build/html
-open documentation/_build/html/index.html
+bash scripts/serve.sh
 ```
 
-`-W` turns every warning into an error, so a broken cross-reference fails the build.
+It prints the address to open, for example `Workspace dashboard: http://127.0.0.1:8765`.
+
+## Run it on a compute cluster
+
+[compose-api](https://compose.cam.uchc.edu) runs process-bigraph models on BioSimulations' cluster. Start the workbench
+with it as the backend, and runs go there instead of your machine:
+
+```bash
+.venv/bin/vivarium-workbench serve --backend-base-url https://compose.cam.uchc.edu
+```
+
+A run there reproduces a run on your machine to within floating-point noise.
+
+## Next
+
+- {doc}`findings`: what the model shows so far.
+- {doc}`tutorials/index`: each part of the model on its own, then together.
+- {doc}`reference/developer`: running the checks and building this documentation.

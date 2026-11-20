@@ -1,0 +1,6 @@
+/* Layer badges: <span class="layer spatial">spatial</span>. Muted fills with dark text read the same in light and dark mode. */
+.layer { padding: 0.05em 0.5em; border-radius: 0.6em; font-size: 0.85em; font-weight: 600; color: #1f2937; white-space: nowrap; }
+.layer.spatial { background: #dbe8f5; }
+.layer.kinetic { background: #f6ead6; }
+.layer.boolean { background: #f1e1ef; }
+.layer.adapter { background: #e2efe8; }
