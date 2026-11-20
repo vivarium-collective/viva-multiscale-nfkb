@@ -12,7 +12,7 @@
 
   // Prefix a root-absolute /api path with the dashboard base path (e.g. /workbench)
   // so composite-explore run/resolve/status calls reach the workbench under the
-  // co-tenant ALB instead of misrouting to sms-api → 404. No-op at root; composes
+  // co-tenant ALB instead of misrouting to the backend → 404. No-op at root; composes
   // safely with the global _base_path_shim (which skips already-prefixed URLs).
   function _api(p) {
     return (window.DataSource && window.DataSource.apiUrl) ? window.DataSource.apiUrl(p) : p;
@@ -2404,7 +2404,7 @@
       return;
     }
     // A target is keyed by `study` (a local study's exports) or `run` (a landed
-    // run's exports, e.g. a GovCloud compose analysis) — forward whichever is set.
+    // run's exports, e.g. a remote compose analysis) — forward whichever is set.
     var q = study ? '?study=' + encodeURIComponent(study)
           : (run ? '?run=' + encodeURIComponent(run) : '');
     var url = '/api/analysis-viewer/' + encodeURIComponent(uid) + '/launch' + q;
@@ -4274,7 +4274,7 @@
   // Composite Explorer Test Run panel) -- before a remote-pinned deployment
   // dispatches to AWS Batch, fetch the server-resolved
   // repo/branch/commit/simulator_id and require explicit confirmation
-  // (mirrors study-detail.js's _dispatchRemotePinned), so a workspace-
+  // (mirrors _dispatchRemotePinned in the launch plugin script), so a workspace-
   // identity mismatch is caught here, before money gets spent, not
   // discovered afterward via aws batch describe-jobs. A plain local-engine
   // run (unchanged, pre-existing behavior) fires with no confirm.
@@ -17452,7 +17452,7 @@
         '<hr style="margin:20px 0;border:none;border-top:1px solid #eee">' +
         '<p class="panel-lead">Analyses to run at dispatch time — which of the workspace\'s <code>v2ecoli.' +
           'workflow.analysis.ANALYSIS_REGISTRY</code> entries to compute. Translated ' +
-          'into <code>analysis_options</code> for remote (sms-api) dispatch and the local post-run pipeline ' +
+          'into <code>analysis_options</code> for remote dispatch and the local post-run pipeline ' +
           'alike.</p>' +
         '<div id="inv-analyses-list">' +
           (window.ProgressTrack ? window.ProgressTrack.loadingHtml('Loading analyses…') : '<p class="empty-state">Loading analyses…</p>') +
@@ -19614,7 +19614,7 @@
   // Statuses that mean "not finished" — a run the user just launched and is
   // actively watching. These ALWAYS pin to the top of the Runs list, regardless
   // of the column sort: remote list timestamps come from an unreliable bulk
-  // `last_updated` (every GovCloud run shows the same frozen time), so a live
+  // `last_updated` (every remote run shows the same frozen time), so a live
   // cloud run can't otherwise rise above the wall of old completed runs.
   var _ACTIVE_RUN_STATUSES = { queued: 1, running: 1, pending: 1, submitted: 1,
                                in_progress: 1, started: 1, dispatching: 1 };
@@ -19624,9 +19624,15 @@
   function _sortActiveRuns(list) {
     // Newest dispatch first among the active runs — the remote simulation_id is
     // monotonic and trustworthy (unlike the frozen timestamp), else fall to time.
+    // Opaque run ids: only an integer id is ordered by value; any other id (a /viva/v1 or
+    // compose-api string) counts as 0 here and falls through to the time order.
+    function _simIdNum(r) {
+      var v = (r.remote_origin || {}).simulation_id;
+      return /^\d+$/.test(String(v == null ? '' : v).trim()) ? Number(v) : 0;
+    }
     return list.slice().sort(function (a, b) {
-      var ai = ((a.remote_origin || {}).simulation_id) || 0;
-      var bi = ((b.remote_origin || {}).simulation_id) || 0;
+      var ai = _simIdNum(a);
+      var bi = _simIdNum(b);
       if (ai !== bi) return bi - ai;
       return (b.completed_at || b.started_at || 0) - (a.completed_at || a.started_at || 0);
     });
@@ -19836,7 +19842,7 @@
 
     // Phase 1 — local-first: fetch the fast local index (include_remote=false)
     // so the table + count paint in ~seconds instead of blocking on the slow
-    // (~tens-of-seconds) remote (GovCloud) fetch. Snapshot mode has no live
+    // (~tens-of-seconds) remote-backend fetch. Snapshot mode has no live
     // backend, so its baked list is already complete — load it in one call.
     var snapshot = (window.__DASH_CONFIG__ || {}).mode === 'snapshot';
     window.DataSource.loadSimulations(snapshot ? undefined : { includeRemote: false })
@@ -19851,7 +19857,7 @@
         }
         // Never shrink back to the local-only set once the remote-enriched rows
         // have loaded: a quiet auto-refresh's fast local-only fetch must not clobber
-        // the (slow) GovCloud rows while they're still valid — that collapse-to-local
+        // the (slow) remote rows while they're still valid — that collapse-to-local
         // then re-fetch was the visible flap.
         var _incoming = data.simulations || [];
         if (!window._simRemoteLoaded || _incoming.length >= (window._simRows || []).length) {
@@ -19870,7 +19876,8 @@
         // Phase 2 — merge in the remote runs (slow ~100s) in the background.
         // On a quiet auto-refresh this only re-fires after a backoff and never
         // while one is in flight, so the 15s poll can't restart the slow fetch.
-        if (!snapshot) _maybeLoadRemoteSims(quiet);
+        // Only when a backend lists its runs (the `listing` feature).
+        if (!snapshot) _whenListingOffered(function () { _maybeLoadRemoteSims(quiet); });
       })
       .catch(function (err) {
         if (quiet) return;
@@ -19882,12 +19889,25 @@
   window._initSimulations = _initSimulations;
 
   // Phase 2 of the Runs load: fetch local+remote (the second call includes the
-  // GovCloud runs, deduped server-side) and merge into the table. Best-effort:
-  // a down tunnel leaves the local-only view in place.
-  // Don't re-pull the slow GovCloud list more than ~every 3 min on the quiet
+  // remote backend's runs, deduped server-side) and merge into the table.
+  // Best-effort: an unreachable backend leaves the local-only view in place.
+  // Don't re-pull the slow remote list more than ~every 3 min on the quiet
   // auto-refresh; the deployed /simulations endpoint can take ~100s, so a 15s
   // poll firing it repeatedly never settles.
   var REMOTE_REFRESH_MS = 180000;
+
+  // Phase 2 is an optional request: run `fn` only when the declared features
+  // include `listing` (static/backend-features.js, docs/backend-adapters.md
+  // §2.2). Known features without it skip phase 2 — the server would list no
+  // remote runs. UNKNOWN features (no BackendFeatures, or its request failed)
+  // behave as before: phase 2 runs.
+  function _whenListingOffered(fn) {
+    var bf = window.BackendFeatures;
+    if (!bf || typeof bf.ready !== 'function') { fn(); return; }
+    bf.ready().then(function (r) {
+      if (!r || !r.known || (r.features || []).indexOf('listing') !== -1) fn();
+    }, function () { fn(); });
+  }
 
   function _maybeLoadRemoteSims(quiet) {
     // First load / explicit refresh: always. Quiet auto-refresh: only after the
@@ -19923,8 +19943,8 @@
   function _setSimRemoteStatus(state) {
     var el = document.getElementById('sim-remote-status');
     if (!el) return;
-    el.textContent = state === 'loading' ? '· loading GovCloud runs…'
-      : state === 'error' ? '· GovCloud runs unavailable'
+    el.textContent = state === 'loading' ? '· loading remote runs…'
+      : state === 'error' ? '· remote runs unavailable'
       : '';
   }
 

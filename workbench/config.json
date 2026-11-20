@@ -1,7 +1,6 @@
 {
   "mode": "snapshot",
-  "smsApiBase": "",
   "repo": "https://github.com/vivarium-collective/viva-multiscale-nfkb",
-  "commit": "d40f05f8f53c6e879183769f4381d37bb4ed5344",
+  "commit": "d9aab6236785e1d50c8485d4930c8255d4ddca70",
   "generated_from_ref": "main"
 }
