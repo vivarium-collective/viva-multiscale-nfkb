@@ -6,8 +6,9 @@ absorbing death, coupling every 30 s, 24 h) in a uniform bath applied at t = 0 t
   switches on at rate occ and off at 1 - occ, as the field composite's dose-response maps it;
 - a decaying bath has TNF c(t) = c0 exp(-lambda t). One Step turns it into occupancy, c / (c + Kd), at every kinetic
   update and writes TNF_R and the TNF node's rates, as the field composite's dose-response Step does with the TNF at
-  the cell. Each matches one distance-study cell and bolus size: the same peak TNF and the same 24 h TNF dose
-  (analysis/exposure-design/ring_exposure.json), so E4 compares the two directly (decision 50).
+  the cell. Each matches one distance-study cell and bolus size: the same peak TNF and the same sensed dose, the
+  occupancy-time the coupling delivers over 24 h (analysis/exposure-design/ring_exposure.json), so E4 compares the
+  two directly and only the timing and shape of the TNF differ (decisions 50 and 56).
 Every TNF node starts off, as in the field composite. MaBoSSProcess starts from the node_state store, so the store is
 what is set (Study 1's builder seeds it with TNF on, which would give every cell a TNF pulse of about one clock unit
 whatever the dose; decision 49). Both arms: NF-kB intact (kappa = ln 2 / 337 s, decision 25) and knocked out
@@ -15,7 +16,8 @@ whatever the dose; decision 49). Both arms: NF-kB intact (kappa = ln 2 / 337 s, 
 
 Decisions: clocks 30, 60 and 120 min per unit (38); about 1,700 cells per point (40b), run as 7 batches of 270
 seeds, 1,890 cells; the readout is the fraction alive at 24 h, with the survival curve and death modes (41); held
-baths from occupancy 0.005 up, denser below 0.2 (43); decaying baths matched to the distance study's cells (50).
+baths from occupancy 0.005 up, denser below 0.2 (43); decaying baths matched to the distance study's cells by sensed
+dose (50, 56).
 
 Batch k holds the cells seeded 270 (k - 1) + 1 to 270 k. It writes
 parquet-runs/<arm>-<min>min-<exposure>/batch<k>.parquet (time, NF-kB's nuclear fraction, and each cell's fate code
@@ -70,10 +72,8 @@ def exposures() -> dict[str, dict]:
     rings = json.loads(RING_EXPOSURE.read_text())
     if rings["kd_uM"] != KD:
         raise SystemExit(f"{RING_EXPOSURE} was computed with Kd {rings['kd_uM']}, not the composite's {KD}")
-    # c0 exp(-lambda t) has peak c0 and dose c0 / lambda over all time; over 24 h it delivers that less a fraction
-    # exp(-lambda 24 h): 0.4% at the far ring (half-life 3 h), nothing measurable nearer
-    decaying = {f"bath-{r['cell']}-M{r['bolus']:g}": {"c0_uM": r["peak_uM"],
-                                                       "decay_per_s": r["peak_uM"] / r["c_integral_uM_s"]}
+    # lambda gives the bath the ring cell's sensed dose (decision 56); ring_exposure.py solves it
+    decaying = {f"bath-{r['cell']}-M{r['bolus']:g}": {"c0_uM": r["peak_uM"], "decay_per_s": r["bath_decay_per_s"]}
                 for r in rings["rows"]}
     return held | decaying
 

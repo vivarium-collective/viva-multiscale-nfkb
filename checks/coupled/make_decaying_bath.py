@@ -1,9 +1,9 @@
 """Generate `coupled/decaying-bath`: the dose study's decaying bath (decision 50) reaches both layers on time.
 
 The document is the dose study's own (s2-dose `dose_study.document`): Study 1's population of 270 fate networks and one
-Lipniacki model, intact, 30 min per unit, in the bath matched to the near cell at bolus size 10 (`bath-near-M10`,
-half-life 5.5 min). Only the emitter is changed, to record what the two layers read, and the SBML is inlined so the
-document stands alone.
+Lipniacki model, intact, 30 min per unit, in the bath matched to the near cell at bolus size 10 (`bath-near-M10`: its
+peak TNF, and lambda giving it the cell's 24 h sensed dose, decision 56). Only the emitter is changed, to record what
+the two layers read, and the SBML is inlined so the document stands alone.
 
 The oracle is the closed form. At each coupling instant t = 30 k s, the bath's TNF is c0 exp(-lambda t) and the
 occupancy c / (c + Kd), written to Lipniacki's TNF_R (the `stimulus` store) and to the TNF node's rates u_TNF = occ and
@@ -11,8 +11,9 @@ d_TNF = 1 - occ in the shared `parameters` store the fate networks read. Row k o
 seeded value, so the bath acts from t = 0. Row 0 also holds the first and last cells' TNF node, in both stores
 MaBoSSProcess starts from: off, so TNF reaches a cell only through the bath (decision 49).
 
-`--negative {decay2,unseeded,tnf-on}` writes `decaying-bath-negative`, which must fail:
+`--negative {decay2,concentration,unseeded,tnf-on}` writes `decaying-bath-negative`, which must fail:
 - decay2 doubles the decay rate in the document;
+- concentration uses decision 50's first rule, lambda = peak / the cell's 24 h concentration integral (decision 56);
 - unseeded leaves u_TNF and d_TNF out of the `parameters` store, so process-bigraph drops the Step's writes;
 - tnf-on seeds every cell's TNF node on, as Study 1's builder does.
 
@@ -36,7 +37,8 @@ SBML = ROOT / "workspace" / "datasets" / "lipniacki2004" / "processed" / "lipnia
 ARM, MINUTES, BATH = "intact", 30, "bath-near-M10"
 END, STEP = 1200.0, 30.0
 ROWS = (0, 1, 2, 10, 20, 40)
-NEGATIVES = ("decay2", "unseeded", "tnf-on")
+NEGATIVES = ("decay2", "concentration", "unseeded", "tnf-on")
+RING_EXPOSURE = ROOT / "analysis" / "exposure-design" / "ring_exposure.json"
 WATCHED = ("c0", "c269")  # the first and last cells
 
 
@@ -59,6 +61,10 @@ def document(ds, negative: str | None) -> dict:
     kinetic["config"] = {"model": SBML.read_text(), "model_format": "sbml", **config}
     if negative == "decay2":
         state["decaying_bath"]["config"]["params"]["decay"] *= 2
+    if negative == "concentration":
+        rows = json.loads(RING_EXPOSURE.read_text())["rows"]
+        (row,) = [r for r in rows if f"bath-{r['cell']}-M{r['bolus']:g}" == BATH]
+        state["decaying_bath"]["config"]["params"]["decay"] = row["peak_uM"] / row["c_integral_uM_s"]
     if negative == "unseeded":
         del state["parameters"]["u_TNF"], state["parameters"]["d_TNF"]
     if negative == "tnf-on":

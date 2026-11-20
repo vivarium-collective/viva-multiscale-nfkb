@@ -14,7 +14,10 @@
    "held_equivalent": 0.0030157186255217005,
    "share_after_1h": 0.3992847765924963,
    "share_after_6h": 0.11666081050090918,
-   "matched_bath_half_life_min": 5.473480950362884,
+   "sensed_dose_s": 260.5567600079126,
+   "bath_decay_per_s": 0.0018525024871426958,
+   "bath_half_life_min": 6.236133602795293,
+   "bath_over_cell_c_integral": 1.1712885172255563,
    "closed_over_band_c_integral": 1.2471384906822738
   },
   {
@@ -29,7 +32,10 @@
    "held_equivalent": 0.022172072747909017,
    "share_after_1h": 0.5243831948717672,
    "share_after_6h": 0.15738602878879981,
-   "matched_bath_half_life_min": 5.473480950362883,
+   "sensed_dose_s": 1915.6537983462167,
+   "bath_decay_per_s": 0.0010252600191024274,
+   "bath_half_life_min": 11.267827472143228,
+   "bath_over_cell_c_integral": 2.0904434814252792,
    "closed_over_band_c_integral": 1.2471384906822738
   },
   {
@@ -44,7 +50,10 @@
    "held_equivalent": 0.11957695202964812,
    "share_after_1h": 0.750335222479785,
    "share_after_6h": 0.2704060361094084,
-   "matched_bath_half_life_min": 5.473480950362883,
+   "sensed_dose_s": 10331.316312166491,
+   "bath_decay_per_s": 0.0003990215661357119,
+   "bath_half_life_min": 28.951951447665106,
+   "bath_over_cell_c_integral": 5.321217746430693,
    "closed_over_band_c_integral": 1.2471384906822738
   },
   {
@@ -59,7 +68,10 @@
    "held_equivalent": 0.0022360792642376133,
    "share_after_1h": 0.5268846027522928,
    "share_after_6h": 0.15552709208585586,
-   "matched_bath_half_life_min": 33.30543598725777,
+   "sensed_dose_s": 193.19593431277764,
+   "bath_decay_per_s": 0.00034364853091943277,
+   "bath_half_life_min": 33.61705920413451,
+   "bath_over_cell_c_integral": 1.0145684254196072,
    "closed_over_band_c_integral": 1.360339318501851
   },
   {
@@ -74,7 +86,10 @@
    "held_equivalent": 0.019580913855633014,
    "share_after_1h": 0.5817229178641381,
    "share_after_6h": 0.1761805648855319,
-   "matched_bath_half_life_min": 33.30543598725777,
+   "sensed_dose_s": 1691.7778211318428,
+   "bath_decay_per_s": 0.0003087957728580933,
+   "bath_half_life_min": 37.41130554478586,
+   "bath_over_cell_c_integral": 1.1284902532119536,
    "closed_over_band_c_integral": 1.360339318501851
   },
   {
@@ -89,7 +104,10 @@
    "held_equivalent": 0.11667816868450209,
    "share_after_1h": 0.7584424292040864,
    "share_after_6h": 0.2741900405551648,
-   "matched_bath_half_life_min": 33.30543598725779,
+   "sensed_dose_s": 10080.86293002357,
+   "bath_decay_per_s": 0.00020440110144044068,
+   "bath_half_life_min": 56.51854578043273,
+   "bath_over_cell_c_integral": 1.7021848470760903,
    "closed_over_band_c_integral": 1.360339318501851
   },
   {
@@ -104,7 +122,10 @@
    "held_equivalent": 0.0011082409240968378,
    "share_after_1h": 0.8347642989347076,
    "share_after_6h": 0.2733395744775924,
-   "matched_bath_half_life_min": 180.04528695998073,
+   "sensed_dose_s": 95.75086970700197,
+   "bath_decay_per_s": 6.396919961225054e-05,
+   "bath_half_life_min": 180.59399022275787,
+   "bath_over_cell_c_integral": 1.000016252835188,
    "closed_over_band_c_integral": 1.7736578499848206
   },
   {
@@ -119,7 +140,10 @@
    "held_equivalent": 0.010789060405968063,
    "share_after_1h": 0.8382604977702686,
    "share_after_6h": 0.2788078120132408,
-   "matched_bath_half_life_min": 180.04528695998073,
+   "sensed_dose_s": 932.1633616655138,
+   "bath_decay_per_s": 6.395056560744702e-05,
+   "bath_half_life_min": 180.64661195095266,
+   "bath_over_cell_c_integral": 1.0003009219870247,
    "closed_over_band_c_integral": 1.7736578499848206
   },
   {
@@ -134,7 +158,10 @@
    "held_equivalent": 0.08688447801168063,
    "share_after_1h": 0.8627642028468577,
    "share_after_6h": 0.32404432476906103,
-   "matched_bath_half_life_min": 180.0452869599807,
+   "sensed_dose_s": 7506.704718575677,
+   "bath_decay_per_s": 6.36723312093821e-05,
+   "bath_half_life_min": 181.4359988068125,
+   "bath_over_cell_c_integral": 1.0045700409035172,
    "closed_over_band_c_integral": 1.7736578499848206
   }
  ]
