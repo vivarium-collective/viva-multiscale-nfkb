@@ -7,6 +7,7 @@
 [![read-only workbench](https://img.shields.io/badge/read--only_workbench-live-2ea44f)](https://vivarium-collective.github.io/viva-multiscale-nfkb/workbench/)
 [![license](https://img.shields.io/github/license/vivarium-collective/viva-multiscale-nfkb)](./LICENSE)
 <!-- END:badges -->
+[![documentation](https://readthedocs.org/projects/viva-multiscale-nfkb/badge/?version=latest)](https://viva-multiscale-nfkb.readthedocs.io/en/latest/)
 
 **When TNF reaches a cell, does the cell live or die, and does it matter how far the TNF had to travel?**
 
