@@ -1,7 +1,7 @@
 # Plan: the exposure studies (dose, distance, wave timing)
 
-Status: draft 3, 2026-11-19: revised after an adversarial review and a review by the tyssue session, with the pilot's results. Nothing is built. Decision 37 (Alex) makes these
-the next work. The three studies are defined in `documentation/design/studies.md`. This plan makes them runnable and
+Status: draft 4, 2026-11-20. Steps 1 and 2 are done, step 3 is running (restarted 2026-11-20 with the sensed-dose baths), and E4 is decided (decisions 49 to 58).
+Decision 37 (Alex) makes these the next work. The three studies are defined in `documentation/design/studies.md`. This plan makes them runnable and
 puts to Alex what they still leave open.
 
 ## Decided (Alex, 2026-11-19)
@@ -19,6 +19,17 @@ puts to Alex what they still leave open.
     not biology.
   - Held survival is a model state, not something an experiment measures, so it is reported but not tested.
 - **E2, E3, E7 and E8, accepted as recommended** (Alex, 2026-11-19: "Accept all four"); decisions 42 to 45.
+- **E4's comparator (2026-11-19, from the 24 h field):** each distance configuration against its own matched decaying
+  bath, with the same peak TNF and, since decision 56 (Alex, 2026-11-20), the same sensed dose (24 h occupancy-time),
+  by two one-sided tests ("Matched decaying bath"; decision 50). The distance study runs seeds 1891 to 3780
+  (decision 57), and each configuration reports its death ratio and a near-ceiling flag (decision 58). Bolus sizes
+  1, 10 and 100 µM·µm² (decision 51).
+- **Arms and verdict (2026-11-20):** the distance study runs NF-κB intact and knocked out ("Intact and knocked out";
+  decision 52). Each configuration comes out equivalent, different (Holm-corrected) or inconclusive ("Three outcomes
+  per config"; decision 53).
+- **Correction (decision 49):** the dose pilot started every cell with TNF on (Study 1's builder seeds the fate
+  network's state store that way), which killed about a quarter of the cells at any dose. The dose study starts TNF
+  off, as the field composite does; finding 2's numbers carry the artifact.
 
 ## What the sources say
 
@@ -29,7 +40,8 @@ puts to Alex what they still leave open.
   - **Distance:** a point bolus at distance $r$ (sweeping $r$, the bolus size and `k_time`).
   - **Wave timing:** the distance runs' TNF front arrival against NF-κB's nuclear peaks.
   - **The test:** map each distance run onto the dose curve by the TNF dose that reached the cell, its peak and its
-    integral. The collapse statistic is fixed before the distance runs.
+    integral. The collapse statistic is fixed before the distance runs. (Superseded by decisions 50 and 56: each run
+    against its own bath, matched on peak and sensed dose.)
 - **Study 1 and decision 37.** The composite does not reproduce NF-κB-dependent survival under held TNF, so these
   studies rest on differences in fate between exposures. Survival lapsing as NF-κB's node cycles is read from the
   rules and not tested (`validation.md`).
@@ -60,7 +72,7 @@ puts to Alex what they still leave open.
 - **The coupling interval** of 30 s is then short against arrival. The interval rule in `time.md` (about 0.1 × the
   fastest timescale crossing an edge) is still untested (roadmap phase 5), and the pilot tests it for this geometry.
 
-**2. The dose pilot (done 2026-11-19).**
+**2. The dose pilot (done 2026-11-19; its numbers carry a TNF pulse at t = 0, decision 49).**
 - **Method:** Study 1's builder with held sub-saturating occupancy; intact cells; 200 cells; 24 h; seeds 1–200;
   viva-maboss 0.1.2. Scratchpad only, not committed.
 - **Alive at 24 h** (cells with no fate in brackets):
@@ -121,11 +133,11 @@ puts to Alex what they still leave open.
 | E1 | The distance study's geometry | **Decided:** a bolus at the centre of a **6 mm** box, with cells at 100, 300 and 1000 µm (TNF peaks at each about 25 s, 4 min and 41 min after release). **dx 10 µm, dt 0.25 s**, which the geometry pilot found converged (finding 4) | Only slow arrival can separate timing from dose (finding 1). The MVP's 200 µm box and a steady source both collapse by construction. Cost: decision 34 found the ring's error first order in dt and independent of dx at 1–2 µm, so a coarser dx may hold. If dx 10 µm passes the ring check, a 3 mm box is 301² nodes, about 9× the MVP. To be measured, not assumed |
 | E1b | Where the bolus goes once it has passed: the box keeps it (finding 1) | **Decided: an absorbing outer band**, a local uptake term on the box's edge nodes (finding 3), **in a 6 mm box** | Geometry pilot, against the open-medium (free-space) solution over 3 h. A 3 mm closed box: the 1000 µm cell plateaus (last/peak 0.90; dose 1.31×). A 3 mm box with the band: the 1000 µm cell, 350 µm from the band, is pulled down (peak 0.94×, dose 0.69×). **The 6 mm box with the band: every cell matches** (peak 0.997, 0.999 and 0.9999; 3 h dose 1.000, 1.000 and 0.999 at 100, 300 and 1000 µm). Uniform clearance λ can't separate peak from plateau (finding 1). The band stands for an open medium, not a biological mechanism |
 | E2 | The bolus sizes | **Chosen from the free-space solution before running** (the band makes the medium open), so that the peak occupancy at the three distances spans the dose curve's range at the chosen clock | `studies.md` sweeps the bolus size. With $K_d$ at 19 pM, the size decides whether every ring saturates |
-| E3 | The dose study's exposures | **Held baths from occupancy about 0.005 up to the highest peak E2's cells reach (up to 1), denser below 0.2 where the pilot's curve is steepest, plus decaying baths** whose half-lives span the pulse durations the distance runs produce (computed from the free-space solution at E1's distances) | The dose curve must cover what the distance runs deliver, both peak and duration. A decay fast against 30 s (half-life under a minute) never registers at the first coupling sample |
-| E4 | The collapse test, fixed before the distance runs | **Decided: an equivalence test** (two one-sided tests) **with a margin of ±0.05 in the alive fraction and about 1,700 cells per point (decision 40b; 270 was a sizing error).** Map by the TNF dose at the cell (its peak and time integral, as `studies.md` says), report occupancy alongside, and compare against an isotonic fit of the dose curve. The unit is the cell (one seed). Runs outside the dose study's range are reported, not extrapolated | Decision 40 sized it so the 90% interval's half-width equals the margin, which gives a test that almost never passes. For an 80% chance of passing when the run truly matches, ±0.05 needs about 1,700 cells per point, for the runs and the curve alike (decision 40b, simulated). An isotonic fit handles points that aren't monotone |
+| E3 | The dose study's exposures | **Held baths from occupancy about 0.005 up to the highest peak E2's cells reach (up to 1), denser below 0.2 where the pilot's curve is steepest, plus decaying baths**, one matched to each distance-study ring and bolus size (decision 50, which replaced half-lives spanning the free-space pulse durations) | The dose curve must cover what the distance runs deliver, both peak and duration. A decay fast against 30 s (half-life under a minute) is held at its t = 0 value for a whole coupling interval, so it is badly resolved; the matched baths' shortest half-life is 6 min (decision 56) |
+| E4 | The collapse test, fixed before the distance runs | **Decided: two one-sided tests** with a margin of ±0.05 in the alive fraction and about 1,700 cells per side (decision 40b), **each distance configuration against its own matched decaying bath** (same peak TNF, same sensed dose; decisions 50 and 56). Each configuration is equivalent, different (Holm-corrected) or inconclusive (decision 53). The unit is the cell (one seed) | A pulse's peak occupancy (0.006 to 0.98) and its occupancy averaged over 24 h (0.001 to 0.12) are far apart, so a one-number map onto the held curve would be decided by the choice of number. The matched bath differs from the pulse only in what space adds: arrival delay and shape |
 | E5 | Clocks | **Decided: 30, 60 and 120 min per unit, equally** | Dose pilot (finding 2): at 60 the curve spans 0.6 to 0.005; at 30 it falls to near zero by occupancy 0.5; at 120 undecided cells dominate the low doses. Running all three shows whether a conclusion depends on the clock |
 | E6 | The readout | **Decided: alive at 24 h**, the fraction of cells with no death node ever on, which is what a viability measurement counts. The survival curve and the death mode are reported with it; held survival is reported, not tested | See "Decided" above |
-| E7 | Where runs execute | **Locally**, in `compose/` through compose-api's runner, plus one 990 s live run per new composite | 24 h is 86 times compose-api's cap, and compose-api can't resume a run. Lifting the cap would be a question for Jim |
+| E7 | Where runs execute | **Locally** for the dose study, in `compose/` through compose-api's runner, plus one 990 s live run per new composite. The distance study and the many-cells work run on compose-api instead (decision 54; Alex, 2026-11-20), planned in `plan-compose-api-dispatch.md` | 24 h is 86 times compose-api's cap, and compose-api can't resume a run. For the distance study the cap is lifted for signed-in runs instead (the dispatch plan's route A, Alex's choice) |
 | E8 | D | **100 µm²/s** (decision 33). This closes the roadmap's open question | It's already the MVP's value |
 
 ## Work (atomic steps, each checked)
@@ -138,13 +150,18 @@ puts to Alex what they still leave open.
 2. **The geometry check** `spatial/far-bolus`: the chosen box, band and grid against the free-space solution at the
    three rings, within the measured band error. Its negatives are D 50 and a misplaced ring (done 2026-11-19: `checks/spatial/far-bolus`).
    The band acts only after about 6 h, beyond the check's hour, so its effect is measured in the 24 h exposure runs.
-3. **The dose study**, at E5's clocks and E3's exposures, intact and knocked out, with about 1,700 cells per point
-   (decision 40b), run as batches of 270 seeds.
-4. **Pre-register E4** in the study before any distance run.
+3. **The dose study** (`s2-dose`, running since 2026-11-19), at E5's clocks, intact and knocked out, 7 batches of 270
+   seeds (1,890 cells per point; decision 40b): 8 held baths and the 9 matched decaying baths (decisions 50 and 56), with
+   every cell's TNF off at the start (decision 49). The decaying bath is checked by `checks/coupled/decaying-bath`.
+4. **Pre-register E4** in the distance study before any distance run: decisions 40, 40b, 50 to 53 and 55 to 58. The scorer is
+   written and tested (`s2-dose/e4_verdict.py`, `tests/test_e4_verdict.py`): Newcombe's hybrid score 90% interval
+   inside ±0.05 is equivalent; otherwise Fisher's exact test, Holm-corrected over the 54 configurations, rejecting at
+   5% is different; otherwise inconclusive. A configuration that passes both tests (a difference inside the margin
+   that is still significant) is equivalent, with both tests reported (decision 55).
 5. **The distance study:**
    - several rings in one document, which is valid because cells only sample the field;
-   - one Lipniacki model and 200 fate networks per ring;
-   - at E2's bolus sizes and E5's clocks;
+   - one Lipniacki model and 270 fate networks per ring per batch, 7 batches (decision 40b);
+   - at bolus sizes 1, 10 and 100 µM·µm² (decision 51), E5's clocks, and both arms (decision 52);
    - its first document measures the cost before the rest run.
 6. **Score E4; the wave-timing analysis** from the distance runs: front arrival (the half-peak time at the ring)
    against NF-κB's first nuclear peak. No new runs.
@@ -156,7 +173,7 @@ puts to Alex what they still leave open.
 - Secretion, which neither plan covers: no provided source gives it.
 - 3-D, and the nuclear envelope.
 - Changing how Survival reads NF-κB (decision 37 leaves it open).
-- Lifting compose-api's cap.
+- Lifting compose-api's cap, which decision 54 now needs: planned separately in `plan-compose-api-dispatch.md`.
 
 ## Relation to the tissue plan
 

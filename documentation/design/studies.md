@@ -5,25 +5,42 @@ project's investigation ({doc}`../reference/glossary`) (Study 0, {doc}`calibrati
 
 | Name | Study | Spatial setup | Swept | Readouts |
 |---|---|---|---|---|
-| Dose | **Fate vs uniform TNF dose.** The control | Uniform bath at concentration $c_0$, optional first-order decay (rate $\lambda$, {doc}`../math/diffusion`) | $c_0$, `k_time` | the fraction of cells alive at 24 h (no death node ever on; decision 41), with the survival curve and the death mode (apoptosis, necrosis) ({doc}`calibration`); NF-κB's first nuclear peak (height, time) and period |
-| Distance | **Fate vs distance from a TNF bolus.** The headline: what space adds | A point bolus at the centre of a 6 mm box with an absorbing band at its edges (an open medium); cells at r = 100, 300 and 1000 µm (decision 39) | r, bolus size, `k_time` | as the dose study, plus TNF at the cell over time (`RegionMean`) |
+| Dose | **Fate vs uniform TNF dose.** The control | Uniform bath at concentration $c_0$, held or decaying at rate $\lambda$ ({doc}`../math/diffusion`) | $c_0$, $\lambda$, `k_time`, NF-κB intact or knocked out | the fraction of cells alive at 24 h (no death node ever on; decision 41), with the survival curve and the death mode (apoptosis, necrosis) ({doc}`calibration`); NF-κB's first nuclear peak (height, time) and period |
+| Distance | **Fate vs distance from a TNF bolus.** The headline: what space adds | A point bolus at the centre of a 6 mm box with an absorbing band at its edges (an open medium); cells at r = 100, 300 and 1000 µm (decision 39) | r, bolus size, `k_time`, NF-κB intact or knocked out | as the dose study, plus TNF at the cell over time (`RegionMean`) |
 | Wave timing | **NF-κB wave timing under a moving TNF front.** The mechanism | the distance study's runs (no new runs) | r | TNF front arrival vs the times of NF-κB's nuclear peaks |
 
 ## The scientific test
 
-Map each distance-study run onto the dose study's dose axis using the TNF dose that reached the cell, both at its peak and
-integrated over time.
-- **If fate collapses onto the dose study's curve,** space acts only through dose.
-- **If it doesn't,** arrival timing matters.
+A cell in the distance study sees a pulse of TNF: it rises as the bolus arrives, peaks, and falls away. Its peak and
+its total dose are far apart. At the chosen bolus sizes a cell's peak receptor occupancy runs from 0.006 to 0.98, but
+its occupancy averaged over the day only from 0.001 to 0.12, so no single number places it on the held-dose curve.
+Instead, each configuration (distance, bolus size, clock and NF-κB arm) is paired with a uniform bath that decays
+exponentially, with the same peak TNF and the same sensed dose: the receptor occupancy the cell accumulates over 24 h
+(decisions 50 and 56). Both models read TNF only through occupancy, so that is the dose the cell responds to. The
+bath has everything the pulse has except what space adds: the delay before TNF arrives and the pulse's shape.
+- **If fate in the pulse matches fate in its bath,** space acts only through dose.
+- **If it doesn't,** when TNF arrives matters.
 
-What counts as "collapses" was fixed before the distance study runs, so that the answer cannot be tuned to the result
-(decision 40):
-- it is an equivalence test, with a margin of ±0.05 in the fraction alive at 24 h and about 1,700 cells per point,
-  which gives an 80% chance of showing equivalence when it holds (decision 40b);
-- it compares each run with a monotone fit of the dose curve, mapped by the TNF dose that reached the cell;
-- runs outside the dose study's range are reported, not extrapolated.
+What counts as a match was fixed before the distance study runs, so that the answer cannot be tuned to the result:
+- each comparison is an equivalence test with a margin of ±0.05 in the fraction alive at 24 h and about 1,700 cells on
+  each side, which gives an 80% chance of showing equivalence when it holds (decisions 40 and 40b). It passes when the
+  90% interval for the difference lies inside the margin, which is the two one-sided tests at 5% each. The interval is
+  Newcombe's hybrid score interval, which keeps its coverage when survival is near 0 or 1, as it often is here;
+- each configuration comes out equivalent, different or inconclusive, and the study's answer is the map of these
+  outcomes (decision 53). "Different" means Fisher's exact test rejects no difference at 5% after Holm's correction
+  across all 54 configurations. A configuration can pass both tests: with about 1,700 cells a side, a difference
+  smaller than the margin can still be significant. It is then equivalent, because decision 40's margin is the
+  smallest difference that matters, and both tests are reported (decision 55);
+- the distance study runs its own seeds, 1891 to 3780, so its cells are independent of the dose study's, as both
+  tests assume (decision 57);
+- each configuration also reports its death ratio, and is flagged near the ceiling when both sides are within 0.05
+  of everyone alive or everyone dead, where equivalence says little about timing (decision 58);
+- both NF-κB arms run, each giving its own map (decision 52). Set side by side, the two maps suggest whether a
+  timing effect needs NF-κB; no test of the difference between the arms is fixed in advance, so that reading is not
+  a verdict.
 
-The wave-timing study shows the mechanism behind either answer.
+The scorer was written and tested before any distance run (`workspace/investigations/tnf-fate-in-space/studies/s2-dose/e4_verdict.py`; its interval reproduces Newcombe's published values). The held baths give the dose curve itself, which the dose study reports. The wave-timing study shows the mechanism
+behind either answer.
 
 ## The death clock
 
@@ -34,13 +51,15 @@ machinery be for TNF to kill, at each dose and each distance?
 
 ## Settings
 
-- **Pulse sizes** come from the open-medium solution, chosen before running so that the three cells' peak doses span
-  the dose curve at each clock (decision 42).
+- **Bolus sizes** are 1, 10 and 100 µM·µm², chosen from the field before running so that the three cells' peak doses
+  span the dose curve at each clock (decisions 42 and 51).
 - **The dose study's baths** run from receptor occupancy about 0.005 up to the highest peak any cell reaches (up to 1),
-  denser below 0.2, where the pilot shows survival changing fastest. Decaying baths cover the distance runs' pulse
-  durations (decision 43).
-- **Runs execute locally,** through compose-api's own runner, because a study runs 24 h and compose-api stops runs at
-  1000 s. Each new composite also gets one 990 s live run (decision 44).
+  denser below 0.2, where survival changes fastest. Each distance-study configuration has its own matched decaying
+  bath (decisions 43 and 50). Every cell starts with TNF off, as in the field composite (decision 49).
+- **The dose study runs locally,** through compose-api's own runner (decision 44). The distance study and the
+  many-cells work run on compose-api itself (decision 54). A run there is capped today at 1,000 s of simulated time and
+  30 min of computing, and a study runs 24 h, so how they run there is planned before any submission
+  (`docs/design/plan-compose-api-dispatch.md`). Each new composite also gets one 990 s live run (decision 44).
 - **TNF diffuses at 100 µm²/s,** the measured free-solution value (decision 45).
 
 ## What Study 0 changes
@@ -64,4 +83,9 @@ holds each cell at a steady dose, which would hide when TNF arrives ({doc}`spati
 
 dx 10 µm and dt 0.25 s in the 6 mm box (decision 39). A geometry pilot found they give the same TNF at every cell as dx 5
 µm or dt 0.05 s, to three decimals, and that every cell then matches the open-medium solution
-(`analysis/exposure-pilot/geometry_pilot.json`). A 24 h run of that field takes about 2.6 h.
+(`analysis/exposure-pilot/geometry_pilot.json`).
+
+Over a full day (`analysis/exposure-design/exposure_24h.py`, 3.7 h of computing on a shared machine), the band takes up
+all but 1.2% of the bolus. Each cell's TNF follows the open medium for about 3 h, then falls below it as TNF reaching
+the walls is removed, to 8–9% of the open-medium value at 24 h. A closed box would instead settle every cell at the
+box's mean and give it 1.25 to 1.77 times the dose, most at the far cell.

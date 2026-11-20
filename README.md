@@ -7,6 +7,7 @@
 [![read-only workbench](https://img.shields.io/badge/read--only_workbench-live-2ea44f)](https://vivarium-collective.github.io/viva-multiscale-nfkb/workbench/)
 [![license](https://img.shields.io/github/license/vivarium-collective/viva-multiscale-nfkb)](./LICENSE)
 <!-- END:badges -->
+[![documentation](https://readthedocs.org/projects/viva-multiscale-nfkb/badge/?version=latest)](https://viva-multiscale-nfkb.readthedocs.io/en/latest/)
 
 **When TNF reaches a cell, does the cell live or die, and does it matter how far the TNF had to travel?**
 
@@ -64,12 +65,22 @@ and fate layers on their own, with TNF held on.
     NF-κB node is on only about a quarter of the time.
   - Cells without NF-κB also die more, mostly by necrosis.
   - That change was not adopted. The gap is recorded as an open question, not tuned away.
-- **Next: what exposure does.** Studies of dose, of distance from a TNF source, and of when TNF arrives. They ask
-  whether space matters only through how much TNF reaches a cell, or also through when it arrives.
-  - **The design:** cells 100 µm, 300 µm and 1 mm from a pulse of TNF in an open medium, so that it reaches them after
-    about half a minute, 4 minutes and 40 minutes, at three speeds of the death machinery.
-  - **The survival test:** survival at 24 hours is compared with cells given the same dose uniformly; distance acts
-    only through dose if survival matches within 5 cells in 100.
+- **Next: does distance matter beyond dose?** A cell close to a burst of TNF gets a short, strong pulse; a cell far
+  away gets a later, weaker, longer one. The exposure studies ask whether that difference in timing changes a cell's
+  fate, or whether only the amount of TNF counts.
+  - **The dose study, running now,** bathes cells in uniform TNF, either held steady or fading away exponentially, at
+    three speeds of the death machinery, with NF-κB working and with it knocked out. Every cell starts at rest.
+  - **The distance study** places cells 100 µm, 300 µm and 1 mm from a burst of TNF in an open medium, which reaches
+    them after about half a minute, 4 minutes and 40 minutes, at three burst sizes.
+  - **The comparison:** each distance-study cell is paired with a fading bath that gives it the same peak TNF and the
+    same dose as the cell senses it, how long its TNF receptors are bound over the day. What the bath lacks is only what distance adds: the delay before TNF arrives and
+    the shape of the pulse. If survival at 24 hours matches within 5 cells in 100, distance acts only through dose.
+    Each pairing comes out equivalent, different or inconclusive, and the answer is the map of where each holds. The
+    same map with NF-κB knocked out, set beside it, suggests whether a timing effect needs NF-κB; no test of the
+    difference between the two is fixed in advance.
+  - The rule was fixed, and the code that scores it tested, before any distance run. The distance study is 54
+    pairings of about 1,700 cells, each followed for a simulated day, so it will run on compose-api, which is being
+    extended to accept runs that long.
 - **After that: many cells on one field.** Each cell has its own signalling and fate models. Taking up TNF lets
   neighbours shade one another, which turns a set of cells into a tissue. The machinery comes first; uptake follows
   once the exposure studies show how dose alone acts.
@@ -123,7 +134,7 @@ model's own results. Most checks also have a deliberately broken copy that is sh
 compose/check.sh kinetic    # Lipniacki's model against COPASI's reference run
 compose/check.sh boolean    # the fate network against Calzone's own network and analytic results
 compose/check.sh spatial    # TNF diffusion, a TNF source confined to one spot, and the studies' geometry, against exact solutions
-compose/check.sh coupled    # receptor occupancy against its formula; the full model against a copy with the field-to-cell link cut
+compose/check.sh coupled    # receptor occupancy against its formula; the full model against a copy with the field-to-cell link cut; the dose study's fading bath against its formula
 ```
 
 ## Where it came from
