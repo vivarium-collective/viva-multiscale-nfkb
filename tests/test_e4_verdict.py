@@ -11,8 +11,10 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import math
 import random
+import sys
 from pathlib import Path
 
 import pytest
@@ -218,3 +220,36 @@ def test_each_configuration_reports_its_death_ratio_and_whether_it_is_near_the_c
     (result,) = e4.verdicts([counts])
     assert result["near_ceiling"] is near
     assert result["death_ratio"] == (None if ratio is None else pytest.approx(ratio))
+
+
+@pytest.mark.parametrize(("counts", "near"), [
+    ((19, 20, 19, 20), True),  # both exactly 0.95 alive: within the margin of everyone alive
+    ((18, 20, 19, 20), False),  # 0.90 on one side
+    ((1, 20, 1, 20), True),  # both exactly 0.05 alive
+    ((2, 20, 1, 20), False),  # 0.10 on one side
+])
+def test_the_ceiling_flag_includes_its_boundaries(e4, counts, near):
+    (result,) = e4.verdicts([counts])
+    assert result["near_ceiling"] is near
+
+
+def test_seed_ranges_must_run_forwards(e4):
+    with pytest.raises(ValueError, match="backwards"):
+        e4.score(_distance_points(), _dose_points(), distance_seeds=(1891, 3780), dose_seeds=(5000, 1))
+
+
+def test_main_reads_both_studies_seeds_from_their_files(e4, tmp_path, monkeypatch):
+    dose = tmp_path / "dose.json"
+    dose.write_text(json.dumps({"seeds": [1, 1890], "points": _dose_points()}))
+    out = tmp_path / "e4.json"
+    for seeds, refused in (([1891, 3780], False), ([1, 1890], True)):
+        distance = tmp_path / "distance.json"
+        distance.write_text(json.dumps({"seeds": seeds, "points": _distance_points()}))
+        monkeypatch.setattr(sys, "argv", ["e4_verdict.py", "--distance", str(distance), "--dose", str(dose),
+                                          "--out", str(out)])
+        if refused:
+            with pytest.raises(ValueError):
+                e4.main()
+        else:
+            e4.main()
+            assert json.loads(out.read_text())["family"] == 16

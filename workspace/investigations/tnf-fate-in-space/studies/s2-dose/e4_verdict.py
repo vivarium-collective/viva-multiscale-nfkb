@@ -1,9 +1,10 @@
 """E4, the collapse test: does a cell near a TNF bolus fare as it would in a uniform bath of the same dose?
 
-Fixed before any distance run (decisions 40, 40b, 50 to 53 and 55 to 58). Each distance-study configuration (NF-kB arm, clock,
-bolus size, ring) is compared with this study's decaying bath matched to its ring and bolus size, `bath-<ring>-M<bolus>`
-at the same arm and clock: the same peak TNF and the same 24 h TNF dose, without the arrival delay or the pulse's shape
-(decision 50). The readout is the fraction of cells alive at 24 h (decision 41), about 1,700 cells on each side (40b).
+Fixed before any distance run (decisions 40, 40b, 50 to 53 and 55 to 58). Each distance-study configuration (NF-kB
+arm, clock, bolus size, ring) is compared with this study's decaying bath matched to its ring and bolus size,
+`bath-<ring>-M<bolus>` at the same arm and clock: the same peak TNF and the same sensed dose (the 24 h receptor
+occupancy-time), without the arrival delay or the pulse's shape (decisions 50 and 56). The readout is the fraction
+of cells alive at 24 h (decision 41), about 1,700 cells on each side (40b).
 
 Each configuration gets one of three verdicts (decision 53):
 - **equivalent**: the two one-sided tests, each at the 5% level, both reject a difference of 0.05 or more. That is the
@@ -17,7 +18,8 @@ A configuration can pass both tests, since with this many cells a difference sma
 significant. It is then equivalent (decision 55), because decision 40's margin is the smallest difference that
 matters; both tests' results are in the output.
 
-Each configuration also reports its death ratio (the distance side's deaths over the bath's) and is flagged
+Each configuration also reports its death ratio (the distance side's death fraction over the bath's; None when the
+bath has no deaths, whatever the distance side's, which the row's counts show) and is flagged
 `near_ceiling` when both sides are within the margin of everyone alive or everyone dead, where equivalence is nearly
 automatic and says little about timing (decision 58).
 
@@ -96,6 +98,9 @@ def verdicts(pairs: list[tuple[int, int, int, int]]) -> list[dict]:
 def score(distance_points: list[dict], dose_points: list[dict], *, distance_seeds: tuple[int, int],
           dose_seeds: tuple[int, int]) -> list[dict]:
     """Pair every distance configuration with its matched bath and score the family."""
+    for name, (first, last) in (("distance", distance_seeds), ("dose", dose_seeds)):
+        if first > last:
+            raise ValueError(f"the {name} study's seeds ({first}, {last}) run backwards")
     if tuple(distance_seeds) != DISTANCE_SEEDS:
         raise ValueError(f"the distance study ran seeds {distance_seeds}, not the {DISTANCE_SEEDS} fixed for it")
     if not (distance_seeds[1] < dose_seeds[0] or dose_seeds[1] < distance_seeds[0]):
