@@ -44,9 +44,11 @@ times the wall-time cap. So the study can't run as one job per document under to
 **A. Long runs on compose-api (chosen).** compose-api accepts runs longer than 1,000 s and 30 min: a signed-in
 submitter may ask for up to a configured maximum of simulated time (anonymous runs keep 1,000 s), and only such a run
 gets a longer job time, scaled to what it asks for and capped within the partition's limit.
-- The study is then 21 documents, one per bolus size and batch. Each holds the field, 3 rings, a Lipniacki model per
-  ring, and 4,860 fate networks (3 clocks × 2 arms × 270 × 3 rings).
-- Each takes about 6 h of wall time (3.7 h of field and 2.4 h of cells), and all 21 can run at once.
+- ~~The study is then 21 documents, one per bolus size and batch. Each holds the field, 3 rings, a Lipniacki model per
+  ring, and 4,860 fate networks (3 clocks × 2 arms × 270 × 3 rings).~~ ~~Each takes about 6 h of wall time (3.7 h of
+  field and 2.4 h of cells), and all 21 can run at once.~~ Superseded by decision 59: building such a composite is
+  roughly quadratic in its processes, so it could not start in time. Each of the 378 points and batches replays its
+  ring's recorded TNF instead: one population per run, about 8 min of computing on this machine.
 - No change to the composite, and each run is one record on compose-api.
 - **A known gap, a follow-up rather than a blocker** (Alex, 2026-11-20): long runs are open to any signed-in account,
   and compose-api has no per-user limit. Its queue holds 100 active runs in all, so one account's long runs could
