@@ -8,6 +8,10 @@ death node ever on), the cells that reached no fate at all, and the median time 
 
 It chose the exposure studies' clocks and dose range (docs/design/plan-exposure-studies.md, finding 2).
 
+Kept as the record of that choice, not as a dose curve: Study 1's builder seeds every fate network's state store with
+TNF on, and this script leaves it so, which gives every cell a TNF pulse of about one clock unit at t = 0 whatever the
+dose (decision 49). The dose study (workspace/.../studies/s2-dose) starts TNF off and replaces these numbers.
+
     uv run --project compose --frozen python -I analysis/exposure-pilot/dose_pilot.py   # writes dose_pilot.json
 """
 

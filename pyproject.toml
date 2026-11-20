@@ -36,9 +36,11 @@ dashboard = [
     "plotly",
     "vivarium-workbench",
 ]
+# The statistics the studies' verdicts use (E4: s2-dose/e4_verdict.py).
+analysis = ["scipy", "statsmodels>=0.14"]
 # Local development and workspace CI (`uv pip install -e ".[dev]"`) run the lint,
-# the reports and the dashboard, so they need it too.
-dev = ["pytest>=7.4", "multiscale-nfkb[dashboard]"]
+# the reports, the dashboard and the tests (E4's among them), so they need both.
+dev = ["pytest>=7.4", "multiscale-nfkb[dashboard,analysis]"]
 cli = ["typer", "rich"]
 # The simulators the composites address, at the commits compose-api's registry pins (as compose/pyproject.toml has
 # them), so the dashboard can build a composite and export it to compose-api: the export imports each
@@ -56,9 +58,11 @@ multiscale-nfkb = "viva_multiscale_nfkb.cli.__main__:main"
 
 # The container image (Dockerfile, Singularity.def) runs `uv sync`, which installs
 # no extras but does install uv's default dependency groups; this group carries the
-# dashboard extra into the image, so `vivarium-workbench serve` is always there.
+# dashboard extra into the image, so `vivarium-workbench serve` is always there,
+# and `analysis` the statistics into the workspace environment (`uv run`).
 # Groups are not package metadata, so `pip install <workspace>` is unaffected.
 [dependency-groups]
+analysis = ["multiscale-nfkb[analysis]"]
 docs = [
     "myst-parser>=4",
     "pydata-sphinx-theme>=0.16",
@@ -69,7 +73,7 @@ docs = [
 workbench = ["multiscale-nfkb[dashboard]"]
 
 [tool.uv]
-default-groups = ["workbench"]
+default-groups = ["workbench", "analysis"]
 
 [build-system]
 requires = ["hatchling"]
