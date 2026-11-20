@@ -48,6 +48,9 @@ gets a longer job time, scaled to what it asks for and capped within the partiti
   ring, and 4,860 fate networks (3 clocks × 2 arms × 270 × 3 rings).
 - Each takes about 6 h of wall time (3.6 h of field and 2.4 h of cells), and all 21 can run at once.
 - No change to the composite, and each run is one record on compose-api.
+- **A known gap, a follow-up rather than a blocker** (Alex, 2026-11-20): long runs are open to any signed-in account,
+  and compose-api has no per-user limit. Its queue holds 100 active runs in all, so one account's long runs could
+  tie up slots for hours. This release records who submitted each run, which a per-user limit would build on.
 
 **B. Chained 990 s segments, no compose-api change.** Each document runs as 88 consecutive jobs, each starting from the
 saved state of the one before.
