@@ -27,8 +27,9 @@ What counts as a match was fixed before the distance study runs, so that the ans
   Newcombe's hybrid score interval, which keeps its coverage when survival is near 0 or 1, as it often is here;
 - each configuration comes out equivalent, different or inconclusive, and the study's answer is the map of these
   outcomes (decision 53). "Different" means Fisher's exact test rejects no difference at 5% after Holm's correction
-  across all 54 configurations. Equivalence is decided first, so a difference smaller than the margin is never
-  called a difference;
+  across all 54 configurations. A configuration can pass both tests: with about 1,700 cells a side, a difference
+  smaller than the margin can still be significant. Which verdict it then gets is still open, for Alex to decide;
+  until then the scorer calls it equivalent and reports both tests;
 - both NF-κB arms run, so that a timing effect can be traced to NF-κB or ruled out (decision 52).
 
 The scorer was written and tested before any distance run (`workspace/investigations/tnf-fate-in-space/studies/s2-dose/e4_verdict.py`; its interval reproduces Newcombe's published values). The held baths give the dose curve itself, which the dose study reports. The wave-timing study shows the mechanism
