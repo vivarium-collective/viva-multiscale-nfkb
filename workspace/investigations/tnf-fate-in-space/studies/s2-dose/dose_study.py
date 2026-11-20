@@ -22,8 +22,10 @@ dose (50, 56).
 Batch k holds the cells seeded 270 (k - 1) + 1 to 270 k. It writes
 parquet-runs/<arm>-<min>min-<exposure>/batch<k>.parquet (time, NF-kB's nuclear fraction, and each cell's fate code
 every 30 s: Survival + 2 Apoptosis + 4 NonACD; columns code_c0 to code_c269 in seed order), where <exposure> is
-occ<occ> or bath-<cell>-M<bolus>. NF-kB's trajectory is deterministic, so it is the same in every batch. A batch
-already run is read back, not rerun. data/dose.json gets, per point, over all batches: alive at 24 h (as a count and a
+occ<occ> or bath-<cell>-M<bolus>. NF-kB's trajectory is deterministic and depends only on the bath (the fate networks
+don't feed back), so it is the same in every batch. A batch already run is read back, not rerun; the summary checks
+each point's NF-kB against a fresh run of its bath with one fate network, so a batch run with other bath settings is
+never read back silently. data/dose.json gets, per point, over all batches: alive at 24 h (as a count and a
 fraction), cells with no fate, apoptosis and necrosis at 24 h, the median first-death time, the survival curve
 (fraction alive at each hour), and NF-kB's first nuclear peak (height, time).
 
@@ -108,10 +110,10 @@ def point_name(arm: str, minutes: int, exposure: str) -> str:
     return f"{arm}-{minutes}min-{exposure}"
 
 
-def document(arm: str, minutes: int, exposure: str, batch: int) -> dict:
+def document(arm: str, minutes: int, exposure: str, batch: int, cells: int = CELLS) -> dict:
     """One batch of one point: Study 1's population in the named bath, every TNF node off at t = 0."""
     bath = exposures()[exposure]
-    doc = _population().build(KAPPA[arm], 1.0 / (60.0 * minutes), CELLS, SEED + (batch - 1) * CELLS, INTERVAL, (),
+    doc = _population().build(KAPPA[arm], 1.0 / (60.0 * minutes), cells, SEED + (batch - 1) * CELLS, INTERVAL, (),
                               1.0, 0.0)
     state = doc["state"]
     occ = bath["occupancy"] if "occupancy" in bath else bath["c0_uM"] / (bath["c0_uM"] + KD)  # at t = 0
@@ -146,11 +148,23 @@ def run_point(arm: str, minutes: int, exposure: str, batch: int) -> Path:
     return out
 
 
+def nfkb_trajectory(arm: str, minutes: int, exposure: str) -> tuple[list[float], list[float]]:
+    """NF-kB's nuclear fraction every 30 s over 24 h in this point's bath, from a run with one fate network (8 s):
+    NF-kB doesn't depend on the fate networks, so every batch of the point reproduces it exactly."""
+    with tempfile.TemporaryDirectory() as tmp:
+        result = _population().run(document(arm, minutes, exposure, 1, cells=1), HOURS, Path(tmp))
+        rows = json.loads(result.read_text())["emitter"][1:]
+    return [r["global_time"] for r in rows], [r["nfkb_fraction"] for r in rows]
+
+
 def summarize(arm: str, minutes: int, exposure: str) -> dict:
     tables = [pq.read_table(run_point(arm, minutes, exposure, b)).to_pydict() for b in range(1, BATCHES + 1)]
     times, f = tables[0]["time_s"], tables[0]["nfkb_fraction"]
     if any(t["time_s"] != times or t["nfkb_fraction"] != f for t in tables):
         raise SystemExit(f"{point_name(arm, minutes, exposure)}: batches differ in time or NF-kB")
+    if (times, f) != nfkb_trajectory(arm, minutes, exposure):
+        raise SystemExit(f"{point_name(arm, minutes, exposure)}: its batches' NF-kB is not this bath's, so they were "
+                         "run with other bath settings; move them aside and rerun the point")
     codes = [t[k] for t in tables for k in t if k.startswith("code_")]
     dead = [any(x & 6 for x in s) for s in codes]
     first_death = [next((t for t, x in zip(times, s, strict=True) if x & 6), None) for s in codes]
