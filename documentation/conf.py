@@ -27,8 +27,9 @@ html_static_path = ["_static"]
 # The workspace logo (assets/logos/logo.svg) is the header on every page and the favicon.
 html_logo = "../assets/logos/logo.svg"
 html_favicon = "../assets/logos/logo.svg"
-html_css_files = ["colors.css"]
-html_context = {"default_mode": "dark"}
+html_css_files = ["layers.css"]
+# Pages with no sub-pages get no left sidebar (it would be an empty "Section Navigation").
+html_sidebars = {"index": [], "getting-started": [], "findings": []}
 html_theme_options = {
     "github_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb",
     "navigation_with_keys": False,
