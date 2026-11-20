@@ -14,8 +14,8 @@ Each configuration gets one of three verdicts (decision 53):
   of the study (54: 2 arms x 3 clocks x 3 bolus sizes x 3 rings);
 - **inconclusive**: neither.
 A configuration can pass both tests, since with this many cells a difference smaller than the margin can be
-significant. Which verdict it then gets is open, for Alex to decide; until then it is scored equivalent, and both
-tests' results are in the output.
+significant. It is then equivalent (decision 55), because decision 40's margin is the smallest difference that
+matters; both tests' results are in the output.
 
 Inputs:
 - the dose study's `data/dose.json` (`dose_study.py`): per point `arm`, `minutes_per_unit`, `exposure`, `cells` and

@@ -153,8 +153,8 @@ puts to Alex what they still leave open.
 4. **Pre-register E4** in the distance study before any distance run: decisions 40, 40b and 50 to 53. The scorer is
    written and tested (`s2-dose/e4_verdict.py`, `tests/test_e4_verdict.py`): Newcombe's hybrid score 90% interval
    inside ±0.05 is equivalent; otherwise Fisher's exact test, Holm-corrected over the 54 configurations, rejecting at
-   5% is different; otherwise inconclusive. Open, for Alex: the verdict when a configuration passes both tests (a
-   difference inside the margin that is still significant). The scorer says equivalent until he decides.
+   5% is different; otherwise inconclusive. A configuration that passes both tests (a difference inside the margin
+   that is still significant) is equivalent, with both tests reported (decision 55).
 5. **The distance study:**
    - several rings in one document, which is valid because cells only sample the field;
    - one Lipniacki model and 270 fate networks per ring per batch, 7 batches (decision 40b);

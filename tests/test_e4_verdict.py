@@ -112,7 +112,7 @@ def test_the_correction_spans_the_family(e4):
 
 def test_equivalence_is_decided_before_a_significant_difference(e4):
     # 0.03 apart with 20,000 cells a side: Fisher rejects (p ~ 2e-9), but the whole interval is inside the margin.
-    # Which verdict wins here is open (decision 53's row); the scorer says equivalent until it is settled.
+    # Equivalent, as decision 55 says: the margin is the smallest difference that matters.
     (result,) = e4.verdicts([(10600, 20000, 10000, 20000)])
     assert result["holm_p"] < e4.ALPHA
     assert -e4.MARGIN < result["interval_90"][0] and result["interval_90"][1] < e4.MARGIN
