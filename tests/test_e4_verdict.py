@@ -158,13 +158,16 @@ def _dose_points():
     return points
 
 
+SEEDS = {"distance_seeds": (1891, 3780), "dose_seeds": (1, 1890)}
+
+
 def _distance_points():
     return [{"arm": arm, "minutes_per_unit": clock, "ring": ring, "bolus": bolus, "cells": 1890, "alive_cells": 1200}
             for arm in ("intact", "knocked_out") for clock in (30, 60) for ring in ("near", "far") for bolus in (1, 10)]
 
 
 def test_each_configuration_meets_its_own_bath(e4):
-    rows = e4.score(_distance_points(), _dose_points())
+    rows = e4.score(_distance_points(), _dose_points(), **SEEDS)
     assert len(rows) == 16  # held baths take no part
     for row in rows:
         assert row["bath"]["exposure"] == f"bath-{row['ring']}-M{row['bolus']:g}"
@@ -184,9 +187,34 @@ def test_the_pairing_must_be_one_to_one(e4, mutate):
     elif mutate == "no_count":
         del next(p for p in dose if p["exposure"].startswith("bath-"))["alive_cells"]
     with pytest.raises(ValueError):
-        e4.score(distance, dose)
+        e4.score(distance, dose, **SEEDS)
 
 
 def test_impossible_counts_are_refused(e4):
     with pytest.raises(ValueError):
         e4.verdicts([(1891, 1890, 945, 1890)])
+
+
+@pytest.mark.parametrize("seeds", [(1, 1890), (1000, 2889), (1891, 3779), (3781, 5670)])
+def test_the_distance_study_must_run_its_own_fixed_seeds(e4, seeds):
+    """Shared seeds correlate the two sides, and both tests assume independent samples (decision 57)."""
+    with pytest.raises(ValueError):
+        e4.score(_distance_points(), _dose_points(), distance_seeds=seeds, dose_seeds=(1, 1890))
+
+
+def test_seeds_that_overlap_the_dose_studys_are_refused(e4):
+    with pytest.raises(ValueError, match="overlap"):
+        e4.score(_distance_points(), _dose_points(), distance_seeds=(1891, 3780), dose_seeds=(1, 1891))
+
+
+@pytest.mark.parametrize(("counts", "near", "ratio"), [
+    ((1880, 1890, 1870, 1890), True, 10 / 20),  # both at least 0.95 alive
+    ((5, 1890, 60, 1890), True, 1885 / 1830),  # both at most 0.05 alive
+    ((1880, 1890, 1700, 1890), False, 10 / 190),  # the bath at 0.90
+    ((945, 1890, 945, 1890), False, 1.0),
+    ((1890, 1890, 1890, 1890), True, None),  # no deaths in the bath: no ratio
+])
+def test_each_configuration_reports_its_death_ratio_and_whether_it_is_near_the_ceiling(e4, counts, near, ratio):
+    (result,) = e4.verdicts([counts])
+    assert result["near_ceiling"] is near
+    assert result["death_ratio"] == (None if ratio is None else pytest.approx(ratio))

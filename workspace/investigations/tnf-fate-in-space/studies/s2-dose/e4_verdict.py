@@ -1,6 +1,6 @@
 """E4, the collapse test: does a cell near a TNF bolus fare as it would in a uniform bath of the same dose?
 
-Fixed before any distance run (decisions 40, 40b, 50 to 53 and 55). Each distance-study configuration (NF-kB arm, clock,
+Fixed before any distance run (decisions 40, 40b, 50 to 53 and 55 to 58). Each distance-study configuration (NF-kB arm, clock,
 bolus size, ring) is compared with this study's decaying bath matched to its ring and bolus size, `bath-<ring>-M<bolus>`
 at the same arm and clock: the same peak TNF and the same 24 h TNF dose, without the arrival delay or the pulse's shape
 (decision 50). The readout is the fraction of cells alive at 24 h (decision 41), about 1,700 cells on each side (40b).
@@ -17,13 +17,20 @@ A configuration can pass both tests, since with this many cells a difference sma
 significant. It is then equivalent (decision 55), because decision 40's margin is the smallest difference that
 matters; both tests' results are in the output.
 
+Each configuration also reports its death ratio (the distance side's deaths over the bath's) and is flagged
+`near_ceiling` when both sides are within the margin of everyone alive or everyone dead, where equivalence is nearly
+automatic and says little about timing (decision 58).
+
 Inputs:
-- the dose study's `data/dose.json` (`dose_study.py`): per point `arm`, `minutes_per_unit`, `exposure`, `cells` and
-  `alive_cells`;
-- the distance study's results, a JSON object whose `points` each give `arm`, `minutes_per_unit`, `ring` (near, middle
-  or far: ring_exposure.json's `cell`), `bolus` (uM um^2), `cells` and `alive_cells`.
+- the dose study's `data/dose.json` (`dose_study.py`): its `seeds` (first, last), and per point `arm`,
+  `minutes_per_unit`, `exposure`, `cells` and `alive_cells`;
+- the distance study's results, a JSON object with its `seeds` (first, last) and `points` that each give `arm`,
+  `minutes_per_unit`, `ring` (near, middle or far: ring_exposure.json's `cell`), `bolus` (uM um^2), `cells` and
+  `alive_cells`.
 The two must pair one to one: every distance configuration has its bath, and every bath its configuration, so the Holm
-family is the whole study.
+family is the whole study. Both tests assume the two sides are independent samples, so the distance study runs the
+seeds fixed for it before any distance run, 1891 to 3780, disjoint from the dose study's (decision 57); the scorer
+refuses any others.
 
     uv run --frozen python -I workspace/investigations/tnf-fate-in-space/studies/s2-dose/e4_verdict.py \\
         --distance <distance results.json> --out <e4.json>
@@ -43,6 +50,7 @@ from statsmodels.stats.proportion import confint_proportions_2indep
 HERE = Path(__file__).resolve().parent
 MARGIN = 0.05  # in the fraction alive at 24 h (decision 40)
 ALPHA = 0.05  # each one-sided test (so a 90% interval), and the Holm-corrected test of a difference
+DISTANCE_SEEDS = (1891, 3780)  # first and last, fixed before any distance run (decision 57)
 
 
 def bath_name(ring: str, bolus: float) -> str:
@@ -76,13 +84,22 @@ def verdicts(pairs: list[tuple[int, int, int, int]]) -> list[dict]:
             verdict = "different"
         else:
             verdict = "inconclusive"
-        out.append({"difference": a / n - b / m, "interval_90": [low, high], "fisher_p": p, "holm_p": float(p_holm),
-                    "verdict": verdict})
+        alive_a, alive_b = a / n, b / m
+        out.append({"difference": alive_a - alive_b, "interval_90": [low, high], "fisher_p": p, "holm_p": float(p_holm),
+                    "verdict": verdict,
+                    # undefined (None) when the bath has no deaths
+                    "death_ratio": (1 - alive_a) / (1 - alive_b) if b < m else None,
+                    "near_ceiling": (min(alive_a, alive_b) >= 1 - MARGIN) or (max(alive_a, alive_b) <= MARGIN)})
     return out
 
 
-def score(distance_points: list[dict], dose_points: list[dict]) -> list[dict]:
+def score(distance_points: list[dict], dose_points: list[dict], *, distance_seeds: tuple[int, int],
+          dose_seeds: tuple[int, int]) -> list[dict]:
     """Pair every distance configuration with its matched bath and score the family."""
+    if tuple(distance_seeds) != DISTANCE_SEEDS:
+        raise ValueError(f"the distance study ran seeds {distance_seeds}, not the {DISTANCE_SEEDS} fixed for it")
+    if not (distance_seeds[1] < dose_seeds[0] or dose_seeds[1] < distance_seeds[0]):
+        raise ValueError(f"the distance study's seeds {distance_seeds} overlap the dose study's {dose_seeds}")
     baths = {}
     for p in dose_points:
         if not p["exposure"].startswith("bath-"):
@@ -117,13 +134,16 @@ def main() -> None:
     parser.add_argument("--dose", type=Path, default=HERE / "data" / "dose.json", help="the dose study's dose.json")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    rows = score(json.loads(args.distance.read_text())["points"], json.loads(args.dose.read_text())["points"])
+    distance, dose = json.loads(args.distance.read_text()), json.loads(args.dose.read_text())
+    rows = score(distance["points"], dose["points"], distance_seeds=tuple(distance["seeds"]),
+                 dose_seeds=tuple(dose["seeds"]))
     counts = Counter((r["arm"], r["verdict"]) for r in rows)
     args.out.write_text(json.dumps({"margin": MARGIN, "alpha": ALPHA, "interval": "Newcombe hybrid score, 90%",
                                     "difference_test": "Fisher exact, two-sided, Holm across the family",
                                     "family": len(rows), "configurations": rows}, indent=1) + "\n")
+    ceiling = Counter((r["arm"], r["verdict"]) for r in rows if r["near_ceiling"])
     for (arm, verdict), n in sorted(counts.items()):
-        print(f"{arm:12} {verdict:13} {n}")
+        print(f"{arm:12} {verdict:13} {n} ({ceiling[arm, verdict]} near the ceiling)")
 
 
 if __name__ == "__main__":
