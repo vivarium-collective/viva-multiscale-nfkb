@@ -22,12 +22,16 @@ what space adds: the delay before TNF arrives and the pulse's shape.
 
 What counts as a match was fixed before the distance study runs, so that the answer cannot be tuned to the result:
 - each comparison is an equivalence test with a margin of ±0.05 in the fraction alive at 24 h and about 1,700 cells on
-  each side, which gives an 80% chance of showing equivalence when it holds (decisions 40 and 40b);
-- each configuration comes out equivalent, different (a test of the difference rejects, corrected for the number of
-  tests) or inconclusive, and the study's answer is the map of these outcomes (decision 53);
+  each side, which gives an 80% chance of showing equivalence when it holds (decisions 40 and 40b). It passes when the
+  90% interval for the difference lies inside the margin, which is the two one-sided tests at 5% each. The interval is
+  Newcombe's hybrid score interval, which keeps its coverage when survival is near 0 or 1, as it often is here;
+- each configuration comes out equivalent, different or inconclusive, and the study's answer is the map of these
+  outcomes (decision 53). "Different" means Fisher's exact test rejects no difference at 5% after Holm's correction
+  across all 54 configurations. Equivalence is decided first, so a difference smaller than the margin is never
+  called a difference;
 - both NF-κB arms run, so that a timing effect can be traced to NF-κB or ruled out (decision 52).
 
-The held baths give the dose curve itself, which the dose study reports. The wave-timing study shows the mechanism
+The scorer was written and tested before any distance run (`workspace/investigations/tnf-fate-in-space/studies/s2-dose/e4_verdict.py`; its interval reproduces Newcombe's published values). The held baths give the dose curve itself, which the dose study reports. The wave-timing study shows the mechanism
 behind either answer.
 
 ## The death clock

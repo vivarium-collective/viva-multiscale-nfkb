@@ -150,7 +150,10 @@ puts to Alex what they still leave open.
 3. **The dose study** (`s2-dose`, running since 2026-11-19), at E5's clocks, intact and knocked out, 7 batches of 270
    seeds (1,890 cells per point; decision 40b): 8 held baths and the 9 matched decaying baths (decision 50), with
    every cell's TNF off at the start (decision 49). The decaying bath is checked by `checks/coupled/decaying-bath`.
-4. **Pre-register E4** in the distance study before any distance run: decisions 40, 40b and 50 to 53.
+4. **Pre-register E4** in the distance study before any distance run: decisions 40, 40b and 50 to 53. The scorer is
+   written and tested (`s2-dose/e4_verdict.py`, `tests/test_e4_verdict.py`): Newcombe's hybrid score 90% interval
+   inside ±0.05 is equivalent; otherwise Fisher's exact test, Holm-corrected over the 54 configurations, rejecting at
+   5% is different; otherwise inconclusive.
 5. **The distance study:**
    - several rings in one document, which is valid because cells only sample the field;
    - one Lipniacki model and 270 fate networks per ring per batch, 7 batches (decision 40b);
