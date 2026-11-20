@@ -86,4 +86,4 @@ Every check in this project has two more properties:
 - it scores with `compliance.evaluate` from a compose-api checkout.
 
 Two of compose-api's own cases, copied unchanged into `checks/harness`, show that the local result matches the live
-one ({doc}`../getting-started`).
+one ({doc}`../reference/developer`).
