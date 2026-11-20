@@ -25,7 +25,8 @@ already run is read back, not rerun. data/dose.json gets, per point, over all ba
 fraction), cells with no fate, apoptosis and necrosis at 24 h, the median first-death time, the survival curve
 (fraction alive at each hour), and NF-kB's first nuclear peak (height, time).
 
-    uv run --frozen python -I workspace/investigations/tnf-fate-in-space/studies/s2-dose/dose_study.py [--workers N]
+    uv run --frozen --extra simulators python -I \
+        workspace/investigations/tnf-fate-in-space/studies/s2-dose/dose_study.py [--workers N]
 
 (the workspace environment, for pyarrow; each simulation runs in compose/ through population.run, as Study 1 did)
 """

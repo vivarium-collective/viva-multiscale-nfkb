@@ -1,4 +1,5 @@
-"""What each distance-study cell is exposed to, per bolus size: the numbers that size the pulses and fix the dose mapping.
+"""What each distance-study cell is exposed to, per bolus size: the numbers that size the pulses and fix the dose
+mapping.
 
 Reads exposure_24h_band1.json (decision 39's field with its absorbing band; exposure_24h.py), whose TNF at each cell is
 per unit bolus mass (1 uM um^2). The field is linear in the bolus, so a bolus of mass M gives M times it. Occupancy is
@@ -13,7 +14,7 @@ For each bolus size and cell it reports:
   half-life.
 It also reports the closed box's 24 h integral (exposure_24h_band0.json) against the band's, the band's effect.
 
-    uv run --frozen python -I analysis/exposure-design/ring_exposure.py   # writes ring_exposure.json
+    uv run --frozen --extra simulators python -I analysis/exposure-design/ring_exposure.py   # writes ring_exposure.json
 """
 
 import json

@@ -27,17 +27,17 @@ per new composite until that release is live and Alex approves the first submiss
 | Resuming a run | no; the runner saves the final state as `state_<stamp>.pbg` "as a convenience" | `compose_api/environments/runner.py:168-169` |
 | Ownership | a signed-in submitter owns the run, private unless `visibility=public`; the owner can change it later | `compose_api/authorization.py:152` |
 
-A 24 h run is 86 times the simulated-time cap, and on this machine a 24 h run of the 6 mm field alone took 3.6 h, seven
+A 24 h run is 86 times the simulated-time cap, and on this machine a 24 h run of the 6 mm field alone took 3.7 h, seven
 times the wall-time cap. So the study can't run as one job per document under today's limits.
 
 ## Measured cost (local, single-threaded)
 
-- The 6 mm field, 601 × 601 nodes, dt 0.25 s: 3.6 h per simulated day (`analysis/exposure-design/exposure_24h.py`).
+- The 6 mm field, 601 × 601 nodes, dt 0.25 s, with its absorbing band: 3.7 h per simulated day (`analysis/exposure-design/exposure_24h.py`).
 - A population of 270 fate networks and one Lipniacki model: 8.1 min per simulated day (the dose study, 380 runs).
-- **The whole study:** 102,060 cells come to about 51 CPU-hours. The field adds 3.6 CPU-hours per document that
-  carries one: 11 for three documents (one per bolus size, 34,020 cells each), 75 for 21 (one per bolus size and
+- **The whole study:** 102,060 cells come to about 51 CPU-hours. The field adds 3.7 CPU-hours per document that
+  carries one: 11 for three documents (one per bolus size, 34,020 cells each), 78 for 21 (one per bolus size and
   batch, 4,860 cells each). Document size grows about 7 kB per cell, so 34,020 cells make about 240 MB and 4,860 make
-  about 35 MB. So 21 documents is the practical packing, about 126 CPU-hours in all.
+  about 35 MB. So 21 documents is the practical packing, about 129 CPU-hours in all.
 
 ## Two routes
 
@@ -46,7 +46,7 @@ submitter may ask for up to a configured maximum of simulated time (anonymous ru
 gets a longer job time, scaled to what it asks for and capped within the partition's limit.
 - The study is then 21 documents, one per bolus size and batch. Each holds the field, 3 rings, a Lipniacki model per
   ring, and 4,860 fate networks (3 clocks × 2 arms × 270 × 3 rings).
-- Each takes about 6 h of wall time (3.6 h of field and 2.4 h of cells), and all 21 can run at once.
+- Each takes about 6 h of wall time (3.7 h of field and 2.4 h of cells), and all 21 can run at once.
 - No change to the composite, and each run is one record on compose-api.
 - **A known gap, a follow-up rather than a blocker** (Alex, 2026-11-20): long runs are open to any signed-in account,
   and compose-api has no per-user limit. Its queue holds 100 active runs in all, so one account's long runs could

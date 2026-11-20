@@ -3,6 +3,7 @@
 - The interval: Newcombe's own published values (Stat Med 1998;17:873, Table II, method 10 "Score, no CC"; 95%), and,
   at the 90% the test uses, his method 10 written out here from the paper's definition (two Wilson score intervals
   combined).
+- Fisher: the two-sided exact p-value summed here from the hypergeometric distribution.
 - Holm: the step-down adjustment written out here, applied to the scorer's own Fisher p-values in a shuffled family.
 - The verdicts: counts whose outcome follows from the margin and the family size.
 """
@@ -63,10 +64,38 @@ def _newcombe_method_10(a: int, m: int, b: int, n: int, z: float) -> tuple[float
 
 
 @pytest.mark.parametrize("counts", [(945, 1890, 945, 1890), (1700, 1890, 1650, 1890), (12, 1890, 3, 1890),
-                                    (1890, 1890, 1881, 1890)])
+                                    (1890, 1890, 1881, 1890), (0, 1890, 0, 1890), (1890, 1890, 1890, 1890),
+                                    (900, 1890, 400, 900)])  # ... no one or everyone alive, unequal sides
 def test_the_test_interval_is_newcombes_at_90_percent(e4, counts):
     z90 = 1.6448536269514722  # the standard normal's 95th percentile
     assert e4.interval(*counts) == pytest.approx(_newcombe_method_10(*counts, z90), abs=1e-9)
+
+
+def _fisher_two_sided(a: int, m: int, b: int, n: int) -> float:
+    """The sum of the probabilities of every table with these margins no more likely than the observed one."""
+    alive, total = a + b, m + n
+
+    def log_p(x: int) -> float:  # x alive of the m on the first side, hypergeometric
+        return (math.lgamma(alive + 1) - math.lgamma(x + 1) - math.lgamma(alive - x + 1)
+                + math.lgamma(total - alive + 1) - math.lgamma(m - x + 1) - math.lgamma(total - alive - m + x + 1)
+                - math.lgamma(total + 1) + math.lgamma(m + 1) + math.lgamma(n + 1))
+
+    observed = log_p(a)
+    support = range(max(0, alive - n), min(alive, m) + 1)
+    return min(1.0, sum(math.exp(log_p(x)) for x in support if log_p(x) <= observed + 1e-7))
+
+
+@pytest.mark.parametrize("counts", [(945, 1890, 870, 1890), (1400, 1890, 900, 1890), (12, 1890, 3, 1890),
+                                    (945, 1890, 945, 1890), (900, 1890, 400, 900)])
+def test_fishers_p_is_the_exact_two_sided_sum(e4, counts):
+    (result,) = e4.verdicts([counts])
+    assert result["fisher_p"] == pytest.approx(_fisher_two_sided(*counts), rel=1e-6)
+
+
+def test_no_one_or_everyone_alive_on_both_sides_is_equivalent(e4):
+    for counts in [(0, 1890, 0, 1890), (1890, 1890, 1890, 1890)]:
+        (result,) = e4.verdicts([counts])
+        assert result["verdict"] == "equivalent" and result["fisher_p"] == 1.0
 
 
 def _holm(p_values: list[float]) -> list[float]:

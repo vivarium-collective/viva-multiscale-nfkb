@@ -75,8 +75,9 @@ and fate layers on their own, with TNF held on.
   - **The comparison:** each distance-study cell is paired with a fading bath that gives it the same peak TNF and the
     same total dose over the day. What the bath lacks is only what distance adds: the delay before TNF arrives and
     the shape of the pulse. If survival at 24 hours matches within 5 cells in 100, distance acts only through dose.
-    Each pairing comes out equivalent, different or inconclusive, and the answer is the map of where each holds. With
-    NF-κB knocked out as a control, a timing effect can be traced to NF-κB or ruled out.
+    Each pairing comes out equivalent, different or inconclusive, and the answer is the map of where each holds. The
+    same map with NF-κB knocked out, set beside it, suggests whether a timing effect needs NF-κB; no test of the
+    difference between the two is fixed in advance.
   - The rule was fixed, and the code that scores it tested, before any distance run. The distance study is 54
     pairings of about 1,700 cells, each followed for a simulated day, so it will run on compose-api, which is being
     extended to accept runs that long.

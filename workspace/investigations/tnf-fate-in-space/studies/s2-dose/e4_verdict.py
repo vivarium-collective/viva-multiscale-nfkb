@@ -1,6 +1,6 @@
 """E4, the collapse test: does a cell near a TNF bolus fare as it would in a uniform bath of the same dose?
 
-Fixed before any distance run (decisions 40, 40b and 50 to 53). Each distance-study configuration (NF-kB arm, clock,
+Fixed before any distance run (decisions 40, 40b, 50 to 53 and 55). Each distance-study configuration (NF-kB arm, clock,
 bolus size, ring) is compared with this study's decaying bath matched to its ring and bolus size, `bath-<ring>-M<bolus>`
 at the same arm and clock: the same peak TNF and the same 24 h TNF dose, without the arrival delay or the pulse's shape
 (decision 50). The readout is the fraction of cells alive at 24 h (decision 41), about 1,700 cells on each side (40b).

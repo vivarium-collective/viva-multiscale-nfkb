@@ -30,7 +30,9 @@ What counts as a match was fixed before the distance study runs, so that the ans
   across all 54 configurations. A configuration can pass both tests: with about 1,700 cells a side, a difference
   smaller than the margin can still be significant. It is then equivalent, because decision 40's margin is the
   smallest difference that matters, and both tests are reported (decision 55);
-- both NF-κB arms run, so that a timing effect can be traced to NF-κB or ruled out (decision 52).
+- both NF-κB arms run, each giving its own map (decision 52). Set side by side, the two maps suggest whether a
+  timing effect needs NF-κB; no test of the difference between the arms is fixed in advance, so that reading is not
+  a verdict.
 
 The scorer was written and tested before any distance run (`workspace/investigations/tnf-fate-in-space/studies/s2-dose/e4_verdict.py`; its interval reproduces Newcombe's published values). The held baths give the dose curve itself, which the dose study reports. The wave-timing study shows the mechanism
 behind either answer.
@@ -78,7 +80,7 @@ dx 10 µm and dt 0.25 s in the 6 mm box (decision 39). A geometry pilot found th
 µm or dt 0.05 s, to three decimals, and that every cell then matches the open-medium solution
 (`analysis/exposure-pilot/geometry_pilot.json`).
 
-Over a full day (`analysis/exposure-design/exposure_24h.py`, 3.6 h of computing on a shared machine), the band takes up
+Over a full day (`analysis/exposure-design/exposure_24h.py`, 3.7 h of computing on a shared machine), the band takes up
 all but 1.2% of the bolus. Each cell's TNF follows the open medium for about 3 h, then falls below it as TNF reaching
 the walls is removed, to 8–9% of the open-medium value at 24 h. A closed box would instead settle every cell at the
 box's mean and give it 1.25 to 1.77 times the dose, most at the far cell.
