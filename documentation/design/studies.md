@@ -15,8 +15,9 @@ A cell in the distance study sees a pulse of TNF: it rises as the bolus arrives,
 its total dose are far apart. At the chosen bolus sizes a cell's peak receptor occupancy runs from 0.006 to 0.98, but
 its occupancy averaged over the day only from 0.001 to 0.12, so no single number places it on the held-dose curve.
 Instead, each configuration (distance, bolus size, clock and NF-κB arm) is paired with a uniform bath that decays
-exponentially, with the same peak TNF and the same 24 h dose (decision 50). The bath has everything the pulse has except
-what space adds: the delay before TNF arrives and the pulse's shape.
+exponentially, with the same peak TNF and the same sensed dose: the receptor occupancy the cell accumulates over 24 h
+(decisions 50 and 56). Both models read TNF only through occupancy, so that is the dose the cell responds to. The
+bath has everything the pulse has except what space adds: the delay before TNF arrives and the pulse's shape.
 - **If fate in the pulse matches fate in its bath,** space acts only through dose.
 - **If it doesn't,** when TNF arrives matters.
 
@@ -30,6 +31,10 @@ What counts as a match was fixed before the distance study runs, so that the ans
   across all 54 configurations. A configuration can pass both tests: with about 1,700 cells a side, a difference
   smaller than the margin can still be significant. It is then equivalent, because decision 40's margin is the
   smallest difference that matters, and both tests are reported (decision 55);
+- the distance study runs its own seeds, 1891 to 3780, so its cells are independent of the dose study's, as both
+  tests assume (decision 57);
+- each configuration also reports its death ratio, and is flagged near the ceiling when both sides are within 0.05
+  of everyone alive or everyone dead, where equivalence says little about timing (decision 58);
 - both NF-κB arms run, each giving its own map (decision 52). Set side by side, the two maps suggest whether a
   timing effect needs NF-κB; no test of the difference between the arms is fixed in advance, so that reading is not
   a verdict.

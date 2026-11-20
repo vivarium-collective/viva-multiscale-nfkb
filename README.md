@@ -73,7 +73,7 @@ and fate layers on their own, with TNF held on.
   - **The distance study** places cells 100 µm, 300 µm and 1 mm from a burst of TNF in an open medium, which reaches
     them after about half a minute, 4 minutes and 40 minutes, at three burst sizes.
   - **The comparison:** each distance-study cell is paired with a fading bath that gives it the same peak TNF and the
-    same total dose over the day. What the bath lacks is only what distance adds: the delay before TNF arrives and
+    same dose as the cell senses it, how long its TNF receptors are bound over the day. What the bath lacks is only what distance adds: the delay before TNF arrives and
     the shape of the pulse. If survival at 24 hours matches within 5 cells in 100, distance acts only through dose.
     Each pairing comes out equivalent, different or inconclusive, and the answer is the map of where each holds. The
     same map with NF-κB knocked out, set beside it, suggests whether a timing effect needs NF-κB; no test of the
