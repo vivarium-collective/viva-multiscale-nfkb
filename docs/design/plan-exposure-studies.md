@@ -158,11 +158,14 @@ puts to Alex what they still leave open.
    inside ±0.05 is equivalent; otherwise Fisher's exact test, Holm-corrected over the 54 configurations, rejecting at
    5% is different; otherwise inconclusive. A configuration that passes both tests (a difference inside the margin
    that is still significant) is equivalent, with both tests reported (decision 55).
-5. **The distance study:**
-   - several rings in one document, which is valid because cells only sample the field;
-   - one Lipniacki model and 270 fate networks per ring per batch, 7 batches (decision 40b);
-   - at bolus sizes 1, 10 and 100 µM·µm² (decision 51), E5's clocks, and both arms (decision 52);
-   - its first document measures the cost before the rest run.
+5. **The distance study** (`s3-distance/distance_study.py`, decision 59):
+   - each ring's TNF replayed from the 24 h field run, which is exact because cells only sample the field
+     (`checks/spatial/field-replay` compares the two over the first hour); one composite of the field and every cell
+     was measured to start too slowly;
+   - one population per point (270 fate networks and one Lipniacki model) per batch, 7 batches seeded from 1891
+     (decisions 40b and 57);
+   - at bolus sizes 1, 10 and 100 µM·µm² (decision 51), E5's clocks, and both arms (decision 52): 378 runs;
+   - needs viva-basic-processes' TimeSeriesStep in compose-api's pinned environment, then `compose/`.
 6. **Score E4; the wave-timing analysis** from the distance runs: front arrival (the half-peak time at the ring)
    against NF-κB's first nuclear peak. No new runs.
 7. **Docs:** decisions rows, a page with generated tables (`--check`), and a fresh-reader round.

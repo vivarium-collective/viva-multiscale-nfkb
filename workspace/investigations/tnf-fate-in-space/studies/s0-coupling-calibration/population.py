@@ -164,13 +164,19 @@ def build(kappa: float, k_time: float, cells: int, seed: int, interval: float, e
     return {"global_time_precision": 6, "state": state}
 
 
+def pack(document: dict, omex: Path) -> Path:
+    """The document and the SBML model it names, zipped as compose-api's /simulation/run receives them."""
+    omex.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(omex, "w") as z:
+        z.writestr("document.pbg", json.dumps(document))
+        z.write(SBML, SBML.name)
+    return omex
+
+
 def run(document: dict, hours: float, out: Path) -> Path:
     out.mkdir(parents=True, exist_ok=True)
     (out / "document.pbg").write_text(json.dumps(document))
-    omex = out / "input.omex"
-    with zipfile.ZipFile(omex, "w") as z:
-        z.write(out / "document.pbg", "document.pbg")
-        z.write(SBML, SBML.name)
+    omex = pack(document, out / "input.omex")
     log = out / "runner.log"
     with log.open("w") as f:
         subprocess.run(["uv", "run", "--project", str(ROOT / "compose"), "--frozen", "python", "-I",

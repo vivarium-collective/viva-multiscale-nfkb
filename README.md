@@ -87,8 +87,9 @@ and fate layers on their own, with TNF held on.
     same map with NF-κB knocked out, set beside it, suggests whether a timing effect needs NF-κB; no test of the
     difference between the two is fixed in advance.
   - The rule was fixed, and the code that scores it tested, before any distance run. The distance study is 54
-    pairings of about 1,700 cells, each followed for a simulated day, so it will run on compose-api, which is being
-    extended to accept runs that long.
+    pairings of about 1,700 cells, each followed for a simulated day. Cells only read the TNF around them and never
+    change it, so each population replays the TNF its ring sees in one day-long run of the field, the same simulation
+    machinery the fading baths use. It runs on compose-api, which now accepts runs that long.
 - **After that: many cells on one field.** Each cell has its own signalling and fate models. Taking up TNF lets
   neighbours shade one another, which turns a set of cells into a tissue. The machinery comes first; uptake follows
   once the exposure studies show how dose alone acts.

@@ -44,9 +44,11 @@ times the wall-time cap. So the study can't run as one job per document under to
 **A. Long runs on compose-api (chosen).** compose-api accepts runs longer than 1,000 s and 30 min: a signed-in
 submitter may ask for up to a configured maximum of simulated time (anonymous runs keep 1,000 s), and only such a run
 gets a longer job time, scaled to what it asks for and capped within the partition's limit.
-- The study is then 21 documents, one per bolus size and batch. Each holds the field, 3 rings, a Lipniacki model per
-  ring, and 4,860 fate networks (3 clocks × 2 arms × 270 × 3 rings).
-- Each takes about 6 h of wall time (3.7 h of field and 2.4 h of cells), and all 21 can run at once.
+- ~~The study is then 21 documents, one per bolus size and batch. Each holds the field, 3 rings, a Lipniacki model per
+  ring, and 4,860 fate networks (3 clocks × 2 arms × 270 × 3 rings).~~ ~~Each takes about 6 h of wall time (3.7 h of
+  field and 2.4 h of cells), and all 21 can run at once.~~ Superseded by decision 59: building such a composite is
+  roughly quadratic in its processes, so it could not start in time. Each of the 378 points and batches replays its
+  ring's recorded TNF instead: one population per run, about 8 min of computing on this machine.
 - No change to the composite, and each run is one record on compose-api.
 - **A known gap, a follow-up rather than a blocker** (Alex, 2026-11-20): long runs are open to any signed-in account,
   and compose-api has no per-user limit. Its queue holds 100 active runs in all, so one account's long runs could
@@ -65,10 +67,13 @@ saved state of the one before.
 
 ## In both routes
 
-- **Environment.** The distance composite uses only the field composite's classes: FVReactionDiffusion, RegionMean,
-  MathExpressionStep, TelluriumProcess, MaBoSSProcess and RAMEmitter. So compose-api infers the existing mash-up
-  (`mash-bb433b1002`, version 2, viva-maboss 0.1.2) and needs no new environment. The first document's live run
-  confirms it.
+- **Environment.** A replayed population (decision 59) names TimeSeriesStep, MathExpressionStep, TelluriumProcess,
+  MaBoSSProcess and RAMEmitter, so it needs tellurium, viva-basic-processes, viva-maboss and viva-tellurium. Only the
+  field's mash-up, `mash-bb433b1002`, holds them, and its version 2 has viva-basic-processes 0.3.0, without
+  TimeSeriesStep. compose-api refuses a run there rather than make a new mash-up. Version 3 (2026-11-23, resolved as of
+  version 2's time, so only viva-basic-processes moves, to 0.4.0) provides it, and every run names it:
+  `--environment mash-bb433b1002 --environment-version 3`. `distance_study.py --write-only` writes each run's archive,
+  the document with its SBML model.
 - **Runs are signed-in and private** while the study runs, and made public when its results are published. A public
   anonymous run has no owner, so its visibility can't be changed later.
 - **One full document is measured first, locally** (plan step 5): its wall time, memory and size. The measurement
