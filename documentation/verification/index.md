@@ -47,7 +47,8 @@ machine and simulator packages of the local run, and a verdict per emitted key: 
 different. With `--check`, it fetches and compares again, and fails if a run's environment or document, or any
 verdict, has changed. Differences below 10⁻⁹ are floating-point noise that can vary by machine, so they are recorded
 but not checked. The MVP's record is `compose/live/tnf_field_cell.yaml`
-({doc}`../design/roadmap`, phase 6).
+({doc}`../design/roadmap`, phase 6); the distance study's smoke run, one full batch, is
+`compose/live/distance_smoke.yaml`.
 
 ## Catalogue
 

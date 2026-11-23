@@ -51,6 +51,9 @@ BOLUS_SIZES = (1.0, 10.0, 100.0)  # uM um^2, decision 51
 CLOCKS = (30, 60, 120)  # min per unit, decision 38
 KAPPA = {"intact": math.log(2) / 337.0, "knocked_out": 0.0}  # decisions 25 and 52
 CELLS, BATCHES, SEED, HOURS, INTERVAL = 270, 7, 1891, 24.0, 30.0  # decisions 40b, 41 and 57
+# compose/live.py's tolerance: one document run on compose-api and here differs only by floating-point noise (the smoke
+# run's NF-kB, 4e-14); a batch run with other settings differs by far more
+NFKB_RTOL = 1e-9
 
 
 def _population():
@@ -116,17 +119,26 @@ def points() -> list[tuple[str, int, str, float]]:
     return [(arm, m, ring, bolus) for arm in KAPPA for m in CLOCKS for ring in RINGS for bolus in BOLUS_SIZES]
 
 
+def batch_path(arm: str, minutes: int, ring: str, bolus: float, batch: int) -> Path:
+    return HERE / "parquet-runs" / point_name(arm, minutes, ring, bolus) / f"batch{batch}.parquet"
+
+
 def run_point(arm: str, minutes: int, ring: str, bolus: float, batch: int) -> Path:
     """Run one batch of one point unless it exists; return its path."""
-    import pyarrow as pa
-    import pyarrow.parquet as pq
-
-    out = HERE / "parquet-runs" / point_name(arm, minutes, ring, bolus) / f"batch{batch}.parquet"
+    out = batch_path(arm, minutes, ring, bolus, batch)
     if out.exists():
         return out
     with tempfile.TemporaryDirectory() as tmp:
-        result = _population().run(document(arm, minutes, ring, bolus, batch), HOURS, Path(tmp))
-        rows = json.loads(result.read_text())["emitter"][1:]  # row 0: t = 0, nothing written
+        return write_batch(_population().run(document(arm, minutes, ring, bolus, batch), HOURS, Path(tmp)), out)
+
+
+def write_batch(results: Path, out: Path) -> Path:
+    """A run's results file (local or from compose-api) as its batch's parquet: time, NF-kB's nuclear fraction and each
+    cell's fate code, every 30 s."""
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    rows = json.loads(results.read_text())["emitter"][1:]  # row 0: t = 0, nothing written
     cells = sorted(rows[0]["fate_codes"], key=lambda c: int(c[1:]))
     out.parent.mkdir(parents=True, exist_ok=True)
     partial = out.with_suffix(".partial")  # renamed only when complete, so an interrupted write is never read back
@@ -139,11 +151,15 @@ def run_point(arm: str, minutes: int, ring: str, bolus: float, batch: int) -> Pa
 
 def nfkb_trajectory(arm: str, minutes: int, ring: str, bolus: float) -> tuple[list[float], list[float]]:
     """NF-kB's nuclear fraction every 30 s in this point's exposure, from a run with one fate network: NF-kB doesn't
-    depend on the fate networks, so every batch of the point reproduces it exactly."""
+    depend on the fate networks, so every batch of the point reproduces it, to NFKB_RTOL wherever the batch ran."""
     with tempfile.TemporaryDirectory() as tmp:
         result = _population().run(document(arm, minutes, ring, bolus, 1, cells=1), HOURS, Path(tmp))
         rows = json.loads(result.read_text())["emitter"][1:]
     return [r["global_time"] for r in rows], [r["nfkb_fraction"] for r in rows]
+
+
+def _same(a: list[float], b: list[float]) -> bool:
+    return len(a) == len(b) and all(abs(x - y) <= NFKB_RTOL * max(abs(x), abs(y)) for x, y in zip(a, b, strict=True))
 
 
 def summarize(arm: str, minutes: int, ring: str, bolus: float) -> dict:
@@ -152,9 +168,10 @@ def summarize(arm: str, minutes: int, ring: str, bolus: float) -> dict:
     name = point_name(arm, minutes, ring, bolus)
     tables = [pq.read_table(run_point(arm, minutes, ring, bolus, b)).to_pydict() for b in range(1, BATCHES + 1)]
     times, f = tables[0]["time_s"], tables[0]["nfkb_fraction"]
-    if any(t["time_s"] != times or t["nfkb_fraction"] != f for t in tables):
+    if any(t["time_s"] != times or not _same(t["nfkb_fraction"], f) for t in tables):
         raise SystemExit(f"{name}: batches differ in time or NF-kB")
-    if (times, f) != nfkb_trajectory(arm, minutes, ring, bolus):
+    reference_times, reference = nfkb_trajectory(arm, minutes, ring, bolus)
+    if reference_times != times or not _same(f, reference):
         raise SystemExit(f"{name}: its batches' NF-kB is not this exposure's, so they were run with other settings; "
                          "move them aside and rerun the point")
     codes = [t[k] for t in tables for k in t if k.startswith("code_")]

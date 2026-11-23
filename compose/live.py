@@ -40,11 +40,13 @@ PACKAGES = ("process-bigraph", "viva-maboss", "viva-tellurium", "viva-pde-partic
 
 def compose_api(*args: str) -> str:
     """compose-api's CLI, in its own project (uv warns when it inherits this one's VIRTUAL_ENV)."""
-    return subprocess.run(
+    done = subprocess.run(
         ["uv", "run", "--project", str(COMPOSE_API), "--frozen", "compose-api", "-q", "-o", "json", *args],
-        check=True, capture_output=True, text=True,
-        env={k: v for k, v in os.environ.items() if k != "VIRTUAL_ENV"},
-    ).stdout
+        capture_output=True, text=True, env={k: v for k, v in os.environ.items() if k != "VIRTUAL_ENV"},
+    )
+    if done.returncode != 0:  # say why: a refusal reads differently from a timeout whose outcome is uncertain
+        raise RuntimeError(f"compose-api {' '.join(args[:2])} failed ({done.returncode}): {done.stderr.strip()[-2000:]}")
+    return done.stdout
 
 
 def fetch(simulation_id: int, into: Path) -> tuple[str, Path, Path]:
@@ -57,9 +59,10 @@ def fetch(simulation_id: int, into: Path) -> tuple[str, Path, Path]:
 
 
 def run_locally(document: Path, interval: float, into: Path) -> Path:
+    """The document, run beside the files its archive carried (an SBML model it names, say), as the service ran it."""
     subprocess.run(
         [sys.executable, "-I", str(HERE / "runner.py"), "run", str(document), "-o", str(into), "-n", str(interval)],
-        check=True, stdout=subprocess.DEVNULL,
+        check=True, stdout=subprocess.DEVNULL, cwd=document.parent,
     )
     [results] = into.glob("results_*.pber")
     return results

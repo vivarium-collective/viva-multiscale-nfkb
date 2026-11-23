@@ -21,6 +21,8 @@
 investigations/*/runs.db
 investigations/*/viz/
 investigations/*/.run.lock
+# s3-distance/dispatch.py's lock and the account that submitted the study's runs
+workspace/investigations/*/studies/*/.dispatch*
 __pycache__/
 *.pyc
 *.egg-info/
