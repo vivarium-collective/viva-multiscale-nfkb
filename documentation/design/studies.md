@@ -128,7 +128,7 @@ Each fading bath is matched to one distance-study cell and bolus size: the cell'
   against up to 0.15 in the held baths. At 30 min per unit the median time of first death is 3.3 to 6.8 h in the fading
   baths and 4.2 to 13.6 h in the held ones; at 120 it is 11.7 to 16.8 h in the fading baths.
 
-### NF-κB's first nuclear peak
+### NF-κB's first nuclear peak and its period
 
 ```{include} _dose_nfkb.md
 ```
@@ -136,8 +136,12 @@ Each fading bath is matched to one distance-study cell and bolus size: the cell'
 NF-κB's trajectory depends only on the bath, because the fate networks don't feed back into it, so its first peak is
 the same at every clock and in both arms (knocking NF-κB out removes it from the fate network only). Its first peak
 comes no later as the dose rises, from 40.5 min at occupancy 0.005 to 23.5 min at occupancy 1, and higher, from 0.66 of
-the NF-κB in the nucleus to 0.94 by occupancy 0.2. The dose study records only this first peak, not the oscillation's
-period that the readouts above list.
+the NF-κB in the nucleus to 0.94 by occupancy 0.2.
+
+Its period is the time from that first peak to the next, when the next comes within 3 h (decision 60). It is 94 to 113
+min wherever NF-κB oscillates, but NF-κB doesn't oscillate at every dose. In the held baths it does at occupancy 0.005
+(94 min) and at 0.5 and 1 (113 and 111.5 min), but not from 0.01 to 0.2, where no second peak comes within 3 h. In the
+fading baths it oscillates in 4 of the 9. The period is computed from the released batch files, with no new runs.
 
 ### How the results were checked
 

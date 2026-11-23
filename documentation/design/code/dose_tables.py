@@ -84,20 +84,25 @@ def baths(dose: dict, rings: dict) -> str:
 
 
 def nfkb(dose: dict) -> str:
-    """NF-kB's first nuclear peak in each bath. It depends only on the bath: the fate networks don't feed back, and the
-    knocked-out arm removes NF-kB from the fate network only, so it must be the same at every clock and in both arms."""
+    """NF-kB's first nuclear peak and its period (decision 60) in each bath. Both depend only on the bath: the fate
+    networks don't feed back, and the knocked-out arm removes NF-kB from the fate network only, so they must be the
+    same at every clock and in both arms."""
     peaks: dict[str, dict] = {}
+    periods: dict[str, float | None] = {}
     for p in dose["points"]:
         peak = p["nfkb_first_peak"]
         if peaks.setdefault(p["exposure"], peak) != peak:
             raise SystemExit(f"{DOSE}: NF-kB's first peak in {p['exposure']} differs between points")
+        if periods.setdefault(p["exposure"], p["nfkb_period_min"]) != p["nfkb_period_min"]:
+            raise SystemExit(f"{DOSE}: NF-kB's period in {p['exposure']} differs between points")
     held_names = _held(dose)
     occupancy = {p["exposure"]: p["occupancy"] for p in dose["points"] if "occupancy" in p}
-    lines = ["| Bath | Time (min) | Nuclear fraction |", "|---|---|---|"]
+    lines = ["| Bath | First peak (min) | Nuclear fraction | Period (min) |", "|---|---|---|---|"]
     for e in held_names + [e for e in peaks if e not in held_names]:
         name = f"held, occupancy {occupancy[e]:g}" if e in occupancy else (
             "fading, matched to the {} cell, bolus {}".format(RING_LABEL[e.split("-")[1]], e.split("-M")[1]))
-        lines.append(f"| {name} | {peaks[e]['time_min']:g} | {peaks[e]['nuclear_fraction']:.2f} |")
+        period = "none" if periods[e] is None else f"{periods[e]:g}"
+        lines.append(f"| {name} | {peaks[e]['time_min']:g} | {peaks[e]['nuclear_fraction']:.2f} | {period} |")
     return "\n".join(lines) + "\n"
 
 
