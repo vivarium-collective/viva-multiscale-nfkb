@@ -1,0 +1,153 @@
+# s2-dose/study.yaml — schema v4. The dose study of tnf-fate-in-space (decision 18, Alex, 2026-11-04): fate in uniform
+# TNF, the control for the distance study. Its settings are decisions 38, 40b, 41, 43, 49, 50 and 56.
+
+schema_version: 4
+name: s2-dose
+investigation: tnf-fate-in-space
+title: Fate vs uniform TNF dose (the dose study)
+created: '2026-11-19'
+status: ran
+phase: Evaluate
+parent_studies:
+- {study: s1-survival-validation, condition: ran, relation: leads-to}
+
+question: >
+  How does the fraction of cells alive at 24 h depend on a uniform TNF bath, held at a receptor occupancy or fading
+  exponentially, at death clocks of 30, 60 and 120 min per unit, with NF-kB intact and knocked out?
+
+hypothesis: >
+  None is tested here. The held baths give the dose curve, which is reported, not tested (decision 41). Each fading
+  bath is matched to one distance-study cell and bolus size, with the same peak TNF and the same sensed dose (decisions
+  50 and 56), and is the dose side of E4's comparison, which the distance study's runs complete (decisions 53, 55 to
+  58).
+
+objective: >
+  Run Study 1's population (Study 0's builder: one Lipniacki model shared by the fate networks, absorbing death,
+  coupling every 30 s, 24 h) in 8 held baths (receptor occupancy 0.005 to 1, denser below 0.2) and 9 fading baths
+  c0 exp(-lambda t), one per distance-study cell (100, 300 and 1000 um) and bolus size (1, 10 and 100 uM um^2), at 30,
+  60 and 120 min per unit, NF-kB intact and knocked out: 102 points of 1,890 cells each (7 batches of 270, seeds 1 to
+  1,890), every TNF node off at t = 0.
+
+assumptions:
+- text: >
+    Receptor occupancy is c / (c + Kd), Kd = 19 pM, treated as quasi-steady (decision 32). A fading bath's occupancy is
+    updated at every 30 s coupling, as the field composite's dose-response Step does with the TNF at the cell.
+- text: >
+    NF-kB's trajectory depends only on the bath: the fate networks don't feed back into Lipniacki's model, and the
+    knocked-out arm (kappa = 0) removes NF-kB from the fate network only. So every batch of a point has the same
+    NF-kB, and a run with one fate network reproduces it; the summary checks both.
+
+conditions:
+  baseline:
+  - name: population
+    description: >-
+      Study 1's population in a uniform bath (dose_study.py): one Lipniacki model and 270 fate networks per batch,
+      coupling every 30 s, absorbing death, 24 h, every TNF node off at t = 0 (decision 49).
+    composite: viva_multiscale_nfkb.composites.kinetic_boolean
+    params:
+      interval: 30.0
+      sample_count: 1
+  variants:
+  - name: held-baths
+    description: "Receptor occupancy held at 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5 and 1 (decision 43)."
+  - name: fading-baths
+    description: >-
+      c(t) = c0 exp(-lambda t), turned into occupancy at every coupling; c0 is the matched cell's peak TNF and lambda
+      gives the bath the cell's 24 h receptor occupancy-time (decisions 50 and 56;
+      analysis/exposure-design/ring_exposure.json). Half-lives 6 to 181 min.
+  - name: nfkb-knockout
+    description: "kappa = 0: the fate network's NF-kB node never switches on."
+  - name: death-clocks
+    description: "30, 60 and 120 min per Calzone unit (decision 38)."
+  model_settings:
+  - name: cells
+    gate: optional
+    description: "1,890 cells per point, 7 batches of 270, seeds 1 to 1,890 (decision 40b); the distance study runs 1891 to 3780 (decision 57)."
+
+controls:
+  negative: >-
+    NF-kB knocked out: no cell can reach Survival, so every knocked-out cell alive at 24 h has reached no fate. It
+    holds at all 51 knocked-out points (no_fate equals alive_cells).
+  positive: >-
+    Occupancy 1 at 30 min per unit kills every cell in both arms, as held, saturating TNF did in Study 1 at that clock.
+
+readouts:
+- "Alive at 24 h: no death node (Apoptosis, NonACD) ever on (decision 41); as a count (alive_cells, what E4 tests) and a fraction."
+- "The survival curve: the fraction alive at each hour, and the median time of first death."
+- "Death mode: Apoptosis and NonACD on at 24 h (a cell can show both)."
+- "No fate: no fate node ever on in 24 h."
+- "NF-kB's first nuclear peak: time and nuclear fraction."
+
+falsifiability: >
+  The dose study tests no claim of its own. Its numbers would be wrong for E4 if a batch had been run with other
+  settings than its point names; the summary refuses a point whose batches' NF-kB differs from a fresh run of its bath.
+
+limitations: >
+  The death clock is unknown and swept at three values. Under held TNF cells are still dying at 24 h (up to 0.15 of
+  them in the last 4 h at 120 min per unit), so the alive fraction at 24 h is not where the curve settles. Between
+  occupancy 0.2 and 1 the held curve has only two more doses, 0.5 and 1, and at 120 min per unit most of its fall
+  lies there. Occupancy 1 is
+  not Study 1's condition: there every TNF node started on, here every one starts off and switches on at rate occ per
+  unit. The summary's check proves each batch's bath, not its fate networks' settings. The study records NF-kB's
+  first nuclear peak, not its period. The 714 batch files (89 MB) are not in the repository; data/dose.json holds
+  every point's counts, survival curve and NF-kB peak.
+
+claim: >
+  Survival at 24 h falls with dose at every death clock and in both arms, and is higher the slower the clock: held
+  occupancy 0.005 to 1 leaves 0.938 to 0 alive at 30 min per unit, 0.976 to 0.003 at 60 and 0.990 to 0.241 at 120
+  (NF-kB intact). NF-kB adds at most 0.103 to the alive fraction. The 54 matched fading baths leave 0.123 to 0.996
+  alive, 20 of them within 0.05 of everyone alive. E4 has no verdicts until the distance study runs.
+confidence: Investigating
+
+findings:
+- id: f1-held-dose-curve
+  tier: observation
+  summary: >
+    Held baths, 1,890 cells per point. Alive at 24 h falls with occupancy at every clock and in both arms, and rises
+    with the clock at every dose: 0.938 to 0 at 30 min per unit, 0.976 to 0.003 at 60, 0.990 to 0.241 at 120 (knocked
+    out 0.933 to 0, 0.974 to 0.0005, 0.987 to 0.138), from occupancy 0.005 to 1. Per unit of occupancy it falls
+    fastest between 0.005 and 0.02 at every clock; at 120 min per unit 0.52 of its 0.75 fall (intact) lies above 0.2.
+    At occupancy 0.05 and 30 min per unit, 0.572 are alive. Cells with no fate are the majority up to occupancy 0.05
+    at 30 min per unit, 0.1 at 60 and 0.2 at 120.
+  evidence: data/dose.json; dose_study.py; documentation/design/studies.md (generated tables)
+- id: f2-nfkb-protects-few
+  tier: observation
+  summary: >
+    Alive intact minus knocked out is never negative at a held dose and at most 0.047 at 30 min per unit, 0.069 at 60
+    and 0.103 at 120 (occupancy 1). In the fading baths it is at most 0.061 (the 300 um cell's bath at bolus size 100,
+    60 min per unit), and at most 0.0021 either way at bolus size 1. Unpaired fractions; Study 1 found at most about 10
+    to 13 points of paired net protection under held, saturating TNF.
+  evidence: data/dose.json
+- id: f3-death-modes-and-timing
+  tier: observation
+  summary: >
+    With NF-kB intact, Apoptosis is on in more cells than NonACD at every held dose at 30 and 60 min per unit; at 120,
+    and knocked out at every clock, NonACD is on in more at 6 to 8 of the 8 doses. Under held TNF cells are still
+    dying at 24 h: up to 0.08, 0.10 and 0.15 of them die in the last 4 h at 30, 60 and 120 min per unit. In the fading
+    baths at most 0.033 of the cells die in the last 4 h. At 30 min per unit the median time of first death is 3.3 to
+    6.8 h in the fading baths and 4.2 to 13.6 h in the held baths; at 120 it is 11.7 to 16.8 h in the fading baths.
+  evidence: data/dose.json (apoptosis_24h, necrosis_24h, survival_curve_hourly, median_first_death_min)
+- id: f4-matched-baths
+  tier: observation
+  summary: >
+    The 54 matched fading baths (9 per arm and clock) leave 0.123 to 0.996 alive. Every bath at bolus size 1 leaves
+    0.960 to 0.996, and the 1000 um cell's bath at bolus size 10 leaves 0.966 at 120 min per unit in both arms: 20 of
+    the 54 are within 0.05 of everyone alive, none within 0.05 of everyone dead. Decision 58 flags an E4
+    configuration near the ceiling when its distance side is too. These counts (alive_cells, cells) are the dose side
+    of every E4 comparison.
+  evidence: data/dose.json; e4_verdict.py reads its seeds and each bath's alive_cells and cells
+- id: f5-nfkb-first-peak
+  tier: observation
+  summary: >
+    NF-kB's first nuclear peak is the same at every clock and in both arms in each bath, as it must be. In the held
+    baths it comes at 40.5 min (nuclear fraction 0.66) at occupancy 0.005 and no later at higher doses, 23.5 min (0.93)
+    at occupancy 1; its height reaches 0.94 by occupancy 0.2. In the fading baths it comes at 23.5 to 38.5 min.
+  evidence: data/dose.json (nfkb_first_peak)
+
+runs:
+- name: dose-study
+  status: complete
+  emitter:
+    kind: json
+    store: data/dose.json
+  params: "{\"cells_per_point\": 1890, \"batches\": 7, \"seeds\": [1, 1890], \"hours\": 24, \"interval_s\": 30, \"absorb_death\": 1, \"kappa\": {\"intact\": \"ln2/337\", \"knocked_out\": 0}, \"minutes_per_unit\": [30, 60, 120], \"held_occupancy\": [0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1], \"fading_baths\": \"analysis/exposure-design/ring_exposure.json (sensed-dose match, decision 56)\", \"kd_uM\": 1.9e-05, \"builder\": \"../s0-coupling-calibration/population.py\", \"environment\": \"compose/ (pinned to compose-api's production mash-up; process-bigraph 1.9.1)\", \"batches_run\": \"2026-11-19 to 2026-11-21, parquet-runs/<point>/batch<k>.parquet (not committed)\", \"summarized\": \"2026-11-23, with the bath check\"}"
