@@ -21,6 +21,10 @@
 investigations/*/runs.db
 investigations/*/viz/
 investigations/*/.run.lock
+# The dose and distance studies' batch files live on GitHub releases, not in git; each study commits their
+# checksums (parquet-runs.sha256). Studies 0 and 1 commit their (small) batch files.
+workspace/investigations/*/studies/s2-dose/parquet-runs*/
+workspace/investigations/*/studies/s3-distance/parquet-runs/
 __pycache__/
 *.pyc
 *.egg-info/

@@ -89,8 +89,9 @@ limitations: >
   lies there. Occupancy 1 is
   not Study 1's condition: there every TNF node started on, here every one starts off and switches on at rate occ per
   unit. The summary's check proves each batch's bath, not its fate networks' settings. The study records NF-kB's
-  first nuclear peak, not its period. The 714 batch files (89 MB) are not in the repository; data/dose.json holds
-  every point's counts, survival curve and NF-kB peak.
+  first nuclear peak, not its period. The 714 batch files (89 MB) are not in the repository but on the release
+  s2-dose-batches (s2-dose-parquet-runs.tar.gz), checked by parquet-runs.sha256; data/dose.json holds every point's
+  counts, survival curve and NF-kB peak.
 
 claim: >
   Survival at 24 h falls with dose at every death clock and in both arms, and is higher the slower the clock: held

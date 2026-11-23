@@ -147,6 +147,10 @@ period that the readouts above list.
   check refuses a batch run with decision 50's concentration-matched bath.
 - **The 234 batches run with the concentration-matched baths** are kept aside in `parquet-runs-concentration-match/`
   and not used (decision 56).
+- **The 714 batch files** (89 MB) are not in the repository but on the release `s2-dose-batches`, and the study's
+  `parquet-runs.sha256` checks them. From the study's folder: `gh release download s2-dose-batches -R
+  vivarium-collective/viva-multiscale-nfkb -p s2-dose-parquet-runs.tar.gz`, `tar -xzf s2-dose-parquet-runs.tar.gz`,
+  then `shasum -a 256 -c parquet-runs.sha256`. `dose_study.py` then reads them back instead of running them.
 
 ## What Study 0 changes
 
