@@ -49,7 +49,7 @@ cli = ["typer", "rich"]
 simulators = [
     "viva-tellurium @ git+https://github.com/vivarium-collective/viva-tellurium@846f87c57058a6bfa383619c9ae7587f0d81453c",
     "viva-maboss @ git+https://github.com/vivarium-collective/viva-maboss@a57c21a1c7ca8f5aa27252d3d4c696d70153019f",
-    "viva-basic-processes @ git+https://github.com/vivarium-collective/viva-basic-processes@9a1a624dc925cf700c3f89a8cc008a8fa4b4e5d4",
+    "viva-basic-processes @ git+https://github.com/vivarium-collective/viva-basic-processes@f9ea4bd35f1ab94e4a8e9e715eaf78da0d04fcc4",
     "viva-pde-particle @ git+https://github.com/vivarium-collective/viva-pde-particle@25e8a058f01cf2f107e6504899baa11d13fff0de",
 ]
 
@@ -74,6 +74,11 @@ workbench = ["multiscale-nfkb[dashboard]"]
 
 [tool.uv]
 default-groups = ["workbench", "analysis"]
+# vivarium-workbench asks for viva-basic-processes from git `main`; every request takes the commit compose-api's
+# registry pins (as the simulators extra and compose/ do), so the dashboard and the runs use the same TimeSeriesStep.
+override-dependencies = [
+    "viva-basic-processes @ git+https://github.com/vivarium-collective/viva-basic-processes@f9ea4bd35f1ab94e4a8e9e715eaf78da0d04fcc4",
+]
 
 [build-system]
 requires = ["hatchling"]

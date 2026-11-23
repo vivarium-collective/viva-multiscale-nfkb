@@ -13,6 +13,9 @@ resolution-markers = [
     "python_full_version < '3.13' and sys_platform != 'emscripten' and sys_platform != 'win32'",
 ]
 
+[manifest]
+overrides = [{ name = "viva-basic-processes", git = "https://github.com/vivarium-collective/viva-basic-processes?rev=f9ea4bd35f1ab94e4a8e9e715eaf78da0d04fcc4" }]
+
 [[package]]
 name = "accessible-pygments"
 version = "0.0.5"
@@ -1622,7 +1625,7 @@ requires-dist = [
     { name = "scipy", marker = "extra == 'analysis'" },
     { name = "statsmodels", marker = "extra == 'analysis'", specifier = ">=0.14" },
     { name = "typer", marker = "extra == 'cli'" },
-    { name = "viva-basic-processes", marker = "extra == 'simulators'", git = "https://github.com/vivarium-collective/viva-basic-processes?rev=9a1a624dc925cf700c3f89a8cc008a8fa4b4e5d4" },
+    { name = "viva-basic-processes", marker = "extra == 'simulators'", git = "https://github.com/vivarium-collective/viva-basic-processes?rev=f9ea4bd35f1ab94e4a8e9e715eaf78da0d04fcc4" },
     { name = "viva-maboss", marker = "extra == 'simulators'", git = "https://github.com/vivarium-collective/viva-maboss?rev=a57c21a1c7ca8f5aa27252d3d4c696d70153019f" },
     { name = "viva-pde-particle", marker = "extra == 'simulators'", git = "https://github.com/vivarium-collective/viva-pde-particle?rev=25e8a058f01cf2f107e6504899baa11d13fff0de" },
     { name = "viva-tellurium", marker = "extra == 'simulators'", git = "https://github.com/vivarium-collective/viva-tellurium?rev=846f87c57058a6bfa383619c9ae7587f0d81453c" },
@@ -3554,8 +3557,8 @@ wheels = [
 
 [[package]]
 name = "viva-basic-processes"
-version = "0.3.0"
-source = { git = "https://github.com/vivarium-collective/viva-basic-processes.git?branch=main#9a1a624dc925cf700c3f89a8cc008a8fa4b4e5d4" }
+version = "0.4.0"
+source = { git = "https://github.com/vivarium-collective/viva-basic-processes?rev=f9ea4bd35f1ab94e4a8e9e715eaf78da0d04fcc4#f9ea4bd35f1ab94e4a8e9e715eaf78da0d04fcc4" }
 dependencies = [
     { name = "bigraph-schema" },
     { name = "numpy" },
