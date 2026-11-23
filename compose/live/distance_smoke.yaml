@@ -1,0 +1,36 @@
+# written by compose/live.py (see its docstring); regenerate, never edit by hand
+interval: 86400.0
+rtol: 1.0e-09
+local:
+  platform: Darwin arm64
+  packages:
+    process-bigraph: 1.9.1
+    viva-maboss: 0.1.2 (a57c21a)
+    viva-tellurium: 0.2.3 (846f87c)
+    viva-pde-particle: 0.0.0 (25e8a05)
+    viva-basic-processes: 0.4.0 (f9ea4bd)
+runs:
+- id: 12549
+  environment: mash-bb433b1002@3
+  document_sha256: d300a39834138cc312c2d1f3a68c913466017a88b9aff11cae1f0f1ba6ba871d
+  rows: 2881
+comparisons:
+- between:
+  - 12549
+  - local
+  keys:
+    coded_at:
+      verdict: identical
+      relative_difference: 0.0
+    fate_codes:
+      verdict: identical
+      relative_difference: 0.0
+    global_time:
+      verdict: identical
+      relative_difference: 0.0
+    nfkb_fraction:
+      verdict: within RTOL
+      relative_difference: 4.3e-14
+    nfkb_fraction_time:
+      verdict: identical
+      relative_difference: 0.0
