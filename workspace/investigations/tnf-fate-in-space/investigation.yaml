@@ -11,6 +11,7 @@ description: 'What decides whether a cell survives or dies when TNF reaches it b
 studies:
 - s0-coupling-calibration
 - s1-survival-validation
+- s2-dose
 expert_docs: []
 proposed_inputs:
   _note: "Agent-suggested inputs the expert did NOT provide; the expert accepts or declines each."
@@ -45,7 +46,7 @@ acceptance_criteria: []
 question: 'What decides whether a cell survives or dies when TNF reaches it by diffusion, and does space act only through the dose that arrives, or also through when it arrives?
 
   '
-hypothesis: 'Map each run with a diffusing TNF bolus onto the uniform-dose curve by the TNF dose that reached the cell (peak and time-integrated). If fate collapses onto that curve, space acts only through dose; if it does not, arrival timing matters. NF-kB''s nuclear wave timing under the moving front is the mechanism either way. Every coupling is first calibrated (Study 0) on parts verified by the workspace''s compose-api checks.
+hypothesis: 'Pair each distance-study configuration (ring, bolus size, death clock, NF-kB arm) with a uniform bath that fades exponentially and gives its cell the same peak TNF and the same sensed dose, the receptor occupancy-time over 24 h (decisions 50 and 56). Where the fraction alive at 24 h is equivalent within 0.05, space acts only through dose (a configuration near everyone alive or everyone dead is flagged, since equivalence there says little about timing; decision 58); where it differs, the arrival delay or the pulse''s shape matters; each configuration is equivalent, different or inconclusive (decisions 40, 40b, 53, 55). NF-kB''s nuclear wave timing under the moving front is the mechanism either way. Every coupling is first calibrated (Study 0) on parts verified by the workspace''s compose-api checks.
 
   '
 executive:
