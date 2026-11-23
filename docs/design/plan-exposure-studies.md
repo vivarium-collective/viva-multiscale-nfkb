@@ -1,6 +1,6 @@
 # Plan: the exposure studies (dose, distance, wave timing)
 
-Status: draft 4, 2026-11-20. Steps 1 and 2 are done, step 3 is running (restarted 2026-11-20 with the sensed-dose baths), and E4 is decided (decisions 49 to 58).
+Status: draft 4, 2026-11-20; updated 2026-11-23. Steps 1 to 3 are done (the dose study finished on 2026-11-21 with the sensed-dose baths; results in `documentation/design/studies.md`), and E4 is decided (decisions 49 to 58).
 Decision 37 (Alex) makes these the next work. The three studies are defined in `documentation/design/studies.md`. This plan makes them runnable and
 puts to Alex what they still leave open.
 
@@ -150,7 +150,7 @@ puts to Alex what they still leave open.
 2. **The geometry check** `spatial/far-bolus`: the chosen box, band and grid against the free-space solution at the
    three rings, within the measured band error. Its negatives are D 50 and a misplaced ring (done 2026-11-19: `checks/spatial/far-bolus`).
    The band acts only after about 6 h, beyond the check's hour, so its effect is measured in the 24 h exposure runs.
-3. **The dose study** (`s2-dose`, running since 2026-11-19), at E5's clocks, intact and knocked out, 7 batches of 270
+3. **The dose study** (`s2-dose`, done: 2026-11-19 to 2026-11-21), at E5's clocks, intact and knocked out, 7 batches of 270
    seeds (1,890 cells per point; decision 40b): 8 held baths and the 9 matched decaying baths (decisions 50 and 56), with
    every cell's TNF off at the start (decision 49). The decaying bath is checked by `checks/coupled/decaying-bath`.
 4. **Pre-register E4** in the distance study before any distance run: decisions 40, 40b, 50 to 53 and 55 to 58. The scorer is
