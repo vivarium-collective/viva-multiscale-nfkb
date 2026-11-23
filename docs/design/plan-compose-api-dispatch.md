@@ -76,8 +76,16 @@ saved state of the one before.
   the document with its SBML model.
 - **Runs are signed-in and private** while the study runs, and made public when its results are published. A public
   anonymous run has no owner, so its visibility can't be changed later.
-- **One full document is measured first, locally** (plan step 5): its wall time, memory and size. The measurement
-  decides how many fate networks a document can hold within 8 GB.
+- **Each run is one population** (270 fate networks and one Lipniacki model, 24 h of simulated time): 402 s on this
+  machine, 16.5 min on compose-api (2026-11-23). The smoke run, simulation 12549 (intact, 120 min per unit, near
+  ring, bolus 100, batch 1), matched the same archive run here: every cell's fate code at all 2,880 instants, and
+  NF-κB's nuclear fraction to 4e-14 (`compose/live/distance_smoke.yaml`).
+- **Dispatch.** `s3-distance/dispatch.py submit` sends the 378 runs, never more than `--max-active` of them active at
+  once (default 20, Alex 2026-11-23), because compose-api's queue is shared and has no per-user limit. compose-api is
+  the record: each run is tagged `nfkb-s3-distance` and `s3:<point>-batch<k>`, so submitting again sends only the
+  batches with no run, or whose one run failed. `collect` checks that each completed run ran in `mash-bb433b1002@3` and
+  ran the document `distance_study.py` builds, then writes its results where a local run writes them;
+  `distance_study.py` then reads every batch back and summarizes.
 - **The matched decaying baths run locally** in the dose study (decision 50), so E4's two sides run in different
   places. The decaying-bath check and the far-bolus check cover each side. A compose-api run and a local run of the
   same document must agree, as the MVP's live record does (`compose/live.py`).
