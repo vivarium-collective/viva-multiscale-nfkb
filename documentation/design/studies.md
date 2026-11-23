@@ -39,8 +39,8 @@ What counts as a match was fixed before the distance study runs, so that the ans
   timing effect needs NF-κB; no test of the difference between the arms is fixed in advance, so that reading is not
   a verdict.
 
-The scorer was written and tested before any distance run (`workspace/investigations/tnf-fate-in-space/studies/s2-dose/e4_verdict.py`; its interval reproduces Newcombe's published values). The held baths give the dose curve itself, which the dose study reports. The wave-timing study shows the mechanism
-behind either answer.
+The scorer was written and tested before any distance run (`workspace/investigations/tnf-fate-in-space/studies/s2-dose/e4_verdict.py`; its interval reproduces Newcombe's published values). The held baths give the dose curve itself, which the dose study reports ([below](#the-dose-studys-results)). The
+wave-timing study shows the mechanism behind either answer.
 
 ## The death clock
 
@@ -65,6 +65,88 @@ machinery be for TNF to kill, at each dose and each distance?
   30 min of computing, and a study runs 24 h, so how they run there is planned before any submission
   (`docs/design/plan-compose-api-dispatch.md`). Each new composite also gets one 990 s live run (decision 44).
 - **TNF diffuses at 100 µm²/s,** the measured free-solution value (decision 45).
+
+## The dose study's results
+
+The dose study ran from 19 to 21 November 2026: 102 points (two NF-κB arms, three clocks, 8 held and 9 fading baths),
+each with 1,890 cells (seeds 1 to 1,890, in 7 batches of 270) followed for 24 h, every TNF node off at the start
+(decision 49). An alive fraction over 1,890 cells has a standard error of at most 0.012. Each table cell gives NF-κB
+intact / knocked out. The data are `workspace/investigations/tnf-fate-in-space/studies/s2-dose/data/dose.json`, with
+each point's hourly survival curve and median time of first death; the tables are generated from it by
+`documentation/design/code/dose_tables.py` (`--check` fails when they are stale).
+
+### Held baths: the dose curve
+
+Alive at 24 h:
+
+```{include} _dose_held.md
+```
+
+- **Survival falls with dose at every clock and in both arms.** From occupancy 0.005 to 1 it falls from 0.938 to 0
+  at 30 min per unit, from 0.976 to 0.003 at 60, and from 0.990 to 0.241 at 120 (0.138 knocked out). At every dose,
+  the slower the death clock, the more cells are alive.
+- **NF-κB protects few cells.** At no held dose does the intact arm have fewer cells alive than the knocked-out arm,
+  and it has at most 0.047 more at 30 min per unit, 0.069 at 60 and 0.103 at 120 (occupancy 1). Study 1 found a
+  similar limit under held, saturating TNF ({doc}`validation`).
+- **At low doses most cells reach no fate in 24 h:** at occupancy 0.005, 1,762, 1,834 and 1,864 of the 1,890 intact
+  cells at 30, 60 and 120 min per unit. Without NF-κB no cell can reach Survival, so every knocked-out cell alive at
+  24 h has reached no fate.
+- **Cells are still dying at 24 h.** At 60 and 120 min per unit, up to 0.10 and 0.15 of the cells die in the last
+  4 h, so the alive fraction at 24 h is not where the curve would settle.
+
+How cells die. Death is absorbing, so a death node on at 24 h means it ever switched on, and a cell can show both.
+The fraction with apoptosis on at 24 h:
+
+```{include} _dose_held_apoptosis.md
+```
+
+and with necrosis on:
+
+```{include} _dose_held_necrosis.md
+```
+
+With NF-κB intact, apoptosis is the more common mode at every held dose at 30 and 60 min per unit. At 120 min per unit,
+and with NF-κB knocked out at every clock, necrosis is the more common at 6 to 8 of the 8 doses.
+
+### Fading baths: the dose study's side of E4
+
+Each fading bath is matched to one distance-study cell and bolus size: the cell's peak TNF and its sensed dose
+(decisions 50 and 56). Alive at 24 h (the bolus is in µM·µm², and the half-life is the bath's):
+
+```{include} _dose_baths.md
+```
+
+- **These are one side of E4's 54 comparisons.** The other side is the distance study, which has not run yet, so E4
+  has no verdicts.
+- **20 of the 54 baths are within 0.05 of everyone alive:** every bath at bolus size 1, at every clock and in both
+  arms (0.960 to 0.996), and the 1000 µm cell's bath at bolus size 10 at 120 min per unit (0.966 and 0.966). Decision
+  58 flags a configuration near the ceiling when its distance-study side is too, where equivalence says little about
+  timing. No bath is within 0.05 of everyone dead.
+- **NF-κB protects at most 0.061** in a fading bath (the 300 µm cell's bath at bolus size 100, 60 min per unit). At
+  bolus size 1 the two arms differ by at most 0.0021, either way.
+- **Few cells are still dying at the end of the day:** at most 0.033 of them in the last 4 h (at 120 min per unit),
+  against up to 0.15 in the held baths. At 30 min per unit the median time of first death is 3.3 to 6.8 h in the fading
+  baths and 4.2 to 13.6 h in the held ones; at 120 it is 11.7 to 16.8 h in the fading baths.
+
+### NF-κB's first nuclear peak
+
+```{include} _dose_nfkb.md
+```
+
+NF-κB's trajectory depends only on the bath, because the fate networks don't feed back into it, so its first peak is
+the same at every clock and in both arms (knocking NF-κB out removes it from the fate network only). Its first peak
+comes no later as the dose rises, from 40.5 min at occupancy 0.005 to 23.5 min at occupancy 1, and higher, from 0.66 of
+the NF-κB in the nucleus to 0.94 by occupancy 0.2. The dose study records only this first peak, not the oscillation's
+period that the readouts above list.
+
+### How the results were checked
+
+- **Every batch is the bath it names.** NF-κB's trajectory is deterministic, so each point's 7 batches must give the
+  same one, and a run of its bath with a single fate network must reproduce it exactly. The study's summary checks
+  both and refuses a point otherwise; all 102 points passed (rerun on 23 November 2026, `dose_study.py`). The same
+  check refuses a batch run with decision 50's concentration-matched bath.
+- **The 234 batches run with the concentration-matched baths** are kept aside in `parquet-runs-concentration-match/`
+  and not used (decision 56).
 
 ## What Study 0 changes
 

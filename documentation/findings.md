@@ -19,12 +19,30 @@ NF-κB is four, and active caspase-8 shuts NF-κB's route. Letting NF-κB switch
 wins that race, but most cells still don't survive, so that change was not adopted. The gap is an open question, not
 something tuned away.
 
+## The more TNF, the fewer cells survive
+
+The dose study bathed cells, starting at rest, in uniform TNF, held steady or fading away, at three speeds of the fate
+network's clock, with NF-κB working and with it knocked out ({doc}`design/studies`):
+
+- **Survival falls steadily with dose.** Held at the lowest dose (0.5% of the receptors bound), 93 to 99 cells in 100
+  are alive after a day. With every receptor bound, none are at the fastest clock; at the slowest, a quarter are with
+  NF-κB working and 14 in 100 without it.
+- **NF-κB saves few cells:** knocking it out costs at most about 10 cells in 100, at the highest doses and the slowest
+  clock, close to the limit Study 1 found.
+- **At low doses most cells have not committed to any fate within the day,** and under held TNF cells are still dying
+  when the day ends.
+- **More TNF brings NF-κB into the nucleus sooner:** its first peak comes about 24 minutes after a full dose arrives,
+  against about 40 at the lowest dose.
+- **In fading TNF, few cells are still dying when the day ends:** at most 3 in 100 in the last 4 hours, against up to
+  15 under steady TNF. Each fading bath is matched to a cell of the distance study, with the same peak TNF and the same
+  dose as the cell's receptors sense it. The weakest third leave at least 96 cells in 100 alive.
+
 ## Next: what exposure does
 
 The next studies ask whether space matters only through how much TNF reaches a cell, or also through when it arrives
 ({doc}`design/studies`):
 
-- **Dose:** survival at 24 hours across TNF doses, held steady or fading as a real dose does.
+- **Dose:** done (above). Its fading baths are what the distance study's cells are compared with.
 - **Distance:** cells 100 µm, 300 µm and 1 mm from a pulse of TNF, compared with cells given the same dose evenly.
 - **Many cells:** a field of cells, each with its own signalling and fate, so that cells taking up TNF shade their
   neighbours.

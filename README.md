@@ -65,15 +65,23 @@ and fate layers on their own, with TNF held on.
     NF-κB node is on only about a quarter of the time.
   - Cells without NF-κB also die more, mostly by necrosis.
   - That change was not adopted. The gap is recorded as an open question, not tuned away.
+- **The more TNF, the fewer cells survive.** The dose study bathed cells that start at rest in uniform TNF, held
+  steady or fading away, at three speeds of the death machinery, with NF-κB working and with it knocked out.
+  - At the lowest dose, with half a percent of the receptors bound, 93 to 99 cells in 100 are alive after a day. With
+    every receptor bound, none are at the fastest speed, and at the slowest a quarter are if NF-κB works.
+  - NF-κB saves at most about 10 cells in 100, much as under constant, saturating TNF.
+  - At low doses most cells have not committed to any fate by the end of the day, and under steady TNF cells are still
+    dying when it ends.
+  - More TNF brings NF-κB into the nucleus sooner: about 24 minutes after a full dose, against about 40 at the lowest.
+  - When TNF fades away, few cells are still dying as the day ends: at most 3 in 100 in the last 4 hours, against up
+    to 15 when it stays.
 - **Next: does distance matter beyond dose?** A cell close to a burst of TNF gets a short, strong pulse; a cell far
   away gets a later, weaker, longer one. The exposure studies ask whether that difference in timing changes a cell's
   fate, or whether only the amount of TNF counts.
-  - **The dose study, running now,** bathes cells in uniform TNF, either held steady or fading away exponentially, at
-    three speeds of the death machinery, with NF-κB working and with it knocked out. Every cell starts at rest.
   - **The distance study** places cells 100 µm, 300 µm and 1 mm from a burst of TNF in an open medium, which reaches
     them after about half a minute, 4 minutes and 40 minutes, at three burst sizes.
-  - **The comparison:** each distance-study cell is paired with a fading bath that gives it the same peak TNF and the
-    same dose as the cell senses it, how long its TNF receptors are bound over the day. What the bath lacks is only what distance adds: the delay before TNF arrives and
+  - **The comparison:** each distance-study cell is paired with one of the dose study's fading baths, which gives it
+    the same peak TNF and the same dose as the cell senses it, how long its TNF receptors are bound over the day. What the bath lacks is only what distance adds: the delay before TNF arrives and
     the shape of the pulse. If survival at 24 hours matches within 5 cells in 100, distance acts only through dose.
     Each pairing comes out equivalent, different or inconclusive, and the answer is the map of where each holds. The
     same map with NF-κB knocked out, set beside it, suggests whether a timing effect needs NF-κB; no test of the
