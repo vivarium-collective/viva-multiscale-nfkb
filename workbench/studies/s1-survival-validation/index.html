@@ -16,17 +16,25 @@
 </head>
 <body>
 <main class="study-page">
+
+
 <header class="study-header">
-  <div style="display:flex; align-items:center; gap:14px; justify-content:space-between;">
+  <div style="display:flex; align-items:flex-start; gap:14px; justify-content:space-between;">
+  <div class="study-head-main" style="min-width:0; flex:1 1 auto">
   <div style="display:flex; align-items:center; gap:12px; min-width:0; flex-wrap:wrap">
   <h1 class="study-title" style="margin:0">
     <span class="study-name" id="study-name" data-slug="s1-survival-validation" data-study-kind="computational" title="s1-survival-validation" data-edit-kind="study" data-edit-field="title" data-edit-value="Survival under TNF (validation against NF-kB-dependent survival)" data-edit-label="Title">Survival under TNF (validation against NF-kB-dependent survival)</span>
     
   </h1>
+  </div>
+  <p id="study-question-headline" class="study-question-headline" title="Under held, saturating TNF, can the composite let most cells with working NF-kB survive, while cells without NF-kB still die, using only the published models&#39; own parameters? If not, where is the limit?
+" data-edit-kind="study" data-edit-field="question" data-edit-value="Under held, saturating TNF, can the composite let most cells with working NF-kB survive, while cells without NF-kB still die, using only the published models&#39; own parameters? If not, where is the limit?
+" data-edit-multiline data-edit-label="Question"><span class="q-glyph">Q</span> <span class="study-question-headline-text">Under held, saturating TNF, can the composite let most cells with working NF-kB survive, while cells without NF-kB still die, using only the published models&#39; own parameters? If not, where is the limit?
+</span></p>
+  </div>
+  <span class="study-header-actions" style="display:inline-flex; gap:10px; flex-shrink:0; align-items:center;">
     
     <span id="study-axis-markers" data-slug="s1-survival-validation" style="display:inline-flex; gap:8px; align-items:center; flex-wrap:wrap"></span>
-  </div>
-  <span class="study-header-actions" style="display:inline-flex; gap:6px; flex-shrink:0; align-items:center;">
     
     
     
@@ -49,10 +57,6 @@
 
 
 
-
-<p id="study-question-headline" class="study-question-headline"><span class="q-glyph">Q</span> <span class="study-question-headline-text" data-edit-kind="study" data-edit-field="question" data-edit-value="Under held, saturating TNF, can the composite let most cells with working NF-kB survive, while cells without NF-kB still die, using only the published models&#39; own parameters? If not, where is the limit?
-" data-edit-multiline data-edit-label="Question">Under held, saturating TNF, can the composite let most cells with working NF-kB survive, while cells without NF-kB still die, using only the published models&#39; own parameters? If not, where is the limit?
-</span></p>
 
 <nav class="study-tabs" aria-label="Study sections">
   
@@ -82,10 +86,18 @@
   </button>
   
   <span class="study-dl study-export-wrap" style="margin-left:auto; align-self:center; position:relative; display:inline-flex">
-    <button type="button" id="study-export-btn" class="btn-mini" aria-haspopup="true" aria-expanded="false" title="Download this study's figures or a runnable notebook">↓ Export ▾</button>
-    <div id="study-export-menu" role="menu" style="display:none;position:absolute;right:0;top:100%;margin-top:4px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.14);z-index:70;min-width:200px;padding:4px">
-      <button type="button" id="study-dl-figures" role="menuitem" class="study-jump-item" onclick="window._vivStudyFiguresFromCard(event, 's1-survival-validation')">Download figures</button>
-      <button type="button" id="study-dl-notebook" role="menuitem" class="study-jump-item" onclick="window._vivStudyNotebookFromCard(event, 's1-survival-validation', 'tnf-fate-in-space')">Download notebook</button>
+    <button type="button" id="study-export-btn" class="btn-mini" aria-haspopup="true" aria-expanded="false" title="Shortcuts — open in the browser or download (report, notebook, figures)">Shortcuts ▾</button>
+    
+    <div id="study-export-menu" role="menu" style="display:none;position:absolute;right:0;top:100%;margin-top:4px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.14);z-index:70;min-width:190px;padding:4px">
+      <div class="study-export-sec">Report</div>
+      <button type="button" id="study-report-open" role="menuitem" class="btn-mini study-export-item" onclick="window._vivStudyReportOpen(event, 's1-survival-validation')">Open in browser</button>
+      <button type="button" id="study-report-dl" role="menuitem" class="btn-mini study-export-item" onclick="window._vivStudyReportDownload(event, 's1-survival-validation')">Download HTML</button>
+      <div class="study-export-sec">Notebook</div>
+      <button type="button" id="study-nb-open" role="menuitem" class="btn-mini study-export-item" onclick="window._vivStudyNotebookOpen(event, 's1-survival-validation')">Open in browser</button>
+      <button type="button" id="study-dl-notebook" role="menuitem" class="btn-mini study-export-item" onclick="window._vivStudyNotebookFromCard(event, 's1-survival-validation', 'tnf-fate-in-space')">Download .ipynb</button>
+      <div class="study-export-sec">Figures</div>
+      <button type="button" id="study-fig-open" role="menuitem" class="btn-mini study-export-item" onclick="window._vivStudyFiguresOpen(event, 's1-survival-validation')">Open in browser</button>
+      <button type="button" id="study-dl-figures" role="menuitem" class="btn-mini study-export-item" onclick="window._vivStudyFiguresFromCard(event, 's1-survival-validation')">Download (zip)</button>
     </div>
   </span>
 </nav>
@@ -98,8 +110,18 @@
 .study-kind-tag.study-kind-biological{background:#ecfdf5;color:#065f46}
 .study-kind-tag.study-kind-computational{background:#eff6ff;color:#1e40af}
 .study-kind-tag.study-kind-theoretical{background:#faf5ff;color:#6b21a8}
-.study-question-headline{margin:6px 0 0 0;font-size:1.05em;line-height:1.5;color:#1e293b;font-family:Georgia,"Times New Roman",serif}
+.study-question-headline{margin:2px 0 0 0;font-size:0.85em;line-height:1.35;color:#475569;font-family:Georgia,"Times New Roman",serif;padding-right:40px}
+/* Park the inline-edit ✎ in a reserved right gutter so it never lands over the
+   question text (the pencil is an absolutely-positioned child of the editable). */
+.study-question-headline>.ie-pencil{right:6px;top:1px}
+h1.study-title .study-name.ie-editable{padding-right:36px}
+h1.study-title .study-name>.ie-pencil{right:4px;top:6px}
 .study-question-headline .q-glyph{display:inline-block;font-size:0.78em;font-weight:700;font-family:ui-monospace,monospace;color:#64748b;background:#f1f5f9;padding:1px 7px;border-radius:4px;margin-right:6px;vertical-align:middle}
+/* Study Export menu — styled to match the investigation-level ↓ Export menu
+   exactly: grey uppercase section labels + full-width, left-aligned, stacked
+   text-link items (not inline pills). Mirrors walkthrough.js `_sec` + `_mi`. */
+.study-export-sec{padding:6px 8px 2px;font-size:0.72em;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:#94a3b8}
+.study-export-item{display:block;width:100%;text-align:left;border:none;background:transparent}
 .status-detail-panel{margin:0;padding:2px 0;background:transparent;border:none;border-radius:0;font-size:0.92em}
 .status-detail-row{display:flex;align-items:center;gap:8px;padding:3px 0}
 .status-detail-axis{min-width:140px;color:#475569;font-size:0.9em}
@@ -931,12 +953,23 @@
 
 
 <section class="study-tab-panel" data-kind="compose" id="panel-compose" hidden>
-  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;">
-    <h2 class="overview-label" style="margin:0">Model composition</h2>
-    
-    <button type="button" class="btn-mini" onclick="window._vivStudyNotebookFromCard(event, 's1-survival-validation', 'tnf-fate-in-space')" title="Download a runnable Jupyter notebook for THIS study — its composite + editable parameters + figures">↓ notebook</button>
+  
+  <div class="model-subtabs" role="tablist" aria-label="Model sections">
+    <button type="button" class="model-subtab active" data-modelsub="composition" role="tab" aria-selected="true" onclick="_setModelSubtab('composition')">Composition</button>
+    <button type="button" class="model-subtab" data-modelsub="loom" role="tab" aria-selected="false" onclick="_setModelSubtab('loom')">Loom</button>
+    <button type="button" class="model-subtab" data-modelsub="variants" role="tab" aria-selected="false" onclick="_setModelSubtab('variants')">Variants <span class="model-subtab-count">4</span></button>
+    <button type="button" class="model-subtab" data-modelsub="interventions" role="tab" aria-selected="false" onclick="_setModelSubtab('interventions')">Interventions</button>
+    <button type="button" class="model-subtab" data-modelsub="readouts" role="tab" aria-selected="false" onclick="_setModelSubtab('readouts')">Readouts</button>
   </div>
 
+  
+  <div class="model-subpanel" data-modelsubpanel="loom" hidden>
+    <div id="model-loom-mount" class="model-loom-mount">
+      <div class="viv-loading"><span class="viv-loading-spin" aria-hidden="true"></span><span>Loading the interactive model diagram…</span></div>
+    </div>
+  </div>
+
+  <div class="model-subpanel active" data-modelsubpanel="composition">
   
   
   <div id="model-composite-cards" class="model-composite-cards" data-study="s1-survival-validation"
@@ -1025,87 +1058,10 @@
 
   
   
+  
   <div class="overview-section" id="conditions-section">
-    <h3>Conditions <span class="muted" style="font-size:0.85em;font-weight:normal">— what we set up to test it</span></h3>
-    <p class="muted" style="font-size:0.88em">The experimental knobs: how variants perturb the baseline, and which model settings still need a human-set value.</p>
-
-    
-    <div class="cond-block">
-      <div class="cond-block-title">Variants <span class="muted" style="font-weight:normal;font-size:0.85em">(4)</span></div>
-      <table class="cond-table">
-        <thead><tr><th>Variant</th><th>Composite / base</th><th>Parameter overrides</th><th>Notes</th></tr></thead>
-        <tbody>
-          
-          
-          
-          
-          <tr data-model-composite="" data-model-overrides='{}'>
-            <td><code>nfkb-knockout</code></td>
-            <td>
-              <em class="muted">(inherits baseline)</em>
-            </td>
-            <td>
-              
-                <em class="muted">(no overrides)</em>
-              
-            </td>
-            <td>NF-kB knocked out: Calzone alone u_NFkB = 0, d_NFkB = 1; composite kappa = 0 (the NF-kB node never switches on).</td>
-          </tr>
-          
-          
-          
-          
-          <tr data-model-composite="" data-model-overrides='{}'>
-            <td><code>transrate-ceiling</code></td>
-            <td>
-              <em class="muted">(inherits baseline)</em>
-            </td>
-            <td>
-              
-                <em class="muted">(no overrides)</em>
-              
-            </td>
-            <td>Phase A ceiling: TransRate 1/24, 1/4, 1, 4, 16, 64 per unit, read at t = 40 units, 20,000 trajectories.</td>
-          </tr>
-          
-          
-          
-          
-          <tr data-model-composite="" data-model-overrides='{}'>
-            <td><code>death-clocks</code></td>
-            <td>
-              <em class="muted">(inherits baseline)</em>
-            </td>
-            <td>
-              
-                <em class="muted">(no overrides)</em>
-              
-            </td>
-            <td>Phase A matched and Phase B: death clocks 30, 120, 180, 200, 240, 480 min per unit; 24 h.</td>
-          </tr>
-          
-          
-          
-          
-          <tr data-model-composite="" data-model-overrides='{"anchor_activation": 1.0}'>
-            <td><code>activation-anchored</code></td>
-            <td>
-              <em class="muted">(inherits baseline)</em>
-            </td>
-            <td>
-              
-                
-                <div><span class="cond-pill-k">anchor_activation</span>=<code>1.0</code></div>
-                
-              
-            </td>
-            <td>Option A (decision 30): NF-kB&#39;s activation route (RIP1, RIP1ub, IKK) switches on at r_act = 0.0239/s (Lipniacki&#39;s IKK_active half-rise, 112 s), not on k_time; TNFR and every switch-off stay on k_time; kappa kept at ln 2/337 s (Alex, 2026-11-06). Phase B&#39;s six clocks rerun on the same 200 seeds, intact and knocked out.</td>
-          </tr>
-          
-        </tbody>
-      </table>
-    </div>
-    
+    <h3>Model settings <span class="muted" style="font-size:0.85em;font-weight:normal">— values this study still needs set</span></h3>
+    <p class="muted" style="font-size:0.88em">Model settings that still need a human-set value. Variants (how the study perturbs the baseline) and interventions live in their own tabs.</p>
 
     
     <div class="cond-block">
@@ -1165,109 +1121,147 @@
   
   
   
+  </div>
 
   
+  <div class="model-subpanel" data-modelsubpanel="variants" hidden>
   <div class="overview-section" id="study-variants-section">
-    <h3>Variants <span class="muted" style="font-size:0.85em;font-weight:normal">— perturbations of the baseline to compare</span></h3>
+    <p class="msub-intro">A <strong>variant</strong> is a copy of a baseline model with a few parameters changed, run and compared against the baseline. Everything else stays fixed.</p>
     
-    <table class="cond-table" style="margin-bottom:10px">
-      <thead><tr><th>Variant</th><th>Base</th><th>Parameter overrides</th><th></th></tr></thead>
-      <tbody>
-        
-        <tr>
-          <td><code>nfkb-knockout</code></td>
-          <td><code>s1-survival-validation</code></td>
-          <td>
-            
-            <em class="muted">(none)</em>
-          </td>
-          <td style="white-space:nowrap">
-            <button type="button" class="action-btn study-variant-run" data-variant="nfkb-knockout" style="font-size:0.78em" title="Run this variant">▶ Run</button>
-            <button type="button" class="action-btn study-variant-del" data-variant="nfkb-knockout" style="font-size:0.78em" title="Delete variant">✕</button>
-          </td>
-        </tr>
-        
-        <tr>
-          <td><code>transrate-ceiling</code></td>
-          <td><code>s1-survival-validation</code></td>
-          <td>
-            
-            <em class="muted">(none)</em>
-          </td>
-          <td style="white-space:nowrap">
-            <button type="button" class="action-btn study-variant-run" data-variant="transrate-ceiling" style="font-size:0.78em" title="Run this variant">▶ Run</button>
-            <button type="button" class="action-btn study-variant-del" data-variant="transrate-ceiling" style="font-size:0.78em" title="Delete variant">✕</button>
-          </td>
-        </tr>
-        
-        <tr>
-          <td><code>death-clocks</code></td>
-          <td><code>s1-survival-validation</code></td>
-          <td>
-            
-            <em class="muted">(none)</em>
-          </td>
-          <td style="white-space:nowrap">
-            <button type="button" class="action-btn study-variant-run" data-variant="death-clocks" style="font-size:0.78em" title="Run this variant">▶ Run</button>
-            <button type="button" class="action-btn study-variant-del" data-variant="death-clocks" style="font-size:0.78em" title="Delete variant">✕</button>
-          </td>
-        </tr>
-        
-        <tr>
-          <td><code>activation-anchored</code></td>
-          <td><code>s1-survival-validation</code></td>
-          <td>
-            
-            <div><span class="cond-pill-k">anchor_activation</span>=<code>1.0</code></div>
-          </td>
-          <td style="white-space:nowrap">
-            <button type="button" class="action-btn study-variant-run" data-variant="activation-anchored" style="font-size:0.78em" title="Run this variant">▶ Run</button>
-            <button type="button" class="action-btn study-variant-del" data-variant="activation-anchored" style="font-size:0.78em" title="Delete variant">✕</button>
-          </td>
-        </tr>
-        
-      </tbody>
-    </table>
+    <div class="var-list">
+      
+      <div class="var-card">
+        <div class="var-card-main">
+          <div class="var-card-head">
+            <code class="var-name">nfkb-knockout</code>
+            <span class="var-base">based on <code>s1-survival-validation</code></span>
+          </div>
+          
+          <div class="var-overrides">
+            <span class="var-nochange">no overrides — identical to the baseline</span>
+          </div>
+        </div>
+        <div class="var-card-actions">
+          <button type="button" class="action-btn study-variant-run" data-variant="nfkb-knockout" title="Run this variant">▶ Run</button>
+          <button type="button" class="icon-btn study-variant-del" data-variant="nfkb-knockout" title="Delete variant" aria-label="Delete variant nfkb-knockout">✕</button>
+        </div>
+      </div>
+      
+      <div class="var-card">
+        <div class="var-card-main">
+          <div class="var-card-head">
+            <code class="var-name">transrate-ceiling</code>
+            <span class="var-base">based on <code>s1-survival-validation</code></span>
+          </div>
+          
+          <div class="var-overrides">
+            <span class="var-nochange">no overrides — identical to the baseline</span>
+          </div>
+        </div>
+        <div class="var-card-actions">
+          <button type="button" class="action-btn study-variant-run" data-variant="transrate-ceiling" title="Run this variant">▶ Run</button>
+          <button type="button" class="icon-btn study-variant-del" data-variant="transrate-ceiling" title="Delete variant" aria-label="Delete variant transrate-ceiling">✕</button>
+        </div>
+      </div>
+      
+      <div class="var-card">
+        <div class="var-card-main">
+          <div class="var-card-head">
+            <code class="var-name">death-clocks</code>
+            <span class="var-base">based on <code>s1-survival-validation</code></span>
+          </div>
+          
+          <div class="var-overrides">
+            <span class="var-nochange">no overrides — identical to the baseline</span>
+          </div>
+        </div>
+        <div class="var-card-actions">
+          <button type="button" class="action-btn study-variant-run" data-variant="death-clocks" title="Run this variant">▶ Run</button>
+          <button type="button" class="icon-btn study-variant-del" data-variant="death-clocks" title="Delete variant" aria-label="Delete variant death-clocks">✕</button>
+        </div>
+      </div>
+      
+      <div class="var-card">
+        <div class="var-card-main">
+          <div class="var-card-head">
+            <code class="var-name">activation-anchored</code>
+            <span class="var-base">based on <code>s1-survival-validation</code></span>
+          </div>
+          
+          <div class="var-overrides">
+            <span class="ovr-chip"><span class="ovr-k">anchor_activation</span><span class="ovr-eq">=</span><span class="ovr-v">1.0</span></span>
+          </div>
+        </div>
+        <div class="var-card-actions">
+          <button type="button" class="action-btn study-variant-run" data-variant="activation-anchored" title="Run this variant">▶ Run</button>
+          <button type="button" class="icon-btn study-variant-del" data-variant="activation-anchored" title="Delete variant" aria-label="Delete variant activation-anchored">✕</button>
+        </div>
+      </div>
+      
+    </div>
     
     
-    <form class="study-variant-add-form" onsubmit="return _submitStudyVariantAdd(this)" style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end">
-      <label style="font-size:0.78em;color:#475569">Name<br>
-        <input name="name" required pattern="[a-zA-Z0-9_-]+" placeholder="hi-dnaa"
-               style="font-family:monospace;font-size:0.82em;padding:3px 6px;min-width:130px"></label>
-      <label style="font-size:0.78em;color:#475569">Base<br>
-        <select name="base_composite" style="font-size:0.82em;padding:3px 6px">
-          <option value="s1-survival-validation">s1-survival-validation</option>
-        </select></label>
-      <label style="font-size:0.78em;color:#475569">Parameter overrides (JSON)<br>
-        <input name="overrides" placeholder='{"k_synth": 2.0}'
-               style="font-family:monospace;font-size:0.82em;padding:3px 6px;min-width:180px"></label>
-      <button type="submit" class="action-btn" style="font-size:0.82em">+ Add variant</button>
+    <form class="study-variant-add-form msub-addcard" onsubmit="return _submitStudyVariantAdd(this)">
+      <div class="msub-addcard-title">Add a variant</div>
+      <div class="msub-field-grid">
+        <label class="msub-field">
+          <span class="msub-lbl">Name</span>
+          <input name="name" required pattern="[a-zA-Z0-9_-]+" placeholder="hi-dnaa" class="msub-input mono">
+          <span class="msub-hint">letters, numbers, - and _</span>
+        </label>
+        <label class="msub-field">
+          <span class="msub-lbl">Based on</span>
+          <select name="base_composite" class="msub-input">
+            <option value="s1-survival-validation">s1-survival-validation</option>
+          </select>
+          <span class="msub-hint">the baseline this variant perturbs</span>
+        </label>
+        <label class="msub-field msub-field-wide">
+          <span class="msub-lbl">Parameter overrides</span>
+          <input name="overrides" placeholder='{"k_synth": 2.0}' class="msub-input mono">
+          <span class="msub-hint">JSON object of parameter → value; leave blank for none</span>
+        </label>
+      </div>
+      <div class="msub-addcard-foot">
+        <button type="submit" class="action-btn primary">+ Add variant</button>
+        <span class="study-variant-add-status msub-status"></span>
+      </div>
     </form>
-    <div class="study-variant-add-status muted" style="font-size:0.8em;margin-top:4px"></div>
     
+  </div>
   </div>
 
   
+  <div class="model-subpanel" data-modelsubpanel="interventions" hidden>
   <div class="overview-section" id="study-interventions-section">
-    <h3>Interventions <span class="muted" style="font-size:0.85em;font-weight:normal">— named perturbations applied in this study</span></h3>
+    <p class="msub-intro">An <strong>intervention</strong> is a named, described perturbation applied in this study (e.g. a knockout) — the conceptual change you are testing, documented alongside the model.</p>
     
-    <p class="muted" style="font-size:0.88em;margin:0 0 10px">No interventions yet.</p>
+    <div class="msub-empty">No interventions yet. Add one below.</div>
     
-    <form class="study-intervention-add-form" onsubmit="return _submitStudyInterventionAdd(this)" style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end">
-      <label style="font-size:0.78em;color:#475569">Name<br>
-        <input name="name" required pattern="[a-zA-Z0-9_-]+" placeholder="knockout-dnaA"
-               style="font-family:monospace;font-size:0.82em;padding:3px 6px;min-width:140px"></label>
-      <label style="font-size:0.78em;color:#475569;flex:1;min-width:200px">Description<br>
-        <input name="description" placeholder="what the intervention does"
-               style="width:100%;font-size:0.82em;padding:3px 6px"></label>
-      <button type="submit" class="action-btn" style="font-size:0.82em">+ Add intervention</button>
+    <form class="study-intervention-add-form msub-addcard" onsubmit="return _submitStudyInterventionAdd(this)">
+      <div class="msub-addcard-title">Add an intervention</div>
+      <div class="msub-field-grid">
+        <label class="msub-field">
+          <span class="msub-lbl">Name</span>
+          <input name="name" required pattern="[a-zA-Z0-9_-]+" placeholder="knockout-dnaA" class="msub-input mono">
+          <span class="msub-hint">letters, numbers, - and _</span>
+        </label>
+        <label class="msub-field msub-field-wide">
+          <span class="msub-lbl">Description</span>
+          <input name="description" placeholder="what the intervention does" class="msub-input">
+          <span class="msub-hint">a short, human-readable summary</span>
+        </label>
+      </div>
+      <div class="msub-addcard-foot">
+        <button type="submit" class="action-btn primary">+ Add intervention</button>
+        <span class="study-intervention-add-status msub-status"></span>
+      </div>
     </form>
-    <div class="study-intervention-add-status muted" style="font-size:0.8em;margin-top:4px"></div>
+  </div>
   </div>
 
-
-
   
+  <div class="model-subpanel" data-modelsubpanel="readouts" hidden>
   <div class="overview-section" id="model-readouts-section">
     <h3>Readouts</h3>
 
@@ -1285,6 +1279,7 @@
     </div>
 
     
+  </div>
   </div>
   </div>
 
@@ -1771,7 +1766,7 @@ expect:  "held_survival_intact \u003e= 0.5 and alive_knocked_out \u003c= 0.5 at 
 </section>
 
 </main>
-<script>window.__DASH_CONFIG__ = { mode: "snapshot", interactiveUrl: "https://github.com/vivarium-collective/viva-multiscale-nfkb", basePath: "/viva-multiscale-nfkb/workbench", inputsDownloadBase: "https://github.com/vivarium-collective/viva-multiscale-nfkb/raw/main/workspace", provenance: {"repo_slug": "vivarium-collective/viva-multiscale-nfkb", "repo_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb", "commit": "d9aab6236785e1d50c8485d4930c8255d4ddca70", "commit_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb/commit/d9aab6236785e1d50c8485d4930c8255d4ddca70", "branch": "main", "lockfile": "uv.lock@80624e57b55a", "generated_at": "2026-11-20 16:17 UTC"} };</script>
+<script>window.__DASH_CONFIG__ = { mode: "snapshot", interactiveUrl: "https://github.com/vivarium-collective/viva-multiscale-nfkb", basePath: "/viva-multiscale-nfkb/workbench", inputsDownloadBase: "https://github.com/vivarium-collective/viva-multiscale-nfkb/raw/main/workspace", provenance: {"repo_slug": "vivarium-collective/viva-multiscale-nfkb", "repo_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb", "commit": "6001f96803abdcbc8dafe8b1f09798794c423048", "commit_url": "https://github.com/vivarium-collective/viva-multiscale-nfkb/commit/6001f96803abdcbc8dafe8b1f09798794c423048", "branch": "main", "lockfile": "uv.lock@80624e57b55a", "generated_at": "2026-11-23 16:43 UTC"} };</script>
 <script src="/viva-multiscale-nfkb/workbench/assets/data-source.js"></script>
 <script src="/viva-multiscale-nfkb/workbench/assets/backend-features.js"></script>
 <script src="/viva-multiscale-nfkb/workbench/assets/toast.js"></script>

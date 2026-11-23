@@ -249,3 +249,7 @@ def _render_one(address, config, runs_db, study_yaml, overrides=None):
 # ## Study: `s1-survival-validation`
 #
 # _study.yaml not found — skipped._
+
+# ## Study: `s2-dose`
+#
+# _study.yaml not found — skipped._
