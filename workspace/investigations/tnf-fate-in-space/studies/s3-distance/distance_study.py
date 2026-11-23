@@ -10,7 +10,7 @@ holds the same samples. Building one composite of the field and 4,860 cells is r
 (measured, 2026-11-20), so the field is run once and replayed.
 
 Each point (ring, bolus size, clock, arm) is the dose study's population with the replayed TNF in place of a bath, so
-E4 compares the two with nothing else different: Study 1's population (Study 0's builder, one Lipniacki model shared by
+E4 compares the two with nothing else different but the seeds (decision 57): Study 1's population (Study 0's builder, one Lipniacki model shared by
 270 fate networks, absorbing death, coupling every 30 s, 24 h), every TNF node off at the start (decision 49), clocks
 30, 60 and 120 min per unit (38), NF-kB intact (kappa = ln 2 / 337 s) and knocked out (kappa = 0) (52), 7 batches of
 270 cells seeded from 1891 (40b, 57: disjoint from the dose study's 1 to 1890). One TimeSeriesStep
@@ -40,11 +40,12 @@ import tempfile
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
+from viva_multiscale_nfkb.composites.make_tnf_field_cell import KD  # uM, decision 32
+
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[4]
 POPULATION = HERE.parent / "s0-coupling-calibration" / "population.py"
 FIELD = ROOT / "analysis" / "exposure-design" / "exposure_24h_band1.json"
-KD = 1.9e-5  # uM, decision 32 (make_tnf_field_cell.KD)
 RINGS = ("near", "middle", "far")
 BOLUS_SIZES = (1.0, 10.0, 100.0)  # uM um^2, decision 51
 CLOCKS = (30, 60, 120)  # min per unit, decision 38
@@ -73,8 +74,11 @@ def replayed(ring: str, bolus: float) -> tuple[list[float], list[float]]:
     """The TNF at the ring's surface at every coupling instant 0, 30, ..., 86400 s: none at t = 0, then the field run's
     samples (per unit bolus) times the bolus."""
     field = json.loads(FIELD.read_text())
-    if not field["band"] or field["sample_s"] != INTERVAL or field["time_s"][0] != INTERVAL:
-        raise SystemExit(f"{FIELD} is not the banded field sampled every {INTERVAL} s from {INTERVAL} s")
+    times, instants = field["time_s"], round(HOURS * 3600.0 / INTERVAL)
+    if (not field["band"] or field["sample_s"] != INTERVAL or times != [INTERVAL * k for k in range(1, instants + 1)]
+            or len(field["tnf_at_cell"][ring]) != instants):
+        # a short series would leave TimeSeriesStep holding its last value for the rest of the run
+        raise SystemExit(f"{FIELD} is not the banded field sampled every {INTERVAL} s from {INTERVAL} s to {HOURS} h")
     return [0.0, *field["time_s"]], [0.0, *(bolus * c for c in field["tnf_at_cell"][ring])]
 
 
@@ -171,15 +175,16 @@ def summarize(arm: str, minutes: int, ring: str, bolus: float) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--workers", type=int, default=4, help="simulations at once (the machine is shared)")
-    parser.add_argument("--write-only", type=Path, help="write every batch's document here (for compose-api) and stop")
+    parser.add_argument("--write-only", type=Path,
+                        help="write every batch's archive (document and SBML model, for compose-api) here and stop")
     args = parser.parse_args()
     tasks = [(*p, b) for b in range(1, BATCHES + 1) for p in points()]  # batch by batch, so each finishes whole
     if args.write_only:
+        population = _population()
         for arm, m, ring, bolus, b in tasks:
-            path = args.write_only / f"{point_name(arm, m, ring, bolus)}-batch{b}.pbg"
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(json.dumps(document(arm, m, ring, bolus, b), separators=(",", ":")))
-        print(f"wrote {len(tasks)} documents to {args.write_only}")
+            archive = args.write_only / f"{point_name(arm, m, ring, bolus)}-batch{b}.omex"
+            population.pack(document(arm, m, ring, bolus, b), archive)
+        print(f"wrote {len(tasks)} archives to {args.write_only}")
         return
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
         list(pool.map(run_point, *zip(*tasks, strict=True)))

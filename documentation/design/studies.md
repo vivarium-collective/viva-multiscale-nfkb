@@ -58,8 +58,8 @@ machinery be for TNF to kill, at each dose and each distance?
   bath (decisions 43 and 50). Every cell starts with TNF off, as in the field composite (decision 49).
 - **The distance study replays the field** (decision 59): each population is the dose study's, driven by the TNF its
   ring records in one 24 h run of the field, scaled by the bolus. Cells only sample the field, so this is exactly what
-  they would read beside it (`checks/spatial/field-replay`), and one composite of the field with every cell was
-  measured to take hours just to start. So both sides of each comparison run on the same machinery.
+  they would read beside it. `checks/spatial/field-replay` compares the two over the first hour, and one composite of
+  the field with every cell was measured to take hours just to start. So both sides of each comparison run on the same machinery.
 - **The dose study runs locally,** through compose-api's own runner (decision 44). The distance study and the
   many-cells work run on compose-api itself (decision 54). A run there is capped today at 1,000 s of simulated time and
   30 min of computing, and a study runs 24 h, so how they run there is planned before any submission

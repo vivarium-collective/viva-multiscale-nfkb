@@ -67,10 +67,13 @@ saved state of the one before.
 
 ## In both routes
 
-- **Environment.** The distance composite uses only the field composite's classes: FVReactionDiffusion, RegionMean,
-  MathExpressionStep, TelluriumProcess, MaBoSSProcess and RAMEmitter. So compose-api infers the existing mash-up
-  (`mash-bb433b1002`, version 2, viva-maboss 0.1.2) and needs no new environment. The first document's live run
-  confirms it.
+- **Environment.** A replayed population (decision 59) names TimeSeriesStep, MathExpressionStep, TelluriumProcess,
+  MaBoSSProcess and RAMEmitter, so it needs tellurium, viva-basic-processes, viva-maboss and viva-tellurium. Only the
+  field's mash-up, `mash-bb433b1002`, holds them, and its version 2 has viva-basic-processes 0.3.0, without
+  TimeSeriesStep. compose-api refuses a run there rather than make a new mash-up. Version 3 (2026-11-23, resolved as of
+  version 2's time, so only viva-basic-processes moves, to 0.4.0) provides it, and every run names it:
+  `--environment mash-bb433b1002 --environment-version 3`. `distance_study.py --write-only` writes each run's archive,
+  the document with its SBML model.
 - **Runs are signed-in and private** while the study runs, and made public when its results are published. A public
   anonymous run has no owner, so its visibility can't be changed later.
 - **One full document is measured first, locally** (plan step 5): its wall time, memory and size. The measurement

@@ -160,7 +160,8 @@ puts to Alex what they still leave open.
    that is still significant) is equivalent, with both tests reported (decision 55).
 5. **The distance study** (`s3-distance/distance_study.py`, decision 59):
    - each ring's TNF replayed from the 24 h field run, which is exact because cells only sample the field
-     (`checks/spatial/field-replay`); one composite of the field and every cell was measured to start too slowly;
+     (`checks/spatial/field-replay` compares the two over the first hour); one composite of the field and every cell
+     was measured to start too slowly;
    - one population per point (270 fate networks and one Lipniacki model) per batch, 7 batches seeded from 1891
      (decisions 40b and 57);
    - at bolus sizes 1, 10 and 100 µM·µm² (decision 51), E5's clocks, and both arms (decision 52): 378 runs;
