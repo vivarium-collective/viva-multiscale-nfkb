@@ -86,10 +86,10 @@ limitations: >
   The death clock is unknown and swept at three values. Under held TNF cells are still dying at 24 h (up to 0.15 of
   them in the last 4 h at 120 min per unit), so the alive fraction at 24 h is not where the curve settles. Between
   occupancy 0.2 and 1 the held curve has only two more doses, 0.5 and 1, and at 120 min per unit most of its fall
-  lies there. Occupancy 1 is
+  lies there (decision 61: recorded, not resampled; E4 does not use the held curve). Occupancy 1 is
   not Study 1's condition: there every TNF node started on, here every one starts off and switches on at rate occ per
   unit. The summary's check proves each batch's bath, not its fate networks' settings. The study records NF-kB's
-  first nuclear peak, not its period. The 714 batch files (89 MB) are not in the repository but on the release
+  first nuclear peak and, where NF-kB oscillates, its period (decision 60). The 714 batch files (89 MB) are not in the repository but on the release
   s2-dose-batches (s2-dose-parquet-runs.tar.gz), checked by parquet-runs.sha256; data/dose.json holds every point's
   counts, survival curve and NF-kB peak.
 

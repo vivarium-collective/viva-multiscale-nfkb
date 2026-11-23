@@ -73,6 +73,8 @@ and fate layers on their own, with TNF held on.
   - At low doses most cells have not committed to any fate by the end of the day, and under steady TNF cells are still
     dying when it ends.
   - More TNF brings NF-κB into the nucleus sooner: about 24 minutes after a full dose, against about 40 at the lowest.
+  - Under steady TNF, NF-κB comes back for a second wave an hour and a half to two hours after its first at the lowest
+    dose and the two highest; at the doses in between no second wave follows within 3 hours.
   - When TNF fades away, few cells are still dying as the day ends: at most 3 in 100 in the last 4 hours, against up
     to 15 when it stays.
 - **Next: does distance matter beyond dose?** A cell close to a burst of TNF gets a short, strong pulse; a cell far

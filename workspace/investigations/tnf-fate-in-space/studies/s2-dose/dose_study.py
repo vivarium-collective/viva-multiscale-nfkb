@@ -27,9 +27,10 @@ don't feed back), so it is the same in every batch. A batch already run is read 
 each point's NF-kB against a fresh run of its bath with one fate network, so a batch run with other bath settings is
 never read back silently. data/dose.json gets, per point, over all batches: alive at 24 h (as a count and a
 fraction), cells with no fate, apoptosis and necrosis at 24 h, the median first-death time, the survival curve
-(fraction alive at each hour), and NF-kB's first nuclear peak (height, time).
+(fraction alive at each hour), NF-kB's first nuclear peak (height, time), and NF-kB's period where it oscillates
+(decision 60: from its first prominent peak to the next, if that comes within 3 h).
 
-    uv run --frozen --extra simulators python -I \
+    uv run --frozen --extra simulators --extra analysis python -I \
         workspace/investigations/tnf-fate-in-space/studies/s2-dose/dose_study.py [--workers N]
 
 (the workspace environment, for pyarrow; each simulation runs in compose/ through population.run, as Study 1 did)
@@ -47,6 +48,7 @@ from pathlib import Path
 
 import pyarrow as pa
 import pyarrow.parquet as pq
+from scipy.signal import find_peaks
 from viva_multiscale_nfkb.composites.make_tnf_field_cell import KD  # uM, decision 32
 
 HERE = Path(__file__).resolve().parent
@@ -56,6 +58,8 @@ RING_EXPOSURE = ROOT / "analysis" / "exposure-design" / "ring_exposure.json"
 CLOCKS = (30, 60, 120)
 OCCUPANCIES = (0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1.0)
 KAPPA = {"intact": math.log(2) / 337.0, "knocked_out": 0.0}
+# decision 60: a nuclear peak rises at least 0.05 above the trough before it, and a period is a second one within 3 h
+PERIOD_PROMINENCE, PERIOD_WINDOW_S = 0.05, 3 * 3600.0
 CELLS, BATCHES, SEED, HOURS, INTERVAL = 270, 7, 1, 24.0, 30.0  # CELLS per batch
 
 
@@ -157,6 +161,15 @@ def nfkb_trajectory(arm: str, minutes: int, exposure: str) -> tuple[list[float],
     return [r["global_time"] for r in rows], [r["nfkb_fraction"] for r in rows]
 
 
+def nfkb_period_min(times: list[float], f: list[float]) -> float | None:
+    """NF-kB's oscillation period (decision 60): from its first prominent nuclear peak to the next, when that one
+    comes within 3 h; None when it doesn't (NF-kB settles, or rises again only after the bath has faded)."""
+    peaks, _ = find_peaks(f, prominence=PERIOD_PROMINENCE)
+    if len(peaks) < 2 or times[peaks[1]] - times[peaks[0]] > PERIOD_WINDOW_S:
+        return None
+    return (times[peaks[1]] - times[peaks[0]]) / 60
+
+
 def summarize(arm: str, minutes: int, exposure: str) -> dict:
     tables = [pq.read_table(run_point(arm, minutes, exposure, b)).to_pydict() for b in range(1, BATCHES + 1)]
     times, f = tables[0]["time_s"], tables[0]["nfkb_fraction"]
@@ -179,7 +192,8 @@ def summarize(arm: str, minutes: int, exposure: str) -> dict:
             "necrosis_24h": round(sum(1 for s in codes if s[-1] & 4) / len(codes), 4),
             "median_first_death_min": statistics.median(deaths) / 60 if deaths else None,
             "survival_curve_hourly": curve,
-            "nfkb_first_peak": None if peak is None else {"time_min": times[peak] / 60, "nuclear_fraction": f[peak]}}
+            "nfkb_first_peak": None if peak is None else {"time_min": times[peak] / 60, "nuclear_fraction": f[peak]},
+            "nfkb_period_min": nfkb_period_min(times, f)}
 
 
 def main() -> None:
