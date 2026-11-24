@@ -37,13 +37,27 @@ network's clock, with NF-κB working and with it knocked out ({doc}`design/studi
   15 under steady TNF. Each fading bath is matched to a cell of the distance study, with the same peak TNF and the same
   dose as the cell's receptors sense it. The weakest third leave at least 96 cells in 100 alive.
 
-## Next: what exposure does
+## Distance matters mostly through dose
 
-The next studies ask whether space matters only through how much TNF reaches a cell, or also through when it arrives
-({doc}`design/studies`):
+The distance study placed cells 100 µm, 300 µm and 1 mm from a pulse of TNF in an open medium, at three pulse sizes,
+and compared each with its matched fading bath: the same peak TNF and the same dose as its receptors sense it, but
+without the delay before TNF arrives or the pulse's shape ({doc}`design/studies`). The rule for a match (survival at 24 h
+within 5 cells in 100) was fixed before any distance run.
 
-- **Dose:** done (above). Its fading baths are what the distance study's cells are compared with.
-- **Distance:** cells 100 µm, 300 µm and 1 mm from a pulse of TNF, compared with cells given the same dose evenly.
+- **In 41 of the 54 comparisons, survival matches the bath within 5 cells in 100:** every cell 1 mm away and every
+  cell at the smallest pulse.
+- **Close to the larger pulses, cells survive a little more than in their bath,** by 3 to 7 cells in 100. All 13
+  comparisons that don't match lean this way, 11 of them at the largest pulse. In 6 the difference is statistically
+  clear, though not shown to reach 5 in 100; 7 can't be called either way. So the pulse's timing protects slightly where exposure
+  is strong; which part of it, the delay or the shape, is still open.
+- **The lean runs through the whole map.** Where nearly every cell lives, a match says little, and in 16 of those 20
+  comparisons there are also fewer deaths beside the pulse than in the bath.
+- **Cells without NF-κB show the same lean, a little weaker,** so the effect does not seem to need NF-κB.
+
+## Next
+
+- **Wave timing:** when the TNF front reaches a cell against when NF-κB enters its nucleus, from the distance study's
+  runs, to see why cells survive a pulse more often than its matched bath.
 - **Many cells:** a field of cells, each with its own signalling and fate, so that cells taking up TNF shade their
   neighbours.
 

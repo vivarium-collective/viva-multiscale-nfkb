@@ -1,0 +1,1359 @@
+{
+ "margin": 0.05,
+ "alpha": 0.05,
+ "interval": "Newcombe hybrid score, 90%",
+ "difference_test": "Fisher exact, two-sided, Holm across the family",
+ "family": 54,
+ "configurations": [
+  {
+   "arm": "intact",
+   "minutes_per_unit": 30,
+   "ring": "near",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1819
+   },
+   "bath": {
+    "exposure": "bath-near-M1",
+    "cells": 1890,
+    "alive_cells": 1815
+   },
+   "difference": 0.002116402116402072,
+   "interval_90": [
+    -0.008260894476062309,
+    0.012513635187050523
+   ],
+   "fisher_p": 0.8001957748705839,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9466666666666678,
+   "near_ceiling": true
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 30,
+   "ring": "near",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1423
+   },
+   "bath": {
+    "exposure": "bath-near-M10",
+    "cells": 1890,
+    "alive_cells": 1360
+   },
+   "difference": 0.033333333333333326,
+   "interval_90": [
+    0.009754419204193624,
+    0.056864248775258704
+   ],
+   "fisher_p": 0.0220870442329482,
+   "holm_p": 0.9939169904826689,
+   "verdict": "inconclusive",
+   "death_ratio": 0.8811320754716981,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 30,
+   "ring": "near",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 419
+   },
+   "bath": {
+    "exposure": "bath-near-M100",
+    "cells": 1890,
+    "alive_cells": 323
+   },
+   "difference": 0.05079365079365078,
+   "interval_90": [
+    0.029560487073634924,
+    0.07198448813921371
+   ],
+   "fisher_p": 9.848827280963629e-05,
+   "holm_p": 0.005121390186101087,
+   "verdict": "different",
+   "death_ratio": 0.9387364390555201,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 30,
+   "ring": "middle",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1840
+   },
+   "bath": {
+    "exposure": "bath-middle-M1",
+    "cells": 1890,
+    "alive_cells": 1842
+   },
+   "difference": -0.0010582010582010914,
+   "interval_90": [
+    -0.009670796516597902,
+    0.007537863946622446
+   ],
+   "fisher_p": 0.9185441289615683,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 1.0416666666666679,
+   "near_ceiling": true
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 30,
+   "ring": "middle",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1485
+   },
+   "bath": {
+    "exposure": "bath-middle-M10",
+    "cells": 1890,
+    "alive_cells": 1476
+   },
+   "difference": 0.004761904761904745,
+   "interval_90": [
+    -0.0172829045575519,
+    0.026801633281652425
+   ],
+   "fisher_p": 0.752133557749865,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9782608695652175,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 30,
+   "ring": "middle",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 439
+   },
+   "bath": {
+    "exposure": "bath-middle-M100",
+    "cells": 1890,
+    "alive_cells": 358
+   },
+   "difference": 0.042857142857142844,
+   "interval_90": [
+    0.021039561008310895,
+    0.06463175405456484
+   ],
+   "fisher_p": 0.0014135432278653604,
+   "holm_p": 0.06785007493753731,
+   "verdict": "inconclusive",
+   "death_ratio": 0.9471279373368147,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 30,
+   "ring": "far",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1868
+   },
+   "bath": {
+    "exposure": "bath-far-M1",
+    "cells": 1890,
+    "alive_cells": 1859
+   },
+   "difference": 0.004761904761904745,
+   "interval_90": [
+    -0.0016000795362918199,
+    0.011273443257921005
+   ],
+   "fisher_p": 0.2682890613311113,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.70967741935484,
+   "near_ceiling": true
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 30,
+   "ring": "far",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1654
+   },
+   "bath": {
+    "exposure": "bath-far-M10",
+    "cells": 1890,
+    "alive_cells": 1652
+   },
+   "difference": 0.0010582010582009804,
+   "interval_90": [
+    -0.016681024231185258,
+    0.018798014865339004
+   ],
+   "fisher_p": 0.9608337321496904,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9915966386554628,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 30,
+   "ring": "far",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 638
+   },
+   "bath": {
+    "exposure": "bath-far-M100",
+    "cells": 1890,
+    "alive_cells": 624
+   },
+   "difference": 0.007407407407407418,
+   "interval_90": [
+    -0.017818283533895342,
+    0.03261998066832052
+   ],
+   "fisher_p": 0.6538983406443577,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9889415481832542,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 60,
+   "ring": "near",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1858
+   },
+   "bath": {
+    "exposure": "bath-near-M1",
+    "cells": 1890,
+    "alive_cells": 1849
+   },
+   "difference": 0.004761904761904745,
+   "interval_90": [
+    -0.0026699285490996687,
+    0.012298739034531315
+   ],
+   "fisher_p": 0.34446817653971623,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.7804878048780491,
+   "near_ceiling": true
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 60,
+   "ring": "near",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1665
+   },
+   "bath": {
+    "exposure": "bath-near-M10",
+    "cells": 1890,
+    "alive_cells": 1598
+   },
+   "difference": 0.0354497354497354,
+   "interval_90": [
+    0.017076801020476377,
+    0.053831277665056354
+   ],
+   "fisher_p": 0.0017630024775381042,
+   "holm_p": 0.0828611164442909,
+   "verdict": "inconclusive",
+   "death_ratio": 0.7705479452054798,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 60,
+   "ring": "near",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 920
+   },
+   "bath": {
+    "exposure": "bath-near-M100",
+    "cells": 1890,
+    "alive_cells": 798
+   },
+   "difference": 0.06455026455026452,
+   "interval_90": [
+    0.03791767408458182,
+    0.091053458710918
+   ],
+   "fisher_p": 7.690351366735586e-05,
+   "holm_p": 0.00407588622436986,
+   "verdict": "different",
+   "death_ratio": 0.8882783882783885,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 60,
+   "ring": "middle",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1867
+   },
+   "bath": {
+    "exposure": "bath-middle-M1",
+    "cells": 1890,
+    "alive_cells": 1855
+   },
+   "difference": 0.006349206349206327,
+   "interval_90": [
+    -0.0002740551531916673,
+    0.013153795467549124
+   ],
+   "fisher_p": 0.14488577344421333,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.6571428571428578,
+   "near_ceiling": true
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 60,
+   "ring": "middle",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1684
+   },
+   "bath": {
+    "exposure": "bath-middle-M10",
+    "cells": 1890,
+    "alive_cells": 1668
+   },
+   "difference": 0.00846560846560851,
+   "interval_90": [
+    -0.008507491959362054,
+    0.02544700307859319
+   ],
+   "fisher_p": 0.4413575813713314,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9279279279279276,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 60,
+   "ring": "middle",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 931
+   },
+   "bath": {
+    "exposure": "bath-middle-M100",
+    "cells": 1890,
+    "alive_cells": 865
+   },
+   "difference": 0.03492063492063491,
+   "interval_90": [
+    0.0082003010926931,
+    0.06157054986984649
+   ],
+   "fisher_p": 0.03423996783324671,
+   "holm_p": 1.0,
+   "verdict": "inconclusive",
+   "death_ratio": 0.935609756097561,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 60,
+   "ring": "far",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1880
+   },
+   "bath": {
+    "exposure": "bath-far-M1",
+    "cells": 1890,
+    "alive_cells": 1878
+   },
+   "difference": 0.0010582010582009804,
+   "interval_90": [
+    -0.0032067868433134257,
+    0.005403900688467044
+   ],
+   "fisher_p": 0.8313203871182179,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.833333333333345,
+   "near_ceiling": true
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 60,
+   "ring": "far",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1785
+   },
+   "bath": {
+    "exposure": "bath-far-M10",
+    "cells": 1890,
+    "alive_cells": 1762
+   },
+   "difference": 0.012169312169312163,
+   "interval_90": [
+    -0.0007184724158698294,
+    0.025113752706834185
+   ],
+   "fisher_p": 0.1366398939129883,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.8203125000000001,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 60,
+   "ring": "far",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1116
+   },
+   "bath": {
+    "exposure": "bath-far-M100",
+    "cells": 1890,
+    "alive_cells": 1111
+   },
+   "difference": 0.002645502645502673,
+   "interval_90": [
+    -0.023664220342391913,
+    0.028950053072790766
+   ],
+   "fisher_p": 0.8947977026475123,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.993581514762516,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 120,
+   "ring": "near",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1871
+   },
+   "bath": {
+    "exposure": "bath-near-M1",
+    "cells": 1890,
+    "alive_cells": 1868
+   },
+   "difference": 0.0015873015873015817,
+   "interval_90": [
+    -0.0040920571004888565,
+    0.00733175473713228
+   ],
+   "fisher_p": 0.7539233751492876,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.8636363636363645,
+   "near_ceiling": true
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 120,
+   "ring": "near",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1757
+   },
+   "bath": {
+    "exposure": "bath-near-M10",
+    "cells": 1890,
+    "alive_cells": 1732
+   },
+   "difference": 0.013227513227513144,
+   "interval_90": [
+    -0.001052164902309638,
+    0.027547493915992323
+   ],
+   "fisher_p": 0.14297277817352463,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.8417721518987351,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 120,
+   "ring": "near",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1385
+   },
+   "bath": {
+    "exposure": "bath-near-M100",
+    "cells": 1890,
+    "alive_cells": 1252
+   },
+   "difference": 0.0703703703703703,
+   "interval_90": [
+    0.04582036408434871,
+    0.09480467393297518
+   ],
+   "fisher_p": 2.8922488528733564e-06,
+   "holm_p": 0.00015618143805516124,
+   "verdict": "different",
+   "death_ratio": 0.79153605015674,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 120,
+   "ring": "middle",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1879
+   },
+   "bath": {
+    "exposure": "bath-middle-M1",
+    "cells": 1890,
+    "alive_cells": 1871
+   },
+   "difference": 0.004232804232804255,
+   "interval_90": [
+    -0.0005928103192754785,
+    0.009298904356966793
+   ],
+   "fisher_p": 0.1986936112461429,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.5789473684210521,
+   "near_ceiling": true
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 120,
+   "ring": "middle",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1774
+   },
+   "bath": {
+    "exposure": "bath-middle-M10",
+    "cells": 1890,
+    "alive_cells": 1777
+   },
+   "difference": -0.0015873015873015817,
+   "interval_90": [
+    -0.014408372757078354,
+    0.011226177588065659
+   ],
+   "fisher_p": 0.8915719470829476,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 1.0265486725663715,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 120,
+   "ring": "middle",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1402
+   },
+   "bath": {
+    "exposure": "bath-middle-M100",
+    "cells": 1890,
+    "alive_cells": 1303
+   },
+   "difference": 0.05238095238095242,
+   "interval_90": [
+    0.028251784160827898,
+    0.07642852017047373
+   ],
+   "fisher_p": 0.00040770421341176813,
+   "holm_p": 0.020385210670588405,
+   "verdict": "different",
+   "death_ratio": 0.8313458262350936,
+   "near_ceiling": false
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 120,
+   "ring": "far",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1884
+   },
+   "bath": {
+    "exposure": "bath-far-M1",
+    "cells": 1890,
+    "alive_cells": 1883
+   },
+   "difference": 0.0005291005291004902,
+   "interval_90": [
+    -0.002875001024783053,
+    0.003998861945004214
+   ],
+   "fisher_p": 1.0,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.8571428571428658,
+   "near_ceiling": true
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 120,
+   "ring": "far",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1835
+   },
+   "bath": {
+    "exposure": "bath-far-M10",
+    "cells": 1890,
+    "alive_cells": 1826
+   },
+   "difference": 0.004761904761904745,
+   "interval_90": [
+    -0.004639926949373742,
+    0.014222376013709017
+   ],
+   "fisher_p": 0.4562968609763047,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.8593750000000003,
+   "near_ceiling": true
+  },
+  {
+   "arm": "intact",
+   "minutes_per_unit": 120,
+   "ring": "far",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1517
+   },
+   "bath": {
+    "exposure": "bath-far-M100",
+    "cells": 1890,
+    "alive_cells": 1524
+   },
+   "difference": -0.0037037037037037646,
+   "interval_90": [
+    -0.024924846554562015,
+    0.017520521156198083
+   ],
+   "fisher_p": 0.8056377992575495,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 1.0191256830601096,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 30,
+   "ring": "near",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1815
+   },
+   "bath": {
+    "exposure": "bath-near-M1",
+    "cells": 1890,
+    "alive_cells": 1819
+   },
+   "difference": -0.002116402116402072,
+   "interval_90": [
+    -0.012513635187050523,
+    0.008260894476062309
+   ],
+   "fisher_p": 0.8001957748705839,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 1.056338028169013,
+   "near_ceiling": true
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 30,
+   "ring": "near",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1372
+   },
+   "bath": {
+    "exposure": "bath-near-M10",
+    "cells": 1890,
+    "alive_cells": 1352
+   },
+   "difference": 0.010582010582010581,
+   "interval_90": [
+    -0.013423512436599724,
+    0.03457130890834041
+   ],
+   "fisher_p": 0.4909881547848578,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9628252788104089,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 30,
+   "ring": "near",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 314
+   },
+   "bath": {
+    "exposure": "bath-near-M100",
+    "cells": 1890,
+    "alive_cells": 233
+   },
+   "difference": 0.04285714285714286,
+   "interval_90": [
+    0.02405485778004234,
+    0.0616615568223683
+   ],
+   "fisher_p": 0.00021230191458082172,
+   "holm_p": 0.010827397643621908,
+   "verdict": "different",
+   "death_ratio": 0.9511164755582379,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 30,
+   "ring": "middle",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1835
+   },
+   "bath": {
+    "exposure": "bath-middle-M1",
+    "cells": 1890,
+    "alive_cells": 1841
+   },
+   "difference": -0.0031746031746031633,
+   "interval_90": [
+    -0.012047032829746661,
+    0.005651648112608657
+   ],
+   "fisher_p": 0.6192677519801171,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 1.1224489795918364,
+   "near_ceiling": true
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 30,
+   "ring": "middle",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1437
+   },
+   "bath": {
+    "exposure": "bath-middle-M10",
+    "cells": 1890,
+    "alive_cells": 1456
+   },
+   "difference": -0.010052910052910091,
+   "interval_90": [
+    -0.03271705252367299,
+    0.012623598214919061
+   ],
+   "fisher_p": 0.4896741028843765,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 1.043778801843318,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 30,
+   "ring": "middle",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 332
+   },
+   "bath": {
+    "exposure": "bath-middle-M100",
+    "cells": 1890,
+    "alive_cells": 255
+   },
+   "difference": 0.040740740740740744,
+   "interval_90": [
+    0.02137701957259718,
+    0.060096970411112755
+   ],
+   "fisher_p": 0.0006337028250696051,
+   "holm_p": 0.031051438428410648,
+   "verdict": "different",
+   "death_ratio": 0.9529051987767584,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 30,
+   "ring": "far",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1865
+   },
+   "bath": {
+    "exposure": "bath-far-M1",
+    "cells": 1890,
+    "alive_cells": 1861
+   },
+   "difference": 0.002116402116402072,
+   "interval_90": [
+    -0.004345920608647662,
+    0.008643647569119759
+   ],
+   "fisher_p": 0.6813168558451556,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.8620689655172441,
+   "near_ceiling": true
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 30,
+   "ring": "far",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1639
+   },
+   "bath": {
+    "exposure": "bath-far-M10",
+    "cells": 1890,
+    "alive_cells": 1637
+   },
+   "difference": 0.0010582010582010914,
+   "interval_90": [
+    -0.01714771889540333,
+    0.01926446273591745
+   ],
+   "fisher_p": 0.9618425886441734,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9920948616600788,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 30,
+   "ring": "far",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 556
+   },
+   "bath": {
+    "exposure": "bath-far-M100",
+    "cells": 1890,
+    "alive_cells": 532
+   },
+   "difference": 0.012698412698412653,
+   "interval_90": [
+    -0.011524940534648271,
+    0.03690172786201019
+   ],
+   "fisher_p": 0.4086573883429675,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9823269513991164,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 60,
+   "ring": "near",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1855
+   },
+   "bath": {
+    "exposure": "bath-near-M1",
+    "cells": 1890,
+    "alive_cells": 1849
+   },
+   "difference": 0.0031746031746031633,
+   "interval_90": [
+    -0.004420844123751221,
+    0.010836833709537481
+   ],
+   "fisher_p": 0.5626052213510803,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.8536585365853661,
+   "near_ceiling": true
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 60,
+   "ring": "near",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1625
+   },
+   "bath": {
+    "exposure": "bath-near-M10",
+    "cells": 1890,
+    "alive_cells": 1597
+   },
+   "difference": 0.014814814814814836,
+   "interval_90": [
+    -0.004174599231488021,
+    0.03380377691863612
+   ],
+   "fisher_p": 0.21567984298628473,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9044368600682593,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 60,
+   "ring": "near",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 782
+   },
+   "bath": {
+    "exposure": "bath-near-M100",
+    "cells": 1890,
+    "alive_cells": 695
+   },
+   "difference": 0.046031746031746035,
+   "interval_90": [
+    0.019926359405089623,
+    0.07204875504681091
+   ],
+   "fisher_p": 0.004138431956017385,
+   "holm_p": 0.1903678699767997,
+   "verdict": "inconclusive",
+   "death_ratio": 0.9271966527196652,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 60,
+   "ring": "middle",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1865
+   },
+   "bath": {
+    "exposure": "bath-middle-M1",
+    "cells": 1890,
+    "alive_cells": 1854
+   },
+   "difference": 0.0058201058201058364,
+   "interval_90": [
+    -0.0009770127441476794,
+    0.012774307313530882
+   ],
+   "fisher_p": 0.19637828315215386,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.6944444444444443,
+   "near_ceiling": true
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 60,
+   "ring": "middle",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1647
+   },
+   "bath": {
+    "exposure": "bath-middle-M10",
+    "cells": 1890,
+    "alive_cells": 1659
+   },
+   "difference": -0.006349206349206327,
+   "interval_90": [
+    -0.024089705621875426,
+    0.011387758703354334
+   ],
+   "fisher_p": 0.5890576451029846,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 1.0519480519480517,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 60,
+   "ring": "middle",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 791
+   },
+   "bath": {
+    "exposure": "bath-middle-M100",
+    "cells": 1890,
+    "alive_cells": 750
+   },
+   "difference": 0.02169312169312171,
+   "interval_90": [
+    -0.004597637297146139,
+    0.04794157478719209
+   ],
+   "fisher_p": 0.18550532572219025,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9640350877192981,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 60,
+   "ring": "far",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1880
+   },
+   "bath": {
+    "exposure": "bath-far-M1",
+    "cells": 1890,
+    "alive_cells": 1877
+   },
+   "difference": 0.0015873015873015817,
+   "interval_90": [
+    -0.0027453527089428996,
+    0.0060360892874392145
+   ],
+   "fisher_p": 0.6766974086432506,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.7692307692307717,
+   "near_ceiling": true
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 60,
+   "ring": "far",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1763
+   },
+   "bath": {
+    "exposure": "bath-far-M10",
+    "cells": 1890,
+    "alive_cells": 1751
+   },
+   "difference": 0.006349206349206438,
+   "interval_90": [
+    -0.007368947020547207,
+    0.020090512462457903
+   ],
+   "fisher_p": 0.48429155127973283,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9136690647482003,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 60,
+   "ring": "far",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1020
+   },
+   "bath": {
+    "exposure": "bath-far-M100",
+    "cells": 1890,
+    "alive_cells": 1028
+   },
+   "difference": -0.004232804232804255,
+   "interval_90": [
+    -0.0308694198338211,
+    0.02241230805332314
+   ],
+   "fisher_p": 0.8192536845983778,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 1.0092807424593968,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 120,
+   "ring": "near",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1871
+   },
+   "bath": {
+    "exposure": "bath-near-M1",
+    "cells": 1890,
+    "alive_cells": 1868
+   },
+   "difference": 0.0015873015873015817,
+   "interval_90": [
+    -0.0040920571004888565,
+    0.00733175473713228
+   ],
+   "fisher_p": 0.7539233751492876,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.8636363636363645,
+   "near_ceiling": true
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 120,
+   "ring": "near",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1747
+   },
+   "bath": {
+    "exposure": "bath-near-M10",
+    "cells": 1890,
+    "alive_cells": 1732
+   },
+   "difference": 0.007936507936507908,
+   "interval_90": [
+    -0.006575556061578076,
+    0.02247100858459964
+   ],
+   "fisher_p": 0.40030765754806646,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9050632911392408,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 120,
+   "ring": "near",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1284
+   },
+   "bath": {
+    "exposure": "bath-near-M100",
+    "cells": 1890,
+    "alive_cells": 1223
+   },
+   "difference": 0.032275132275132346,
+   "interval_90": [
+    0.00698709076782103,
+    0.05750571719842434
+   ],
+   "fisher_p": 0.038908653731682785,
+   "holm_p": 1.0,
+   "verdict": "inconclusive",
+   "death_ratio": 0.9085457271364316,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 120,
+   "ring": "middle",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1878
+   },
+   "bath": {
+    "exposure": "bath-middle-M1",
+    "cells": 1890,
+    "alive_cells": 1871
+   },
+   "difference": 0.0037037037037037646,
+   "interval_90": [
+    -0.001215768332791349,
+    0.00882627097476376
+   ],
+   "fisher_p": 0.27905228688049627,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.6315789473684164,
+   "near_ceiling": true
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 120,
+   "ring": "middle",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1769
+   },
+   "bath": {
+    "exposure": "bath-middle-M10",
+    "cells": 1890,
+    "alive_cells": 1768
+   },
+   "difference": 0.0005291005291006012,
+   "interval_90": [
+    -0.012642612369214854,
+    0.013703094501536436
+   ],
+   "fisher_p": 1.0,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9918032786885235,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 120,
+   "ring": "middle",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1300
+   },
+   "bath": {
+    "exposure": "bath-middle-M100",
+    "cells": 1890,
+    "alive_cells": 1233
+   },
+   "difference": 0.0354497354497354,
+   "interval_90": [
+    0.01029205106327431,
+    0.06054514799466669
+   ],
+   "fisher_p": 0.022401093712275263,
+   "holm_p": 0.9939169904826689,
+   "verdict": "inconclusive",
+   "death_ratio": 0.8980213089802133,
+   "near_ceiling": false
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 120,
+   "ring": "far",
+   "bolus": 1.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1882
+   },
+   "bath": {
+    "exposure": "bath-far-M1",
+    "cells": 1890,
+    "alive_cells": 1882
+   },
+   "difference": 0.0,
+   "interval_90": [
+    -0.0037495215730706686,
+    0.0037495215730706686
+   ],
+   "fisher_p": 1.0,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 1.0,
+   "near_ceiling": true
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 120,
+   "ring": "far",
+   "bolus": 10.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1829
+   },
+   "bath": {
+    "exposure": "bath-far-M10",
+    "cells": 1890,
+    "alive_cells": 1825
+   },
+   "difference": 0.002116402116402183,
+   "interval_90": [
+    -0.007561554357771748,
+    0.011818568051973316
+   ],
+   "fisher_p": 0.7858738115103318,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 0.9384615384615366,
+   "near_ceiling": true
+  },
+  {
+   "arm": "knocked_out",
+   "minutes_per_unit": 120,
+   "ring": "far",
+   "bolus": 100.0,
+   "distance": {
+    "cells": 1890,
+    "alive_cells": 1445
+   },
+   "bath": {
+    "exposure": "bath-far-M100",
+    "cells": 1890,
+    "alive_cells": 1454
+   },
+   "difference": -0.004761904761904745,
+   "interval_90": [
+    -0.02737738491111025,
+    0.017859370374407203
+   ],
+   "fisher_p": 0.758270836188702,
+   "holm_p": 1.0,
+   "verdict": "equivalent",
+   "death_ratio": 1.0206422018348622,
+   "near_ceiling": false
+  }
+ ]
+}

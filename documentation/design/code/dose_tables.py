@@ -1,8 +1,9 @@
-"""The dose study's tables for documentation/design/studies.md, generated from the study's committed data.
+"""The dose and distance studies' tables for documentation/design/studies.md, generated from their committed data.
 
-Reads workspace/investigations/tnf-fate-in-space/studies/s2-dose/data/dose.json and
-analysis/exposure-design/ring_exposure.json, and writes documentation/design/_dose_held.md, _dose_held_apoptosis.md,
-_dose_held_necrosis.md, _dose_baths.md and _dose_nfkb.md.
+Reads workspace/investigations/tnf-fate-in-space/studies/s2-dose/data/dose.json,
+analysis/exposure-design/ring_exposure.json and the distance study's E4 verdicts
+(studies/s3-distance/data/e4.json), and writes documentation/design/_dose_held.md, _dose_held_apoptosis.md,
+_dose_held_necrosis.md, _dose_baths.md, _dose_nfkb.md, _e4_intact.md and _e4_knocked_out.md.
 
     uv run --no-project python -I documentation/design/code/dose_tables.py           # rewrite the tables
     uv run --no-project python -I documentation/design/code/dose_tables.py --check   # fail if one is stale
@@ -18,6 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 DOSE = ROOT / "workspace" / "investigations" / "tnf-fate-in-space" / "studies" / "s2-dose" / "data" / "dose.json"
 RINGS = ROOT / "analysis" / "exposure-design" / "ring_exposure.json"
+E4 = ROOT / "workspace" / "investigations" / "tnf-fate-in-space" / "studies" / "s3-distance" / "data" / "e4.json"
 OUT = ROOT / "documentation" / "design"
 ARMS = ("intact", "knocked_out")
 PAIR = "\u00a0/\u00a0"  # intact / knocked out, with no-break spaces so a table cell never wraps inside a pair
@@ -106,6 +108,31 @@ def nfkb(dose: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+def e4(verdicts: dict, rings: dict, arm: str) -> str:
+    """E4 in one NF-kB arm: for each distance-study cell and bolus size, at each clock, the fraction alive at 24 h
+    beside the bolus, its difference from the matched fading bath (distance minus bath), and the verdict, in bold
+    unless equivalent; * marks a configuration near the ceiling (decision 58)."""
+    rows = {(c["arm"], c["minutes_per_unit"], c["ring"], c["bolus"]): c for c in verdicts["configurations"]}
+    if len(rows) != len(verdicts["configurations"]):
+        raise SystemExit(f"{E4} names a configuration twice")
+    clocks = sorted({c["minutes_per_unit"] for c in verdicts["configurations"]})
+    lines = ["| Cell, bolus | " + " | ".join(f"{m} min per unit" for m in clocks) + " |", "|---|" + "---|" * len(clocks)]
+    for r in rings["rows"]:
+        cells = []
+        for m in clocks:
+            c = rows.get((arm, m, r["cell"], float(r["bolus"])))
+            if c is None:
+                raise SystemExit(f"{E4} has no configuration {arm}, {m} min, {r['cell']}, bolus {r['bolus']:g}")
+            if c["bath"]["exposure"] != f"bath-{r['cell']}-M{r['bolus']:g}":
+                raise SystemExit(f"{E4}: {arm}, {m} min, {r['cell']}, {r['bolus']:g} is scored against "
+                                 f"{c['bath']['exposure']}")
+            alive = c["distance"]["alive_cells"] / c["distance"]["cells"]
+            verdict = c["verdict"] if c["verdict"] == "equivalent" else f"**{c['verdict']}**"
+            cells.append(f"{_fraction(alive)} ({c['difference']:+.3f})<br>{verdict}{'*' if c['near_ceiling'] else ''}")
+        lines.append(f"| {RING_LABEL[r['cell']]}, {r['bolus']:g} | " + " | ".join(cells) + " |")
+    return "\n".join(lines) + "\n"
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true", help="fail if a committed table differs")
@@ -116,6 +143,8 @@ def main() -> None:
     tables = {"_dose_held.md": held(dose), "_dose_held_apoptosis.md": held(dose, "apoptosis_24h"),
               "_dose_held_necrosis.md": held(dose, "necrosis_24h"), "_dose_baths.md": baths(dose, rings),
               "_dose_nfkb.md": nfkb(dose)}
+    verdicts = json.loads(E4.read_text())
+    tables |= {f"_e4_{arm}.md": e4(verdicts, rings, arm) for arm in ARMS}
     stale = []
     for name, text in tables.items():
         path = OUT / name

@@ -77,21 +77,30 @@ and fate layers on their own, with TNF held on.
     dose and the two highest; at the doses in between no second wave follows within 3 hours.
   - When TNF fades away, few cells are still dying as the day ends: at most 3 in 100 in the last 4 hours, against up
     to 15 when it stays.
-- **Next: does distance matter beyond dose?** A cell close to a burst of TNF gets a short, strong pulse; a cell far
-  away gets a later, weaker, longer one. The exposure studies ask whether that difference in timing changes a cell's
-  fate, or whether only the amount of TNF counts.
-  - **The distance study** places cells 100 µm, 300 µm and 1 mm from a burst of TNF in an open medium, which reaches
+- **Does distance matter beyond dose? Mostly not, but beside a large burst of TNF it does, a little.** A cell close
+  to a burst of TNF gets a short, strong pulse; a cell far away gets a later, weaker, longer one. The distance study
+  asks whether that difference in timing changes a cell's fate, or whether only the amount of TNF counts.
+  - **The distance study** placed cells 100 µm, 300 µm and 1 mm from a burst of TNF in an open medium, which reaches
     them after about half a minute, 4 minutes and 40 minutes, at three burst sizes.
   - **The comparison:** each distance-study cell is paired with one of the dose study's fading baths, which gives it
-    the same peak TNF and the same dose as the cell senses it, how long its TNF receptors are bound over the day. What the bath lacks is only what distance adds: the delay before TNF arrives and
-    the shape of the pulse. If survival at 24 hours matches within 5 cells in 100, distance acts only through dose.
-    Each pairing comes out equivalent, different or inconclusive, and the answer is the map of where each holds. The
-    same map with NF-κB knocked out, set beside it, suggests whether a timing effect needs NF-κB; no test of the
-    difference between the two is fixed in advance.
-  - The rule was fixed, and the code that scores it tested, before any distance run. The distance study is 54
-    pairings of about 1,700 cells, each followed for a simulated day. Cells only read the TNF around them and never
-    change it, so each population replays the TNF its ring sees in one day-long run of the field, the same simulation
-    machinery the fading baths use. It runs on compose-api, which now accepts runs that long.
+    the same peak TNF and the same dose as the cell senses it, how long its TNF receptors are bound over the day. What
+    the bath lacks is only what distance adds: the delay before TNF arrives and the shape of the pulse. If survival at
+    24 hours matches within 5 cells in 100, distance acts only through dose. The rule, and the code that scores it,
+    were fixed before any distance run.
+  - **The answer:** in 41 of the 54 pairings survival matches its bath within 5 in 100, including every cell 1 mm
+    away and every cell at the smallest burst. The 13 that don't are all close to the largest bursts (and, with NF-κB
+    working, 100 µm from the middle one at the two faster death speeds). In every one of them cells beside the burst
+    survive more than in their bath, by 3 to 7 in 100. In six the difference is statistically clear, though not shown to reach 5
+    in 100; seven lean the same way but can't be called either way.
+  - **Where nearly every cell lives,** a match says little. That is 20 pairings, all those at the smallest burst and
+    two 1 mm from the middle one, and in 16 of them there are also fewer deaths beside the burst than in the bath. The lean runs through the whole map; it is only large enough
+    to see in survival where exposure is strong.
+  - **It seems not to need NF-κB.** Cells without NF-κB show the same lean, a little weaker: 5 of their 27 pairings
+    don't match, against 8 of 27 with NF-κB working. No test of that difference was fixed in advance, so it is a
+    reading, not a result.
+  - Each pairing followed 1,890 cells for a simulated day on each side; the distance side took 378 runs of 270 cells
+    on compose-api. Cells only read the TNF around them and never change it, so each run replays the TNF its ring
+    sees in one day-long run of the field, the same simulation machinery the fading baths use.
 - **After that: many cells on one field.** Each cell has its own signalling and fate models. Taking up TNF lets
   neighbours shade one another, which turns a set of cells into a tissue. The machinery comes first; uptake follows
   once the exposure studies show how dose alone acts.

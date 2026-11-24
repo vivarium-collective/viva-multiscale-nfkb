@@ -61,9 +61,10 @@ machinery be for TNF to kill, at each dose and each distance?
   they would read beside it. `checks/spatial/field-replay` compares the two over the first hour, and one composite of
   the field with every cell was measured to take hours just to start. So both sides of each comparison run on the same machinery.
 - **The dose study runs locally,** through compose-api's own runner (decision 44). The distance study and the
-  many-cells work run on compose-api itself (decision 54). A run there is capped today at 1,000 s of simulated time and
-  30 min of computing, and a study runs 24 h, so how they run there is planned before any submission
-  (`docs/design/plan-compose-api-dispatch.md`). Each new composite also gets one 990 s live run (decision 44).
+  many-cells work run on compose-api itself (decision 54). A study runs 24 h of simulated time, longer than a default
+  run there is allowed, so the distance study ran as long runs, which need compose-api's `long-runs` role, sent by
+  `s3-distance/dispatch.py` (`docs/design/plan-compose-api-dispatch.md`). Each new composite also gets one 990 s live
+  run (decision 44).
 - **TNF diffuses at 100 µm²/s,** the measured free-solution value (decision 45).
 
 ## The dose study's results
@@ -116,8 +117,8 @@ Each fading bath is matched to one distance-study cell and bolus size: the cell'
 ```{include} _dose_baths.md
 ```
 
-- **These are one side of E4's 54 comparisons.** The other side is the distance study, which has not run yet, so E4
-  has no verdicts.
+- **These are one side of E4's 54 comparisons.** The other side is the distance study; E4's verdicts are
+  [below](#the-distance-studys-results).
 - **20 of the 54 baths are within 0.05 of everyone alive:** every bath at bolus size 1, at every clock and in both
   arms (0.960 to 0.996), and the 1000 µm cell's bath at bolus size 10 at 120 min per unit (0.966 and 0.966). Decision
   58 flags a configuration near the ceiling when its distance-study side is too, where equivalence says little about
@@ -155,6 +156,70 @@ fading baths it oscillates in 4 of the 9. The period is computed from the releas
   `parquet-runs.sha256` checks them. From the study's folder: `gh release download s2-dose-batches -R
   vivarium-collective/viva-multiscale-nfkb -p s2-dose-parquet-runs.tar.gz`, `tar -xzf s2-dose-parquet-runs.tar.gz`,
   then `shasum -a 256 -c parquet-runs.sha256`. `dose_study.py` then reads them back instead of running them.
+
+## The distance study's results
+
+The distance study ran on compose-api on 23 November 2026: 54 points (two NF-κB arms, three clocks, three rings and
+three bolus sizes), each with 1,890 cells (seeds 1,891 to 3,780, in 7 batches of 270) followed for 24 h, in 378 runs of
+one batch each, all completed (`s3-distance/dispatch.py`). The data are `s3-distance/data/distance.json` (in
+`workspace/investigations/tnf-fate-in-space/studies/`), with each point's hourly survival curve, death modes and median
+time of first death, and E4's verdicts are `data/e4.json` beside it (`s2-dose/e4_verdict.py`). Alex recorded them as
+scored (decision 62).
+
+### E4: does a cell near a bolus fare as it would in its bath?
+
+Each table cell gives the fraction alive at 24 h beside the bolus, its difference from the matched fading bath
+([above](#fading-baths-the-dose-studys-side-of-e4); distance minus bath), and the verdict, in bold where it is not
+equivalent; \* marks a configuration near the ceiling. The bolus is in µM·µm². With NF-κB intact:
+
+```{include} _e4_intact.md
+```
+
+and knocked out:
+
+```{include} _e4_knocked_out.md
+```
+
+| Verdict | NF-κB intact | Knocked out |
+|---|---|---|
+| equivalent | 19 (10 near the ceiling) | 22 (10 near the ceiling) |
+| different | 4 | 2 |
+| inconclusive | 4 | 3 |
+
+- **41 of the 54 configurations are equivalent.** Every cell 1000 µm from the bolus, and every cell at bolus size 1,
+  fares as in its bath within the margin. The 20 configurations near the ceiling are among them, and there
+  equivalence says little about timing (decision 58): in 16 of the 20 the death ratio is below 1 (0.58 to 0.95), the
+  same lean as below, so the map does not show that space acts only through dose there.
+- **The other 13 are all close to the bolus at strong exposure,** at bolus size 100 for the 100 and 300 µm cells, and
+  at bolus size 10 for the 100 µm cell at 30 and 60 min per unit with NF-κB intact.
+- **In all 13, the cell beside the bolus survives more than in its bath,** by 0.032 to 0.070. The 6 different ones are
+  detected differences, but each one's 90% interval also reaches past the 0.05 margin, so none is shown to matter by
+  decision 40's measure. The 7 inconclusive ones lean the same way: their intervals lie wholly above zero and also
+  reach past the margin. Across all 54, the difference is positive in 44.
+- **What the bath lacks is the delay before TNF arrives and the pulse's shape,** so one of the two protects the cell
+  slightly where exposure is strong. Which one is the wave-timing study's question; E4 does not separate them.
+- **The knocked-out arm shows the same lean, a little weaker:** 5 of its 27 configurations are not equivalent, against
+  8 with NF-κB intact, and at the 100 µm cell with bolus size 100 its differences are 0.032 to 0.046 against 0.051 to
+  0.070. So the effect does not seem to need NF-κB. No test of the difference between the arms was fixed in advance
+  (see [the scientific test](#the-scientific-test)), so this is a reading, not a verdict.
+
+### How the distance results were checked
+
+- **Every run is the one the study builds.** `dispatch.py collect` fetched each completed run's results only after
+  checking that it ran in mash-bb433b1002@3, that its document is the one `distance_study.py` builds today, and that
+  its SBML model is this workspace's. All 378 passed.
+- **Every batch is the exposure it names.** As in the dose study, each point's 7 batches must give the same NF-κB
+  trajectory, and a fresh local run of its exposure with a single fate network must reproduce it to 1e-9. All 54
+  points passed.
+- **The 378 batch files** (48 MB) are on the release `s3-distance-batches`, checked by the study's
+  `parquet-runs.sha256`. `distance_study.py` reads them back and rewrites `data/distance.json` byte-identical (checked
+  24 November 2026). From the study's folder:
+
+  ```
+  gh release download s3-distance-batches -R vivarium-collective/viva-multiscale-nfkb -p s3-distance-parquet-runs.tar.gz
+  tar -xzf s3-distance-parquet-runs.tar.gz
+  shasum -a 256 -c parquet-runs.sha256
+  ```
 
 ## What Study 0 changes
 
